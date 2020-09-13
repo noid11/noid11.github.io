@@ -1,4 +1,4 @@
-baseURL = "http://example.org/"
-languageCode = "en-us"
-title = "My New Hugo Site"
-theme = "blank"
+baseURL = "https://noid11.github.io/"
+languageCode = "ja-jp"
+title = "noid11"
+publishDir = "docs"
