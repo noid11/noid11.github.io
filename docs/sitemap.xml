@@ -3,8 +3,18 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://noid11.github.io/posts/2021-goals/</loc>
+    <lastmod>2020-12-31T22:49:26+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/posts/</loc>
+    <lastmod>2020-12-31T22:49:26+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://noid11.github.io/</loc>
-    <priority>0</priority>
+    <lastmod>2020-12-31T22:49:26+09:00</lastmod>
   </url>
   
   <url>

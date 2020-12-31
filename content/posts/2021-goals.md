@@ -1,7 +1,7 @@
 ---
 title: "2021 年の目標"
 date: 2020-12-31T22:49:26+09:00
-draft: true
+draft: false
 ---
 
 <!--more-->
