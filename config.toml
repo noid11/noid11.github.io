@@ -1,4 +1,5 @@
 baseURL = "https://noid11.github.io/"
 languageCode = "ja-jp"
-title = "noid11"
+title = "tmp log"
 publishDir = "docs"
+theme = "ananke"
