@@ -7,6 +7,7 @@ tmp log
 ```zsh
 hugo new posts/my-post.md
 hugo server -D
+hugo -D
 ```
 
 # Useful Links
