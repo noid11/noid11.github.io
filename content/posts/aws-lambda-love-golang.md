@@ -2,7 +2,7 @@
 title: "AWS Lambda で Go ランタイムを使うのが良いと思っている理由"
 date: 2021-01-01T15:05:18+09:00
 toc: true
-draft: true
+draft: false
 ---
 
 個人的に AWS Lambda では zip 形式で golang ランタイム使うのがコスパ最強な気がしているので、根拠をまとめておくメモ
