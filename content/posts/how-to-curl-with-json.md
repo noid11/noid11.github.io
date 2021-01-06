@@ -2,7 +2,7 @@
 title: "curl で外部 json ファイルを元に POST リクエストする方法"
 date: 2021-01-07T08:00:34+09:00
 toc: true
-draft: true
+draft: false
 ---
 
 `--data`, `-d` オプションで `@/file/to/path` という感じで指定すれば良い。

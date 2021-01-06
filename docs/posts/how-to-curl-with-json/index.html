@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>curl で外部 json ファイルを元に POST リクエストする方法 | tmp log</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="--data, -d オプションで @/file/to/path という感じで指定すれば良い。">
+    <meta name="generator" content="Hugo 0.79.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.4fc0b62e4b82c997bb0041217cd6b979.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="curl で外部 json ファイルを元に POST リクエストする方法" />
+<meta property="og:description" content="--data, -d オプションで @/file/to/path という感じで指定すれば良い。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noid11.github.io/posts/how-to-curl-with-json/" />
+<meta property="article:published_time" content="2021-01-07T08:00:34+09:00" />
+<meta property="article:modified_time" content="2021-01-07T08:00:34+09:00" />
+<meta itemprop="name" content="curl で外部 json ファイルを元に POST リクエストする方法">
+<meta itemprop="description" content="--data, -d オプションで @/file/to/path という感じで指定すれば良い。">
+<meta itemprop="datePublished" content="2021-01-07T08:00:34+09:00" />
+<meta itemprop="dateModified" content="2021-01-07T08:00:34+09:00" />
+<meta itemprop="wordCount" content="508">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="curl で外部 json ファイルを元に POST リクエストする方法"/>
+<meta name="twitter:description" content="--data, -d オプションで @/file/to/path という感じで指定すれば良い。"/>
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        tmp log
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://noid11.github.io/posts/how-to-curl-with-json/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://noid11.github.io/posts/how-to-curl-with-json/&amp;text=curl%20%e3%81%a7%e5%a4%96%e9%83%a8%20json%20%e3%83%95%e3%82%a1%e3%82%a4%e3%83%ab%e3%82%92%e5%85%83%e3%81%ab%20POST%20%e3%83%aa%e3%82%af%e3%82%a8%e3%82%b9%e3%83%88%e3%81%99%e3%82%8b%e6%96%b9%e6%b3%95" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://noid11.github.io/posts/how-to-curl-with-json/&amp;title=curl%20%e3%81%a7%e5%a4%96%e9%83%a8%20json%20%e3%83%95%e3%82%a1%e3%82%a4%e3%83%ab%e3%82%92%e5%85%83%e3%81%ab%20POST%20%e3%83%aa%e3%82%af%e3%82%a8%e3%82%b9%e3%83%88%e3%81%99%e3%82%8b%e6%96%b9%e6%b3%95" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">curl で外部 json ファイルを元に POST リクエストする方法</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2021-01-07T08:00:34+09:00">January 7, 2021</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><code>--data</code>, <code>-d</code> オプションで <code>@/file/to/path</code> という感じで指定すれば良い。</p>
+<h2 id="実行例">実行例</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">ENDPOINT<span style="color:#f92672">=</span>https://www.example.com
+
+<span style="color:#75715e"># ミニマムなリクエスト</span>
+<span style="color:#75715e"># -d, --data オプションを使用する場合、自動で POST リクエストになるので -X POST は不要</span>
+curl --data @./request.json $ENDPOINT
+
+<span style="color:#75715e"># Content-Type として application/json を指定</span>
+<span style="color:#75715e"># 明示的に Content-Type を指定しない場合、 Content-Type は application/x-www-form-urlencoded になる</span>
+curl --data @./request.json -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> $ENDPOINT
+
+<span style="color:#75715e"># 標準出力の json を受け取ってリクエスト</span>
+echo <span style="color:#e6db74">&#39;{ &#34;hoge&#34;: &#34;fuga&#34;}&#39;</span> | curl --data @- $ENDPOINT
+</code></pre></div><p>動作検証には <a href="http://httpdump.io/">http://httpdump.io/</a> が便利</p>
+<h2 id="requestjson-サンプル">request.json サンプル</h2>
+<p>JSON Example<br>
+<a href="https://json.org/example.html">https://json.org/example.html</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+	<span style="color:#f92672">&#34;glossary&#34;</span>: {
+		<span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;example glossary&#34;</span>,
+		<span style="color:#f92672">&#34;GlossDiv&#34;</span>: {
+			<span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;S&#34;</span>,
+			<span style="color:#f92672">&#34;GlossList&#34;</span>: {
+				<span style="color:#f92672">&#34;GlossEntry&#34;</span>: {
+					<span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#e6db74">&#34;SGML&#34;</span>,
+					<span style="color:#f92672">&#34;SortAs&#34;</span>: <span style="color:#e6db74">&#34;SGML&#34;</span>,
+					<span style="color:#f92672">&#34;GlossTerm&#34;</span>: <span style="color:#e6db74">&#34;Standard Generalized Markup Language&#34;</span>,
+					<span style="color:#f92672">&#34;Acronym&#34;</span>: <span style="color:#e6db74">&#34;SGML&#34;</span>,
+					<span style="color:#f92672">&#34;Abbrev&#34;</span>: <span style="color:#e6db74">&#34;ISO 8879:1986&#34;</span>,
+					<span style="color:#f92672">&#34;GlossDef&#34;</span>: {
+						<span style="color:#f92672">&#34;para&#34;</span>: <span style="color:#e6db74">&#34;A meta-markup language, used to create markup languages such as DocBook.&#34;</span>,
+						<span style="color:#f92672">&#34;GlossSeeAlso&#34;</span>: [
+							<span style="color:#e6db74">&#34;GML&#34;</span>,
+							<span style="color:#e6db74">&#34;XML&#34;</span>
+						]
+					},
+					<span style="color:#f92672">&#34;GlossSee&#34;</span>: <span style="color:#e6db74">&#34;markup&#34;</span>
+				}
+			}
+		}
+	}
+}
+</code></pre></div><h2 id="curl-manual">curl manual</h2>
+<p>curl - How To Use<br>
+<a href="https://curl.se/docs/manpage.html">https://curl.se/docs/manpage.html</a></p>
+<blockquote>
+<p>-d, &ndash;data <!-- raw HTML omitted --><br>
+(HTTP MQTT) Sends the specified data in a POST request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button. This will cause curl to pass the data to the server using the content-type application/x-www-form-urlencoded. Compare to -F, &ndash;form.<br>
+&ndash;data-raw is almost the same but does not have a special interpretation of the @ character. To post data purely binary, you should instead use the &ndash;data-binary option. To URL-encode the value of a form field you may use &ndash;data-urlencode.
+If any of these options is used more than once on the same command line, the data pieces specified will be merged together with a separating &amp;-symbol. Thus, using &lsquo;-d name=daniel -d skill=lousy&rsquo; would generate a post chunk that looks like &lsquo;name=daniel&amp;skill=lousy&rsquo;.<br>
+If you start the data with the letter @, the rest should be a file name to read the data from, or - if you want curl to read the data from stdin. Posting data from a file named &lsquo;foobar&rsquo; would thus be done with -d, &ndash;data @foobar. When -d, &ndash;data is told to read from a file like that, carriage returns and newlines will be stripped out. If you don&rsquo;t want the @ character to have a special interpretation use &ndash;data-raw instead.<br>
+See also &ndash;data-binary, &ndash;data-urlencode and &ndash;data-raw. This option overrides -F, &ndash;form and -I, &ndash;head and -T, &ndash;upload-file.</p>
+</blockquote>
+<ul>
+<li><code>-d</code>, <code>--data</code> オプションは POST リクエストで指定されたデータを HTTP サーバーに送信する
+<ul>
+<li><code>content-type</code> として <code>application/x-www-form-urlencoded</code> を使用する</li>
+</ul>
+</li>
+<li><code>--data-raw</code> は殆ど同じだが、 <code>@</code> 文字の特別な解釈が無い
+<ul>
+<li>データを純粋にバイナリで送信する場合には <code>--data-binary</code> オプションを使用する必要がある</li>
+<li>フォームフィールドの値を URL エンコードするには <code>--data-urlencode</code> を使用できる</li>
+</ul>
+</li>
+<li>これらのオプションのいずれかが同じコマンドラインで複数回使用される場合、指定されたデータ部分は区切り文字と一緒にマージされる
+<ul>
+<li><code>-d name=daniel -d skill=lousy</code> と指定をすると <code>name=daniel&amp;skill=lousy</code> という post chunk が生成される</li>
+</ul>
+</li>
+<li>データを <code>@</code> で始める場合、残りはデータを読み取るためのファイル名である必要がある
+<ul>
+<li>または、 curl で stdin からデータを読み取る場合は <code>-</code></li>
+<li>foobar というファイルからのデータ投稿をする場合 <code>-d, --data @foobar</code> のように指定する</li>
+<li><code>-d</code>, <code>--data</code> がファイル読み取りを指示されると、キャリッジリターンと開業が削除される</li>
+<li>純粋に <code>@</code> を文字として使用したい場合、 <code>--data-raw</code> を使用する</li>
+</ul>
+</li>
+<li><code>--data-binary</code>, <code>--data-urlencode</code>, <code>--data-raw</code> も参照すると良い
+<ul>
+<li>これらのオプションは <code>-F</code>, <code>--form</code>, <code>-I</code>, <code>--head</code>, <code>-T</code>, <code>--upload-file</code> を上書きする</li>
+</ul>
+</li>
+</ul>
+<h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">% uname -v
+Darwin Kernel Version 19.6.0: Tue Nov <span style="color:#ae81ff">10</span> 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64
+% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% curl --version
+curl 7.64.1 <span style="color:#f92672">(</span>x86_64-apple-darwin19.0<span style="color:#f92672">)</span> libcurl/7.64.1 <span style="color:#f92672">(</span>SecureTransport<span style="color:#f92672">)</span> LibreSSL/2.8.3 zlib/1.2.11 nghttp2/1.39.2
+Release-Date: 2019-03-27
+Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp smb smbs smtp smtps telnet tftp 
+Features: AsynchDNS GSS-API HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz MultiSSL NTLM NTLM_WB SPNEGO SSL UnixSockets
+</code></pre></div><ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l"><div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">What&#39;s in this posts</p>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#実行例">実行例</a></li>
+    <li><a href="#requestjson-サンプル">request.json サンプル</a></li>
+    <li><a href="#curl-manual">curl manual</a></li>
+    <li><a href="#この記事を試した環境">この記事を試した環境</a></li>
+  </ul>
+</nav>
+  </div>
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://noid11.github.io/" >
+    &copy;  tmp log 2021 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>
