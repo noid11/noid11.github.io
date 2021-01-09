@@ -31,39 +31,13 @@ echo '{ "hoge": "fuga"}' | curl --data @- $ENDPOINT
 
 ## request.json サンプル
 
+JSON 形式であれば何でも良いが、以下の URL にサンプルがあるので試してみると良いかも
+
 JSON Example  
 https://json.org/example.html
 
-```json
-{
-	"glossary": {
-		"title": "example glossary",
-		"GlossDiv": {
-			"title": "S",
-			"GlossList": {
-				"GlossEntry": {
-					"ID": "SGML",
-					"SortAs": "SGML",
-					"GlossTerm": "Standard Generalized Markup Language",
-					"Acronym": "SGML",
-					"Abbrev": "ISO 8879:1986",
-					"GlossDef": {
-						"para": "A meta-markup language, used to create markup languages such as DocBook.",
-						"GlossSeeAlso": [
-							"GML",
-							"XML"
-						]
-					},
-					"GlossSee": "markup"
-				}
-			}
-		}
-	}
-}
-```
 
-
-## curl manual
+## curl の manual を読む
 
 curl - How To Use  
 https://curl.se/docs/manpage.html
@@ -83,9 +57,9 @@ https://curl.se/docs/manpage.html
 - これらのオプションのいずれかが同じコマンドラインで複数回使用される場合、指定されたデータ部分は区切り文字と一緒にマージされる
     - `-d name=daniel -d skill=lousy` と指定をすると `name=daniel&skill=lousy` という post chunk が生成される
 - データを `@` で始める場合、残りはデータを読み取るためのファイル名である必要がある
-    - または、 curl で stdin からデータを読み取る場合は `-`
+    - curl で stdin からデータを読み取る場合は `-`
     - foobar というファイルからのデータ投稿をする場合 `-d, --data @foobar` のように指定する
-    - `-d`, `--data` がファイル読み取りを指示されると、キャリッジリターンと開業が削除される
+    - `-d`, `--data` がファイル読み取りを指示されると、キャリッジリターンと改行が削除される
     - 純粋に `@` を文字として使用したい場合、 `--data-raw` を使用する
 - `--data-binary`, `--data-urlencode`, `--data-raw` も参照すると良い
     - これらのオプションは `-F`, `--form`, `-I`, `--head`, `-T`, `--upload-file` を上書きする
