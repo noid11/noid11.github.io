@@ -37,7 +37,7 @@
 <meta itemprop="description" content="--data, -d オプションで @/file/to/path という感じで指定すれば良い。">
 <meta itemprop="datePublished" content="2021-01-07T08:00:34+09:00" />
 <meta itemprop="dateModified" content="2021-01-07T08:00:34+09:00" />
-<meta itemprop="wordCount" content="508">
+<meta itemprop="wordCount" content="458">
 
 
 
@@ -156,34 +156,10 @@ curl --data @./request.json -H <span style="color:#e6db74">&#34;Content-Type: ap
 echo <span style="color:#e6db74">&#39;{ &#34;hoge&#34;: &#34;fuga&#34;}&#39;</span> | curl --data @- $ENDPOINT
 </code></pre></div><p>動作検証には <a href="http://httpdump.io/">http://httpdump.io/</a> が便利</p>
 <h2 id="requestjson-サンプル">request.json サンプル</h2>
+<p>JSON 形式であれば何でも良いが、以下の URL にサンプルがあるので試してみると良いかも</p>
 <p>JSON Example<br>
 <a href="https://json.org/example.html">https://json.org/example.html</a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-	<span style="color:#f92672">&#34;glossary&#34;</span>: {
-		<span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;example glossary&#34;</span>,
-		<span style="color:#f92672">&#34;GlossDiv&#34;</span>: {
-			<span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;S&#34;</span>,
-			<span style="color:#f92672">&#34;GlossList&#34;</span>: {
-				<span style="color:#f92672">&#34;GlossEntry&#34;</span>: {
-					<span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#e6db74">&#34;SGML&#34;</span>,
-					<span style="color:#f92672">&#34;SortAs&#34;</span>: <span style="color:#e6db74">&#34;SGML&#34;</span>,
-					<span style="color:#f92672">&#34;GlossTerm&#34;</span>: <span style="color:#e6db74">&#34;Standard Generalized Markup Language&#34;</span>,
-					<span style="color:#f92672">&#34;Acronym&#34;</span>: <span style="color:#e6db74">&#34;SGML&#34;</span>,
-					<span style="color:#f92672">&#34;Abbrev&#34;</span>: <span style="color:#e6db74">&#34;ISO 8879:1986&#34;</span>,
-					<span style="color:#f92672">&#34;GlossDef&#34;</span>: {
-						<span style="color:#f92672">&#34;para&#34;</span>: <span style="color:#e6db74">&#34;A meta-markup language, used to create markup languages such as DocBook.&#34;</span>,
-						<span style="color:#f92672">&#34;GlossSeeAlso&#34;</span>: [
-							<span style="color:#e6db74">&#34;GML&#34;</span>,
-							<span style="color:#e6db74">&#34;XML&#34;</span>
-						]
-					},
-					<span style="color:#f92672">&#34;GlossSee&#34;</span>: <span style="color:#e6db74">&#34;markup&#34;</span>
-				}
-			}
-		}
-	}
-}
-</code></pre></div><h2 id="curl-manual">curl manual</h2>
+<h2 id="curl-の-manual-を読む">curl の manual を読む</h2>
 <p>curl - How To Use<br>
 <a href="https://curl.se/docs/manpage.html">https://curl.se/docs/manpage.html</a></p>
 <blockquote>
@@ -213,9 +189,9 @@ See also &ndash;data-binary, &ndash;data-urlencode and &ndash;data-raw. This opt
 </li>
 <li>データを <code>@</code> で始める場合、残りはデータを読み取るためのファイル名である必要がある
 <ul>
-<li>または、 curl で stdin からデータを読み取る場合は <code>-</code></li>
+<li>curl で stdin からデータを読み取る場合は <code>-</code></li>
 <li>foobar というファイルからのデータ投稿をする場合 <code>-d, --data @foobar</code> のように指定する</li>
-<li><code>-d</code>, <code>--data</code> がファイル読み取りを指示されると、キャリッジリターンと開業が削除される</li>
+<li><code>-d</code>, <code>--data</code> がファイル読み取りを指示されると、キャリッジリターンと改行が削除される</li>
 <li>純粋に <code>@</code> を文字として使用したい場合、 <code>--data-raw</code> を使用する</li>
 </ul>
 </li>
@@ -252,7 +228,7 @@ Features: AsynchDNS GSS-API HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz Multi
   <ul>
     <li><a href="#実行例">実行例</a></li>
     <li><a href="#requestjson-サンプル">request.json サンプル</a></li>
-    <li><a href="#curl-manual">curl manual</a></li>
+    <li><a href="#curl-の-manual-を読む">curl の manual を読む</a></li>
     <li><a href="#この記事を試した環境">この記事を試した環境</a></li>
   </ul>
 </nav>
