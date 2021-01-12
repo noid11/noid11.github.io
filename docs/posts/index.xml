@@ -6,7 +6,16 @@
     <description>Recent content in Posts on tmp log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Sat, 09 Jan 2021 12:31:00 +0900</lastBuildDate><atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Jan 2021 12:39:32 +0900</lastBuildDate><atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Playwright を Typescript で動かすまで</title>
+      <link>https://noid11.github.io/posts/hello-playwright-with-typescript/</link>
+      <pubDate>Tue, 12 Jan 2021 12:39:32 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/hello-playwright-with-typescript/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>セキュリティを学ぶことでトラブルシューティング能力が向上する・・・気がする</title>
       <link>https://noid11.github.io/posts/learning-security-will-improve-troubleshooting-skills/</link>

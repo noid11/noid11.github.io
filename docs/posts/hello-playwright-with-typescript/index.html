@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Playwright を Typescript で動かすまで | tmp log</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.79.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.4fc0b62e4b82c997bb0041217cd6b979.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="Playwright を Typescript で動かすまで" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noid11.github.io/posts/hello-playwright-with-typescript/" />
+<meta property="article:published_time" content="2021-01-12T12:39:32+09:00" />
+<meta property="article:modified_time" content="2021-01-12T12:39:32+09:00" />
+<meta itemprop="name" content="Playwright を Typescript で動かすまで">
+<meta itemprop="description" content="">
+<meta itemprop="datePublished" content="2021-01-12T12:39:32+09:00" />
+<meta itemprop="dateModified" content="2021-01-12T12:39:32+09:00" />
+<meta itemprop="wordCount" content="786">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Playwright を Typescript で動かすまで"/>
+<meta name="twitter:description" content=""/>
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        tmp log
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://noid11.github.io/posts/hello-playwright-with-typescript/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://noid11.github.io/posts/hello-playwright-with-typescript/&amp;text=Playwright%20%e3%82%92%20Typescript%20%e3%81%a7%e5%8b%95%e3%81%8b%e3%81%99%e3%81%be%e3%81%a7" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://noid11.github.io/posts/hello-playwright-with-typescript/&amp;title=Playwright%20%e3%82%92%20Typescript%20%e3%81%a7%e5%8b%95%e3%81%8b%e3%81%99%e3%81%be%e3%81%a7" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Playwright を Typescript で動かすまで</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2021-01-12T12:39:32+09:00">January 12, 2021</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h2 id="プロジェクトのセットアップ">プロジェクトのセットアップ</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">mkdir my-playwright-project <span style="color:#f92672">&amp;&amp;</span> cd my-playwright-project
+
+<span style="color:#75715e"># npm 初期化 </span>
+npm init --yes
+
+<span style="color:#75715e"># playwright のインストール</span>
+<span style="color:#75715e">#     --save-dev いらないような気がする・・・</span>
+<span style="color:#75715e">#     chromium, firefox, webkit がダウンロードされ、 300 MB 程度のトラフィックが発生するので注意</span>
+npm install --save-dev playwright
+
+<span style="color:#75715e"># typescript セットアップ</span>
+npm install --save-dev typescript @types/node@12 ts-node
+npx tsc --init
+
+<span style="color:#75715e"># コードを書いていく</span>
+touch main.ts
+</code></pre></div><h2 id="ミニマムなコード実装">ミニマムなコード実装</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">webkit</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;playwright&#39;</span>
+
+(<span style="color:#66d9ef">async</span> () <span style="color:#f92672">=&gt;</span> {
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">browser</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">webkit</span>.<span style="color:#a6e22e">launch</span>()
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">page</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">browser</span>.<span style="color:#a6e22e">newPage</span>()
+  <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">page</span>.<span style="color:#66d9ef">goto</span>(<span style="color:#e6db74">&#39;http://whatsmyuseragent.org/&#39;</span>)
+  <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">page</span>.<span style="color:#a6e22e">screenshot</span>({ <span style="color:#a6e22e">path</span><span style="color:#f92672">:</span> <span style="color:#e6db74">`example.png`</span> })
+  <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">browser</span>.<span style="color:#a6e22e">close</span>()
+})()
+</code></pre></div><h2 id="コード実行">コード実行</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">npx ts-node main.ts
+</code></pre></div><ul>
+<li>同じディレクトリに <a href="http://whatsmyuseragent.org/">http://whatsmyuseragent.org/</a> にアクセスしたスクリーンショットが example.png として保存されれば OK</li>
+<li>上記コードの場合 User-Agent が WebKit になる</li>
+</ul>
+<h2 id="useful-links">Useful Links</h2>
+<p>CLI Commands | npm Docs<br>
+<a href="https://docs.npmjs.com/cli/v6/commands">https://docs.npmjs.com/cli/v6/commands</a></p>
+<p>Getting Started | Playwright<br>
+<a href="https://playwright.dev/docs/intro">https://playwright.dev/docs/intro</a></p>
+<p>TypeScript: The starting point for learning TypeScript<br>
+<a href="https://www.typescriptlang.org/docs">https://www.typescriptlang.org/docs</a></p>
+<h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">% node -v
+v12.16.1
+% npm -v
+6.14.8
+</code></pre></div><p>package.json</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;my-playwright-project&#34;</span>,
+  <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.0.0&#34;</span>,
+  <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+  <span style="color:#f92672">&#34;main&#34;</span>: <span style="color:#e6db74">&#34;index.js&#34;</span>,
+  <span style="color:#f92672">&#34;scripts&#34;</span>: {
+    <span style="color:#f92672">&#34;test&#34;</span>: <span style="color:#e6db74">&#34;echo \&#34;Error: no test specified\&#34; &amp;&amp; exit 1&#34;</span>
+  },
+  <span style="color:#f92672">&#34;keywords&#34;</span>: [],
+  <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+  <span style="color:#f92672">&#34;license&#34;</span>: <span style="color:#e6db74">&#34;ISC&#34;</span>,
+  <span style="color:#f92672">&#34;dependencies&#34;</span>: {
+    <span style="color:#f92672">&#34;playwright&#34;</span>: <span style="color:#e6db74">&#34;^1.7.1&#34;</span>
+  },
+  <span style="color:#f92672">&#34;devDependencies&#34;</span>: {
+    <span style="color:#f92672">&#34;@types/node&#34;</span>: <span style="color:#e6db74">&#34;^12.19.12&#34;</span>,
+    <span style="color:#f92672">&#34;ts-node&#34;</span>: <span style="color:#e6db74">&#34;^9.1.1&#34;</span>,
+    <span style="color:#f92672">&#34;typescript&#34;</span>: <span style="color:#e6db74">&#34;^4.1.3&#34;</span>
+  }
+}
+</code></pre></div><p>package-lock.json</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;my-playwright-project&#34;</span>,
+  <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.0.0&#34;</span>,
+  <span style="color:#f92672">&#34;lockfileVersion&#34;</span>: <span style="color:#ae81ff">1</span>,
+  <span style="color:#f92672">&#34;requires&#34;</span>: <span style="color:#66d9ef">true</span>,
+  <span style="color:#f92672">&#34;dependencies&#34;</span>: {
+    <span style="color:#f92672">&#34;@types/node&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;12.19.12&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/@types/node/-/node-12.19.12.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-UwfL2uIU9arX/+/PRcIkT08/iBadGN2z6ExOROA2Dh5mAuWTBj6iJbQX4nekiV5H8cTrEG569LeX+HRco9Cbxw==&#34;</span>
+    },
+    <span style="color:#f92672">&#34;@types/yauzl&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;2.9.1&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/@types/yauzl/-/yauzl-2.9.1.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-A1b8SU4D10uoPjwb0lnHmmu8wZhR9d+9o2PKBQT2jU5YPTKsxac6M2qGAdY7VcL+dHHhARVUDmeg0rOrcd9EjA==&#34;</span>,
+      <span style="color:#f92672">&#34;optional&#34;</span>: <span style="color:#66d9ef">true</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;@types/node&#34;</span>: <span style="color:#e6db74">&#34;*&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;agent-base&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;6.0.2&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/agent-base/-/agent-base-6.0.2.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;debug&#34;</span>: <span style="color:#e6db74">&#34;4&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;arg&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;4.1.3&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/arg/-/arg-4.1.3.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==&#34;</span>,
+      <span style="color:#f92672">&#34;dev&#34;</span>: <span style="color:#66d9ef">true</span>
+    },
+    <span style="color:#f92672">&#34;balanced-match&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.0.0&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.0.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha1-ibTRmasr7kneFk6gK4nORi1xt2c=&#34;</span>
+    },
+    <span style="color:#f92672">&#34;brace-expansion&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.1.11&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.11.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;balanced-match&#34;</span>: <span style="color:#e6db74">&#34;^1.0.0&#34;</span>,
+        <span style="color:#f92672">&#34;concat-map&#34;</span>: <span style="color:#e6db74">&#34;0.0.1&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;buffer-crc32&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.2.13&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/buffer-crc32/-/buffer-crc32-0.2.13.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha1-DTM+PwDqxQqhRUq9MO+MKl2ackI=&#34;</span>
+    },
+    <span style="color:#f92672">&#34;buffer-from&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.1.1&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/buffer-from/-/buffer-from-1.1.1.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-MQcXEUbCKtEo7bhqEs6560Hyd4XaovZlO/k9V3hjVUF/zwW7KBVdSK4gIt/bzwS9MbR5qob+F5jusZsb0YQK2A==&#34;</span>,
+      <span style="color:#f92672">&#34;dev&#34;</span>: <span style="color:#66d9ef">true</span>
+    },
+    <span style="color:#f92672">&#34;concat-map&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.0.1&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=&#34;</span>
+    },
+    <span style="color:#f92672">&#34;create-require&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.1.1&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/create-require/-/create-require-1.1.1.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==&#34;</span>,
+      <span style="color:#f92672">&#34;dev&#34;</span>: <span style="color:#66d9ef">true</span>
+    },
+    <span style="color:#f92672">&#34;debug&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;4.3.1&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/debug/-/debug-4.3.1.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-doEwdvm4PCeK4K3RQN2ZC2BYUBaxwLARCqZmMjtF8a51J2Rb0xpVloFRnCODwqjpwnAoao4pelN8l3RJdv3gRQ==&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;ms&#34;</span>: <span style="color:#e6db74">&#34;2.1.2&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;diff&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;4.0.2&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/diff/-/diff-4.0.2.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==&#34;</span>,
+      <span style="color:#f92672">&#34;dev&#34;</span>: <span style="color:#66d9ef">true</span>
+    },
+    <span style="color:#f92672">&#34;end-of-stream&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.4.4&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/end-of-stream/-/end-of-stream-1.4.4.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;once&#34;</span>: <span style="color:#e6db74">&#34;^1.4.0&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;extract-zip&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;2.0.1&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/extract-zip/-/extract-zip-2.0.1.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-GDhU9ntwuKyGXdZBUgTIe+vXnWj0fppUEtMDL0+idd5Sta8TGpHssn/eusA9mrPr9qNDym6SxAYZjNvCn/9RBg==&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;@types/yauzl&#34;</span>: <span style="color:#e6db74">&#34;^2.9.1&#34;</span>,
+        <span style="color:#f92672">&#34;debug&#34;</span>: <span style="color:#e6db74">&#34;^4.1.1&#34;</span>,
+        <span style="color:#f92672">&#34;get-stream&#34;</span>: <span style="color:#e6db74">&#34;^5.1.0&#34;</span>,
+        <span style="color:#f92672">&#34;yauzl&#34;</span>: <span style="color:#e6db74">&#34;^2.10.0&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;fd-slicer&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.1.0&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/fd-slicer/-/fd-slicer-1.1.0.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha1-JcfInLH5B3+IkbvmHY85Dq4lbx4=&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;pend&#34;</span>: <span style="color:#e6db74">&#34;~1.2.0&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;fs.realpath&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.0.0&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha1-FQStJSMVjKpA20onh8sBQRmU6k8=&#34;</span>
+    },
+    <span style="color:#f92672">&#34;get-stream&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;5.2.0&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/get-stream/-/get-stream-5.2.0.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-nBF+F1rAZVCu/p7rjzgA+Yb4lfYXrpl7a6VmJrU8wF9I1CKvP/QwPNZHnOlwbTkY6dvtFIzFMSyQXbLoTQPRpA==&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;pump&#34;</span>: <span style="color:#e6db74">&#34;^3.0.0&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;glob&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;7.1.6&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/glob/-/glob-7.1.6.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;fs.realpath&#34;</span>: <span style="color:#e6db74">&#34;^1.0.0&#34;</span>,
+        <span style="color:#f92672">&#34;inflight&#34;</span>: <span style="color:#e6db74">&#34;^1.0.4&#34;</span>,
+        <span style="color:#f92672">&#34;inherits&#34;</span>: <span style="color:#e6db74">&#34;2&#34;</span>,
+        <span style="color:#f92672">&#34;minimatch&#34;</span>: <span style="color:#e6db74">&#34;^3.0.4&#34;</span>,
+        <span style="color:#f92672">&#34;once&#34;</span>: <span style="color:#e6db74">&#34;^1.3.0&#34;</span>,
+        <span style="color:#f92672">&#34;path-is-absolute&#34;</span>: <span style="color:#e6db74">&#34;^1.0.0&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;graceful-fs&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;4.2.4&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.4.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==&#34;</span>
+    },
+    <span style="color:#f92672">&#34;https-proxy-agent&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;5.0.0&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/https-proxy-agent/-/https-proxy-agent-5.0.0.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-EkYm5BcKUGiduxzSt3Eppko+PiNWNEpa4ySk9vTC6wDsQJW9rHSa+UhGNJoRYp7bz6Ht1eaRIa6QaJqO5rCFbA==&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;agent-base&#34;</span>: <span style="color:#e6db74">&#34;6&#34;</span>,
+        <span style="color:#f92672">&#34;debug&#34;</span>: <span style="color:#e6db74">&#34;4&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;inflight&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.0.6&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/inflight/-/inflight-1.0.6.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha1-Sb1jMdfQLQwJvJEKEHW6gWW1bfk=&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;once&#34;</span>: <span style="color:#e6db74">&#34;^1.3.0&#34;</span>,
+        <span style="color:#f92672">&#34;wrappy&#34;</span>: <span style="color:#e6db74">&#34;1&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;inherits&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;2.0.4&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==&#34;</span>
+    },
+    <span style="color:#f92672">&#34;jpeg-js&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.4.3&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/jpeg-js/-/jpeg-js-0.4.3.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-ru1HWKek8octvUHFHvE5ZzQ1yAsJmIvRdGWvSoKV52XKyuyYA437QWDttXT8eZXDSbuMpHlLzPDZUPd6idIz+Q==&#34;</span>
+    },
+    <span style="color:#f92672">&#34;make-error&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.3.6&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/make-error/-/make-error-1.3.6.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==&#34;</span>,
+      <span style="color:#f92672">&#34;dev&#34;</span>: <span style="color:#66d9ef">true</span>
+    },
+    <span style="color:#f92672">&#34;mime&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;2.4.7&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/mime/-/mime-2.4.7.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-dhNd1uA2u397uQk3Nv5LM4lm93WYDUXFn3Fu291FJerns4jyTudqhIWe4W04YLy7Uk1tm1Ore04NpjRvQp/NPA==&#34;</span>
+    },
+    <span style="color:#f92672">&#34;minimatch&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;3.0.4&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/minimatch/-/minimatch-3.0.4.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;brace-expansion&#34;</span>: <span style="color:#e6db74">&#34;^1.1.7&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;ms&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;2.1.2&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/ms/-/ms-2.1.2.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==&#34;</span>
+    },
+    <span style="color:#f92672">&#34;once&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.4.0&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/once/-/once-1.4.0.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha1-WDsap3WWHUsROsF9nFC6753Xa9E=&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;wrappy&#34;</span>: <span style="color:#e6db74">&#34;1&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;path-is-absolute&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.0.1&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/path-is-absolute/-/path-is-absolute-1.0.1.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha1-F0uSaHNVNP+8es5r9TpanhtcX18=&#34;</span>
+    },
+    <span style="color:#f92672">&#34;pend&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.2.0&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/pend/-/pend-1.2.0.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha1-elfrVQpng/kRUzH89GY9XI4AelA=&#34;</span>
+    },
+    <span style="color:#f92672">&#34;playwright&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.7.1&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/playwright/-/playwright-1.7.1.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-dOSWME42wDedJ/PXv8k0zG0Kxd6d6R2OKA51/05++Z2ISdA4N58gHlWqlVKPDkBog1MI6lu/KNt7QDn19AybWQ==&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;debug&#34;</span>: <span style="color:#e6db74">&#34;^4.1.1&#34;</span>,
+        <span style="color:#f92672">&#34;extract-zip&#34;</span>: <span style="color:#e6db74">&#34;^2.0.1&#34;</span>,
+        <span style="color:#f92672">&#34;https-proxy-agent&#34;</span>: <span style="color:#e6db74">&#34;^5.0.0&#34;</span>,
+        <span style="color:#f92672">&#34;jpeg-js&#34;</span>: <span style="color:#e6db74">&#34;^0.4.2&#34;</span>,
+        <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;^2.4.6&#34;</span>,
+        <span style="color:#f92672">&#34;pngjs&#34;</span>: <span style="color:#e6db74">&#34;^5.0.0&#34;</span>,
+        <span style="color:#f92672">&#34;progress&#34;</span>: <span style="color:#e6db74">&#34;^2.0.3&#34;</span>,
+        <span style="color:#f92672">&#34;proper-lockfile&#34;</span>: <span style="color:#e6db74">&#34;^4.1.1&#34;</span>,
+        <span style="color:#f92672">&#34;proxy-from-env&#34;</span>: <span style="color:#e6db74">&#34;^1.1.0&#34;</span>,
+        <span style="color:#f92672">&#34;rimraf&#34;</span>: <span style="color:#e6db74">&#34;^3.0.2&#34;</span>,
+        <span style="color:#f92672">&#34;ws&#34;</span>: <span style="color:#e6db74">&#34;^7.3.1&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;pngjs&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;5.0.0&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/pngjs/-/pngjs-5.0.0.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==&#34;</span>
+    },
+    <span style="color:#f92672">&#34;progress&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;2.0.3&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/progress/-/progress-2.0.3.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==&#34;</span>
+    },
+    <span style="color:#f92672">&#34;proper-lockfile&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;4.1.1&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/proper-lockfile/-/proper-lockfile-4.1.1.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-1w6rxXodisVpn7QYvLk706mzprPTAPCYAqxMvctmPN3ekuRk/kuGkGc82pangZiAt4R3lwSuUzheTTn0/Yb7Zg==&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;graceful-fs&#34;</span>: <span style="color:#e6db74">&#34;^4.1.11&#34;</span>,
+        <span style="color:#f92672">&#34;retry&#34;</span>: <span style="color:#e6db74">&#34;^0.12.0&#34;</span>,
+        <span style="color:#f92672">&#34;signal-exit&#34;</span>: <span style="color:#e6db74">&#34;^3.0.2&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;proxy-from-env&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.1.0&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/proxy-from-env/-/proxy-from-env-1.1.0.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==&#34;</span>
+    },
+    <span style="color:#f92672">&#34;pump&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;3.0.0&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/pump/-/pump-3.0.0.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-LwZy+p3SFs1Pytd/jYct4wpv49HiYCqd9Rlc5ZVdk0V+8Yzv6jR5Blk3TRmPL1ft69TxP0IMZGJ+WPFU2BFhww==&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;end-of-stream&#34;</span>: <span style="color:#e6db74">&#34;^1.1.0&#34;</span>,
+        <span style="color:#f92672">&#34;once&#34;</span>: <span style="color:#e6db74">&#34;^1.3.1&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;retry&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.12.0&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/retry/-/retry-0.12.0.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha1-G0KmJmoh8HQh0bC1S33BZ7AcATs=&#34;</span>
+    },
+    <span style="color:#f92672">&#34;rimraf&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;3.0.2&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/rimraf/-/rimraf-3.0.2.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;glob&#34;</span>: <span style="color:#e6db74">&#34;^7.1.3&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;signal-exit&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;3.0.3&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.3.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-VUJ49FC8U1OxwZLxIbTTrDvLnf/6TDgxZcK8wxR8zs13xpx7xbG60ndBlhNrFi2EMuFRoeDoJO7wthSLq42EjA==&#34;</span>
+    },
+    <span style="color:#f92672">&#34;source-map&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.6.1&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==&#34;</span>,
+      <span style="color:#f92672">&#34;dev&#34;</span>: <span style="color:#66d9ef">true</span>
+    },
+    <span style="color:#f92672">&#34;source-map-support&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.5.19&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/source-map-support/-/source-map-support-0.5.19.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==&#34;</span>,
+      <span style="color:#f92672">&#34;dev&#34;</span>: <span style="color:#66d9ef">true</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;buffer-from&#34;</span>: <span style="color:#e6db74">&#34;^1.0.0&#34;</span>,
+        <span style="color:#f92672">&#34;source-map&#34;</span>: <span style="color:#e6db74">&#34;^0.6.0&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;ts-node&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;9.1.1&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/ts-node/-/ts-node-9.1.1.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-hPlt7ZACERQGf03M253ytLY3dHbGNGrAq9qIHWUY9XHYl1z7wYngSr3OQ5xmui8o2AaxsONxIzjafLUiWBo1Fg==&#34;</span>,
+      <span style="color:#f92672">&#34;dev&#34;</span>: <span style="color:#66d9ef">true</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;arg&#34;</span>: <span style="color:#e6db74">&#34;^4.1.0&#34;</span>,
+        <span style="color:#f92672">&#34;create-require&#34;</span>: <span style="color:#e6db74">&#34;^1.1.0&#34;</span>,
+        <span style="color:#f92672">&#34;diff&#34;</span>: <span style="color:#e6db74">&#34;^4.0.1&#34;</span>,
+        <span style="color:#f92672">&#34;make-error&#34;</span>: <span style="color:#e6db74">&#34;^1.1.1&#34;</span>,
+        <span style="color:#f92672">&#34;source-map-support&#34;</span>: <span style="color:#e6db74">&#34;^0.5.17&#34;</span>,
+        <span style="color:#f92672">&#34;yn&#34;</span>: <span style="color:#e6db74">&#34;3.1.1&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;typescript&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;4.1.3&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/typescript/-/typescript-4.1.3.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-B3ZIOf1IKeH2ixgHhj6la6xdwR9QrLC5d1VKeCSY4tvkqhF2eqd9O7txNlS0PO3GrBAFIdr3L1ndNwteUbZLYg==&#34;</span>,
+      <span style="color:#f92672">&#34;dev&#34;</span>: <span style="color:#66d9ef">true</span>
+    },
+    <span style="color:#f92672">&#34;wrappy&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.0.2&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=&#34;</span>
+    },
+    <span style="color:#f92672">&#34;ws&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;7.4.2&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/ws/-/ws-7.4.2.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-T4tewALS3+qsrpGI/8dqNMLIVdq/g/85U98HPMa6F0m6xTbvhXU6RCQLqPH3+SlomNV/LdY6RXEbBpMH6EOJnA==&#34;</span>
+    },
+    <span style="color:#f92672">&#34;yauzl&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;2.10.0&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/yauzl/-/yauzl-2.10.0.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha1-x+sXyT4RLLEIb6bY5R+wZnt5pfk=&#34;</span>,
+      <span style="color:#f92672">&#34;requires&#34;</span>: {
+        <span style="color:#f92672">&#34;buffer-crc32&#34;</span>: <span style="color:#e6db74">&#34;~0.2.3&#34;</span>,
+        <span style="color:#f92672">&#34;fd-slicer&#34;</span>: <span style="color:#e6db74">&#34;~1.1.0&#34;</span>
+      }
+    },
+    <span style="color:#f92672">&#34;yn&#34;</span>: {
+      <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;3.1.1&#34;</span>,
+      <span style="color:#f92672">&#34;resolved&#34;</span>: <span style="color:#e6db74">&#34;https://registry.npmjs.org/yn/-/yn-3.1.1.tgz&#34;</span>,
+      <span style="color:#f92672">&#34;integrity&#34;</span>: <span style="color:#e6db74">&#34;sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==&#34;</span>,
+      <span style="color:#f92672">&#34;dev&#34;</span>: <span style="color:#66d9ef">true</span>
+    }
+  }
+}
+</code></pre></div><ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l"><div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">What&#39;s in this posts</p>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#プロジェクトのセットアップ">プロジェクトのセットアップ</a></li>
+    <li><a href="#ミニマムなコード実装">ミニマムなコード実装</a></li>
+    <li><a href="#コード実行">コード実行</a></li>
+    <li><a href="#useful-links">Useful Links</a></li>
+    <li><a href="#この記事を試した環境">この記事を試した環境</a></li>
+  </ul>
+</nav>
+  </div>
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://noid11.github.io/" >
+    &copy;  tmp log 2021 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>
