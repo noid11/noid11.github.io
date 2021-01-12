@@ -22,9 +22,9 @@ mkdir my-playwright-project && cd my-playwright-project
 npm init --yes
 
 # playwright のインストール
-#     --save-dev いらないような気がする・・・
-#     chromium, firefox, webkit がダウンロードされ、 300 MB 程度のトラフィックが発生するので注意
-npm install --save-dev playwright
+#   公式では --save-dev オプションを使っているが、不要な気がする・・・と思ったが E2E などのテスト目的で使う場合には --save-dev 使うべきだった
+#   chromium, firefox, webkit がダウンロードされ、 300 MB 程度のトラフィックが発生するので注意
+npm install playwright
 
 # typescript セットアップ
 npm install --save-dev typescript @types/node@12 ts-node
@@ -75,6 +75,10 @@ https://www.typescriptlang.org/docs
 ## この記事を試した環境
 
 ```zsh
+% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
 % node -v
 v12.16.1
 % npm -v
