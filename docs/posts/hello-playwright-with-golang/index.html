@@ -8,6 +8,11 @@
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <meta name="description" content="
 playwright を Go で使える playwright-go を動かしたメモ
+build したバイナリには Chromium などのエンジンは含まれず、バイナリ実行時にダウンロードが発生する
+
+なのでクロスコンパイルして動かしても、バイナリを動かす環境にブラウザエンジンを動かす共有ライブラリが無い場合、ブラウザの起動に失敗してエラーとなる
+
+
 ">
     <meta name="generator" content="Hugo 0.79.0" />
     
@@ -32,6 +37,11 @@ playwright を Go で使える playwright-go を動かしたメモ
     <meta property="og:title" content="Playwright を golang から使う" />
 <meta property="og:description" content="
 playwright を Go で使える playwright-go を動かしたメモ
+build したバイナリには Chromium などのエンジンは含まれず、バイナリ実行時にダウンロードが発生する
+
+なのでクロスコンパイルして動かしても、バイナリを動かす環境にブラウザエンジンを動かす共有ライブラリが無い場合、ブラウザの起動に失敗してエラーとなる
+
+
 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://noid11.github.io/posts/hello-playwright-with-golang/" />
@@ -40,10 +50,15 @@ playwright を Go で使える playwright-go を動かしたメモ
 <meta itemprop="name" content="Playwright を golang から使う">
 <meta itemprop="description" content="
 playwright を Go で使える playwright-go を動かしたメモ
+build したバイナリには Chromium などのエンジンは含まれず、バイナリ実行時にダウンロードが発生する
+
+なのでクロスコンパイルして動かしても、バイナリを動かす環境にブラウザエンジンを動かす共有ライブラリが無い場合、ブラウザの起動に失敗してエラーとなる
+
+
 ">
 <meta itemprop="datePublished" content="2021-01-12T14:51:07+09:00" />
 <meta itemprop="dateModified" content="2021-01-12T14:51:07+09:00" />
-<meta itemprop="wordCount" content="575">
+<meta itemprop="wordCount" content="580">
 
 
 
@@ -52,6 +67,11 @@ playwright を Go で使える playwright-go を動かしたメモ
 <meta name="twitter:title" content="Playwright を golang から使う"/>
 <meta name="twitter:description" content="
 playwright を Go で使える playwright-go を動かしたメモ
+build したバイナリには Chromium などのエンジンは含まれず、バイナリ実行時にダウンロードが発生する
+
+なのでクロスコンパイルして動かしても、バイナリを動かす環境にブラウザエンジンを動かす共有ライブラリが無い場合、ブラウザの起動に失敗してエラーとなる
+
+
 "/>
 
 	
@@ -150,6 +170,11 @@ playwright を Go で使える playwright-go を動かしたメモ
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><ul>
 <li><a href="https://playwright.dev/">playwright</a> を Go で使える <a href="https://github.com/mxschmitt/playwright-go">playwright-go</a> を動かしたメモ</li>
+<li>build したバイナリには Chromium などのエンジンは含まれず、バイナリ実行時にダウンロードが発生する
+<ul>
+<li>なのでクロスコンパイルして動かしても、バイナリを動かす環境にブラウザエンジンを動かす共有ライブラリが無い場合、ブラウザの起動に失敗してエラーとなる</li>
+</ul>
+</li>
 </ul>
 <h2 id="プロジェクトのセットアップ">プロジェクトのセットアップ</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># directory setup</span>

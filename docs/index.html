@@ -136,6 +136,11 @@
         <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
           <ul>
 <li><a href="https://playwright.dev/">playwright</a> を Go で使える <a href="https://github.com/mxschmitt/playwright-go">playwright-go</a> を動かしたメモ</li>
+<li>build したバイナリには Chromium などのエンジンは含まれず、バイナリ実行時にダウンロードが発生する
+<ul>
+<li>なのでクロスコンパイルして動かしても、バイナリを動かす環境にブラウザエンジンを動かす共有ライブラリが無い場合、ブラウザの起動に失敗してエラーとなる</li>
+</ul>
+</li>
 </ul>
         </div>
           <a href="https://noid11.github.io/posts/hello-playwright-with-golang/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>

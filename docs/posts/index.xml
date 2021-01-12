@@ -15,6 +15,11 @@
       <guid>https://noid11.github.io/posts/hello-playwright-with-golang/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://playwright.dev/&#34;&gt;playwright&lt;/a&gt; を Go で使える &lt;a href=&#34;https://github.com/mxschmitt/playwright-go&#34;&gt;playwright-go&lt;/a&gt; を動かしたメモ&lt;/li&gt;
+&lt;li&gt;build したバイナリには Chromium などのエンジンは含まれず、バイナリ実行時にダウンロードが発生する
+&lt;ul&gt;
+&lt;li&gt;なのでクロスコンパイルして動かしても、バイナリを動かす環境にブラウザエンジンを動かす共有ライブラリが無い場合、ブラウザの起動に失敗してエラーとなる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     

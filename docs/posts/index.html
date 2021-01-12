@@ -110,6 +110,11 @@
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       <ul>
 <li><a href="https://playwright.dev/">playwright</a> を Go で使える <a href="https://github.com/mxschmitt/playwright-go">playwright-go</a> を動かしたメモ</li>
+<li>build したバイナリには Chromium などのエンジンは含まれず、バイナリ実行時にダウンロードが発生する
+<ul>
+<li>なのでクロスコンパイルして動かしても、バイナリを動かす環境にブラウザエンジンを動かす共有ライブラリが無い場合、ブラウザの起動に失敗してエラーとなる</li>
+</ul>
+</li>
 </ul>
     </div>
   </div>
