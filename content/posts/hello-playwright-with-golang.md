@@ -6,6 +6,8 @@ draft: false
 ---
 
 - [playwright](https://playwright.dev/) を Go で使える [playwright-go](https://github.com/mxschmitt/playwright-go) を動かしたメモ
+- build したバイナリには Chromium などのエンジンは含まれず、バイナリ実行時にダウンロードが発生する
+    - なのでクロスコンパイルして動かしても、バイナリを動かす環境にブラウザエンジンを動かす共有ライブラリが無い場合、ブラウザの起動に失敗してエラーとなる
 
 <!--more-->
 
