@@ -6,7 +6,15 @@
     
     <title>Playwright を Typescript で動かすまで | tmp log</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="description" content="">
+    <meta name="description" content="
+Playwright は Microsoft 製のブラウザ自動化ツール
+
+Chromium, Firefox, WebKit に対応している
+公式 Docker イメージも提供されている
+
+
+組み込みで TypeScript をサポートしているとあったので、最低限動かす所まで試したメモ
+">
     <meta name="generator" content="Hugo 0.79.0" />
     
     
@@ -28,23 +36,47 @@
     
     
     <meta property="og:title" content="Playwright を Typescript で動かすまで" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="
+Playwright は Microsoft 製のブラウザ自動化ツール
+
+Chromium, Firefox, WebKit に対応している
+公式 Docker イメージも提供されている
+
+
+組み込みで TypeScript をサポートしているとあったので、最低限動かす所まで試したメモ
+" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://noid11.github.io/posts/hello-playwright-with-typescript/" />
 <meta property="article:published_time" content="2021-01-12T12:39:32+09:00" />
 <meta property="article:modified_time" content="2021-01-12T12:39:32+09:00" />
 <meta itemprop="name" content="Playwright を Typescript で動かすまで">
-<meta itemprop="description" content="">
+<meta itemprop="description" content="
+Playwright は Microsoft 製のブラウザ自動化ツール
+
+Chromium, Firefox, WebKit に対応している
+公式 Docker イメージも提供されている
+
+
+組み込みで TypeScript をサポートしているとあったので、最低限動かす所まで試したメモ
+">
 <meta itemprop="datePublished" content="2021-01-12T12:39:32+09:00" />
 <meta itemprop="dateModified" content="2021-01-12T12:39:32+09:00" />
-<meta itemprop="wordCount" content="786">
+<meta itemprop="wordCount" content="800">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Playwright を Typescript で動かすまで"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="
+Playwright は Microsoft 製のブラウザ自動化ツール
+
+Chromium, Firefox, WebKit に対応している
+公式 Docker イメージも提供されている
+
+
+組み込みで TypeScript をサポートしているとあったので、最低限動かす所まで試したメモ
+"/>
 
 	
   </head>
@@ -140,7 +172,16 @@
       
       
     </header>
-    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h2 id="プロジェクトのセットアップ">プロジェクトのセットアップ</h2>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><ul>
+<li><a href="https://playwright.dev/">Playwright</a> は Microsoft 製のブラウザ自動化ツール
+<ul>
+<li><a href="https://www.chromium.org/">Chromium</a>, <a href="https://www.mozilla.org/en-US/firefox/">Firefox</a>, <a href="https://webkit.org/">WebKit</a> に対応している</li>
+<li><a href="https://playwright.dev/docs/docker/README/">公式 Docker イメージ</a>も提供されている</li>
+</ul>
+</li>
+<li>組み込みで TypeScript をサポートしているとあったので、最低限動かす所まで試したメモ</li>
+</ul>
+<h2 id="プロジェクトのセットアップ">プロジェクトのセットアップ</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">mkdir my-playwright-project <span style="color:#f92672">&amp;&amp;</span> cd my-playwright-project
 
 <span style="color:#75715e"># npm 初期化 </span>
