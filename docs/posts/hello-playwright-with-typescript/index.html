@@ -61,7 +61,7 @@ Chromium, Firefox, WebKit に対応している
 ">
 <meta itemprop="datePublished" content="2021-01-12T12:39:32+09:00" />
 <meta itemprop="dateModified" content="2021-01-12T12:39:32+09:00" />
-<meta itemprop="wordCount" content="800">
+<meta itemprop="wordCount" content="814">
 
 
 
@@ -188,9 +188,9 @@ Chromium, Firefox, WebKit に対応している
 npm init --yes
 
 <span style="color:#75715e"># playwright のインストール</span>
-<span style="color:#75715e">#     --save-dev いらないような気がする・・・</span>
-<span style="color:#75715e">#     chromium, firefox, webkit がダウンロードされ、 300 MB 程度のトラフィックが発生するので注意</span>
-npm install --save-dev playwright
+<span style="color:#75715e">#   公式では --save-dev オプションを使っているが、不要な気がする・・・と思ったが E2E などのテスト目的で使う場合には --save-dev 使うべきだった</span>
+<span style="color:#75715e">#   chromium, firefox, webkit がダウンロードされ、 300 MB 程度のトラフィックが発生するので注意</span>
+npm install playwright
 
 <span style="color:#75715e"># typescript セットアップ</span>
 npm install --save-dev typescript @types/node@12 ts-node
@@ -222,7 +222,11 @@ touch main.ts
 <p>TypeScript: The starting point for learning TypeScript<br>
 <a href="https://www.typescriptlang.org/docs">https://www.typescriptlang.org/docs</a></p>
 <h2 id="この記事を試した環境">この記事を試した環境</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">% node -v
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% node -v
 v12.16.1
 % npm -v
 6.14.8
