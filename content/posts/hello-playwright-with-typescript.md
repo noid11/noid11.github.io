@@ -5,6 +5,12 @@ toc: true
 draft: false
 ---
 
+- [Playwright](https://playwright.dev/) は Microsoft 製のブラウザ自動化ツール
+    - [Chromium](https://www.chromium.org/), [Firefox](https://www.mozilla.org/en-US/firefox/), [WebKit](https://webkit.org/) に対応している
+    - [公式 Docker イメージ](https://playwright.dev/docs/docker/README/)も提供されている
+- 組み込みで TypeScript をサポートしているとあったので、最低限動かす所まで試したメモ
+
+
 <!--more-->
 
 ## プロジェクトのセットアップ
