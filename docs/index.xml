@@ -6,9 +6,20 @@
     <description>Recent content on tmp log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Tue, 12 Jan 2021 12:39:32 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Jan 2021 14:51:07 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Playwright を Typescript で動かすまで</title>
+      <title>Playwright を golang から使う</title>
+      <link>https://noid11.github.io/posts/hello-playwright-with-golang/</link>
+      <pubDate>Tue, 12 Jan 2021 14:51:07 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/hello-playwright-with-golang/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://playwright.dev/&#34;&gt;playwright&lt;/a&gt; を Go で使える &lt;a href=&#34;https://github.com/mxschmitt/playwright-go&#34;&gt;playwright-go&lt;/a&gt; を動かしたメモ&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>Playwright を TypeScript で動かすまで</title>
       <link>https://noid11.github.io/posts/hello-playwright-with-typescript/</link>
       <pubDate>Tue, 12 Jan 2021 12:39:32 +0900</pubDate>
       

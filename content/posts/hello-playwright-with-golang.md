@@ -2,7 +2,7 @@
 title: "Playwright を golang から使う"
 date: 2021-01-12T14:51:07+09:00
 toc: ture
-draft: true
+draft: false
 ---
 
 - [playwright](https://playwright.dev/) を Go で使える [playwright-go](https://github.com/mxschmitt/playwright-go) を動かしたメモ
