@@ -11,7 +11,7 @@ draft: false
     - AWS Lambda 等ローカル環境の PostgreSQL が接続できない環境から、ちょっとしたデータベース接続を試したいような場合に便利
         - RDS よりも立ち上がりが速いし、無料
 - Cons
-    - [無料の Hobby Dev プラン](https://jp.heroku.com/pricing)だと、レコード行数 10 K と同時接続数 20 といった制限があるので注意
+    - [無料の Hobby Dev プラン](https://jp.heroku.com/pricing)だと、レコード数 10 K と同時接続数 20 といった制限があるので注意
 
 <!--more-->
 

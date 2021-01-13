@@ -27,7 +27,7 @@
 &lt;/li&gt;
 &lt;li&gt;Cons
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://jp.heroku.com/pricing&#34;&gt;無料の Hobby Dev プラン&lt;/a&gt;だと、レコード行数 10 K と同時接続数 20 といった制限があるので注意&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://jp.heroku.com/pricing&#34;&gt;無料の Hobby Dev プラン&lt;/a&gt;だと、レコード数 10 K と同時接続数 20 といった制限があるので注意&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;</description>
