@@ -6,7 +6,7 @@ draft: false
 ---
 
 - [Heroku が提供するマネージドデータベースである Heroku Postgres](https://jp.heroku.com/postgres) を [Heroku CLI](https://devcenter.heroku.com/ja/articles/heroku-cli) からセットアップして接続するまでを試す手順
-- Proc
+- Pros
     - PostgreSQL や SQL を学習したい時にサクッと使えて便利
     - AWS Lambda 等ローカル環境の PostgreSQL が接続できない環境から、ちょっとしたデータベース接続を試したいような場合に便利
         - RDS よりも立ち上がりが速いし、無料

@@ -15,7 +15,7 @@
       <guid>https://noid11.github.io/posts/setup-heroku-postgres-by-heroku-cli/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://jp.heroku.com/postgres&#34;&gt;Heroku が提供するマネージドデータベースである Heroku Postgres&lt;/a&gt; を &lt;a href=&#34;https://devcenter.heroku.com/ja/articles/heroku-cli&#34;&gt;Heroku CLI&lt;/a&gt; からセットアップして接続するまでを試す手順&lt;/li&gt;
-&lt;li&gt;Proc
+&lt;li&gt;Pros
 &lt;ul&gt;
 &lt;li&gt;PostgreSQL や SQL を学習したい時にサクッと使えて便利&lt;/li&gt;
 &lt;li&gt;AWS Lambda 等ローカル環境の PostgreSQL が接続できない環境から、ちょっとしたデータベース接続を試したいような場合に便利
