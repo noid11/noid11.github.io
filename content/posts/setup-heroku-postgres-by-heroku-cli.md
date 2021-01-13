@@ -2,7 +2,7 @@
 title: "Heroku CLI を使って Heroku Postgres をセットアップする方法"
 date: 2021-01-14T02:29:30+09:00
 toc: true
-draft: true
+draft: false
 ---
 
 - [Heroku が提供するマネージドデータベースである Heroku Postgres](https://jp.heroku.com/postgres) を [Heroku CLI](https://devcenter.heroku.com/ja/articles/heroku-cli) からセットアップして接続するまでを試す手順

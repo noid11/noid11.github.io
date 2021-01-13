@@ -6,7 +6,33 @@
     <description>Recent content in Posts on tmp log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Tue, 12 Jan 2021 14:51:07 +0900</lastBuildDate><atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 14 Jan 2021 02:29:30 +0900</lastBuildDate><atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Heroku CLI を使って Heroku Postgres をセットアップする方法</title>
+      <link>https://noid11.github.io/posts/setup-heroku-postgres-by-heroku-cli/</link>
+      <pubDate>Thu, 14 Jan 2021 02:29:30 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/setup-heroku-postgres-by-heroku-cli/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://jp.heroku.com/postgres&#34;&gt;Heroku が提供するマネージドデータベースである Heroku Postgres&lt;/a&gt; を &lt;a href=&#34;https://devcenter.heroku.com/ja/articles/heroku-cli&#34;&gt;Heroku CLI&lt;/a&gt; からセットアップして接続するまでを試す手順&lt;/li&gt;
+&lt;li&gt;Proc
+&lt;ul&gt;
+&lt;li&gt;PostgreSQL や SQL を学習したい時にサクッと使えて便利&lt;/li&gt;
+&lt;li&gt;AWS Lambda 等ローカル環境の PostgreSQL が接続できない環境から、ちょっとしたデータベース接続を試したいような場合に便利
+&lt;ul&gt;
+&lt;li&gt;RDS よりも立ち上がりが速いし、無料&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Cons
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://jp.heroku.com/pricing&#34;&gt;無料の Hobby Dev プラン&lt;/a&gt;だと、レコード行数 10 K と同時接続数 20 といった制限があるので注意&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
     <item>
       <title>Playwright を golang から使う</title>
       <link>https://noid11.github.io/posts/hello-playwright-with-golang/</link>
