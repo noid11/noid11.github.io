@@ -2,7 +2,7 @@
 title: "mktemp コマンド"
 date: 2021-01-16T08:56:33+09:00
 toc: true
-draft: true
+draft: false
 ---
 
 - 一時的なファイルやディレクトリを作成する mktemp コマンドについて調べたメモ

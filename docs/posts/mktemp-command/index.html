@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>mktemp コマンド | tmp log</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="
+一時的なファイルやディレクトリを作成する mktemp コマンドについて調べたメモ
+一時的なディレクトリを作成して cd で移動しつつ作業する・・・といった事がサクッとできて便利
+
+cd &#34;(mktemp -d)&#34;
+">
+    <meta name="generator" content="Hugo 0.79.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.4fc0b62e4b82c997bb0041217cd6b979.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="mktemp コマンド" />
+<meta property="og:description" content="
+一時的なファイルやディレクトリを作成する mktemp コマンドについて調べたメモ
+一時的なディレクトリを作成して cd で移動しつつ作業する・・・といった事がサクッとできて便利
+
+cd &#34;(mktemp -d)&#34;
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noid11.github.io/posts/mktemp-command/" />
+<meta property="article:published_time" content="2021-01-16T08:56:33+09:00" />
+<meta property="article:modified_time" content="2021-01-16T08:56:33+09:00" />
+<meta itemprop="name" content="mktemp コマンド">
+<meta itemprop="description" content="
+一時的なファイルやディレクトリを作成する mktemp コマンドについて調べたメモ
+一時的なディレクトリを作成して cd で移動しつつ作業する・・・といった事がサクッとできて便利
+
+cd &#34;(mktemp -d)&#34;
+">
+<meta itemprop="datePublished" content="2021-01-16T08:56:33+09:00" />
+<meta itemprop="dateModified" content="2021-01-16T08:56:33+09:00" />
+<meta itemprop="wordCount" content="835">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="mktemp コマンド"/>
+<meta name="twitter:description" content="
+一時的なファイルやディレクトリを作成する mktemp コマンドについて調べたメモ
+一時的なディレクトリを作成して cd で移動しつつ作業する・・・といった事がサクッとできて便利
+
+cd &#34;(mktemp -d)&#34;
+"/>
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        tmp log
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://noid11.github.io/posts/mktemp-command/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://noid11.github.io/posts/mktemp-command/&amp;text=mktemp%20%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://noid11.github.io/posts/mktemp-command/&amp;title=mktemp%20%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">mktemp コマンド</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2021-01-16T08:56:33+09:00">January 16, 2021</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><ul>
+<li>一時的なファイルやディレクトリを作成する mktemp コマンドについて調べたメモ</li>
+<li>一時的なディレクトリを作成して cd で移動しつつ作業する・・・といった事がサクッとできて便利</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd <span style="color:#e6db74">&#34;(mktemp -d)&#34;</span>
+</code></pre></div><h2 id="一時的なファイルを作成する">一時的なファイルを作成する</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mktemp
+</code></pre></div><p>実行例</p>
+<ul>
+<li><code>/var/folders/</code> 配下に一時的な空のファイルが作成される</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mktemp
+/var/folders/2s/xv1nds5j2d3b795qy43yzcthb7qc6n/T/tmp.9HMytC5L 
+% ls -lh /var/folders/2s/xv1nds5j2d3b795qy43yzcthb7qc6n/T/tmp.9HMytC5L 
+-rw-------  <span style="color:#ae81ff">1</span> myusername  <span style="color:#ae81ff">1896053708</span>     0B Jan <span style="color:#ae81ff">16</span> 09:03 /var/folders/2s/xv1nds5j2d3b795qy43yzcthb7qc6n/T/tmp.9HMytC5L
+% cat /var/folders/2s/xv1nds5j2d3b795qy43yzcthb7qc6n/T/tmp.9HMytC5L
+</code></pre></div><h2 id="一時的なディレクトリを作成する">一時的なディレクトリを作成する</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mktemp -d
+</code></pre></div><p>実行例</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">% mktemp -d
+/var/folders/2s/xv1nds5j2d3b795qy43yzcthb7qc6n/T/tmp.t3PtNiwY
+% ls -lh /var/folders/2s/xv1nds5j2d3b795qy43yzcthb7qc6n/T/ | grep t3PtNiwY
+drwx------      <span style="color:#ae81ff">2</span> myusername  <span style="color:#ae81ff">1896053708</span>    64B Jan <span style="color:#ae81ff">16</span> 09:22 tmp.t3PtNiwY
+</code></pre></div><h2 id="生成されるファイルやディレクトリの名前を指定する">生成されるファイルやディレクトリの名前を指定する</h2>
+<ul>
+<li><code>mktemp [ファイル名].XXXXX</code> といった形で、任意の X を追加することでランダムな文字列を設定できる</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mktemp mytmp.XXXXX
+mktemp -d mytmp.XXXXX
+</code></pre></div><p>実行例</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">% mktemp mytmp.XXXXX
+mytmp.M2wuV
+% mktemp -d mytmp.XXXXX
+mytmp.moGrd
+</code></pre></div><h2 id="シェルスクリプト例">シェルスクリプト例</h2>
+<p>安全な一時ファイルを取得できない場合にスクリプトを終了する例</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">tempfoo<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>basename $0<span style="color:#e6db74">`</span>
+TMPFILE<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>mktemp /tmp/<span style="color:#e6db74">${</span>tempfoo<span style="color:#e6db74">}</span>.XXXXXX<span style="color:#e6db74">`</span> <span style="color:#f92672">||</span> exit <span style="color:#ae81ff">1</span>
+echo <span style="color:#e6db74">&#34;program output&#34;</span> &gt;&gt; $TMPFILE
+</code></pre></div><p>実行例</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">% sh example.sh
+% cat example.sh.kZXaAa
+program output
+</code></pre></div><hr>
+<p>$TMPDIR を使う</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">tempfoo<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>basename $0<span style="color:#e6db74">`</span>
+TMPFILE<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>mktemp -t <span style="color:#e6db74">${</span>tempfoo<span style="color:#e6db74">}</span><span style="color:#e6db74">`</span> <span style="color:#f92672">||</span> exit <span style="color:#ae81ff">1</span>
+echo	<span style="color:#e6db74">&#34;program output&#34;</span> &gt;&gt; $TMPFILE
+</code></pre></div><p>実行例</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">% sh example.sh
+% echo $TMPDIR
+/var/folders/2s/xv1nds5j2d3b795qy43yzcthb7qc6n/T/
+% ls -l /var/folders/2s/xv1nds5j2d3b795qy43yzcthb7qc6n/T/ | grep example
+-rw-------      <span style="color:#ae81ff">1</span> myusername  <span style="color:#ae81ff">1896053708</span>        <span style="color:#ae81ff">15</span>  <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">16</span> 09:43 example.sh.gihepulJ
+</code></pre></div><hr>
+<p>エラーハンドリングを考慮する</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">tempfoo<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>basename $0<span style="color:#e6db74">`</span>
+TMPFILE<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>mktemp -q /tmp/<span style="color:#e6db74">${</span>tempfoo<span style="color:#e6db74">}</span>.XXXXXX<span style="color:#e6db74">`</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $? -ne <span style="color:#ae81ff">0</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+    echo <span style="color:#e6db74">&#34;</span>$0<span style="color:#e6db74">: Can&#39;t create temp file, exiting...&#34;</span>
+    exit <span style="color:#ae81ff">1</span>
+<span style="color:#66d9ef">fi</span>
+</code></pre></div><h2 id="オプション">オプション</h2>
+<ul>
+<li><code>-d</code> オプション: 一時的なファイルではなく、一時的なディレクトリを作成する</li>
+<li><code>-q</code> オプション: エラーメッセージを表示しない</li>
+<li><code>-t</code> オプション: 指定した prefix と、 TMPDIR が設定されている場合にはそれを使って、テンプレートを作成し、ファイル名テンプレートを作成する</li>
+<li><code>-u</code> オプション: unsafe モードを使用する。一時的なファイルは mktemp コマンドが終了する前に、リンクが解除される。これは mktemp（3）よりもわずかに優れていますが、それでも競合状態が発生するため、このオプションの使用は推奨されていない</li>
+</ul>
+<h2 id="manual">manual</h2>
+<pre><code>% man mktemp
+MKTEMP(1)                 BSD General Commands Manual                MKTEMP(1)
+
+NAME
+     mktemp -- make temporary file name (unique)
+
+SYNOPSIS
+     mktemp [-d] [-q] [-t prefix] [-u] template ...
+     mktemp [-d] [-q] [-u] -t prefix
+
+DESCRIPTION
+     The mktemp utility takes each of the given file name templates and overwrites a portion of it to create a file name. 
+     This file name is unique and suitable for use by the application.  
+     The template may be any file name with some number of `Xs' appended to it, for example /tmp/temp.XXXX. 
+     The trailing `Xs' are replaced with the current process number and/or a unique letter combination. 
+     The number of unique file names mktemp can return depends on the number of `Xs' provided; six `Xs' will result in mktemp selecting 1 of 56800235584 (62 ** 6) possible file names. 
+     On case-insensitive file systems, the effective number of unique names is significantly less; given six `Xs', mktemp will instead select 1 of 2176782336 (36 ** 6) possible unique file names.
+
+     If mktemp can successfully generate a unique file name, the file is created with mode 0600 (unless the -u flag is given) and the filename is printed to standard output.
+
+     If the -t prefix option is given, mktemp will generate a template string based on the prefix and the _CS_DARWIN_USER_TEMP_DIR configuration variable if available. 
+     Fallback locations if _CS_DARWIN_USER_TEMP_DIR is not available are TMPDIR and /tmp.  
+     Care should be taken to ensure that it is appropriate to use an environment variable potentially supplied by the user.
+
+     If no arguments are passed or if only the -d flag is passed mktemp behaves as if -t tmp was supplied.
+
+     Any number of temporary files may be created in a single invocation, including one based on the internal template resulting from the -t flag.
+
+     The mktemp utility is provided to allow shell scripts to safely use temporary files.  
+     Traditionally, many shell scripts take the name of the program with the pid as a suffix and use that as a temporary file name.  
+     This kind of naming scheme is predictable and the race condition it creates is easy for an attacker to win. 
+     A safer, though still inferior, approach is to make a temporary directory using the same naming scheme.  
+     While this does allow one to guarantee that a temporary file will not be subverted, it still allows a simple denial of service attack.  
+     For these reasons it is suggested that mktemp be used instead.
+
+OPTIONS
+     The available options are as follows:
+
+     -d      Make a directory instead of a file.
+
+     -q      Fail silently if an error occurs.  This is useful if a script does not want error output to go to standard error.
+
+     -t prefix
+             Generate a template (using the supplied prefix and TMPDIR if set) to create a filename template.
+
+     -u      Operate in ``unsafe'' mode.  The temp file will be unlinked before mktemp exits.  This is slightly better than mktemp(3) but still introduces
+             a race condition.  Use of this option is not encouraged.
+
+EXIT STATUS
+     The mktemp utility exits 0 on success, and &gt;0 if an error occurs.
+
+EXAMPLES
+     The following sh(1) fragment illustrates a simple use of mktemp where the script should quit if it cannot get a safe temporary file.
+
+           tempfoo=`basename $0`
+           TMPFILE=`mktemp /tmp/${tempfoo}.XXXXXX` || exit 1
+           echo &quot;program output&quot; &gt;&gt; $TMPFILE
+
+     To allow the use of $TMPDIR:
+
+           tempfoo=`basename $0`
+           TMPFILE=`mktemp -t ${tempfoo}` || exit 1
+           echo &quot;program output&quot; &gt;&gt; $TMPFILE
+
+     In this case, we want the script to catch the error itself.
+
+           tempfoo=`basename $0`
+           TMPFILE=`mktemp -q /tmp/${tempfoo}.XXXXXX`
+           if [ $? -ne 0 ]; then
+                   echo &quot;$0: Can't create temp file, exiting...&quot;
+                   exit 1
+           fi
+
+SEE ALSO
+     mkdtemp(3), mkstemp(3), mktemp(3), confstr(3), environ(7)
+
+HISTORY
+     A mktemp utility appeared in OpenBSD 2.1.  This implementation was written independently based on the OpenBSD man page, and first appeared in
+     FreeBSD 2.2.7.  This man page is taken from OpenBSD.
+
+BSD                            December 30, 2005                           BSD
+</code></pre><h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+</code></pre></div><ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l"><div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">What&#39;s in this posts</p>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一時的なファイルを作成する">一時的なファイルを作成する</a></li>
+    <li><a href="#一時的なディレクトリを作成する">一時的なディレクトリを作成する</a></li>
+    <li><a href="#生成されるファイルやディレクトリの名前を指定する">生成されるファイルやディレクトリの名前を指定する</a></li>
+    <li><a href="#シェルスクリプト例">シェルスクリプト例</a></li>
+    <li><a href="#オプション">オプション</a></li>
+    <li><a href="#manual">manual</a></li>
+    <li><a href="#この記事を試した環境">この記事を試した環境</a></li>
+  </ul>
+</nav>
+  </div>
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://noid11.github.io/" >
+    &copy;  tmp log 2021 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>
