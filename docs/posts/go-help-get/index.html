@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>go get コマンドのヘルプを読む | tmp log</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="go get コマンドのヘルプ go help get を読んだメモ">
+    <meta name="generator" content="Hugo 0.79.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.4fc0b62e4b82c997bb0041217cd6b979.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="go get コマンドのヘルプを読む" />
+<meta property="og:description" content="go get コマンドのヘルプ go help get を読んだメモ" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noid11.github.io/posts/go-help-get/" />
+<meta property="article:published_time" content="2021-01-16T12:10:06+09:00" />
+<meta property="article:modified_time" content="2021-01-16T12:10:06+09:00" />
+<meta itemprop="name" content="go get コマンドのヘルプを読む">
+<meta itemprop="description" content="go get コマンドのヘルプ go help get を読んだメモ">
+<meta itemprop="datePublished" content="2021-01-16T12:10:06+09:00" />
+<meta itemprop="dateModified" content="2021-01-16T12:10:06+09:00" />
+<meta itemprop="wordCount" content="1346">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="go get コマンドのヘルプを読む"/>
+<meta name="twitter:description" content="go get コマンドのヘルプ go help get を読んだメモ"/>
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        tmp log
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://noid11.github.io/posts/go-help-get/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://noid11.github.io/posts/go-help-get/&amp;text=go%20get%20%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%ae%e3%83%98%e3%83%ab%e3%83%97%e3%82%92%e8%aa%ad%e3%82%80" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://noid11.github.io/posts/go-help-get/&amp;title=go%20get%20%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%ae%e3%83%98%e3%83%ab%e3%83%97%e3%82%92%e8%aa%ad%e3%82%80" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">go get コマンドのヘルプを読む</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2021-01-16T12:10:06+09:00">January 16, 2021</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><code>go get</code> コマンドのヘルプ <code>go help get</code> を読んだメモ</p>
+<h2 id="note">Note</h2>
+<pre><code>usage: go get [-d] [-t] [-u] [-v] [-insecure] [build flags] [packages]
+</code></pre><hr>
+<p>依存関係の解決挙動あれこれ</p>
+<ul>
+<li>go get は、現在の開発モジュールを、依存関係の解決して追加し、ビルドとインストールを行う</li>
+<li>まず、追加するモジュールの依存関係を解決する</li>
+<li>それぞれのネームドパッケージやパッケージパターンに対して get はバージョンを指定する
+<ul>
+<li>デフォルトでは最新のタグ付きリリースバージョンとなる
+<ul>
+<li><code>v0.4.5</code> や <code>v1.2.2.3</code> など</li>
+</ul>
+</li>
+<li>タグ付けされたリリースのように、最新のタグ付きプレリリース版も検索する
+<ul>
+<li><code>v0.0.1-pre1</code> など</li>
+</ul>
+</li>
+<li>タグ付けされたバージョンが全く無い場合、 get は最新のコミットを見る</li>
+<li>もし、モジュールが後のバージョンで、まだ required とされていない場合、 get は調べたバージョンを使用する
+<ul>
+<li>最新のリリースよりも新しいプレリリースがあるとか</li>
+</ul>
+</li>
+<li>そうでなければ get は現在の必須バージョンを指定する</li>
+</ul>
+</li>
+<li>デフォルトのバージョン選択は <code>go get golang.org/x/text@v0.3.0</code> のように <code>@version</code> サフィックスをパッケージ引数に追加することで上書きすることが出来る
+<ul>
+<li>バージョンにはプレフィックスを指定することが出来る。 <code>@v1</code> は <code>v1</code> で始まる最新の利用可能なバージョンを表す</li>
+<li>クエリの完全な構文については <code>go help modules</code> を参照</li>
+</ul>
+</li>
+<li>ソース管理リポジトリに保存されているモジュールの場合、バージョンサフィックスはコミットハッシュ、ブランチ識別子、ソース管理システムが知っている他構文 (例えば <code>go get golang.org/x/text@master</code>) のような形でも OK
+<ul>
+<li>他モジュールのクエリ構文と重複する名前のブランチは、明示的に選択できないことに注意
+<ul>
+<li>例えば、 <code>@v2</code> というサフィックスは <code>v2</code> で始まる最新のバージョンを意味し、 <code>v2</code> という名前のブランチを意味しない</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>検討中のモジュールが既に現在の開発モジュールの依存関係にある場合、 get は必要なバージョンを更新する
+<ul>
+<li>現在の必須バージョンよりも前のバージョンを指定することは有効であり、依存関係をダウングレードする</li>
+<li>バージョンサフィックス <code>@none</code> は、必要に応じて依存関係をダウングレードしたり、依存関係に依存するモジュールを削除したりして、依存関係を完全に削除すべきであることを示している</li>
+</ul>
+</li>
+<li>バージョンサフィックス <code>@latest</code> は、指定されたパスで指定されたモジュールの最新マイナーリリースを明示的に要求する
+<ul>
+<li><code>@upgrade</code> というサフィックスは <code>@latest</code> と似ているが、モジュールが最新のリリースバージョンよりも新しいリビジョンやプレリリースバージョンで既に required とされている場合は、モジュールをダウングレードしない</li>
+<li><code>@patch</code> というサフィックスは、最新のパッチリリースを要求する
+<ul>
+<li>現在必要とされているバージョンと同じメジャーとマイナーのバージョン番号を持つ、最新のリリースされたバージョン</li>
+</ul>
+</li>
+<li><code>@upgrade</code> と同様に <code>@patch</code> は既に required とされているモジュールを新しいバージョンにダウングレードすることは無い</li>
+<li>パスが required されていない場合、 <code>@upgrade</code>, <code>@patch</code>, <code>@latest</code> は同等</li>
+</ul>
+</li>
+<li>get のデフォルトでは、ネームドパッケージを含むモジュールの最新バージョンを使用するが、そのモジュールの依存関係の最新バージョンは使用しない
+<ul>
+<li>かわりに、そのモジュールが要求した特定の依存関係バージョンを使用する
+<ul>
+<li>例えば、最新の A がモジュール B v1.2.3 を必要とし、一方で B v1.2.4 と v1.3.1 も利用可能である場合、 <code>go get A</code> は最新の A を使用するものの A が要求した通り B v1.2.3 を使用する</li>
+</ul>
+</li>
+<li>特定のモジュールに対して競合する要求がある場合 <code>go get</code> は要求された最大のバージョンを使用することで、それらの要求を解決する</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>コマンド実行時のフラグあれこれ</p>
+<ul>
+<li><code>-d</code> フラグ
+<ul>
+<li>指定されたパッケージのビルドに必要なソースコードをダウンロードするが、ビルドやインストールは行わない</li>
+</ul>
+</li>
+<li><code>-t</code> フラグ
+<ul>
+<li>コマンドラインで指定されたパッケージのテストを構築するために必要なモジュールを考慮する</li>
+</ul>
+</li>
+<li><code>-u</code> フラグ
+<ul>
+<li>コマンドラインで指定されたパッケージの依存関係を提供するモジュールを更新する</li>
+<li>前の例の続きで、 <code>go get -u A</code> とした場合には B v1.3.1 の最新の A を使用する</li>
+<li>B がモジュール C を必要としているが、 C が A のパッケージをビルドするのに必要なパッケージを提供していない場合、 C は更新されない</li>
+</ul>
+</li>
+<li><code>-u=patch</code> フラグ
+<ul>
+<li><code>-u patch</code> では無い</li>
+<li>依存関係を更新する</li>
+<li>デフォルトでパッチリリースを選択するように変更</li>
+<li><code>go get -u=patch A@latest</code> は B v1.2.4 の最新の A を使用するが <code>go get -u=patch A</code> は A のパッチリリースを代わりに使用する</li>
+</ul>
+</li>
+<li><code>-t</code> と <code>-u</code> を同時に使うと get はテストの依存関係も更新する
+<ul>
+<li>一般的に、新しい依存関係を追加すると、ビルドを動作させるために既存の依存関係をアップグレードする必要があるかもしれないが、 <code>go get</code> はこれを自動的に行う</li>
+<li>同様に、ある依存関係をダウングレードすると、他の依存関係をダウングレードする必要があるかもしれない</li>
+</ul>
+</li>
+<li><code>-insecure</code> フラグ
+<ul>
+<li>HTTP のような安全ではないスキームを使って、リポジトリからの取得やカスタムドメインの解決を許可する</li>
+<li>注意して使用すること</li>
+<li>環境変数 <code>GOINSECURE</code> は、安全ではないスキームを使って、どのモジュールを取得するかを制御することが出来るので、一般的によりよい代替手段となる</li>
+<li>詳細は <code>go help environment</code> を参照</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>ネームドパッケージのダウンロード、ビルド、インストール</p>
+<ul>
+<li>引数にモジュールの名前があってもパッケージでは無い場合、ビルドに失敗する代わりに、その引数のインストールステップはスキップされる
+<ul>
+<li>パッケージではない場合にはモジュールのルートディレクトリに Go コードが無いためビルドに失敗する</li>
+<li>例えば、 <code>go get golang.org/x/perf</code> は、インポートパスに対応するコードが無くても成功する</li>
+</ul>
+</li>
+<li>パッケージパターンは許可されており、モジュールのバージョンを解決した後に展開されることに注意
+<ul>
+<li>例えば、 <code>go get golang.org/x/perf/cmd...</code> は最新の golang.org/x/perf を追加し、その最新バージョンのコマンドをインストールする</li>
+</ul>
+</li>
+<li>パッケージの引数が無い場合、 <code>go get</code> はカレントディレクトリに Go パッケージがある場合には、そのパッケージに適用される
+<ul>
+<li>特に <code>go get -u</code> と <code>go get -u=patch</code> は、そのパッケージの全ての依存関係を更新する</li>
+<li>パッケージ引数が無く、 <code>-u</code> も無い場合、 <code>go get</code> は <code>go install</code> 以上のものではなく、 <code>go get -d</code> は <code>go list</code> 以上のものでは無い</li>
+</ul>
+</li>
+<li>モジュールの詳細については <code>go help modules</code></li>
+<li>パッケージしていについては <code>go help packages</code></li>
+<li>このテキストでは、ソースコードと依存関係を管理するためにモジュールを使用した get の動作について説明している
+<ul>
+<li>代わりに go コマンドが <code>GOPATH</code> モードで実行されている場合、 get のフラグと効果の詳細は <code>go help get</code> と同様に変更される</li>
+<li>詳細については <code>go help modules</code> と <code>go help gopath-get</code> を参照</li>
+</ul>
+</li>
+<li><code>go build</code>, <code>go install</code>, <code>go clean</code>, <code>go mod</code> も参照しよう</li>
+</ul>
+<h2 id="go-help-get">go help get</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">% go help get
+usage: go get <span style="color:#f92672">[</span>-d<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>-t<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>-u<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>-v<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>-insecure<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>build flags<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>packages<span style="color:#f92672">]</span>
+
+Get resolves and adds dependencies to the current development module and <span style="color:#66d9ef">then</span> builds and installs them.
+
+The first step is to resolve which dependencies to add.
+
+For each named package or package pattern, get must decide which version of the corresponding module to use.
+By default, get looks up the latest tagged release version, such as v0.4.5 or v1.2.3. If there are no tagged release versions, get looks up the latest tagged pre-release version, such as v0.0.1-pre1. 
+If there are no tagged versions at all, get looks up the latest known commit. 
+If the module is not already required at a later version <span style="color:#f92672">(</span><span style="color:#66d9ef">for</span> example, a pre-release newer than the latest release<span style="color:#f92672">)</span>, get will use the version it looked up. 
+Otherwise, get will use the currently required version.
+
+This default version selection can be overridden by adding an @version suffix to the package argument, as in <span style="color:#e6db74">&#39;go get golang.org/x/text@v0.3.0&#39;</span>.
+The version may be a prefix: @v1 denotes the latest available version starting with v1. 
+See <span style="color:#e6db74">&#39;go help modules&#39;</span> under the heading <span style="color:#e6db74">&#39;Module queries&#39;</span> <span style="color:#66d9ef">for</span> the full query syntax.
+
+For modules stored in source control repositories, the version suffix can also be a commit hash, branch identifier, or other syntax known to the source control system, as in <span style="color:#e6db74">&#39;go get golang.org/x/text@master&#39;</span>. 
+Note that branches with names that overlap with other module query syntax cannot be selected explicitly. 
+For example, the suffix @v2 means the latest version starting with v2, not the branch named v2.
+
+If a module under consideration is already a dependency of the current development module, <span style="color:#66d9ef">then</span> get will update the required version.
+Specifying a version earlier than the current required version is valid and downgrades the dependency. 
+The version suffix @none indicates that the dependency should be removed entirely, downgrading or removing modules depending on it as needed.
+
+The version suffix @latest explicitly requests the latest minor release of the module named by the given path. 
+The suffix @upgrade is like @latest but will not downgrade a module <span style="color:#66d9ef">if</span> it is already required at a revision or pre-release version newer than the latest released version. 
+The suffix @patch requests the latest patch release: the latest released version with the same major and minor version numbers as the currently required version. 
+Like @upgrade, @patch will not downgrade a module already required at a newer version. 
+If the path is not already required, @upgrade and @patch are equivalent to @latest.
+
+Although get defaults to using the latest version of the module containing a named package, it does not use the latest version of that module<span style="color:#e6db74">&#39;s dependencies.
+</span><span style="color:#e6db74">Instead it prefers to use the specific dependency versions requested by that module. 
+</span><span style="color:#e6db74">For example, if the latest A requires module B v1.2.3, while B v1.2.4 and v1.3.1 are also available, then &#39;</span>go get A<span style="color:#e6db74">&#39; will use the latest A but then use B v1.2.3, as requested by A. 
+</span><span style="color:#e6db74">(If there are competing requirements for a particular module, then &#39;</span>go get<span style="color:#e6db74">&#39; resolves those requirements by taking the maximum requested version.)
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">The -t flag instructs get to consider modules needed to build tests of packages specified on the command line.
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">The -u flag instructs get to update modules providing dependencies of packages named on the command line to use newer minor or patch releases when available. 
+</span><span style="color:#e6db74">Continuing the previous example, &#39;</span>go get -u A<span style="color:#e6db74">&#39; will use the latest A with B v1.3.1 (not B v1.2.3). 
+</span><span style="color:#e6db74">If B requires module C, but C does not provide any packages needed to build packages in A (not including tests), then C will not be updated.
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">The -u=patch flag (not -u patch) also instructs get to update dependencies, but changes the default to select patch releases.
+</span><span style="color:#e6db74">Continuing the previous example, &#39;</span>go get -u<span style="color:#f92672">=</span>patch A@latest<span style="color:#e6db74">&#39; will use the latest A with B v1.2.4 (not B v1.2.3), while &#39;</span>go get -u<span style="color:#f92672">=</span>patch A<span style="color:#e6db74">&#39; will use a patch release of A instead.
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">When the -t and -u flags are used together, get will update test dependencies as well.
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">In general, adding a new dependency may require upgrading existing dependencies to keep a working build, and &#39;</span>go get<span style="color:#e6db74">&#39; does this automatically. 
+</span><span style="color:#e6db74">Similarly, downgrading one dependency may require downgrading other dependencies, and &#39;</span>go get<span style="color:#e6db74">&#39; does this automatically as well.
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">The -insecure flag permits fetching from repositories and resolving custom domains using insecure schemes such as HTTP. 
+</span><span style="color:#e6db74">Use with caution. 
+</span><span style="color:#e6db74">The GOINSECURE environment variable is usually a better alternative, since it provides control over which modules may be retrieved using an insecure scheme. 
+</span><span style="color:#e6db74">See &#39;</span>go help environment<span style="color:#e6db74">&#39; for details.
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">The second step is to download (if needed), build, and install the named packages.
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">If an argument names a module but not a package (because there is no Go source code in the module&#39;</span>s root directory<span style="color:#f92672">)</span>, <span style="color:#66d9ef">then</span> the install step is skipped <span style="color:#66d9ef">for</span> that argument, instead of causing a build failure. 
+For example <span style="color:#e6db74">&#39;go get golang.org/x/perf&#39;</span> succeeds even though there is no code corresponding to that import path.
+
+Note that package patterns are allowed and are expanded after resolving the module versions. 
+For example, <span style="color:#e6db74">&#39;go get golang.org/x/perf/cmd/...&#39;</span> adds the latest golang.org/x/perf and <span style="color:#66d9ef">then</span> installs the commands in that latest version.
+
+The -d flag instructs get to download the source code needed to build the named packages, including downloading necessary dependencies, but not to build and install them.
+
+With no package arguments, <span style="color:#e6db74">&#39;go get&#39;</span> applies to Go package in the current directory, <span style="color:#66d9ef">if</span> any. In particular, <span style="color:#e6db74">&#39;go get -u&#39;</span> and <span style="color:#e6db74">&#39;go get -u=patch&#39;</span> update all the dependencies of that package.
+With no package arguments and also without -u, <span style="color:#e6db74">&#39;go get&#39;</span> is not much more than <span style="color:#e6db74">&#39;go install&#39;</span>, and <span style="color:#e6db74">&#39;go get -d&#39;</span> not much more than <span style="color:#e6db74">&#39;go list&#39;</span>.
+
+For more about modules, see <span style="color:#e6db74">&#39;go help modules&#39;</span>.
+
+For more about specifying packages, see <span style="color:#e6db74">&#39;go help packages&#39;</span>.
+
+This text describes the behavior of get using modules to manage source code and dependencies. If instead the go command is running in GOPATH mode, the details of get<span style="color:#e6db74">&#39;s flags and effects change, as does &#39;</span>go help get<span style="color:#e6db74">&#39;.
+</span><span style="color:#e6db74">See &#39;</span>go help modules<span style="color:#e6db74">&#39; and &#39;</span>go help gopath-get<span style="color:#960050;background-color:#1e0010">&#39;</span>.
+
+See also: go build, go install, go clean, go mod.
+</code></pre></div><h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% go version
+go version go1.15.6 darwin/amd64
+</code></pre></div><ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l"><div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">What&#39;s in this posts</p>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#note">Note</a></li>
+    <li><a href="#go-help-get">go help get</a></li>
+    <li><a href="#この記事を試した環境">この記事を試した環境</a></li>
+  </ul>
+</nav>
+  </div>
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://noid11.github.io/" >
+    &copy;  tmp log 2021 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>
