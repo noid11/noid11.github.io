@@ -6,7 +6,16 @@
     <description>Recent content in Posts on tmp log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Tue, 19 Jan 2021 08:51:43 +0900</lastBuildDate><atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 19 Jan 2021 14:24:03 +0900</lastBuildDate><atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Windows の情報を PowerShell から確認する方法</title>
+      <link>https://noid11.github.io/posts/view-windows-info/</link>
+      <pubDate>Tue, 19 Jan 2021 14:24:03 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/view-windows-info/</guid>
+      <description>&lt;p&gt;Windows Server のバージョン情報を PowerShell から確認する方法を調べたメモ&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Kinesis Data Streams のコンシューマーとして動かす AWS Lambda 関数サンプル</title>
       <link>https://noid11.github.io/posts/lambda-kinesis-consumer-sample/</link>
