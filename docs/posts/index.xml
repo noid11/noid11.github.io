@@ -1810,7 +1810,7 @@ Features: AsynchDNS GSS-API HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz Multi
 			<guid>https://noid11.github.io/posts/cognito-user-pool-csv-import-feature/</guid>
 			<description>&lt;p&gt;Cognito User Pool における CSV インポート機能についてのメモ&lt;/p&gt;</description>
 			<content type="html"><![CDATA[<p>Cognito User Pool における CSV インポート機能についてのメモ</p>
-<h2 id="cognito-user-pool-におけるユーザーインポートの概要">Cognito User Pool におけるユーザーインポートの概要</h2>
+<h2 id="ユーザーインポート機能の概要">ユーザーインポート機能の概要</h2>
 <ul>
 <li>Cognito User Pool におけるユーザーインポート機能は2種類ある<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>
 <ol>
@@ -1837,7 +1837,7 @@ Features: AsynchDNS GSS-API HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz Multi
 </ol>
 </li>
 </ul>
-<h2 id="cognito-user-pool-における-csv-インポート機能とは">Cognito User Pool における CSV インポート機能とは？</h2>
+<h2 id="csv-インポート機能とは">CSV インポート機能とは？</h2>
 <ul>
 <li>先述の Cognito User Pool にユーザーをインポートする機能の1つ</li>
 <li>ユーザー情報を記述した CSV ファイルを元に、 Cognito User Pool にユーザーをインポートする機能<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>
@@ -1851,7 +1851,7 @@ Features: AsynchDNS GSS-API HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz Multi
 <p><img src="/images/cognito-user-pool-import-feature/amazon-cognito-sign-in-confirm-user.png" alt="user-status"></p>
 </blockquote>
 <p><a href="https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html">https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html</a> より引用</p>
-<h2 id="csv-ファイルを使ったユーザーインポートの大まかな流れ">CSV ファイルを使ったユーザーインポートの大まかな流れ</h2>
+<h2 id="ユーザーインポートの流れ">ユーザーインポートの流れ</h2>
 <ol>
 <li>IAM ロールを作成する
 <ul>
@@ -1886,8 +1886,8 @@ Features: AsynchDNS GSS-API HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz Multi
 </ul>
 </li>
 </ol>
-<h2 id="aws-cli-を使ってインポート機能を試してみる">AWS CLI を使ってインポート機能を試してみる</h2>
-<h3 id="0-iam-ロール">0. IAM ロール</h3>
+<h2 id="aws-cli-を使ってインポートを試す">AWS CLI を使ってインポートを試す</h2>
+<h3 id="iam-ロール">IAM ロール</h3>
 <ul>
 <li>IAM ロールについてはマネジメントコンソールからインポートを試した際に作成されるサービスロールを使用する<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup></li>
 </ul>
@@ -1938,7 +1938,7 @@ Features: AsynchDNS GSS-API HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz Multi
         <span class="p">}</span>
     <span class="p">]</span>
 <span class="p">}</span>
-</code></pre></div><h3 id="1-csv-ファイルを用意">1. CSV ファイルを用意</h3>
+</code></pre></div><h3 id="csv-ファイルを用意">CSV ファイルを用意</h3>
 <p>get-csv-header コマンドで CSV に必要となるヘッダーを取得できる<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup></p>
 <div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">USER_POOL_ID</span><span class="o">=</span>ap-northeast-1_xxx
 aws cognito-idp get-csv-header --user-pool-id <span class="nv">$USER_POOL_ID</span>
@@ -1977,7 +1977,7 @@ name    given_name      family_name     middle_name     nickname        preferre
 <pre><code class="language-csv" data-lang="csv">name,given_name,family_name,middle_name,nickname,preferred_username,profile,picture,website,email,email_verified,gender,birthdate,zoneinfo,locale,phone_number,phone_number_verified,address,updated_at,cognito:mfa_enabled,cognito:username
 johndoe,,,,,,,,,johndoe@example.com,TRUE,,,,,,FALSE,,,FALSE,johndoe
 janeroe,,,,,,,,,janeroe@example.com,TRUE,,,,,,FALSE,,,FALSE,janeroe
-</code></pre><h3 id="2-インポートジョブを作成">2. インポートジョブを作成</h3>
+</code></pre><h3 id="ジョブを作成">ジョブを作成</h3>
 <p><code>create-user-import-job</code> コマンドでインポートジョブを作成<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup></p>
 <div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">JOB_NAME</span><span class="o">=</span>myjob
 <span class="nv">CLOUD_WATCH_LOGS_ROLE_ARN</span><span class="o">=</span>arn:aws:iam::123456789012:role/service-role/Cognito-UserImport-Role
@@ -2001,7 +2001,7 @@ aws cognito-idp create-user-import-job --job-name <span class="nv">$JOB_NAME</sp
 </code></pre></div><p>CSV ファイルのアップロード</p>
 <div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">PRE_SIGNED_URL</span><span class="o">=</span><span class="s2">&#34;https://aws-cognito-idp-user-import-nrt.s3.ap-northeast-1.amazonaws.com/123456789012/ap-northeast-1_xxx/import-xxx?...&#34;</span>
 curl -v -T ./user-import-csv-template.csv -H <span class="s2">&#34;x-amz-server-side-encryption:aws:kms&#34;</span> <span class="nv">$PRE_SIGNED_URL</span>
-</code></pre></div><h3 id="3-作成したインポートジョブを開始">3. 作成したインポートジョブを開始</h3>
+</code></pre></div><h3 id="作成したジョブを開始">作成したジョブを開始</h3>
 <p><code>start-user-import-job</code> でジョブを開始<sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup></p>
 <div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">JOB_ID</span><span class="o">=</span>import-xxx
 aws cognito-idp start-user-import-job --user-pool-id <span class="nv">$USER_POOL_ID</span> --job-id <span class="nv">$JOB_ID</span>
@@ -2022,7 +2022,7 @@ aws cognito-idp start-user-import-job --user-pool-id <span class="nv">$USER_POOL
         <span class="s2">&#34;FailedUsers&#34;</span>: <span class="m">0</span>
     <span class="o">}</span>
 <span class="o">}</span>
-</code></pre></div><h3 id="4-インポートジョブのステータス確認">4. インポートジョブのステータス確認</h3>
+</code></pre></div><h3 id="インポートジョブのステータス確認">インポートジョブのステータス確認</h3>
 <p><code>describe-user-import-job</code> コマンドでインポートジョブのステータスを確認可能<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup></p>
 <div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">aws cognito-idp describe-user-import-job --user-pool-id <span class="nv">$USER_POOL_ID</span> --job-id <span class="nv">$JOB_ID</span>
 </code></pre></div><p>実行例</p>
@@ -2044,7 +2044,7 @@ aws cognito-idp start-user-import-job --user-pool-id <span class="nv">$USER_POOL
         <span class="s2">&#34;CompletionMessage&#34;</span>: <span class="s2">&#34;Import Job Completed Successfully.&#34;</span>
     <span class="o">}</span>
 <span class="o">}</span>
-</code></pre></div><h3 id="5-ユーザーが追加されたか確認">5. ユーザーが追加されたか確認</h3>
+</code></pre></div><h3 id="ユーザーが追加されたか確認">ユーザーが追加されたか確認</h3>
 <p><code>list-users</code> コマンドで確認<sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup></p>
 <div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">aws cognito-idp list-users --user-pool-id <span class="nv">$USER_POOL_ID</span>
 </code></pre></div><p>実行例</p>
@@ -2111,7 +2111,7 @@ aws cognito-idp start-user-import-job --user-pool-id <span class="nv">$USER_POOL
         <span class="o">}</span>
     <span class="o">]</span>
 <span class="o">}</span>
-</code></pre></div><h2 id="ユーザーインポートジョブのステータス">ユーザーインポートジョブのステータス</h2>
+</code></pre></div><h2 id="ジョブのステータス">ジョブのステータス</h2>
 <ul>
 <li>API Reference の DataType に定義がある<sup id="fnref:10"><a href="#fn:10" class="footnote-ref" role="doc-noteref">10</a></sup>
 <ul>
@@ -2126,7 +2126,7 @@ aws cognito-idp start-user-import-job --user-pool-id <span class="nv">$USER_POOL
 </ul>
 </li>
 </ul>
-<h2 id="トラブルシュート">トラブルシュート</h2>
+<h2 id="トラブルシュート-tips">トラブルシュート Tips</h2>
 <ul>
 <li>CSV のインポートが失敗する
 <ul>

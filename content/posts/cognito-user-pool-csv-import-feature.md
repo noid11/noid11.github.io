@@ -9,7 +9,7 @@ Cognito User Pool における CSV インポート機能についてのメモ
 
 <!--more-->
 
-## Cognito User Pool におけるユーザーインポートの概要
+## ユーザーインポート機能の概要
 
 - Cognito User Pool におけるユーザーインポート機能は2種類ある[^cognito-user-pools-import-users]
     1. ユーザー移行 Lambda トリガーを用いたユーザーインポート
@@ -22,7 +22,7 @@ Cognito User Pool における CSV インポート機能についてのメモ
         - ユーザーのパスワードは CSV で指定できないため、インポート後各ユーザーのパスワードリセットが必要
 
 
-## Cognito User Pool における CSV インポート機能とは？
+## CSV インポート機能とは？
 
 - 先述の Cognito User Pool にユーザーをインポートする機能の1つ
 - ユーザー情報を記述した CSV ファイルを元に、 Cognito User Pool にユーザーをインポートする機能[^cognito-user-pools-using-import-tool]
@@ -35,7 +35,7 @@ Cognito User Pool におけるユーザーステータスの遷移図
 https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html より引用
 
 
-## CSV ファイルを使ったユーザーインポートの大まかな流れ
+## ユーザーインポートの流れ
 
 1. IAM ロールを作成する
     - これは Cognito User Pool が CSV インポートする際に CloudWatch Logs にログ出力を行うため必要となるもの
@@ -53,9 +53,9 @@ https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-yo
     - これはアプリケーション実装側のトピックとなるので、この記事では省略する
 
 
-## AWS CLI を使ってインポート機能を試してみる
+## AWS CLI を使ってインポートを試す
 
-### 0. IAM ロール
+### IAM ロール
 
 - IAM ロールについてはマネジメントコンソールからインポートを試した際に作成されるサービスロールを使用する[^cognito-user-pools-using-import-tool-cli-cloudwatch-iam-role]
 
@@ -116,7 +116,7 @@ https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-yo
 ```
 
 
-### 1. CSV ファイルを用意
+### CSV ファイルを用意
 
 get-csv-header コマンドで CSV に必要となるヘッダーを取得できる[^get-csv-header]
 
@@ -181,7 +181,7 @@ janeroe,,,,,,,,,janeroe@example.com,TRUE,,,,,,FALSE,,,FALSE,janeroe
 ```
 
 
-### 2. インポートジョブを作成
+### ジョブを作成
 
 `create-user-import-job` コマンドでインポートジョブを作成[^create-user-import-job]
 
@@ -220,7 +220,7 @@ PRE_SIGNED_URL="https://aws-cognito-idp-user-import-nrt.s3.ap-northeast-1.amazon
 curl -v -T ./user-import-csv-template.csv -H "x-amz-server-side-encryption:aws:kms" $PRE_SIGNED_URL
 ```
 
-### 3. 作成したインポートジョブを開始
+### 作成したジョブを開始
 
 `start-user-import-job` でジョブを開始[^start-user-import-job]
 
@@ -252,7 +252,7 @@ aws cognito-idp start-user-import-job --user-pool-id $USER_POOL_ID --job-id $JOB
 ```
 
 
-### 4. インポートジョブのステータス確認
+### インポートジョブのステータス確認
 
 `describe-user-import-job` コマンドでインポートジョブのステータスを確認可能[^describe-user-import-job]
 
@@ -285,7 +285,7 @@ aws cognito-idp describe-user-import-job --user-pool-id $USER_POOL_ID --job-id $
 ```
 
 
-### 5. ユーザーが追加されたか確認
+### ユーザーが追加されたか確認
 
 `list-users` コマンドで確認[^list-users]
 
@@ -363,7 +363,7 @@ aws cognito-idp list-users --user-pool-id $USER_POOL_ID
 ```
 
 
-## ユーザーインポートジョブのステータス
+## ジョブのステータス
 
 - API Reference の DataType に定義がある[^API_UserImportJobType]
     - `Created`: ジョブが作成されたものの未開始
@@ -376,7 +376,7 @@ aws cognito-idp list-users --user-pool-id $USER_POOL_ID
     - `Expired`: ジョブを作成したが 24 - 48 時間の間にジョブを開始しなかった。ジョブに関連付けられているデータは全て削除され、ジョブは開始できない
 
 
-## トラブルシュート
+## トラブルシュート Tips
 
 - CSV のインポートが失敗する
     - CloudWatch Logs に出力されるログを見るとヒントがあるかも
