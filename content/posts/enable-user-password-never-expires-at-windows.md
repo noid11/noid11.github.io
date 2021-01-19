@@ -2,7 +2,7 @@
 title: "PowerShell を使って Windows ユーザーでパスワード失効を無効化する方法"
 date: 2021-01-19T16:11:20+09:00
 toc: true
-draft: true
+draft: false
 ---
 
 - Windows Server で特定ユーザーのパスワード失効を無効化したい場合に便利
