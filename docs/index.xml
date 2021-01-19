@@ -6,7 +6,19 @@
     <description>Recent content on tmp log</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Sat, 16 Jan 2021 12:10:06 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 19 Jan 2021 08:51:43 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kinesis Data Streams のコンシューマーとして動かす AWS Lambda 関数サンプル</title>
+      <link>https://noid11.github.io/posts/lambda-kinesis-consumer-sample/</link>
+      <pubDate>Tue, 19 Jan 2021 08:51:43 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/lambda-kinesis-consumer-sample/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;Kinesis Data Streams に連携されるデータを確認したい場合等に使う&lt;/li&gt;
+&lt;li&gt;ログの出力先等として Kinesis Data Streams に連携するサービスは結構存在するので、サクッと試す分にはマネジメントコンソールから編集可能な Python, Node.js 等を使うのが便利&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
     <item>
       <title>go get コマンドのヘルプを読む</title>
       <link>https://noid11.github.io/posts/go-help-get/</link>

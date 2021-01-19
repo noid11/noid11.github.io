@@ -2,7 +2,7 @@
 title: "Kinesis Data Streams のコンシューマーとして動かす AWS Lambda 関数サンプル"
 date: 2021-01-19T08:51:43+09:00
 toc: true
-draft: true
+draft: false
 ---
 
 - Kinesis Data Streams に連携されるデータを確認したい場合等に使う
