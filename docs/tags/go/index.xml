@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go on noid11.github.io</title>
+    <link>https://noid11.github.io/tags/go/</link>
+    <description>Recent content in Go on noid11.github.io</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>&amp;#169; noid11</copyright>
+    <lastBuildDate>Sat, 16 Jan 2021 12:10:06 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>go get コマンドのヘルプを読む</title>
+      <link>https://noid11.github.io/posts/go-help-get/</link>
+      <pubDate>Sat, 16 Jan 2021 12:10:06 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/go-help-get/</guid>
+      <description>&lt;p&gt;&lt;code&gt;go get&lt;/code&gt; コマンドのヘルプ &lt;code&gt;go help get&lt;/code&gt; を読んだメモ&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>UUIDv4 を Go で生成する</title>
+      <link>https://noid11.github.io/posts/generate-uuidv4-by-golang/</link>
+      <pubDate>Sat, 16 Jan 2021 11:31:50 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/generate-uuidv4-by-golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Playwright を golang から使う</title>
+      <link>https://noid11.github.io/posts/hello-playwright-with-golang/</link>
+      <pubDate>Tue, 12 Jan 2021 14:51:07 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/hello-playwright-with-golang/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://playwright.dev/&#34;&gt;playwright&lt;/a&gt; を Go で使える &lt;a href=&#34;https://github.com/mxschmitt/playwright-go&#34;&gt;playwright-go&lt;/a&gt; を動かしたメモ&lt;/li&gt;
+&lt;li&gt;build したバイナリには Chromium などのエンジンは含まれず、バイナリ実行時にダウンロードが発生する
+&lt;ul&gt;
+&lt;li&gt;なのでクロスコンパイルして動かしても、バイナリを動かす環境にブラウザエンジンを動かす共有ライブラリが無い場合、ブラウザの起動に失敗してエラーとなる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>AWS Lambda で Go ランタイムを使うのが良いと思っている理由</title>
+      <link>https://noid11.github.io/posts/aws-lambda-love-golang/</link>
+      <pubDate>Fri, 01 Jan 2021 15:05:18 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/aws-lambda-love-golang/</guid>
+      <description>&lt;p&gt;個人的に AWS Lambda では zip 形式で golang ランタイム使うのがコスパ最強な気がしているので、根拠をまとめておくメモ&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

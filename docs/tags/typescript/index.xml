@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>TypeScript on noid11.github.io</title>
+    <link>https://noid11.github.io/tags/typescript/</link>
+    <description>Recent content in TypeScript on noid11.github.io</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>&amp;#169; noid11</copyright>
+    <lastBuildDate>Tue, 12 Jan 2021 12:39:32 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/typescript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Playwright を TypeScript で動かすまで</title>
+      <link>https://noid11.github.io/posts/hello-playwright-with-typescript/</link>
+      <pubDate>Tue, 12 Jan 2021 12:39:32 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/hello-playwright-with-typescript/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://playwright.dev/&#34;&gt;Playwright&lt;/a&gt; は Microsoft 製のブラウザ自動化ツール
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.chromium.org/&#34;&gt;Chromium&lt;/a&gt;, &lt;a href=&#34;https://www.mozilla.org/en-US/firefox/&#34;&gt;Firefox&lt;/a&gt;, &lt;a href=&#34;https://webkit.org/&#34;&gt;WebKit&lt;/a&gt; に対応している&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://playwright.dev/docs/docker/README/&#34;&gt;公式 Docker イメージ&lt;/a&gt;も提供されている&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;組み込みで TypeScript をサポートしているとあったので、最低限動かす所まで試したメモ&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
