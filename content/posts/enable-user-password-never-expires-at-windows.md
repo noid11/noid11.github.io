@@ -1,5 +1,5 @@
 ---
-title: "PowerShell を使って Windows ユーザーでパスワード失効を無効化する方法"
+title: "PowerShell を使って Windows アカウントユーザーのパスワード失効を無効化する方法"
 date: 2021-01-19T16:11:20+09:00
 toc: true
 draft: false
