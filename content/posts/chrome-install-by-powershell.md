@@ -2,7 +2,7 @@
 title: "Powershell を使って Google Chrome をインストールする方法"
 date: 2021-01-19T15:12:28+09:00
 toc: true
-draft: true
+draft: false
 ---
 
 Windows Server 構築で毎回 Internet Explorer の設定を変える・・・みたいな作業が減るので便利
