@@ -1,147 +1,78 @@
 <!DOCTYPE html>
 <html lang="ja-jp">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    
-    <title>Cognito User Pool の CSV インポート機能 | tmp log</title>
-    <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="description" content="Cognito User Pool における CSV インポート機能についてのメモ">
-    <meta name="generator" content="Hugo 0.79.0" />
-    
-    
-      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-    
 
-    
-    
-      <link href="/dist/css/app.4fc0b62e4b82c997bb0041217cd6b979.css" rel="stylesheet">
-    
-
-    
-
-    
-      
-
-    
-
-    
-    
-    <meta property="og:title" content="Cognito User Pool の CSV インポート機能" />
-<meta property="og:description" content="Cognito User Pool における CSV インポート機能についてのメモ" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://noid11.github.io/posts/cognito-user-pool-csv-import-feature/" />
-<meta property="article:published_time" content="2021-01-05T20:18:51+09:00" />
-<meta property="article:modified_time" content="2021-01-05T20:18:51+09:00" />
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
 <meta itemprop="name" content="Cognito User Pool の CSV インポート機能">
 <meta itemprop="description" content="Cognito User Pool における CSV インポート機能についてのメモ">
 <meta itemprop="datePublished" content="2021-01-05T20:18:51+09:00" />
-<meta itemprop="dateModified" content="2021-01-05T20:18:51+09:00" />
-<meta itemprop="wordCount" content="702">
+<meta itemprop="dateModified" content="2021-01-06T04:51:10+09:00" />
+<meta itemprop="wordCount" content="2101">
 
 
 
 <meta itemprop="keywords" content="" />
+<meta property="og:title" content="Cognito User Pool の CSV インポート機能" />
+<meta property="og:description" content="Cognito User Pool における CSV インポート機能についてのメモ" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noid11.github.io/posts/cognito-user-pool-csv-import-feature/" />
+<meta property="article:published_time" content="2021-01-05T20:18:51+09:00" />
+<meta property="article:modified_time" content="2021-01-06T04:51:10+09:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Cognito User Pool の CSV インポート機能"/>
 <meta name="twitter:description" content="Cognito User Pool における CSV インポート機能についてのメモ"/>
 
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Cognito User Pool の CSV インポート機能</title>
+	<link rel="stylesheet" href="https://noid11.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
 	
-  </head>
+</head>
 
-  <body class="ma0 avenir bg-near-white">
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://noid11.github.io/">noid11.github.io</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://noid11.github.io/posts/">Posts</a>
 
-    
-   
-  
-
-  <header>
-    <div class="bg-black">
-      <nav class="pv3 ph3 ph4-ns" role="navigation">
-  <div class="flex-l justify-between items-center center">
-    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
-      
-        tmp log
-      
-    </a>
-    <div class="flex-l items-center">
-      
-
-      
-      
-
-
-
-
-
-
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="toc-btn" class="hdr-btn desktop-only-ib" title="Table of Contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="https://twitter.com/_noid11" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://github.com/noid11" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://noid11.github.io/posts/">Posts</a></li>
+		</ul>
+	</div>
 
 
-
-
-
-
-
-
-
-    </div>
-  </div>
-</nav>
-
-    </div>
-  </header>
-
-
-
-    <main class="pb7" role="main">
-      
-  
-  <article class="flex-l flex-wrap justify-between mw8 center ph3">
-    <header class="mt4 w-100">
-      <aside class="instapaper_ignoref b helvetica tracked">
-          
-        POSTS
-      </aside>
-      
-
-
-
-
-  <div id="sharing" class="mt3">
-
-    
-    <a href="https://www.facebook.com/sharer.php?u=https://noid11.github.io/posts/cognito-user-pool-csv-import-feature/" class="facebook no-underline" aria-label="share on Facebook">
-      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
-
-    </a>
-
-    
-    
-    <a href="https://twitter.com/share?url=https://noid11.github.io/posts/cognito-user-pool-csv-import-feature/&amp;text=Cognito%20User%20Pool%20%e3%81%ae%20CSV%20%e3%82%a4%e3%83%b3%e3%83%9d%e3%83%bc%e3%83%88%e6%a9%9f%e8%83%bd" class="twitter no-underline" aria-label="share on Twitter">
-      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
-
-    </a>
-
-    
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://noid11.github.io/posts/cognito-user-pool-csv-import-feature/&amp;title=Cognito%20User%20Pool%20%e3%81%ae%20CSV%20%e3%82%a4%e3%83%b3%e3%83%9d%e3%83%bc%e3%83%88%e6%a9%9f%e8%83%bd" class="linkedin no-underline" aria-label="share on LinkedIn">
-      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
-</svg>
-
-    </a>
-  </div>
-
-
-      <h1 class="f1 athelas mt3 mb1">Cognito User Pool の CSV インポート機能</h1>
-      
-      
-      <time class="f6 mv4 dib tracked" datetime="2021-01-05T20:18:51+09:00">January 5, 2021</time>
-
-      
-      
-    </header>
-    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Cognito User Pool における CSV インポート機能についてのメモ</p>
-<h2 id="cognito-user-pool-におけるユーザーインポートの概要">Cognito User Pool におけるユーザーインポートの概要</h2>
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>2021/01/05</span></div>
+				<h1>Cognito User Pool の CSV インポート機能</h1>
+			</header>
+			<div class="content">
+				<p>Cognito User Pool における CSV インポート機能についてのメモ</p>
+<h2 id="cognito-user-pool-におけるユーザーインポートの概要">Cognito User Pool におけるユーザーインポートの概要<a href="#cognito-user-pool-におけるユーザーインポートの概要" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <ul>
 <li>Cognito User Pool におけるユーザーインポート機能は2種類ある<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>
 <ol>
@@ -168,7 +99,7 @@
 </ol>
 </li>
 </ul>
-<h2 id="cognito-user-pool-における-csv-インポート機能とは">Cognito User Pool における CSV インポート機能とは？</h2>
+<h2 id="cognito-user-pool-における-csv-インポート機能とは">Cognito User Pool における CSV インポート機能とは？<a href="#cognito-user-pool-における-csv-インポート機能とは" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <ul>
 <li>先述の Cognito User Pool にユーザーをインポートする機能の1つ</li>
 <li>ユーザー情報を記述した CSV ファイルを元に、 Cognito User Pool にユーザーをインポートする機能<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>
@@ -182,7 +113,7 @@
 <p><img src="/images/cognito-user-pool-import-feature/amazon-cognito-sign-in-confirm-user.png" alt="user-status"></p>
 </blockquote>
 <p><a href="https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html">https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html</a> より引用</p>
-<h2 id="csv-ファイルを使ったユーザーインポートの大まかな流れ">CSV ファイルを使ったユーザーインポートの大まかな流れ</h2>
+<h2 id="csv-ファイルを使ったユーザーインポートの大まかな流れ">CSV ファイルを使ったユーザーインポートの大まかな流れ<a href="#csv-ファイルを使ったユーザーインポートの大まかな流れ" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <ol>
 <li>IAM ロールを作成する
 <ul>
@@ -217,90 +148,90 @@
 </ul>
 </li>
 </ol>
-<h2 id="aws-cli-を使ってインポート機能を試してみる">AWS CLI を使ってインポート機能を試してみる</h2>
-<h3 id="0-iam-ロール">0. IAM ロール</h3>
+<h2 id="aws-cli-を使ってインポート機能を試してみる">AWS CLI を使ってインポート機能を試してみる<a href="#aws-cli-を使ってインポート機能を試してみる" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<h3 id="0-iam-ロール">0. IAM ロール<a href="#0-iam-ロール" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <ul>
 <li>IAM ロールについてはマネジメントコンソールからインポートを試した際に作成されるサービスロールを使用する<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup></li>
 </ul>
 <p><code>get-role</code> 結果</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">% aws iam get-role --role-name Cognito-UserImport-Role   
-<span style="color:#f92672">{</span>
-    <span style="color:#e6db74">&#34;Role&#34;</span>: <span style="color:#f92672">{</span>
-        <span style="color:#e6db74">&#34;Path&#34;</span>: <span style="color:#e6db74">&#34;/service-role/&#34;</span>,
-        <span style="color:#e6db74">&#34;RoleName&#34;</span>: <span style="color:#e6db74">&#34;Cognito-UserImport-Role&#34;</span>,
-        <span style="color:#e6db74">&#34;RoleId&#34;</span>: <span style="color:#e6db74">&#34;AROAIQGN5YPP2UMLFTJVM&#34;</span>,
-        <span style="color:#e6db74">&#34;Arn&#34;</span>: <span style="color:#e6db74">&#34;arn:aws:iam::123456789012:role/service-role/Cognito-UserImport-Role&#34;</span>,
-        <span style="color:#e6db74">&#34;CreateDate&#34;</span>: <span style="color:#e6db74">&#34;2018-06-30T09:54:58+00:00&#34;</span>,
-        <span style="color:#e6db74">&#34;AssumeRolePolicyDocument&#34;</span>: <span style="color:#f92672">{</span>
-            <span style="color:#e6db74">&#34;Version&#34;</span>: <span style="color:#e6db74">&#34;2012-10-17&#34;</span>,
-            <span style="color:#e6db74">&#34;Statement&#34;</span>: <span style="color:#f92672">[</span>
-                <span style="color:#f92672">{</span>
-                    <span style="color:#e6db74">&#34;Effect&#34;</span>: <span style="color:#e6db74">&#34;Allow&#34;</span>,
-                    <span style="color:#e6db74">&#34;Principal&#34;</span>: <span style="color:#f92672">{</span>
-                        <span style="color:#e6db74">&#34;Service&#34;</span>: <span style="color:#e6db74">&#34;cognito-idp.amazonaws.com&#34;</span>
-                    <span style="color:#f92672">}</span>,
-                    <span style="color:#e6db74">&#34;Action&#34;</span>: <span style="color:#e6db74">&#34;sts:AssumeRole&#34;</span>
-                <span style="color:#f92672">}</span>
-            <span style="color:#f92672">]</span>
-        <span style="color:#f92672">}</span>,
-        <span style="color:#e6db74">&#34;MaxSessionDuration&#34;</span>: 3600,
-        <span style="color:#e6db74">&#34;RoleLastUsed&#34;</span>: <span style="color:#f92672">{</span>
-            <span style="color:#e6db74">&#34;LastUsedDate&#34;</span>: <span style="color:#e6db74">&#34;2021-01-05T18:35:15+00:00&#34;</span>,
-            <span style="color:#e6db74">&#34;Region&#34;</span>: <span style="color:#e6db74">&#34;ap-northeast-1&#34;</span>
-        <span style="color:#f92672">}</span>
-    <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% aws iam get-role --role-name Cognito-UserImport-Role   
+<span class="o">{</span>
+    <span class="s2">&#34;Role&#34;</span>: <span class="o">{</span>
+        <span class="s2">&#34;Path&#34;</span>: <span class="s2">&#34;/service-role/&#34;</span>,
+        <span class="s2">&#34;RoleName&#34;</span>: <span class="s2">&#34;Cognito-UserImport-Role&#34;</span>,
+        <span class="s2">&#34;RoleId&#34;</span>: <span class="s2">&#34;AROAIQGN5YPP2UMLFTJVM&#34;</span>,
+        <span class="s2">&#34;Arn&#34;</span>: <span class="s2">&#34;arn:aws:iam::123456789012:role/service-role/Cognito-UserImport-Role&#34;</span>,
+        <span class="s2">&#34;CreateDate&#34;</span>: <span class="s2">&#34;2018-06-30T09:54:58+00:00&#34;</span>,
+        <span class="s2">&#34;AssumeRolePolicyDocument&#34;</span>: <span class="o">{</span>
+            <span class="s2">&#34;Version&#34;</span>: <span class="s2">&#34;2012-10-17&#34;</span>,
+            <span class="s2">&#34;Statement&#34;</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="s2">&#34;Effect&#34;</span>: <span class="s2">&#34;Allow&#34;</span>,
+                    <span class="s2">&#34;Principal&#34;</span>: <span class="o">{</span>
+                        <span class="s2">&#34;Service&#34;</span>: <span class="s2">&#34;cognito-idp.amazonaws.com&#34;</span>
+                    <span class="o">}</span>,
+                    <span class="s2">&#34;Action&#34;</span>: <span class="s2">&#34;sts:AssumeRole&#34;</span>
+                <span class="o">}</span>
+            <span class="o">]</span>
+        <span class="o">}</span>,
+        <span class="s2">&#34;MaxSessionDuration&#34;</span>: 3600,
+        <span class="s2">&#34;RoleLastUsed&#34;</span>: <span class="o">{</span>
+            <span class="s2">&#34;LastUsedDate&#34;</span>: <span class="s2">&#34;2021-01-05T18:35:15+00:00&#34;</span>,
+            <span class="s2">&#34;Region&#34;</span>: <span class="s2">&#34;ap-northeast-1&#34;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div><p>自分の環境では、以下のようなマネージドポリシー <code>Cognito-1530352497476</code> がアタッチされた</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-    <span style="color:#f92672">&#34;Version&#34;</span>: <span style="color:#e6db74">&#34;2012-10-17&#34;</span>,
-    <span style="color:#f92672">&#34;Statement&#34;</span>: [
-        {
-            <span style="color:#f92672">&#34;Sid&#34;</span>: <span style="color:#e6db74">&#34;Stmt1467314338000&#34;</span>,
-            <span style="color:#f92672">&#34;Effect&#34;</span>: <span style="color:#e6db74">&#34;Allow&#34;</span>,
-            <span style="color:#f92672">&#34;Action&#34;</span>: [
-                <span style="color:#e6db74">&#34;logs:CreateLogGroup&#34;</span>,
-                <span style="color:#e6db74">&#34;logs:CreateLogStream&#34;</span>,
-                <span style="color:#e6db74">&#34;logs:DescribeLogStreams&#34;</span>,
-                <span style="color:#e6db74">&#34;logs:PutLogEvents&#34;</span>
-            ],
-            <span style="color:#f92672">&#34;Resource&#34;</span>: [
-                <span style="color:#e6db74">&#34;arn:aws:logs:ap-northeast-1:123456789012:log-group:/aws/cognito/*&#34;</span>
-            ]
-        }
-    ]
-}
-</code></pre></div><h3 id="1-csv-ファイルを用意">1. CSV ファイルを用意</h3>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="nt">&#34;Version&#34;</span><span class="p">:</span> <span class="s2">&#34;2012-10-17&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;Statement&#34;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&#34;Sid&#34;</span><span class="p">:</span> <span class="s2">&#34;Stmt1467314338000&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;Effect&#34;</span><span class="p">:</span> <span class="s2">&#34;Allow&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;Action&#34;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&#34;logs:CreateLogGroup&#34;</span><span class="p">,</span>
+                <span class="s2">&#34;logs:CreateLogStream&#34;</span><span class="p">,</span>
+                <span class="s2">&#34;logs:DescribeLogStreams&#34;</span><span class="p">,</span>
+                <span class="s2">&#34;logs:PutLogEvents&#34;</span>
+            <span class="p">],</span>
+            <span class="nt">&#34;Resource&#34;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&#34;arn:aws:logs:ap-northeast-1:123456789012:log-group:/aws/cognito/*&#34;</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="1-csv-ファイルを用意">1. CSV ファイルを用意<a href="#1-csv-ファイルを用意" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>get-csv-header コマンドで CSV に必要となるヘッダーを取得できる<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">USER_POOL_ID<span style="color:#f92672">=</span>ap-northeast-1_xxx
-aws cognito-idp get-csv-header --user-pool-id $USER_POOL_ID
-aws cognito-idp get-csv-header --user-pool-id $USER_POOL_ID --query CSVHeader
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">USER_POOL_ID</span><span class="o">=</span>ap-northeast-1_xxx
+aws cognito-idp get-csv-header --user-pool-id <span class="nv">$USER_POOL_ID</span>
+aws cognito-idp get-csv-header --user-pool-id <span class="nv">$USER_POOL_ID</span> --query CSVHeader
 </code></pre></div><p>実行例</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">% aws cognito-idp get-csv-header --user-pool-id $USER_POOL_ID --query CSVHeader --output text
-<span style="color:#f92672">[</span>
-    <span style="color:#e6db74">&#34;name&#34;</span>,
-    <span style="color:#e6db74">&#34;given_name&#34;</span>,
-    <span style="color:#e6db74">&#34;family_name&#34;</span>,
-    <span style="color:#e6db74">&#34;middle_name&#34;</span>,
-    <span style="color:#e6db74">&#34;nickname&#34;</span>,
-    <span style="color:#e6db74">&#34;preferred_username&#34;</span>,
-    <span style="color:#e6db74">&#34;profile&#34;</span>,
-    <span style="color:#e6db74">&#34;picture&#34;</span>,
-    <span style="color:#e6db74">&#34;website&#34;</span>,
-    <span style="color:#e6db74">&#34;email&#34;</span>,
-    <span style="color:#e6db74">&#34;email_verified&#34;</span>,
-    <span style="color:#e6db74">&#34;gender&#34;</span>,
-    <span style="color:#e6db74">&#34;birthdate&#34;</span>,
-    <span style="color:#e6db74">&#34;zoneinfo&#34;</span>,
-    <span style="color:#e6db74">&#34;locale&#34;</span>,
-    <span style="color:#e6db74">&#34;phone_number&#34;</span>,
-    <span style="color:#e6db74">&#34;phone_number_verified&#34;</span>,
-    <span style="color:#e6db74">&#34;address&#34;</span>,
-    <span style="color:#e6db74">&#34;updated_at&#34;</span>,
-    <span style="color:#e6db74">&#34;cognito:mfa_enabled&#34;</span>,
-    <span style="color:#e6db74">&#34;cognito:username&#34;</span>
-<span style="color:#f92672">]</span>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% aws cognito-idp get-csv-header --user-pool-id <span class="nv">$USER_POOL_ID</span> --query CSVHeader --output text
+<span class="o">[</span>
+    <span class="s2">&#34;name&#34;</span>,
+    <span class="s2">&#34;given_name&#34;</span>,
+    <span class="s2">&#34;family_name&#34;</span>,
+    <span class="s2">&#34;middle_name&#34;</span>,
+    <span class="s2">&#34;nickname&#34;</span>,
+    <span class="s2">&#34;preferred_username&#34;</span>,
+    <span class="s2">&#34;profile&#34;</span>,
+    <span class="s2">&#34;picture&#34;</span>,
+    <span class="s2">&#34;website&#34;</span>,
+    <span class="s2">&#34;email&#34;</span>,
+    <span class="s2">&#34;email_verified&#34;</span>,
+    <span class="s2">&#34;gender&#34;</span>,
+    <span class="s2">&#34;birthdate&#34;</span>,
+    <span class="s2">&#34;zoneinfo&#34;</span>,
+    <span class="s2">&#34;locale&#34;</span>,
+    <span class="s2">&#34;phone_number&#34;</span>,
+    <span class="s2">&#34;phone_number_verified&#34;</span>,
+    <span class="s2">&#34;address&#34;</span>,
+    <span class="s2">&#34;updated_at&#34;</span>,
+    <span class="s2">&#34;cognito:mfa_enabled&#34;</span>,
+    <span class="s2">&#34;cognito:username&#34;</span>
+<span class="o">]</span>
 </code></pre></div><p><code>--output</code> を <code>text</code> とするとコマンドを使って加工しやすいかもしれない</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">% aws cognito-idp get-csv-header --user-pool-id $USER_POOL_ID --query CSVHeader --output text
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% aws cognito-idp get-csv-header --user-pool-id <span class="nv">$USER_POOL_ID</span> --query CSVHeader --output text
 name    given_name      family_name     middle_name     nickname        preferred_username      profile picture website email   email_verified  gender  birthdate       zoneinfo        locale  phone_number       phone_number_verified   address updated_at      cognito:mfa_enabled     cognito:username
 </code></pre></div><p>これで取得したヘッダーを元に CSV ファイルを作成する</p>
 <pre><code class="language-csv" data-lang="csv">name,given_name,family_name,middle_name,nickname,preferred_username,profile,picture,website,email,email_verified,gender,birthdate,zoneinfo,locale,phone_number,phone_number_verified,address,updated_at,cognito:mfa_enabled,cognito:username
@@ -308,141 +239,141 @@ name    given_name      family_name     middle_name     nickname        preferre
 <pre><code class="language-csv" data-lang="csv">name,given_name,family_name,middle_name,nickname,preferred_username,profile,picture,website,email,email_verified,gender,birthdate,zoneinfo,locale,phone_number,phone_number_verified,address,updated_at,cognito:mfa_enabled,cognito:username
 johndoe,,,,,,,,,johndoe@example.com,TRUE,,,,,,FALSE,,,FALSE,johndoe
 janeroe,,,,,,,,,janeroe@example.com,TRUE,,,,,,FALSE,,,FALSE,janeroe
-</code></pre><h3 id="2-インポートジョブを作成">2. インポートジョブを作成</h3>
+</code></pre><h3 id="2-インポートジョブを作成">2. インポートジョブを作成<a href="#2-インポートジョブを作成" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p><code>create-user-import-job</code> コマンドでインポートジョブを作成<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">JOB_NAME<span style="color:#f92672">=</span>myjob
-CLOUD_WATCH_LOGS_ROLE_ARN<span style="color:#f92672">=</span>arn:aws:iam::123456789012:role/service-role/Cognito-UserImport-Role
-aws cognito-idp create-user-import-job --job-name $JOB_NAME --user-pool-id $USER_POOL_ID --cloud-watch-logs-role-arn $CLOUD_WATCH_LOGS_ROLE_ARN
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">JOB_NAME</span><span class="o">=</span>myjob
+<span class="nv">CLOUD_WATCH_LOGS_ROLE_ARN</span><span class="o">=</span>arn:aws:iam::123456789012:role/service-role/Cognito-UserImport-Role
+aws cognito-idp create-user-import-job --job-name <span class="nv">$JOB_NAME</span> --user-pool-id <span class="nv">$USER_POOL_ID</span> --cloud-watch-logs-role-arn <span class="nv">$CLOUD_WATCH_LOGS_ROLE_ARN</span>
 </code></pre></div><p>実行例</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">% aws cognito-idp create-user-import-job --job-name $JOB_NAME --user-pool-id $USER_POOL_ID --cloud-watch-logs-role-arn $CLOUD_WATCH_LOGS_ROLE_ARN
-<span style="color:#f92672">{</span>
-    <span style="color:#e6db74">&#34;UserImportJob&#34;</span>: <span style="color:#f92672">{</span>
-        <span style="color:#e6db74">&#34;JobName&#34;</span>: <span style="color:#e6db74">&#34;myjob&#34;</span>,
-        <span style="color:#e6db74">&#34;JobId&#34;</span>: <span style="color:#e6db74">&#34;import-xxx&#34;</span>,
-        <span style="color:#e6db74">&#34;UserPoolId&#34;</span>: <span style="color:#e6db74">&#34;ap-northeast-1_xxx&#34;</span>,
-        <span style="color:#e6db74">&#34;PreSignedUrl&#34;</span>: <span style="color:#e6db74">&#34;https://aws-cognito-idp-user-import-nrt.s3.ap-northeast-1.amazonaws.com/123456789012/ap-northeast-1_xxx/import-xxx?...&#34;</span>,
-        <span style="color:#e6db74">&#34;CreationDate&#34;</span>: <span style="color:#e6db74">&#34;2021-01-05T21:06:37.381000+09:00&#34;</span>,
-        <span style="color:#e6db74">&#34;Status&#34;</span>: <span style="color:#e6db74">&#34;Created&#34;</span>,
-        <span style="color:#e6db74">&#34;CloudWatchLogsRoleArn&#34;</span>: <span style="color:#e6db74">&#34;arn:aws:iam::123456789012:role/service-role/Cognito-UserImport-Role&#34;</span>,
-        <span style="color:#e6db74">&#34;ImportedUsers&#34;</span>: 0,
-        <span style="color:#e6db74">&#34;SkippedUsers&#34;</span>: 0,
-        <span style="color:#e6db74">&#34;FailedUsers&#34;</span>: <span style="color:#ae81ff">0</span>
-    <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% aws cognito-idp create-user-import-job --job-name <span class="nv">$JOB_NAME</span> --user-pool-id <span class="nv">$USER_POOL_ID</span> --cloud-watch-logs-role-arn <span class="nv">$CLOUD_WATCH_LOGS_ROLE_ARN</span>
+<span class="o">{</span>
+    <span class="s2">&#34;UserImportJob&#34;</span>: <span class="o">{</span>
+        <span class="s2">&#34;JobName&#34;</span>: <span class="s2">&#34;myjob&#34;</span>,
+        <span class="s2">&#34;JobId&#34;</span>: <span class="s2">&#34;import-xxx&#34;</span>,
+        <span class="s2">&#34;UserPoolId&#34;</span>: <span class="s2">&#34;ap-northeast-1_xxx&#34;</span>,
+        <span class="s2">&#34;PreSignedUrl&#34;</span>: <span class="s2">&#34;https://aws-cognito-idp-user-import-nrt.s3.ap-northeast-1.amazonaws.com/123456789012/ap-northeast-1_xxx/import-xxx?...&#34;</span>,
+        <span class="s2">&#34;CreationDate&#34;</span>: <span class="s2">&#34;2021-01-05T21:06:37.381000+09:00&#34;</span>,
+        <span class="s2">&#34;Status&#34;</span>: <span class="s2">&#34;Created&#34;</span>,
+        <span class="s2">&#34;CloudWatchLogsRoleArn&#34;</span>: <span class="s2">&#34;arn:aws:iam::123456789012:role/service-role/Cognito-UserImport-Role&#34;</span>,
+        <span class="s2">&#34;ImportedUsers&#34;</span>: 0,
+        <span class="s2">&#34;SkippedUsers&#34;</span>: 0,
+        <span class="s2">&#34;FailedUsers&#34;</span>: <span class="m">0</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div><p>CSV ファイルのアップロード</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">PRE_SIGNED_URL<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://aws-cognito-idp-user-import-nrt.s3.ap-northeast-1.amazonaws.com/123456789012/ap-northeast-1_xxx/import-xxx?...&#34;</span>
-curl -v -T ./user-import-csv-template.csv -H <span style="color:#e6db74">&#34;x-amz-server-side-encryption:aws:kms&#34;</span> $PRE_SIGNED_URL
-</code></pre></div><h3 id="3-作成したインポートジョブを開始">3. 作成したインポートジョブを開始</h3>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">PRE_SIGNED_URL</span><span class="o">=</span><span class="s2">&#34;https://aws-cognito-idp-user-import-nrt.s3.ap-northeast-1.amazonaws.com/123456789012/ap-northeast-1_xxx/import-xxx?...&#34;</span>
+curl -v -T ./user-import-csv-template.csv -H <span class="s2">&#34;x-amz-server-side-encryption:aws:kms&#34;</span> <span class="nv">$PRE_SIGNED_URL</span>
+</code></pre></div><h3 id="3-作成したインポートジョブを開始">3. 作成したインポートジョブを開始<a href="#3-作成したインポートジョブを開始" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p><code>start-user-import-job</code> でジョブを開始<sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">JOB_ID<span style="color:#f92672">=</span>import-xxx
-aws cognito-idp start-user-import-job --user-pool-id $USER_POOL_ID --job-id $JOB_ID
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">JOB_ID</span><span class="o">=</span>import-xxx
+aws cognito-idp start-user-import-job --user-pool-id <span class="nv">$USER_POOL_ID</span> --job-id <span class="nv">$JOB_ID</span>
 </code></pre></div><p>実行例</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">% aws cognito-idp start-user-import-job --user-pool-id $USER_POOL_ID --job-id $JOB_ID
-<span style="color:#f92672">{</span>
-    <span style="color:#e6db74">&#34;UserImportJob&#34;</span>: <span style="color:#f92672">{</span>
-        <span style="color:#e6db74">&#34;JobName&#34;</span>: <span style="color:#e6db74">&#34;myjob&#34;</span>,
-        <span style="color:#e6db74">&#34;JobId&#34;</span>: <span style="color:#e6db74">&#34;import-xxx&#34;</span>,
-        <span style="color:#e6db74">&#34;UserPoolId&#34;</span>: <span style="color:#e6db74">&#34;ap-northeast-1_xxx&#34;</span>,
-        <span style="color:#e6db74">&#34;PreSignedUrl&#34;</span>: <span style="color:#e6db74">&#34;https://aws-cognito-idp-user-import-nrt.s3.ap-northeast-1.amazonaws.com/123456789012/ap-northeast-1_xxx/import-xxx?...&#34;</span>,
-        <span style="color:#e6db74">&#34;CreationDate&#34;</span>: <span style="color:#e6db74">&#34;2021-01-06T03:49:04.035000+09:00&#34;</span>,
-        <span style="color:#e6db74">&#34;StartDate&#34;</span>: <span style="color:#e6db74">&#34;2021-01-06T03:50:45.478000+09:00&#34;</span>,
-        <span style="color:#e6db74">&#34;Status&#34;</span>: <span style="color:#e6db74">&#34;Pending&#34;</span>,
-        <span style="color:#e6db74">&#34;CloudWatchLogsRoleArn&#34;</span>: <span style="color:#e6db74">&#34;arn:aws:iam::123456789012:role/service-role/Cognito-UserImport-Role&#34;</span>,
-        <span style="color:#e6db74">&#34;ImportedUsers&#34;</span>: 0,
-        <span style="color:#e6db74">&#34;SkippedUsers&#34;</span>: 0,
-        <span style="color:#e6db74">&#34;FailedUsers&#34;</span>: <span style="color:#ae81ff">0</span>
-    <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h3 id="4-インポートジョブのステータス確認">4. インポートジョブのステータス確認</h3>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% aws cognito-idp start-user-import-job --user-pool-id <span class="nv">$USER_POOL_ID</span> --job-id <span class="nv">$JOB_ID</span>
+<span class="o">{</span>
+    <span class="s2">&#34;UserImportJob&#34;</span>: <span class="o">{</span>
+        <span class="s2">&#34;JobName&#34;</span>: <span class="s2">&#34;myjob&#34;</span>,
+        <span class="s2">&#34;JobId&#34;</span>: <span class="s2">&#34;import-xxx&#34;</span>,
+        <span class="s2">&#34;UserPoolId&#34;</span>: <span class="s2">&#34;ap-northeast-1_xxx&#34;</span>,
+        <span class="s2">&#34;PreSignedUrl&#34;</span>: <span class="s2">&#34;https://aws-cognito-idp-user-import-nrt.s3.ap-northeast-1.amazonaws.com/123456789012/ap-northeast-1_xxx/import-xxx?...&#34;</span>,
+        <span class="s2">&#34;CreationDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:49:04.035000+09:00&#34;</span>,
+        <span class="s2">&#34;StartDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:50:45.478000+09:00&#34;</span>,
+        <span class="s2">&#34;Status&#34;</span>: <span class="s2">&#34;Pending&#34;</span>,
+        <span class="s2">&#34;CloudWatchLogsRoleArn&#34;</span>: <span class="s2">&#34;arn:aws:iam::123456789012:role/service-role/Cognito-UserImport-Role&#34;</span>,
+        <span class="s2">&#34;ImportedUsers&#34;</span>: 0,
+        <span class="s2">&#34;SkippedUsers&#34;</span>: 0,
+        <span class="s2">&#34;FailedUsers&#34;</span>: <span class="m">0</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="4-インポートジョブのステータス確認">4. インポートジョブのステータス確認<a href="#4-インポートジョブのステータス確認" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p><code>describe-user-import-job</code> コマンドでインポートジョブのステータスを確認可能<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">aws cognito-idp describe-user-import-job --user-pool-id $USER_POOL_ID --job-id $JOB_ID
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">aws cognito-idp describe-user-import-job --user-pool-id <span class="nv">$USER_POOL_ID</span> --job-id <span class="nv">$JOB_ID</span>
 </code></pre></div><p>実行例</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">% aws cognito-idp describe-user-import-job --user-pool-id $USER_POOL_ID --job-id $JOB_ID
-<span style="color:#f92672">{</span>
-    <span style="color:#e6db74">&#34;UserImportJob&#34;</span>: <span style="color:#f92672">{</span>
-        <span style="color:#e6db74">&#34;JobName&#34;</span>: <span style="color:#e6db74">&#34;myjob&#34;</span>,
-        <span style="color:#e6db74">&#34;JobId&#34;</span>: <span style="color:#e6db74">&#34;import-xxx&#34;</span>,
-        <span style="color:#e6db74">&#34;UserPoolId&#34;</span>: <span style="color:#e6db74">&#34;ap-northeast-1_xxx&#34;</span>,
-        <span style="color:#e6db74">&#34;PreSignedUrl&#34;</span>: <span style="color:#e6db74">&#34;https://aws-cognito-idp-user-import-nrt.s3.ap-northeast-1.amazonaws.com/123456789012/ap-northeast-1_xxx/import-xxx?...&#34;</span>,
-        <span style="color:#e6db74">&#34;CreationDate&#34;</span>: <span style="color:#e6db74">&#34;2021-01-06T03:49:04.035000+09:00&#34;</span>,
-        <span style="color:#e6db74">&#34;StartDate&#34;</span>: <span style="color:#e6db74">&#34;2021-01-06T03:50:47.752000+09:00&#34;</span>,
-        <span style="color:#e6db74">&#34;CompletionDate&#34;</span>: <span style="color:#e6db74">&#34;2021-01-06T03:50:48.531000+09:00&#34;</span>,
-        <span style="color:#e6db74">&#34;Status&#34;</span>: <span style="color:#e6db74">&#34;Succeeded&#34;</span>,
-        <span style="color:#e6db74">&#34;CloudWatchLogsRoleArn&#34;</span>: <span style="color:#e6db74">&#34;arn:aws:iam::123456789012:role/service-role/Cognito-UserImport-Role&#34;</span>,
-        <span style="color:#e6db74">&#34;ImportedUsers&#34;</span>: 2,
-        <span style="color:#e6db74">&#34;SkippedUsers&#34;</span>: 0,
-        <span style="color:#e6db74">&#34;FailedUsers&#34;</span>: 0,
-        <span style="color:#e6db74">&#34;CompletionMessage&#34;</span>: <span style="color:#e6db74">&#34;Import Job Completed Successfully.&#34;</span>
-    <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h3 id="5-ユーザーが追加されたか確認">5. ユーザーが追加されたか確認</h3>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% aws cognito-idp describe-user-import-job --user-pool-id <span class="nv">$USER_POOL_ID</span> --job-id <span class="nv">$JOB_ID</span>
+<span class="o">{</span>
+    <span class="s2">&#34;UserImportJob&#34;</span>: <span class="o">{</span>
+        <span class="s2">&#34;JobName&#34;</span>: <span class="s2">&#34;myjob&#34;</span>,
+        <span class="s2">&#34;JobId&#34;</span>: <span class="s2">&#34;import-xxx&#34;</span>,
+        <span class="s2">&#34;UserPoolId&#34;</span>: <span class="s2">&#34;ap-northeast-1_xxx&#34;</span>,
+        <span class="s2">&#34;PreSignedUrl&#34;</span>: <span class="s2">&#34;https://aws-cognito-idp-user-import-nrt.s3.ap-northeast-1.amazonaws.com/123456789012/ap-northeast-1_xxx/import-xxx?...&#34;</span>,
+        <span class="s2">&#34;CreationDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:49:04.035000+09:00&#34;</span>,
+        <span class="s2">&#34;StartDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:50:47.752000+09:00&#34;</span>,
+        <span class="s2">&#34;CompletionDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:50:48.531000+09:00&#34;</span>,
+        <span class="s2">&#34;Status&#34;</span>: <span class="s2">&#34;Succeeded&#34;</span>,
+        <span class="s2">&#34;CloudWatchLogsRoleArn&#34;</span>: <span class="s2">&#34;arn:aws:iam::123456789012:role/service-role/Cognito-UserImport-Role&#34;</span>,
+        <span class="s2">&#34;ImportedUsers&#34;</span>: 2,
+        <span class="s2">&#34;SkippedUsers&#34;</span>: 0,
+        <span class="s2">&#34;FailedUsers&#34;</span>: 0,
+        <span class="s2">&#34;CompletionMessage&#34;</span>: <span class="s2">&#34;Import Job Completed Successfully.&#34;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="5-ユーザーが追加されたか確認">5. ユーザーが追加されたか確認<a href="#5-ユーザーが追加されたか確認" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p><code>list-users</code> コマンドで確認<sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">aws cognito-idp list-users --user-pool-id $USER_POOL_ID
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">aws cognito-idp list-users --user-pool-id <span class="nv">$USER_POOL_ID</span>
 </code></pre></div><p>実行例</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">% aws cognito-idp list-users --user-pool-id $USER_POOL_ID
-<span style="color:#f92672">{</span>
-    <span style="color:#e6db74">&#34;Users&#34;</span>: <span style="color:#f92672">[</span>
-        <span style="color:#f92672">{</span>
-            <span style="color:#e6db74">&#34;Username&#34;</span>: <span style="color:#e6db74">&#34;janeroe&#34;</span>,
-            <span style="color:#e6db74">&#34;Attributes&#34;</span>: <span style="color:#f92672">[</span>
-                <span style="color:#f92672">{</span>
-                    <span style="color:#e6db74">&#34;Name&#34;</span>: <span style="color:#e6db74">&#34;sub&#34;</span>,
-                    <span style="color:#e6db74">&#34;Value&#34;</span>: <span style="color:#e6db74">&#34;c754c8af-55e4-413f-afdb-895bd17e8078&#34;</span>
-                <span style="color:#f92672">}</span>,
-                <span style="color:#f92672">{</span>
-                    <span style="color:#e6db74">&#34;Name&#34;</span>: <span style="color:#e6db74">&#34;email_verified&#34;</span>,
-                    <span style="color:#e6db74">&#34;Value&#34;</span>: <span style="color:#e6db74">&#34;true&#34;</span>
-                <span style="color:#f92672">}</span>,
-                <span style="color:#f92672">{</span>
-                    <span style="color:#e6db74">&#34;Name&#34;</span>: <span style="color:#e6db74">&#34;name&#34;</span>,
-                    <span style="color:#e6db74">&#34;Value&#34;</span>: <span style="color:#e6db74">&#34;janeroe&#34;</span>
-                <span style="color:#f92672">}</span>,
-                <span style="color:#f92672">{</span>
-                    <span style="color:#e6db74">&#34;Name&#34;</span>: <span style="color:#e6db74">&#34;phone_number_verified&#34;</span>,
-                    <span style="color:#e6db74">&#34;Value&#34;</span>: <span style="color:#e6db74">&#34;false&#34;</span>
-                <span style="color:#f92672">}</span>,
-                <span style="color:#f92672">{</span>
-                    <span style="color:#e6db74">&#34;Name&#34;</span>: <span style="color:#e6db74">&#34;email&#34;</span>,
-                    <span style="color:#e6db74">&#34;Value&#34;</span>: <span style="color:#e6db74">&#34;janeroe@example.com&#34;</span>
-                <span style="color:#f92672">}</span>
-            <span style="color:#f92672">]</span>,
-            <span style="color:#e6db74">&#34;UserCreateDate&#34;</span>: <span style="color:#e6db74">&#34;2021-01-06T03:50:48.369000+09:00&#34;</span>,
-            <span style="color:#e6db74">&#34;UserLastModifiedDate&#34;</span>: <span style="color:#e6db74">&#34;2021-01-06T03:50:48.369000+09:00&#34;</span>,
-            <span style="color:#e6db74">&#34;Enabled&#34;</span>: true,
-            <span style="color:#e6db74">&#34;UserStatus&#34;</span>: <span style="color:#e6db74">&#34;RESET_REQUIRED&#34;</span>
-        <span style="color:#f92672">}</span>,
-        <span style="color:#f92672">{</span>
-            <span style="color:#e6db74">&#34;Username&#34;</span>: <span style="color:#e6db74">&#34;johndoe&#34;</span>,
-            <span style="color:#e6db74">&#34;Attributes&#34;</span>: <span style="color:#f92672">[</span>
-                <span style="color:#f92672">{</span>
-                    <span style="color:#e6db74">&#34;Name&#34;</span>: <span style="color:#e6db74">&#34;sub&#34;</span>,
-                    <span style="color:#e6db74">&#34;Value&#34;</span>: <span style="color:#e6db74">&#34;556cdeca-59af-49e2-903c-8d2452ff1cae&#34;</span>
-                <span style="color:#f92672">}</span>,
-                <span style="color:#f92672">{</span>
-                    <span style="color:#e6db74">&#34;Name&#34;</span>: <span style="color:#e6db74">&#34;email_verified&#34;</span>,
-                    <span style="color:#e6db74">&#34;Value&#34;</span>: <span style="color:#e6db74">&#34;true&#34;</span>
-                <span style="color:#f92672">}</span>,
-                <span style="color:#f92672">{</span>
-                    <span style="color:#e6db74">&#34;Name&#34;</span>: <span style="color:#e6db74">&#34;name&#34;</span>,
-                    <span style="color:#e6db74">&#34;Value&#34;</span>: <span style="color:#e6db74">&#34;johndoe&#34;</span>
-                <span style="color:#f92672">}</span>,
-                <span style="color:#f92672">{</span>
-                    <span style="color:#e6db74">&#34;Name&#34;</span>: <span style="color:#e6db74">&#34;phone_number_verified&#34;</span>,
-                    <span style="color:#e6db74">&#34;Value&#34;</span>: <span style="color:#e6db74">&#34;false&#34;</span>
-                <span style="color:#f92672">}</span>,
-                <span style="color:#f92672">{</span>
-                    <span style="color:#e6db74">&#34;Name&#34;</span>: <span style="color:#e6db74">&#34;email&#34;</span>,
-                    <span style="color:#e6db74">&#34;Value&#34;</span>: <span style="color:#e6db74">&#34;johndoe@example.com&#34;</span>
-                <span style="color:#f92672">}</span>
-            <span style="color:#f92672">]</span>,
-            <span style="color:#e6db74">&#34;UserCreateDate&#34;</span>: <span style="color:#e6db74">&#34;2021-01-06T03:50:48.363000+09:00&#34;</span>,
-            <span style="color:#e6db74">&#34;UserLastModifiedDate&#34;</span>: <span style="color:#e6db74">&#34;2021-01-06T03:50:48.363000+09:00&#34;</span>,
-            <span style="color:#e6db74">&#34;Enabled&#34;</span>: true,
-            <span style="color:#e6db74">&#34;UserStatus&#34;</span>: <span style="color:#e6db74">&#34;RESET_REQUIRED&#34;</span>
-        <span style="color:#f92672">}</span>
-    <span style="color:#f92672">]</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h2 id="ユーザーインポートジョブのステータス">ユーザーインポートジョブのステータス</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% aws cognito-idp list-users --user-pool-id <span class="nv">$USER_POOL_ID</span>
+<span class="o">{</span>
+    <span class="s2">&#34;Users&#34;</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">&#34;Username&#34;</span>: <span class="s2">&#34;janeroe&#34;</span>,
+            <span class="s2">&#34;Attributes&#34;</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;sub&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;c754c8af-55e4-413f-afdb-895bd17e8078&#34;</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;email_verified&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;true&#34;</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;name&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;janeroe&#34;</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;phone_number_verified&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;false&#34;</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;email&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;janeroe@example.com&#34;</span>
+                <span class="o">}</span>
+            <span class="o">]</span>,
+            <span class="s2">&#34;UserCreateDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:50:48.369000+09:00&#34;</span>,
+            <span class="s2">&#34;UserLastModifiedDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:50:48.369000+09:00&#34;</span>,
+            <span class="s2">&#34;Enabled&#34;</span>: true,
+            <span class="s2">&#34;UserStatus&#34;</span>: <span class="s2">&#34;RESET_REQUIRED&#34;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">&#34;Username&#34;</span>: <span class="s2">&#34;johndoe&#34;</span>,
+            <span class="s2">&#34;Attributes&#34;</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;sub&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;556cdeca-59af-49e2-903c-8d2452ff1cae&#34;</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;email_verified&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;true&#34;</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;name&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;johndoe&#34;</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;phone_number_verified&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;false&#34;</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;email&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;johndoe@example.com&#34;</span>
+                <span class="o">}</span>
+            <span class="o">]</span>,
+            <span class="s2">&#34;UserCreateDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:50:48.363000+09:00&#34;</span>,
+            <span class="s2">&#34;UserLastModifiedDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:50:48.363000+09:00&#34;</span>,
+            <span class="s2">&#34;Enabled&#34;</span>: true,
+            <span class="s2">&#34;UserStatus&#34;</span>: <span class="s2">&#34;RESET_REQUIRED&#34;</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="ユーザーインポートジョブのステータス">ユーザーインポートジョブのステータス<a href="#ユーザーインポートジョブのステータス" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <ul>
 <li>API Reference の DataType に定義がある<sup id="fnref:10"><a href="#fn:10" class="footnote-ref" role="doc-noteref">10</a></sup>
 <ul>
@@ -457,7 +388,7 @@ aws cognito-idp start-user-import-job --user-pool-id $USER_POOL_ID --job-id $JOB
 </ul>
 </li>
 </ul>
-<h2 id="トラブルシュート">トラブルシュート</h2>
+<h2 id="トラブルシュート">トラブルシュート<a href="#トラブルシュート" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <ul>
 <li>CSV のインポートが失敗する
 <ul>
@@ -471,9 +402,9 @@ aws cognito-idp start-user-import-job --user-pool-id $USER_POOL_ID --job-id $JOB
 </ul>
 </li>
 </ul>
-<h2 id="この記事を試した環境">この記事を試した環境</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-zsh" data-lang="zsh">% uname -v
-Darwin Kernel Version 19.6.0: Tue Nov <span style="color:#ae81ff">10</span> 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64
+<h2 id="この記事を試した環境">この記事を試した環境<a href="#この記事を試した環境" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% uname -v
+Darwin Kernel Version 19.6.0: Tue Nov <span class="m">10</span> 00:10:30 PST 2020<span class="p">;</span> root:xnu-6153.141.10~1/RELEASE_X86_64
 % sw_vers
 ProductName:    Mac OS X
 ProductVersion: 10.15.7
@@ -519,18 +450,18 @@ aws-cli/2.1.6 Python/3.7.4 Darwin/19.6.0 exe/x86_64 prompt/off
 <a href="https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_UserImportJobType.html">https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_UserImportJobType.html</a> <a href="#fnref:10" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</section><ul class="pa0">
-  
-</ul>
-<div class="mt6 instapaper_ignoref">
-      
-      
-      </div>
-    </div>
-
-    <aside class="w-30-l mt6-l"><div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
-    <p class="f5 b mb3">What&#39;s in this posts</p>
-      <nav id="TableOfContents">
+</section>
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>2101 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2021/01/05 20:18 &#43;0900</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/noid11/noid11.github.io/commit/bc7243cdd02f2e865659f52c9b1cca5dd1320ba5" target="_blank" rel="noopener">bc7243c</a> @ 2021/01/06</p>
+			</footer>
+		</article>
+		<aside id="toc" class="show-toc">
+			<div class="toc-title">Table of Contents</div>
+			<nav id="TableOfContents">
   <ul>
     <li><a href="#cognito-user-pool-におけるユーザーインポートの概要">Cognito User Pool におけるユーザーインポートの概要</a></li>
     <li><a href="#cognito-user-pool-における-csv-インポート機能とは">Cognito User Pool における CSV インポート機能とは？</a></li>
@@ -550,44 +481,31 @@ aws-cli/2.1.6 Python/3.7.4 Darwin/19.6.0 exe/x86_64 prompt/off
     <li><a href="#この記事を試した環境">この記事を試した環境</a></li>
   </ul>
 </nav>
-  </div>
-
-
-
-
-</aside>
-
-  </article>
-
-    </main>
-    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
-  <div class="flex justify-between">
-  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://noid11.github.io/" >
-    &copy;  tmp log 2021 
-  </a>
-    <div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		</aside>
+		<div class="post-nav thin">
+			<a class="next-post" href="https://noid11.github.io/posts/how-to-curl-with-json/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;Newer</span><br><span>curl で外部 json ファイルを元に POST リクエストする方法</span>
+			</a>
+			<a class="prev-post" href="https://noid11.github.io/posts/aws-lambda-love-golang/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>AWS Lambda で Go ランタイムを使うのが良いと思っている理由</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
 </div>
-  </div>
-</footer>
+	</main>
 
-    
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2021 <a href="https://noid11.github.io/"></a>&#183; noid11</p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://noid11.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
 
-  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
 
 
-  </body>
+	<script src="https://noid11.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
 </html>

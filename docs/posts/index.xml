@@ -1,93 +1,931 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Posts on tmp log</title>
-    <link>https://noid11.github.io/posts/</link>
-    <description>Recent content in Posts on tmp log</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>ja-jp</language>
-    <lastBuildDate>Tue, 19 Jan 2021 16:11:20 +0900</lastBuildDate><atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>PowerShell を使って Windows アカウントユーザーのパスワード失効を無効化する方法</title>
-      <link>https://noid11.github.io/posts/enable-user-password-never-expires-at-windows/</link>
-      <pubDate>Tue, 19 Jan 2021 16:11:20 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/enable-user-password-never-expires-at-windows/</guid>
-      <description>&lt;ul&gt;
+	<channel>
+		<title>Posts on noid11.github.io</title>
+		<link>https://noid11.github.io/posts/</link>
+		<description>Recent content in Posts on noid11.github.io</description>
+		<generator>Hugo -- gohugo.io</generator>
+		<language>ja-jp</language>
+		<copyright>&amp;#169; noid11</copyright>
+		<lastBuildDate>Tue, 19 Jan 2021 16:11:20 +0900</lastBuildDate>
+		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>PowerShell を使って Windows アカウントユーザーのパスワード失効を無効化する方法</title>
+			<link>https://noid11.github.io/posts/enable-user-password-never-expires-at-windows/</link>
+			<pubDate>Tue, 19 Jan 2021 16:11:20 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/enable-user-password-never-expires-at-windows/</guid>
+			<description>&lt;ul&gt;
 &lt;li&gt;Windows Server で特定ユーザーのパスワード失効を無効化したい場合に便利&lt;/li&gt;
 &lt;li&gt;デフォルトでは一定期間でローテートするような設定なので、セキュリティに注意した上で使おう&lt;/li&gt;
 &lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>PowerShell を使って Google Chrome をインストールする方法</title>
-      <link>https://noid11.github.io/posts/chrome-install-by-powershell/</link>
-      <pubDate>Tue, 19 Jan 2021 15:12:28 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/chrome-install-by-powershell/</guid>
-      <description>&lt;p&gt;Windows Server 構築で毎回 Internet Explorer の設定を変える・・・みたいな作業が減るので便利&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Windows の情報を PowerShell から確認する方法</title>
-      <link>https://noid11.github.io/posts/view-windows-info/</link>
-      <pubDate>Tue, 19 Jan 2021 14:24:03 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/view-windows-info/</guid>
-      <description>&lt;p&gt;Windows Server のバージョン情報を PowerShell から確認する方法を調べたメモ&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Kinesis Data Streams のコンシューマーとして動かす AWS Lambda 関数サンプル</title>
-      <link>https://noid11.github.io/posts/lambda-kinesis-consumer-sample/</link>
-      <pubDate>Tue, 19 Jan 2021 08:51:43 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/lambda-kinesis-consumer-sample/</guid>
-      <description>&lt;ul&gt;
+			<content type="html"><![CDATA[<ul>
+<li>Windows Server で特定ユーザーのパスワード失効を無効化したい場合に便利</li>
+<li>デフォルトでは一定期間でローテートするような設定なので、セキュリティに注意した上で使おう</li>
+</ul>
+<h2 id="コマンド">コマンド</h2>
+<ul>
+<li>Administrator ユーザーのパスワード失効を無効化する例
+<ul>
+<li>コマンド的には、パスワード有効期限を無期限とする設定を有効化する感じ</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">Set-LocalUser</span> <span class="n">-Name</span> <span class="s2">&#34;Administrator&#34;</span> <span class="n">-PasswordNeverExpires</span> <span class="nv">$true</span>
+</code></pre></div><h2 id="set-localuser-コマンド">Set-LocalUser コマンド</h2>
+<p>Set-LocalUser (Microsoft.PowerShell.LocalAccounts) - PowerShell | Microsoft Docs<br>
+<a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.localaccounts/set-localuser">https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.localaccounts/set-localuser</a></p>
+<blockquote>
+<p>The Set-LocalUser cmdlet modifies a local user account. This cmdlet can reset the password of a local user account.</p>
+</blockquote>
+<ul>
+<li>ローカルユーザーアカウントの変更を行うコマンド</li>
+<li><code>-Name</code>
+<ul>
+<li>対象となるローカルユーザーアカウントの名前</li>
+</ul>
+</li>
+<li><code>-PasswordNeverExpires</code>
+<ul>
+<li>パスワード有効期限を無期限とする設定を有効化・無効化する</li>
+</ul>
+</li>
+</ul>
+<h2 id="net-user-コマンド">Net user コマンド</h2>
+<p>Net user | Microsoft Docs<br>
+<a href="https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/cc771865(v=ws.11)">https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/cc771865(v=ws.11)</a></p>
+<blockquote>
+<p>Adds or modifies user accounts, or displays user account information.</p>
+</blockquote>
+<ul>
+<li>ユーザーアカウントの追加・変更や、ユーザーアカウント情報を表示するコマンド</li>
+<li><code>Set-LocalUser</code> コマンドを実行する前後で使用することで、変更内容を確認できる</li>
+</ul>
+<h2 id="実行例">実行例</h2>
+<ul>
+<li><code>Password expires</code> が <code>Never</code> になれば OK</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">Users</span><span class="p">\</span><span class="n">Administrator</span><span class="p">&gt;</span> <span class="n">net</span> <span class="n">user</span> <span class="n">Administrator</span>
+<span class="n">User</span> <span class="n">name</span>                    <span class="n">Administrator</span>
+<span class="n">Full</span> <span class="n">Name</span>
+<span class="n">Comment</span>                      <span class="n">Built-in</span> <span class="n">account</span> <span class="k">for</span> <span class="n">administering</span> <span class="n">the</span> <span class="n">computer</span><span class="p">/</span><span class="n">domain</span>
+<span class="n">User</span> <span class="n">s</span> <span class="n">comment</span>
+<span class="n">Country</span><span class="p">/</span><span class="n">region</span> <span class="n">code</span>          <span class="n">000</span> <span class="p">(</span><span class="n">System</span> <span class="k">Default</span><span class="p">)</span>
+<span class="n">Account</span> <span class="n">active</span>               <span class="n">Yes</span>
+<span class="n">Account</span> <span class="n">expires</span>              <span class="n">Never</span>
+
+<span class="n">Password</span> <span class="n">last</span> <span class="nb">set </span>           <span class="n">1</span><span class="p">/</span><span class="n">19</span><span class="p">/</span><span class="n">2021</span> <span class="n">4</span><span class="err">:</span><span class="n">27</span><span class="err">:</span><span class="n">36</span> <span class="n">AM</span>
+<span class="n">Password</span> <span class="n">expires</span>             <span class="n">3</span><span class="p">/</span><span class="n">2</span><span class="p">/</span><span class="n">2021</span> <span class="n">4</span><span class="err">:</span><span class="n">27</span><span class="err">:</span><span class="n">36</span> <span class="n">AM</span>
+<span class="n">Password</span> <span class="n">changeable</span>          <span class="n">1</span><span class="p">/</span><span class="n">19</span><span class="p">/</span><span class="n">2021</span> <span class="n">4</span><span class="err">:</span><span class="n">27</span><span class="err">:</span><span class="n">36</span> <span class="n">AM</span>
+<span class="n">Password</span> <span class="n">required</span>            <span class="n">Yes</span>
+<span class="n">User</span> <span class="n">may</span> <span class="n">change</span> <span class="n">password</span>     <span class="n">Yes</span>
+
+<span class="n">Workstations</span> <span class="n">allowed</span>         <span class="n">All</span>
+<span class="n">Logon</span> <span class="n">script</span>
+<span class="n">User</span> <span class="n">profile</span>
+<span class="n">Home</span> <span class="n">directory</span>
+<span class="n">Last</span> <span class="n">logon</span>                   <span class="n">1</span><span class="p">/</span><span class="n">19</span><span class="p">/</span><span class="n">2021</span> <span class="n">4</span><span class="err">:</span><span class="n">41</span><span class="err">:</span><span class="n">50</span> <span class="n">AM</span>
+
+<span class="n">Logon</span> <span class="n">hours</span> <span class="n">allowed</span>          <span class="n">All</span>
+
+<span class="n">Local</span> <span class="nb">Group </span><span class="n">Memberships</span>      <span class="p">*</span><span class="n">Administrators</span>
+<span class="n">Global</span> <span class="nb">Group </span><span class="n">memberships</span>     <span class="p">*</span><span class="n">None</span>
+<span class="n">The</span> <span class="n">command</span> <span class="n">completed</span> <span class="n">successfully</span><span class="p">.</span>
+<span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">Users</span><span class="p">\</span><span class="n">Administrator</span><span class="p">&gt;</span> <span class="nb">Set-LocalUser</span> <span class="n">-Name</span> <span class="s2">&#34;Administrator&#34;</span> <span class="n">-PasswordNeverExpires</span> <span class="nv">$true</span>
+<span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">Users</span><span class="p">\</span><span class="n">Administrator</span><span class="p">&gt;</span> <span class="n">net</span> <span class="n">user</span> <span class="n">Administrator</span>
+<span class="n">User</span> <span class="n">name</span>                    <span class="n">Administrator</span>
+<span class="n">Full</span> <span class="n">Name</span>
+<span class="n">Comment</span>                      <span class="n">Built-in</span> <span class="n">account</span> <span class="k">for</span> <span class="n">administering</span> <span class="n">the</span> <span class="n">computer</span><span class="p">/</span><span class="n">domain</span>
+<span class="n">User</span> <span class="n">s</span> <span class="n">comment</span>
+<span class="n">Country</span><span class="p">/</span><span class="n">region</span> <span class="n">code</span>          <span class="n">000</span> <span class="p">(</span><span class="n">System</span> <span class="k">Default</span><span class="p">)</span>
+<span class="n">Account</span> <span class="n">active</span>               <span class="n">Yes</span>
+<span class="n">Account</span> <span class="n">expires</span>              <span class="n">Never</span>
+
+<span class="n">Password</span> <span class="n">last</span> <span class="nb">set </span>           <span class="n">1</span><span class="p">/</span><span class="n">19</span><span class="p">/</span><span class="n">2021</span> <span class="n">4</span><span class="err">:</span><span class="n">27</span><span class="err">:</span><span class="n">36</span> <span class="n">AM</span>
+<span class="n">Password</span> <span class="n">expires</span>             <span class="n">Never</span>
+<span class="n">Password</span> <span class="n">changeable</span>          <span class="n">1</span><span class="p">/</span><span class="n">19</span><span class="p">/</span><span class="n">2021</span> <span class="n">4</span><span class="err">:</span><span class="n">27</span><span class="err">:</span><span class="n">36</span> <span class="n">AM</span>
+<span class="n">Password</span> <span class="n">required</span>            <span class="n">Yes</span>
+<span class="n">User</span> <span class="n">may</span> <span class="n">change</span> <span class="n">password</span>     <span class="n">Yes</span>
+
+<span class="n">Workstations</span> <span class="n">allowed</span>         <span class="n">All</span>
+<span class="n">Logon</span> <span class="n">script</span>
+<span class="n">User</span> <span class="n">profile</span>
+<span class="n">Home</span> <span class="n">directory</span>
+<span class="n">Last</span> <span class="n">logon</span>                   <span class="n">1</span><span class="p">/</span><span class="n">19</span><span class="p">/</span><span class="n">2021</span> <span class="n">4</span><span class="err">:</span><span class="n">41</span><span class="err">:</span><span class="n">50</span> <span class="n">AM</span>
+
+<span class="n">Logon</span> <span class="n">hours</span> <span class="n">allowed</span>          <span class="n">All</span>
+
+<span class="n">Local</span> <span class="nb">Group </span><span class="n">Memberships</span>      <span class="p">*</span><span class="n">Administrators</span>
+<span class="n">Global</span> <span class="nb">Group </span><span class="n">memberships</span>     <span class="p">*</span><span class="n">None</span>
+<span class="n">The</span> <span class="n">command</span> <span class="n">completed</span> <span class="n">successfully</span><span class="p">.</span>
+</code></pre></div><h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">Users</span><span class="p">\</span><span class="n">Administrator</span><span class="p">&gt;</span> <span class="nb">Get-WmiObject</span> <span class="n">Win32_OperatingSystem</span>
+
+
+<span class="n">SystemDirectory</span> <span class="err">:</span> <span class="n">C:</span><span class="p">\</span><span class="n">Windows</span><span class="p">\</span><span class="n">system32</span>
+<span class="n">Organization</span>    <span class="err">:</span> <span class="n">Amazon</span><span class="p">.</span><span class="n">com</span>
+<span class="n">BuildNumber</span>     <span class="err">:</span> <span class="n">17763</span>
+<span class="n">RegisteredUser</span>  <span class="err">:</span> <span class="n">EC2</span>
+<span class="n">SerialNumber</span>    <span class="err">:</span> <span class="n">00430</span><span class="p">-</span><span class="n">00000</span><span class="p">-</span><span class="n">00000-AA379</span>
+<span class="n">Version</span>         <span class="err">:</span> <span class="n">10</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">17763</span>
+
+<span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">Users</span><span class="p">\</span><span class="n">Administrator</span><span class="p">&gt;</span> <span class="nv">$PSVersionTable</span>
+
+<span class="n">Name</span>                           <span class="n">Value</span>
+<span class="p">----</span>                           <span class="p">-----</span>
+<span class="n">PSVersion</span>                      <span class="n">5</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">17763</span><span class="p">.</span><span class="n">1490</span>
+<span class="n">PSEdition</span>                      <span class="n">Desktop</span>
+<span class="n">PSCompatibleVersions</span>           <span class="p">{</span><span class="n">1</span><span class="p">.</span><span class="n">0</span><span class="p">,</span> <span class="n">2</span><span class="p">.</span><span class="n">0</span><span class="p">,</span> <span class="n">3</span><span class="p">.</span><span class="n">0</span><span class="p">,</span> <span class="n">4</span><span class="p">.</span><span class="n">0</span><span class="p">...}</span>
+<span class="n">BuildVersion</span>                   <span class="n">10</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">17763</span><span class="p">.</span><span class="n">1490</span>
+<span class="n">CLRVersion</span>                     <span class="n">4</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">30319</span><span class="p">.</span><span class="n">42000</span>
+<span class="n">WSManStackVersion</span>              <span class="n">3</span><span class="p">.</span><span class="n">0</span>
+<span class="n">PSRemotingProtocolVersion</span>      <span class="n">2</span><span class="p">.</span><span class="n">3</span>
+<span class="n">SerializationVersion</span>           <span class="n">1</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">1</span>
+</code></pre></div>]]></content>
+		</item>
+		
+		<item>
+			<title>PowerShell を使って Google Chrome をインストールする方法</title>
+			<link>https://noid11.github.io/posts/chrome-install-by-powershell/</link>
+			<pubDate>Tue, 19 Jan 2021 15:12:28 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/chrome-install-by-powershell/</guid>
+			<description>&lt;p&gt;Windows Server 構築で毎回 Internet Explorer の設定を変える・・・みたいな作業が減るので便利&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p>Windows Server 構築で毎回 Internet Explorer の設定を変える・・・みたいな作業が減るので便利</p>
+<h2 id="コマンド">コマンド</h2>
+<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nv">$Path</span> <span class="p">=</span> <span class="nv">$env:TEMP</span><span class="p">;</span> <span class="nv">$Installer</span> <span class="p">=</span> <span class="s2">&#34;chrome_installer.exe&#34;</span><span class="p">;</span> <span class="nb">Invoke-WebRequest</span> <span class="s2">&#34;https://dl.google.com/tag/s/appguid%3D%7B8A69D345-D564-463C-AFF1-A69D9E530F96%7D%26browser%3D0%26usagestats%3D1%26appname%3DGoogle%2520Chrome%26needsadmin%3Dprefers%26brand%3DGTPM/update2/installers/ChromeSetup.exe&#34;</span> <span class="n">-OutFile</span> <span class="nv">$Path</span><span class="p">\</span><span class="nv">$Installer</span><span class="p">;</span> <span class="nb">Start-Process</span> <span class="n">-FilePath</span> <span class="nv">$Path</span><span class="p">\</span><span class="nv">$Installer</span> <span class="n">-Args</span> <span class="s2">&#34;/silent /install&#34;</span> <span class="n">-Verb</span> <span class="n">RunAs</span> <span class="n">-Wait</span><span class="p">;</span> <span class="nb">Remove-Item</span> <span class="nv">$Path</span><span class="p">\</span><span class="nv">$Installer</span>
+</code></pre></div><h2 id="何をしているのか">何をしているのか</h2>
+<p><code>;</code> はコマンドの区切りなので、実質以下のようなコマンドを連続して実行している</p>
+<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nv">$Path</span> <span class="p">=</span> <span class="nv">$env:TEMP</span>
+<span class="nv">$Installer</span> <span class="p">=</span> <span class="s2">&#34;chrome_installer.exe&#34;</span>
+<span class="nb">Invoke-WebRequest</span> <span class="s2">&#34;https://dl.google.com/tag/s/appguid%3D%7B8A69D345-D564-463C-AFF1-A69D9E530F96%7D%26browser%3D0%26usagestats%3D1%26appname%3DGoogle%2520Chrome%26needsadmin%3Dprefers%26brand%3DGTPM/update2/installers/ChromeSetup.exe&#34;</span> <span class="n">-OutFile</span> <span class="nv">$Path</span><span class="p">\</span><span class="nv">$Installer</span>
+<span class="nb">Start-Process</span> <span class="n">-FilePath</span> <span class="nv">$Path</span><span class="p">\</span><span class="nv">$Installer</span> <span class="n">-Args</span> <span class="s2">&#34;/silent /install&#34;</span> <span class="n">-Verb</span> <span class="n">RunAs</span> <span class="n">-Wait</span>
+<span class="nb">Remove-Item</span> <span class="nv">$Path</span><span class="p">\</span><span class="nv">$Installer</span>
+</code></pre></div><ol>
+<li><code>$Path = $env:TEMP</code>
+<ul>
+<li>Google Chrome のインストーラーを保存する一時ディレクトリの定義</li>
+</ul>
+</li>
+<li><code>$Installer = &quot;chrome_installer.exe&quot;</code>
+<ul>
+<li>Google Chrome のインストーラーを保存する際のファイル名</li>
+</ul>
+</li>
+<li><code>Invoke-WebRequest &quot;https://dl.google.com/tag/s/appguid%3D%7B8A69D345-D564-463C-AFF1-A69D9E530F96%7D%26browser%3D0%26usagestats%3D1%26appname%3DGoogle%2520Chrome%26needsadmin%3Dprefers%26brand%3DGTPM/update2/installers/ChromeSetup.exe&quot; -OutFile $Path\$Installer</code>
+<ul>
+<li><code>Invoke-WebRequest</code>
+<ul>
+<li>HTTP, HTTPS リクエストを行うコマンド</li>
+<li><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-webrequest">https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-webrequest</a></li>
+</ul>
+</li>
+<li><code>https://dl.google.com/...</code>
+<ul>
+<li>Google Chrome インストーラーがホストされている URL</li>
+<li>直接ダウンロードできるリンクについては Google 公式の情報は発見できなかった</li>
+</ul>
+</li>
+<li><code>-OutFile $Path\$Installer</code>
+<ul>
+<li>HTTP, HTTPS レスポンス内容をファイルに出力するオプション</li>
+<li><code>$Path\$Installer</code> は前に定義した一時ディレクトリとファイル名</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>Start-Process -FilePath $Path\$Installer -Args &quot;/silent /install&quot; -Verb RunAs -Wait</code>
+<ul>
+<li><code>Start-Process</code>
+<ul>
+<li>新しいプロセスを開始するコマンド</li>
+<li><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/start-process">https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/start-process</a></li>
+</ul>
+</li>
+<li><code>-FilePath $Path\$Installer</code>
+<ul>
+<li>プロセスとして実行するファイルのパス</li>
+</ul>
+</li>
+<li><code>-Args &quot;/silent /install&quot;</code>
+<ul>
+<li><code>-ArgumentList</code> のエイリアス</li>
+<li>プロセスを開始するときの引数</li>
+<li>そのため <code>&quot;/silent /install&quot;</code> は Google Chrome インストーラーに対して指定するオプション
+<ul>
+<li>サイレントインストールのためのオプションだと思われるが、 Google Chrome のインストーラーで使用できるオプションについては情報を発見できなかった</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>-Verb RunAs</code>
+<ul>
+<li>ファイルを動作するときの verb を指定するオプション
+<ul>
+<li>verb は実行するアクション的な意味合い</li>
+</ul>
+</li>
+<li>指定可能な verb は、実行するファイルの拡張子によって異なる</li>
+<li><code>RunAs</code> は <code>.exe</code> 形式のファイルに指定できる verb
+<ul>
+<li>要するに管理者権限でプロセスを実行するということ。 <code>sudo</code> に似ている</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>-Wait</code>
+<ul>
+<li>実行するプロセスと、その子孫となるプロセスが完了するのを待つオプション</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>Remove-Item $Path\$Installer</code>
+<ul>
+<li>ファイルを削除するコマンド
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/remove-item">https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/remove-item</a></li>
+</ul>
+</li>
+<li><code>Start-Process ... -Wait</code> と合わせて、イントールプロセス完了後にインストーラーを削除する</li>
+</ul>
+</li>
+</ol>
+<h2 id="参考">参考</h2>
+<p>コマンドでWindowsにChromeをインストールする - Qiita<br>
+<a href="https://qiita.com/Arahabica/items/04f8469842f29550b831">https://qiita.com/Arahabica/items/04f8469842f29550b831</a></p>
+<p>Install Google Chrome with Powershell command-line - YouTube<br>
+<a href="https://www.youtube.com/watch?v=M0qX46M3mnE">https://www.youtube.com/watch?v=M0qX46M3mnE</a></p>
+<h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">Users</span><span class="p">\</span><span class="n">Administrator</span><span class="p">&gt;</span> <span class="nb">Get-WmiObject</span> <span class="n">Win32_OperatingSystem</span>
+
+
+<span class="n">SystemDirectory</span> <span class="err">:</span> <span class="n">C:</span><span class="p">\</span><span class="n">Windows</span><span class="p">\</span><span class="n">system32</span>
+<span class="n">Organization</span>    <span class="err">:</span> <span class="n">Amazon</span><span class="p">.</span><span class="n">com</span>
+<span class="n">BuildNumber</span>     <span class="err">:</span> <span class="n">17763</span>
+<span class="n">RegisteredUser</span>  <span class="err">:</span> <span class="n">EC2</span>
+<span class="n">SerialNumber</span>    <span class="err">:</span> <span class="n">00430</span><span class="p">-</span><span class="n">00000</span><span class="p">-</span><span class="n">00000-AA379</span>
+<span class="n">Version</span>         <span class="err">:</span> <span class="n">10</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">17763</span>
+
+<span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">Users</span><span class="p">\</span><span class="n">Administrator</span><span class="p">&gt;</span> <span class="nv">$PSVersionTable</span>
+
+<span class="n">Name</span>                           <span class="n">Value</span>
+<span class="p">----</span>                           <span class="p">-----</span>
+<span class="n">PSVersion</span>                      <span class="n">5</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">17763</span><span class="p">.</span><span class="n">1490</span>
+<span class="n">PSEdition</span>                      <span class="n">Desktop</span>
+<span class="n">PSCompatibleVersions</span>           <span class="p">{</span><span class="n">1</span><span class="p">.</span><span class="n">0</span><span class="p">,</span> <span class="n">2</span><span class="p">.</span><span class="n">0</span><span class="p">,</span> <span class="n">3</span><span class="p">.</span><span class="n">0</span><span class="p">,</span> <span class="n">4</span><span class="p">.</span><span class="n">0</span><span class="p">...}</span>
+<span class="n">BuildVersion</span>                   <span class="n">10</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">17763</span><span class="p">.</span><span class="n">1490</span>
+<span class="n">CLRVersion</span>                     <span class="n">4</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">30319</span><span class="p">.</span><span class="n">42000</span>
+<span class="n">WSManStackVersion</span>              <span class="n">3</span><span class="p">.</span><span class="n">0</span>
+<span class="n">PSRemotingProtocolVersion</span>      <span class="n">2</span><span class="p">.</span><span class="n">3</span>
+<span class="n">SerializationVersion</span>           <span class="n">1</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">1</span>
+</code></pre></div>]]></content>
+		</item>
+		
+		<item>
+			<title>Windows の情報を PowerShell から確認する方法</title>
+			<link>https://noid11.github.io/posts/view-windows-info/</link>
+			<pubDate>Tue, 19 Jan 2021 14:24:03 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/view-windows-info/</guid>
+			<description>&lt;p&gt;Windows Server のバージョン情報を PowerShell から確認する方法を調べたメモ&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p>Windows Server のバージョン情報を PowerShell から確認する方法を調べたメモ</p>
+<h2 id="get-wmiobject-win32_operatingsystem">Get-WmiObject Win32_OperatingSystem</h2>
+<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">Get-WmiObject</span> <span class="n">Win32_OperatingSystem</span>
+</code></pre></div><h2 id="実行例">実行例</h2>
+<p>EC2 で Windows Server を構築した例</p>
+<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">Users</span><span class="p">\</span><span class="n">Administrator</span><span class="p">&gt;</span> <span class="nb">Get-WmiObject</span> <span class="n">Win32_OperatingSystem</span>
+
+
+<span class="n">SystemDirectory</span> <span class="err">:</span> <span class="n">C:</span><span class="p">\</span><span class="n">Windows</span><span class="p">\</span><span class="n">system32</span>
+<span class="n">Organization</span>    <span class="err">:</span> <span class="n">Amazon</span><span class="p">.</span><span class="n">com</span>
+<span class="n">BuildNumber</span>     <span class="err">:</span> <span class="n">17763</span>
+<span class="n">RegisteredUser</span>  <span class="err">:</span> <span class="n">EC2</span>
+<span class="n">SerialNumber</span>    <span class="err">:</span> <span class="n">00430</span><span class="p">-</span><span class="n">00000</span><span class="p">-</span><span class="n">00000-AA379</span>
+<span class="n">Version</span>         <span class="err">:</span> <span class="n">10</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">17763</span>
+</code></pre></div><ul>
+<li>SystemDirectory:
+<ul>
+<li>OS のシステムディレクトリ</li>
+<li>System directory of the operating system.</li>
+</ul>
+</li>
+<li>Organization:
+<ul>
+<li>OS 登録ユーザーの会社名</li>
+<li>Company name for the registered user of the operating system.</li>
+</ul>
+</li>
+<li>BuildNumber:
+<ul>
+<li>OS のビルド番号。製品のリリースバージョン番号よりも正確なバージョン情報として使用できる</li>
+<li>Build number of an operating system. It can be used for more precise version information than product release version numbers.</li>
+</ul>
+</li>
+<li>RegisteredUser:
+<ul>
+<li>OS の登録ユーザー名</li>
+<li>Name of the registered user of the operating system.</li>
+</ul>
+</li>
+<li>SerialNumber:
+<ul>
+<li>OS のシリアル ID 番号</li>
+<li>Operating system product serial identification number.</li>
+</ul>
+</li>
+<li>Version:
+<ul>
+<li>OS のバージョン</li>
+<li>Version number of the operating system.</li>
+</ul>
+</li>
+</ul>
+<p>Win32_OperatingSystem class - Win32 apps | Microsoft Docs<br>
+<a href="https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-operatingsystem">https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-operatingsystem</a></p>
+<h2 id="get-wmiobject-とは">Get-WmiObject とは</h2>
+<p>Get-WmiObject (Microsoft.PowerShell.Management) - PowerShell | Microsoft Docs<br>
+<a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-wmiobject">https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-wmiobject</a></p>
+<blockquote>
+<p>Gets instances of Windows Management Instrumentation (WMI) classes or information about the available classes.</p>
+</blockquote>
+<p>WMI: Windows Managemtn Instrumentation クラスまたは利用可能なクラス情報のインスタンス情報を取得するコマンド</p>
+<h2 id="wmi-windows-managemtn-instrumentation-とは">WMI: Windows Managemtn Instrumentation とは</h2>
+<p>Windows Management Instrumentation - Win32 apps | Microsoft Docs<br>
+<a href="https://docs.microsoft.com/ja-jp/windows/win32/wmisdk/wmi-start-page">https://docs.microsoft.com/ja-jp/windows/win32/wmisdk/wmi-start-page</a></p>
+<blockquote>
+<p>Windows Management Instrumentation (WMI) is the infrastructure for management data and operations on Windows-based operating systems. You can write WMI scripts or applications to automate administrative tasks on remote computers but WMI also supplies management data to other parts of the operating system and products, for example System Center Operations Manager, formerly Microsoft Operations Manager (MOM), or Windows Remote Management (WinRM).</p>
+</blockquote>
+<p>Windows Management Instrumentation (WMI) は Windows ベース OS におけるデータ管理と操作のためのインフラ</p>
+<h2 id="win32_operatingsystem-とは">Win32_OperatingSystem とは</h2>
+<p>Win32_OperatingSystem class - Win32 apps | Microsoft Docs<br>
+<a href="https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-operatingsystem">https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-operatingsystem</a></p>
+<blockquote>
+<p>The Win32_OperatingSystem WMI class represents a Windows-based operating system installed on a computer.</p>
+</blockquote>
+<p>Win32_OperatingSystem は WMI クラスの1つで、コンピューターにインストールされている Windows ベースの OS を扱うクラス</p>
+<h2 id="buildnumber-から-windows-server-リリースを確認する">BuildNumber から Windows Server リリースを確認する</h2>
+<ul>
+<li>公式情報があるので BuildNumber で検索すれば OK</li>
+<li>BuildNumber が <code>17763</code> なら、 OS Build カラムから <code>Windows Server 2019 (Long-Term Servicing Channel) (Datacenter, Essentials, Standard)</code> か <code>Windows Server, version 1809 (Semi-Annual Channel) (Datacenter Core, Standard Core)</code> だと分かる</li>
+</ul>
+<p>Windows Server のリリース情報 | Microsoft Docs<br>
+<a href="https://docs.microsoft.com/ja-jp/windows-server/get-started/windows-server-release-info">https://docs.microsoft.com/ja-jp/windows-server/get-started/windows-server-release-info</a></p>
+<h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">Users</span><span class="p">\</span><span class="n">Administrator</span><span class="p">&gt;</span> <span class="nb">Get-WmiObject</span> <span class="n">Win32_OperatingSystem</span>
+
+
+<span class="n">SystemDirectory</span> <span class="err">:</span> <span class="n">C:</span><span class="p">\</span><span class="n">Windows</span><span class="p">\</span><span class="n">system32</span>
+<span class="n">Organization</span>    <span class="err">:</span> <span class="n">Amazon</span><span class="p">.</span><span class="n">com</span>
+<span class="n">BuildNumber</span>     <span class="err">:</span> <span class="n">17763</span>
+<span class="n">RegisteredUser</span>  <span class="err">:</span> <span class="n">EC2</span>
+<span class="n">SerialNumber</span>    <span class="err">:</span> <span class="n">00430</span><span class="p">-</span><span class="n">00000</span><span class="p">-</span><span class="n">00000-AA379</span>
+<span class="n">Version</span>         <span class="err">:</span> <span class="n">10</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">17763</span>
+
+<span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">Users</span><span class="p">\</span><span class="n">Administrator</span><span class="p">&gt;</span> <span class="nv">$PSVersionTable</span>
+
+<span class="n">Name</span>                           <span class="n">Value</span>
+<span class="p">----</span>                           <span class="p">-----</span>
+<span class="n">PSVersion</span>                      <span class="n">5</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">17763</span><span class="p">.</span><span class="n">1490</span>
+<span class="n">PSEdition</span>                      <span class="n">Desktop</span>
+<span class="n">PSCompatibleVersions</span>           <span class="p">{</span><span class="n">1</span><span class="p">.</span><span class="n">0</span><span class="p">,</span> <span class="n">2</span><span class="p">.</span><span class="n">0</span><span class="p">,</span> <span class="n">3</span><span class="p">.</span><span class="n">0</span><span class="p">,</span> <span class="n">4</span><span class="p">.</span><span class="n">0</span><span class="p">...}</span>
+<span class="n">BuildVersion</span>                   <span class="n">10</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">17763</span><span class="p">.</span><span class="n">1490</span>
+<span class="n">CLRVersion</span>                     <span class="n">4</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">30319</span><span class="p">.</span><span class="n">42000</span>
+<span class="n">WSManStackVersion</span>              <span class="n">3</span><span class="p">.</span><span class="n">0</span>
+<span class="n">PSRemotingProtocolVersion</span>      <span class="n">2</span><span class="p">.</span><span class="n">3</span>
+<span class="n">SerializationVersion</span>           <span class="n">1</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">1</span>
+</code></pre></div>]]></content>
+		</item>
+		
+		<item>
+			<title>Kinesis Data Streams のコンシューマーとして動かす AWS Lambda 関数サンプル</title>
+			<link>https://noid11.github.io/posts/lambda-kinesis-consumer-sample/</link>
+			<pubDate>Tue, 19 Jan 2021 08:51:43 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/lambda-kinesis-consumer-sample/</guid>
+			<description>&lt;ul&gt;
 &lt;li&gt;Kinesis Data Streams に連携されるデータを確認したい場合等に使う&lt;/li&gt;
 &lt;li&gt;ログの出力先等として Kinesis Data Streams に連携するサービスは結構存在するので、サクッと試す分にはマネジメントコンソールから編集可能な Python, Node.js 等を使うのが便利&lt;/li&gt;
 &lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>go get コマンドのヘルプを読む</title>
-      <link>https://noid11.github.io/posts/go-help-get/</link>
-      <pubDate>Sat, 16 Jan 2021 12:10:06 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/go-help-get/</guid>
-      <description>&lt;p&gt;&lt;code&gt;go get&lt;/code&gt; コマンドのヘルプ &lt;code&gt;go help get&lt;/code&gt; を読んだメモ&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>UUIDv4 を Go で生成する</title>
-      <link>https://noid11.github.io/posts/generate-uuidv4-by-golang/</link>
-      <pubDate>Sat, 16 Jan 2021 11:31:50 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/generate-uuidv4-by-golang/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>mktemp コマンド</title>
-      <link>https://noid11.github.io/posts/mktemp-command/</link>
-      <pubDate>Sat, 16 Jan 2021 08:56:33 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/mktemp-command/</guid>
-      <description>&lt;ul&gt;
+			<content type="html"><![CDATA[<ul>
+<li>Kinesis Data Streams に連携されるデータを確認したい場合等に使う</li>
+<li>ログの出力先等として Kinesis Data Streams に連携するサービスは結構存在するので、サクッと試す分にはマネジメントコンソールから編集可能な Python, Node.js 等を使うのが便利</li>
+</ul>
+<h2 id="サンプルコード">サンプルコード</h2>
+<div class="highlight"><pre class="chroma"><code class="language-py" data-lang="py"><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span><span class="p">,</span> <span class="n">INFO</span><span class="p">,</span> <span class="n">DEBUG</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;init&#34;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;base64 decorded records data&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">]:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;kinesis&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">event</span>
+</code></pre></div><h2 id="aws-cli-を使って-kinesis-data-streams-にデータを投入するサンプル">AWS CLI を使って Kinesis Data Streams にデータを投入するサンプル</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">STREAM_NAME</span><span class="o">=</span>mystream
+<span class="nv">PERTITION_KEY</span><span class="o">=</span>my-partition
+<span class="nv">REGION</span><span class="o">=</span>ap-northeast-1
+aws --region <span class="nv">$REGION</span> kinesis put-record --stream-name <span class="nv">$STREAM_NAME</span> --data <span class="k">$(</span>uuidgen<span class="p">|</span>base64<span class="k">)</span> --partition-key <span class="nv">$PERTITION_KEY</span>
+
+<span class="c1"># ループしたい場合</span>
+<span class="k">while</span> sleep 1<span class="p">;</span> <span class="k">do</span> aws --region <span class="nv">$REGION</span> kinesis put-record --stream-name <span class="nv">$STREAM_NAME</span> --data <span class="k">$(</span>uuidgen<span class="p">|</span>base64<span class="k">)</span> --partition-key <span class="nv">$PERTITION_KEY</span><span class="p">;</span> <span class="k">done</span>
+</code></pre></div><ul>
+<li>Kinesis Data Streams に連携されているデータは base64 エンコードされる場合が多いため、上記コマンドでも base64 エンコードしているが、必須ではない</li>
+</ul>
+<h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% sw_vers
+ProductName:	Mac OS X
+ProductVersion:	10.15.7
+BuildVersion:	19H114
+% aws --version
+aws-cli/2.1.6 Python/3.7.4 Darwin/19.6.0 exe/x86_64 prompt/off
+</code></pre></div><ul>
+<li>AWS Lambda ランタイム: Python 3.8</li>
+</ul>]]></content>
+		</item>
+		
+		<item>
+			<title>go get コマンドのヘルプを読む</title>
+			<link>https://noid11.github.io/posts/go-help-get/</link>
+			<pubDate>Sat, 16 Jan 2021 12:10:06 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/go-help-get/</guid>
+			<description>&lt;p&gt;&lt;code&gt;go get&lt;/code&gt; コマンドのヘルプ &lt;code&gt;go help get&lt;/code&gt; を読んだメモ&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p><code>go get</code> コマンドのヘルプ <code>go help get</code> を読んだメモ</p>
+<h2 id="note">Note</h2>
+<pre><code>usage: go get [-d] [-t] [-u] [-v] [-insecure] [build flags] [packages]
+</code></pre><hr>
+<p>依存関係の解決挙動あれこれ</p>
+<ul>
+<li>go get は、現在の開発モジュールを、依存関係の解決して追加し、ビルドとインストールを行う</li>
+<li>まず、追加するモジュールの依存関係を解決する</li>
+<li>それぞれのネームドパッケージやパッケージパターンに対して get はバージョンを指定する
+<ul>
+<li>デフォルトでは最新のタグ付きリリースバージョンとなる
+<ul>
+<li><code>v0.4.5</code> や <code>v1.2.2.3</code> など</li>
+</ul>
+</li>
+<li>タグ付けされたリリースのように、最新のタグ付きプレリリース版も検索する
+<ul>
+<li><code>v0.0.1-pre1</code> など</li>
+</ul>
+</li>
+<li>タグ付けされたバージョンが全く無い場合、 get は最新のコミットを見る</li>
+<li>もし、モジュールが後のバージョンで、まだ required とされていない場合、 get は調べたバージョンを使用する
+<ul>
+<li>最新のリリースよりも新しいプレリリースがあるとか</li>
+</ul>
+</li>
+<li>そうでなければ get は現在の必須バージョンを指定する</li>
+</ul>
+</li>
+<li>デフォルトのバージョン選択は <code>go get golang.org/x/text@v0.3.0</code> のように <code>@version</code> サフィックスをパッケージ引数に追加することで上書きすることが出来る
+<ul>
+<li>バージョンにはプレフィックスを指定することが出来る。 <code>@v1</code> は <code>v1</code> で始まる最新の利用可能なバージョンを表す</li>
+<li>クエリの完全な構文については <code>go help modules</code> を参照</li>
+</ul>
+</li>
+<li>ソース管理リポジトリに保存されているモジュールの場合、バージョンサフィックスはコミットハッシュ、ブランチ識別子、ソース管理システムが知っている他構文 (例えば <code>go get golang.org/x/text@master</code>) のような形でも OK
+<ul>
+<li>他モジュールのクエリ構文と重複する名前のブランチは、明示的に選択できないことに注意
+<ul>
+<li>例えば、 <code>@v2</code> というサフィックスは <code>v2</code> で始まる最新のバージョンを意味し、 <code>v2</code> という名前のブランチを意味しない</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>検討中のモジュールが既に現在の開発モジュールの依存関係にある場合、 get は必要なバージョンを更新する
+<ul>
+<li>現在の必須バージョンよりも前のバージョンを指定することは有効であり、依存関係をダウングレードする</li>
+<li>バージョンサフィックス <code>@none</code> は、必要に応じて依存関係をダウングレードしたり、依存関係に依存するモジュールを削除したりして、依存関係を完全に削除すべきであることを示している</li>
+</ul>
+</li>
+<li>バージョンサフィックス <code>@latest</code> は、指定されたパスで指定されたモジュールの最新マイナーリリースを明示的に要求する
+<ul>
+<li><code>@upgrade</code> というサフィックスは <code>@latest</code> と似ているが、モジュールが最新のリリースバージョンよりも新しいリビジョンやプレリリースバージョンで既に required とされている場合は、モジュールをダウングレードしない</li>
+<li><code>@patch</code> というサフィックスは、最新のパッチリリースを要求する
+<ul>
+<li>現在必要とされているバージョンと同じメジャーとマイナーのバージョン番号を持つ、最新のリリースされたバージョン</li>
+</ul>
+</li>
+<li><code>@upgrade</code> と同様に <code>@patch</code> は既に required とされているモジュールを新しいバージョンにダウングレードすることは無い</li>
+<li>パスが required されていない場合、 <code>@upgrade</code>, <code>@patch</code>, <code>@latest</code> は同等</li>
+</ul>
+</li>
+<li>get のデフォルトでは、ネームドパッケージを含むモジュールの最新バージョンを使用するが、そのモジュールの依存関係の最新バージョンは使用しない
+<ul>
+<li>かわりに、そのモジュールが要求した特定の依存関係バージョンを使用する
+<ul>
+<li>例えば、最新の A がモジュール B v1.2.3 を必要とし、一方で B v1.2.4 と v1.3.1 も利用可能である場合、 <code>go get A</code> は最新の A を使用するものの A が要求した通り B v1.2.3 を使用する</li>
+</ul>
+</li>
+<li>特定のモジュールに対して競合する要求がある場合 <code>go get</code> は要求された最大のバージョンを使用することで、それらの要求を解決する</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>コマンド実行時のフラグあれこれ</p>
+<ul>
+<li><code>-d</code> フラグ
+<ul>
+<li>指定されたパッケージのビルドに必要なソースコードをダウンロードするが、ビルドやインストールは行わない</li>
+</ul>
+</li>
+<li><code>-t</code> フラグ
+<ul>
+<li>コマンドラインで指定されたパッケージのテストを構築するために必要なモジュールを考慮する</li>
+</ul>
+</li>
+<li><code>-u</code> フラグ
+<ul>
+<li>コマンドラインで指定されたパッケージの依存関係を提供するモジュールを更新する</li>
+<li>前の例の続きで、 <code>go get -u A</code> とした場合には B v1.3.1 の最新の A を使用する</li>
+<li>B がモジュール C を必要としているが、 C が A のパッケージをビルドするのに必要なパッケージを提供していない場合、 C は更新されない</li>
+</ul>
+</li>
+<li><code>-u=patch</code> フラグ
+<ul>
+<li><code>-u patch</code> では無い</li>
+<li>依存関係を更新する</li>
+<li>デフォルトでパッチリリースを選択するように変更</li>
+<li><code>go get -u=patch A@latest</code> は B v1.2.4 の最新の A を使用するが <code>go get -u=patch A</code> は A のパッチリリースを代わりに使用する</li>
+</ul>
+</li>
+<li><code>-t</code> と <code>-u</code> を同時に使うと get はテストの依存関係も更新する
+<ul>
+<li>一般的に、新しい依存関係を追加すると、ビルドを動作させるために既存の依存関係をアップグレードする必要があるかもしれないが、 <code>go get</code> はこれを自動的に行う</li>
+<li>同様に、ある依存関係をダウングレードすると、他の依存関係をダウングレードする必要があるかもしれない</li>
+</ul>
+</li>
+<li><code>-insecure</code> フラグ
+<ul>
+<li>HTTP のような安全ではないスキームを使って、リポジトリからの取得やカスタムドメインの解決を許可する</li>
+<li>注意して使用すること</li>
+<li>環境変数 <code>GOINSECURE</code> は、安全ではないスキームを使って、どのモジュールを取得するかを制御することが出来るので、一般的によりよい代替手段となる</li>
+<li>詳細は <code>go help environment</code> を参照</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>ネームドパッケージのダウンロード、ビルド、インストール</p>
+<ul>
+<li>引数にモジュールの名前があってもパッケージでは無い場合、ビルドに失敗する代わりに、その引数のインストールステップはスキップされる
+<ul>
+<li>パッケージではない場合にはモジュールのルートディレクトリに Go コードが無いためビルドに失敗する</li>
+<li>例えば、 <code>go get golang.org/x/perf</code> は、インポートパスに対応するコードが無くても成功する</li>
+</ul>
+</li>
+<li>パッケージパターンは許可されており、モジュールのバージョンを解決した後に展開されることに注意
+<ul>
+<li>例えば、 <code>go get golang.org/x/perf/cmd...</code> は最新の golang.org/x/perf を追加し、その最新バージョンのコマンドをインストールする</li>
+</ul>
+</li>
+<li>パッケージの引数が無い場合、 <code>go get</code> はカレントディレクトリに Go パッケージがある場合には、そのパッケージに適用される
+<ul>
+<li>特に <code>go get -u</code> と <code>go get -u=patch</code> は、そのパッケージの全ての依存関係を更新する</li>
+<li>パッケージ引数が無く、 <code>-u</code> も無い場合、 <code>go get</code> は <code>go install</code> 以上のものではなく、 <code>go get -d</code> は <code>go list</code> 以上のものでは無い</li>
+</ul>
+</li>
+<li>モジュールの詳細については <code>go help modules</code></li>
+<li>パッケージしていについては <code>go help packages</code></li>
+<li>このテキストでは、ソースコードと依存関係を管理するためにモジュールを使用した get の動作について説明している
+<ul>
+<li>代わりに go コマンドが <code>GOPATH</code> モードで実行されている場合、 get のフラグと効果の詳細は <code>go help get</code> と同様に変更される</li>
+<li>詳細については <code>go help modules</code> と <code>go help gopath-get</code> を参照</li>
+</ul>
+</li>
+<li><code>go build</code>, <code>go install</code>, <code>go clean</code>, <code>go mod</code> も参照しよう</li>
+</ul>
+<h2 id="go-help-get">go help get</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% go <span class="nb">help</span> get
+usage: go get <span class="o">[</span>-d<span class="o">]</span> <span class="o">[</span>-t<span class="o">]</span> <span class="o">[</span>-u<span class="o">]</span> <span class="o">[</span>-v<span class="o">]</span> <span class="o">[</span>-insecure<span class="o">]</span> <span class="o">[</span>build flags<span class="o">]</span> <span class="o">[</span>packages<span class="o">]</span>
+
+Get resolves and adds dependencies to the current development module and <span class="k">then</span> builds and installs them.
+
+The first step is to resolve which dependencies to add.
+
+For each named package or package pattern, get must decide which version of the corresponding module to use.
+By default, get looks up the latest tagged release version, such as v0.4.5 or v1.2.3. If there are no tagged release versions, get looks up the latest tagged pre-release version, such as v0.0.1-pre1. 
+If there are no tagged versions at all, get looks up the latest known commit. 
+If the module is not already required at a later version <span class="o">(</span><span class="k">for</span> example, a pre-release newer than the latest release<span class="o">)</span>, get will use the version it looked up. 
+Otherwise, get will use the currently required version.
+
+This default version selection can be overridden by adding an @version suffix to the package argument, as in <span class="s1">&#39;go get golang.org/x/text@v0.3.0&#39;</span>.
+The version may be a prefix: @v1 denotes the latest available version starting with v1. 
+See <span class="s1">&#39;go help modules&#39;</span> under the heading <span class="s1">&#39;Module queries&#39;</span> <span class="k">for</span> the full query syntax.
+
+For modules stored in <span class="nb">source</span> control repositories, the version suffix can also be a commit hash, branch identifier, or other syntax known to the <span class="nb">source</span> control system, as in <span class="s1">&#39;go get golang.org/x/text@master&#39;</span>. 
+Note that branches with names that overlap with other module query syntax cannot be selected explicitly. 
+For example, the suffix @v2 means the latest version starting with v2, not the branch named v2.
+
+If a module under consideration is already a dependency of the current development module, <span class="k">then</span> get will update the required version.
+Specifying a version earlier than the current required version is valid and downgrades the dependency. 
+The version suffix @none indicates that the dependency should be removed entirely, downgrading or removing modules depending on it as needed.
+
+The version suffix @latest explicitly requests the latest minor release of the module named by the given path. 
+The suffix @upgrade is like @latest but will not downgrade a module <span class="k">if</span> it is already required at a revision or pre-release version newer than the latest released version. 
+The suffix @patch requests the latest patch release: the latest released version with the same major and minor version numbers as the currently required version. 
+Like @upgrade, @patch will not downgrade a module already required at a newer version. 
+If the path is not already required, @upgrade and @patch are equivalent to @latest.
+
+Although get defaults to using the latest version of the module containing a named package, it does not use the latest version of that module<span class="s1">&#39;s dependencies.
+</span><span class="s1">Instead it prefers to use the specific dependency versions requested by that module. 
+</span><span class="s1">For example, if the latest A requires module B v1.2.3, while B v1.2.4 and v1.3.1 are also available, then &#39;</span>go get A<span class="s1">&#39; will use the latest A but then use B v1.2.3, as requested by A. 
+</span><span class="s1">(If there are competing requirements for a particular module, then &#39;</span>go get<span class="s1">&#39; resolves those requirements by taking the maximum requested version.)
+</span><span class="s1">
+</span><span class="s1">The -t flag instructs get to consider modules needed to build tests of packages specified on the command line.
+</span><span class="s1">
+</span><span class="s1">The -u flag instructs get to update modules providing dependencies of packages named on the command line to use newer minor or patch releases when available. 
+</span><span class="s1">Continuing the previous example, &#39;</span>go get -u A<span class="s1">&#39; will use the latest A with B v1.3.1 (not B v1.2.3). 
+</span><span class="s1">If B requires module C, but C does not provide any packages needed to build packages in A (not including tests), then C will not be updated.
+</span><span class="s1">
+</span><span class="s1">The -u=patch flag (not -u patch) also instructs get to update dependencies, but changes the default to select patch releases.
+</span><span class="s1">Continuing the previous example, &#39;</span>go get -u<span class="o">=</span>patch A@latest<span class="s1">&#39; will use the latest A with B v1.2.4 (not B v1.2.3), while &#39;</span>go get -u<span class="o">=</span>patch A<span class="s1">&#39; will use a patch release of A instead.
+</span><span class="s1">
+</span><span class="s1">When the -t and -u flags are used together, get will update test dependencies as well.
+</span><span class="s1">
+</span><span class="s1">In general, adding a new dependency may require upgrading existing dependencies to keep a working build, and &#39;</span>go get<span class="s1">&#39; does this automatically. 
+</span><span class="s1">Similarly, downgrading one dependency may require downgrading other dependencies, and &#39;</span>go get<span class="s1">&#39; does this automatically as well.
+</span><span class="s1">
+</span><span class="s1">The -insecure flag permits fetching from repositories and resolving custom domains using insecure schemes such as HTTP. 
+</span><span class="s1">Use with caution. 
+</span><span class="s1">The GOINSECURE environment variable is usually a better alternative, since it provides control over which modules may be retrieved using an insecure scheme. 
+</span><span class="s1">See &#39;</span>go <span class="nb">help</span> environment<span class="s1">&#39; for details.
+</span><span class="s1">
+</span><span class="s1">The second step is to download (if needed), build, and install the named packages.
+</span><span class="s1">
+</span><span class="s1">If an argument names a module but not a package (because there is no Go source code in the module&#39;</span>s root directory<span class="o">)</span>, <span class="k">then</span> the install step is skipped <span class="k">for</span> that argument, instead of causing a build failure. 
+For example <span class="s1">&#39;go get golang.org/x/perf&#39;</span> succeeds even though there is no code corresponding to that import path.
+
+Note that package patterns are allowed and are expanded after resolving the module versions. 
+For example, <span class="s1">&#39;go get golang.org/x/perf/cmd/...&#39;</span> adds the latest golang.org/x/perf and <span class="k">then</span> installs the commands in that latest version.
+
+The -d flag instructs get to download the <span class="nb">source</span> code needed to build the named packages, including downloading necessary dependencies, but not to build and install them.
+
+With no package arguments, <span class="s1">&#39;go get&#39;</span> applies to Go package in the current directory, <span class="k">if</span> any. In particular, <span class="s1">&#39;go get -u&#39;</span> and <span class="s1">&#39;go get -u=patch&#39;</span> update all the dependencies of that package.
+With no package arguments and also without -u, <span class="s1">&#39;go get&#39;</span> is not much more than <span class="s1">&#39;go install&#39;</span>, and <span class="s1">&#39;go get -d&#39;</span> not much more than <span class="s1">&#39;go list&#39;</span>.
+
+For more about modules, see <span class="s1">&#39;go help modules&#39;</span>.
+
+For more about specifying packages, see <span class="s1">&#39;go help packages&#39;</span>.
+
+This text describes the behavior of get using modules to manage <span class="nb">source</span> code and dependencies. If instead the go <span class="nb">command</span> is running in GOPATH mode, the details of get<span class="s1">&#39;s flags and effects change, as does &#39;</span>go <span class="nb">help</span> get<span class="s1">&#39;.
+</span><span class="s1">See &#39;</span>go <span class="nb">help</span> modules<span class="s1">&#39; and &#39;</span>go <span class="nb">help</span> gopath-get<span class="err">&#39;</span>.
+
+See also: go build, go install, go clean, go mod.
+</code></pre></div><h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% go version
+go version go1.15.6 darwin/amd64
+</code></pre></div>]]></content>
+		</item>
+		
+		<item>
+			<title>UUIDv4 を Go で生成する</title>
+			<link>https://noid11.github.io/posts/generate-uuidv4-by-golang/</link>
+			<pubDate>Sat, 16 Jan 2021 11:31:50 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/generate-uuidv4-by-golang/</guid>
+			<description></description>
+			<content type="html"><![CDATA[<h2 id="セットアップ">セットアップ</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">go mod init generate-uuidv4-by-golang
+go get github.com/google/uuid
+</code></pre></div><h2 id="実装例">実装例</h2>
+<p>main.go</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;fmt&#34;</span>
+
+	<span class="s">&#34;github.com/google/uuid&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">uuidv4</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">uuid</span><span class="p">.</span><span class="nf">NewRandom</span><span class="p">()</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">uuidv4</span><span class="p">.</span><span class="nf">String</span><span class="p">())</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="実行例">実行例</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% go run main.go
+3c85b7b7-0b11-4612-9b1d-1dab37e20c9d
+</code></pre></div><h2 id="リファレンス">リファレンス</h2>
+<p>uuid · pkg.go.dev<br>
+<a href="https://pkg.go.dev/github.com/google/uuid#NewRandom">https://pkg.go.dev/github.com/google/uuid#NewRandom</a></p>
+<p>google/uuid: Go package for UUIDs based on RFC 4122 and DCE 1.1: Authentication and Security Services.<br>
+<a href="https://github.com/google/uuid">https://github.com/google/uuid</a></p>
+<p>RFC 4122 - A Universally Unique IDentifier (UUID) URN Namespace<br>
+<a href="https://tools.ietf.org/html/rfc4122">https://tools.ietf.org/html/rfc4122</a></p>
+<p>RFC 4122 - A Universally Unique IDentifier (UUID) URN Namespace 日本語訳<br>
+<a href="https://tex2e.github.io/rfc-translater/html/rfc4122.html">https://tex2e.github.io/rfc-translater/html/rfc4122.html</a></p>
+<h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% go version
+go version go1.15.6 darwin/amd64
+</code></pre></div><p>go.mod</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">module</span> <span class="nx">golang</span><span class="o">-</span><span class="nx">uuid</span>
+
+<span class="k">go</span> <span class="mf">1.15</span>
+
+<span class="nx">require</span> <span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">google</span><span class="o">/</span><span class="nx">uuid</span> <span class="nx">v1</span><span class="mf">.1.5</span> <span class="c1">// indirect
+</span></code></pre></div><p>go.sum</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">google</span><span class="o">/</span><span class="nx">uuid</span> <span class="nx">v1</span><span class="mf">.1.5</span> <span class="nx">h1</span><span class="p">:</span><span class="nx">kxhtnfFVi</span><span class="o">+</span><span class="nx">rYdOALN0B3k9UT86zVJKfBimRaciULW4I</span><span class="p">=</span>
+<span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">google</span><span class="o">/</span><span class="nx">uuid</span> <span class="nx">v1</span><span class="mf">.1.5</span><span class="o">/</span><span class="k">go</span><span class="p">.</span><span class="nx">mod</span> <span class="nx">h1</span><span class="p">:</span><span class="nx">TIyPZe4MgqvfeYDBFedMoGGpEw</span><span class="o">/</span><span class="nx">LqOeaOT</span><span class="o">+</span><span class="nx">nhxU</span><span class="o">+</span><span class="nx">yHo</span><span class="p">=</span>
+</code></pre></div>]]></content>
+		</item>
+		
+		<item>
+			<title>mktemp コマンド</title>
+			<link>https://noid11.github.io/posts/mktemp-command/</link>
+			<pubDate>Sat, 16 Jan 2021 08:56:33 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/mktemp-command/</guid>
+			<description>&lt;ul&gt;
 &lt;li&gt;一時的なファイルやディレクトリを作成する mktemp コマンドについて調べたメモ&lt;/li&gt;
 &lt;li&gt;一時的なディレクトリを作成して cd で移動しつつ作業する・・・といった事がサクッとできて便利&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;cd &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;(mktemp -d)&amp;#34;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;(mktemp -d)&amp;#34;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>Heroku CLI を使って Heroku Postgres をセットアップする方法</title>
-      <link>https://noid11.github.io/posts/setup-heroku-postgres-by-heroku-cli/</link>
-      <pubDate>Thu, 14 Jan 2021 02:29:30 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/setup-heroku-postgres-by-heroku-cli/</guid>
-      <description>&lt;ul&gt;
+			<content type="html"><![CDATA[<ul>
+<li>一時的なファイルやディレクトリを作成する mktemp コマンドについて調べたメモ</li>
+<li>一時的なディレクトリを作成して cd で移動しつつ作業する・・・といった事がサクッとできて便利</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> <span class="s2">&#34;(mktemp -d)&#34;</span>
+</code></pre></div><h2 id="一時的なファイルを作成する">一時的なファイルを作成する</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">mktemp
+</code></pre></div><p>実行例</p>
+<ul>
+<li><code>/var/folders/</code> 配下に一時的な空のファイルが作成される</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ mktemp
+/var/folders/2s/xv1nds5j2d3b795qy43yzcthb7qc6n/T/tmp.9HMytC5L 
+% ls -lh /var/folders/2s/xv1nds5j2d3b795qy43yzcthb7qc6n/T/tmp.9HMytC5L 
+-rw-------  <span class="m">1</span> myusername  <span class="m">1896053708</span>     0B Jan <span class="m">16</span> 09:03 /var/folders/2s/xv1nds5j2d3b795qy43yzcthb7qc6n/T/tmp.9HMytC5L
+% cat /var/folders/2s/xv1nds5j2d3b795qy43yzcthb7qc6n/T/tmp.9HMytC5L
+</code></pre></div><h2 id="一時的なディレクトリを作成する">一時的なディレクトリを作成する</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">mktemp -d
+</code></pre></div><p>実行例</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% mktemp -d
+/var/folders/2s/xv1nds5j2d3b795qy43yzcthb7qc6n/T/tmp.t3PtNiwY
+% ls -lh /var/folders/2s/xv1nds5j2d3b795qy43yzcthb7qc6n/T/ <span class="p">|</span> grep t3PtNiwY
+drwx------      <span class="m">2</span> myusername  <span class="m">1896053708</span>    64B Jan <span class="m">16</span> 09:22 tmp.t3PtNiwY
+</code></pre></div><h2 id="生成されるファイルやディレクトリの名前を指定する">生成されるファイルやディレクトリの名前を指定する</h2>
+<ul>
+<li><code>mktemp [ファイル名].XXXXX</code> といった形で、任意の X を追加することでランダムな文字列を設定できる</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">mktemp mytmp.XXXXX
+mktemp -d mytmp.XXXXX
+</code></pre></div><p>実行例</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% mktemp mytmp.XXXXX
+mytmp.M2wuV
+% mktemp -d mytmp.XXXXX
+mytmp.moGrd
+</code></pre></div><h2 id="シェルスクリプト例">シェルスクリプト例</h2>
+<p>安全な一時ファイルを取得できない場合にスクリプトを終了する例</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh"><span class="nv">tempfoo</span><span class="o">=</span><span class="sb">`</span>basename <span class="nv">$0</span><span class="sb">`</span>
+<span class="nv">TMPFILE</span><span class="o">=</span><span class="sb">`</span>mktemp /tmp/<span class="si">${</span><span class="nv">tempfoo</span><span class="si">}</span>.XXXXXX<span class="sb">`</span> <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>
+<span class="nb">echo</span> <span class="s2">&#34;program output&#34;</span> &gt;&gt; <span class="nv">$TMPFILE</span>
+</code></pre></div><p>実行例</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% sh example.sh
+% cat example.sh.kZXaAa
+program output
+</code></pre></div><hr>
+<p>$TMPDIR を使う</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh"><span class="nv">tempfoo</span><span class="o">=</span><span class="sb">`</span>basename <span class="nv">$0</span><span class="sb">`</span>
+<span class="nv">TMPFILE</span><span class="o">=</span><span class="sb">`</span>mktemp -t <span class="si">${</span><span class="nv">tempfoo</span><span class="si">}</span><span class="sb">`</span> <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>
+<span class="nb">echo</span>	<span class="s2">&#34;program output&#34;</span> &gt;&gt; <span class="nv">$TMPFILE</span>
+</code></pre></div><p>実行例</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% sh example.sh
+% <span class="nb">echo</span> <span class="nv">$TMPDIR</span>
+/var/folders/2s/xv1nds5j2d3b795qy43yzcthb7qc6n/T/
+% ls -l /var/folders/2s/xv1nds5j2d3b795qy43yzcthb7qc6n/T/ <span class="p">|</span> grep example
+-rw-------      <span class="m">1</span> myusername  <span class="m">1896053708</span>        <span class="m">15</span>  <span class="m">1</span> <span class="m">16</span> 09:43 example.sh.gihepulJ
+</code></pre></div><hr>
+<p>エラーハンドリングを考慮する</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh"><span class="nv">tempfoo</span><span class="o">=</span><span class="sb">`</span>basename <span class="nv">$0</span><span class="sb">`</span>
+<span class="nv">TMPFILE</span><span class="o">=</span><span class="sb">`</span>mktemp -q /tmp/<span class="si">${</span><span class="nv">tempfoo</span><span class="si">}</span>.XXXXXX<span class="sb">`</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$0</span><span class="s2">: Can&#39;t create temp file, exiting...&#34;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">fi</span>
+</code></pre></div><h2 id="オプション">オプション</h2>
+<ul>
+<li><code>-d</code> オプション: 一時的なファイルではなく、一時的なディレクトリを作成する</li>
+<li><code>-q</code> オプション: エラーメッセージを表示しない</li>
+<li><code>-t</code> オプション: 指定した prefix と、 TMPDIR が設定されている場合にはそれを使って、テンプレートを作成し、ファイル名テンプレートを作成する</li>
+<li><code>-u</code> オプション: unsafe モードを使用する。一時的なファイルは mktemp コマンドが終了する前に、リンクが解除される。これは mktemp（3）よりもわずかに優れていますが、それでも競合状態が発生するため、このオプションの使用は推奨されていない</li>
+</ul>
+<h2 id="manual">manual</h2>
+<pre><code>% man mktemp
+MKTEMP(1)                 BSD General Commands Manual                MKTEMP(1)
+
+NAME
+     mktemp -- make temporary file name (unique)
+
+SYNOPSIS
+     mktemp [-d] [-q] [-t prefix] [-u] template ...
+     mktemp [-d] [-q] [-u] -t prefix
+
+DESCRIPTION
+     The mktemp utility takes each of the given file name templates and overwrites a portion of it to create a file name. 
+     This file name is unique and suitable for use by the application.  
+     The template may be any file name with some number of `Xs' appended to it, for example /tmp/temp.XXXX. 
+     The trailing `Xs' are replaced with the current process number and/or a unique letter combination. 
+     The number of unique file names mktemp can return depends on the number of `Xs' provided; six `Xs' will result in mktemp selecting 1 of 56800235584 (62 ** 6) possible file names. 
+     On case-insensitive file systems, the effective number of unique names is significantly less; given six `Xs', mktemp will instead select 1 of 2176782336 (36 ** 6) possible unique file names.
+
+     If mktemp can successfully generate a unique file name, the file is created with mode 0600 (unless the -u flag is given) and the filename is printed to standard output.
+
+     If the -t prefix option is given, mktemp will generate a template string based on the prefix and the _CS_DARWIN_USER_TEMP_DIR configuration variable if available. 
+     Fallback locations if _CS_DARWIN_USER_TEMP_DIR is not available are TMPDIR and /tmp.  
+     Care should be taken to ensure that it is appropriate to use an environment variable potentially supplied by the user.
+
+     If no arguments are passed or if only the -d flag is passed mktemp behaves as if -t tmp was supplied.
+
+     Any number of temporary files may be created in a single invocation, including one based on the internal template resulting from the -t flag.
+
+     The mktemp utility is provided to allow shell scripts to safely use temporary files.  
+     Traditionally, many shell scripts take the name of the program with the pid as a suffix and use that as a temporary file name.  
+     This kind of naming scheme is predictable and the race condition it creates is easy for an attacker to win. 
+     A safer, though still inferior, approach is to make a temporary directory using the same naming scheme.  
+     While this does allow one to guarantee that a temporary file will not be subverted, it still allows a simple denial of service attack.  
+     For these reasons it is suggested that mktemp be used instead.
+
+OPTIONS
+     The available options are as follows:
+
+     -d      Make a directory instead of a file.
+
+     -q      Fail silently if an error occurs.  This is useful if a script does not want error output to go to standard error.
+
+     -t prefix
+             Generate a template (using the supplied prefix and TMPDIR if set) to create a filename template.
+
+     -u      Operate in ``unsafe'' mode.  The temp file will be unlinked before mktemp exits.  This is slightly better than mktemp(3) but still introduces
+             a race condition.  Use of this option is not encouraged.
+
+EXIT STATUS
+     The mktemp utility exits 0 on success, and &gt;0 if an error occurs.
+
+EXAMPLES
+     The following sh(1) fragment illustrates a simple use of mktemp where the script should quit if it cannot get a safe temporary file.
+
+           tempfoo=`basename $0`
+           TMPFILE=`mktemp /tmp/${tempfoo}.XXXXXX` || exit 1
+           echo &quot;program output&quot; &gt;&gt; $TMPFILE
+
+     To allow the use of $TMPDIR:
+
+           tempfoo=`basename $0`
+           TMPFILE=`mktemp -t ${tempfoo}` || exit 1
+           echo &quot;program output&quot; &gt;&gt; $TMPFILE
+
+     In this case, we want the script to catch the error itself.
+
+           tempfoo=`basename $0`
+           TMPFILE=`mktemp -q /tmp/${tempfoo}.XXXXXX`
+           if [ $? -ne 0 ]; then
+                   echo &quot;$0: Can't create temp file, exiting...&quot;
+                   exit 1
+           fi
+
+SEE ALSO
+     mkdtemp(3), mkstemp(3), mktemp(3), confstr(3), environ(7)
+
+HISTORY
+     A mktemp utility appeared in OpenBSD 2.1.  This implementation was written independently based on the OpenBSD man page, and first appeared in
+     FreeBSD 2.2.7.  This man page is taken from OpenBSD.
+
+BSD                            December 30, 2005                           BSD
+</code></pre><h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+</code></pre></div>]]></content>
+		</item>
+		
+		<item>
+			<title>Heroku CLI を使って Heroku Postgres をセットアップする方法</title>
+			<link>https://noid11.github.io/posts/setup-heroku-postgres-by-heroku-cli/</link>
+			<pubDate>Thu, 14 Jan 2021 02:29:30 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/setup-heroku-postgres-by-heroku-cli/</guid>
+			<description>&lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://jp.heroku.com/postgres&#34;&gt;Heroku が提供するマネージドデータベースである Heroku Postgres&lt;/a&gt; を &lt;a href=&#34;https://devcenter.heroku.com/ja/articles/heroku-cli&#34;&gt;Heroku CLI&lt;/a&gt; からセットアップして接続するまでを試す手順&lt;/li&gt;
 &lt;li&gt;Pros
 &lt;ul&gt;
@@ -105,15 +943,151 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Playwright を golang から使う</title>
-      <link>https://noid11.github.io/posts/hello-playwright-with-golang/</link>
-      <pubDate>Tue, 12 Jan 2021 14:51:07 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/hello-playwright-with-golang/</guid>
-      <description>&lt;ul&gt;
+			<content type="html"><![CDATA[<ul>
+<li><a href="https://jp.heroku.com/postgres">Heroku が提供するマネージドデータベースである Heroku Postgres</a> を <a href="https://devcenter.heroku.com/ja/articles/heroku-cli">Heroku CLI</a> からセットアップして接続するまでを試す手順</li>
+<li>Pros
+<ul>
+<li>PostgreSQL や SQL を学習したい時にサクッと使えて便利</li>
+<li>AWS Lambda 等ローカル環境の PostgreSQL が接続できない環境から、ちょっとしたデータベース接続を試したいような場合に便利
+<ul>
+<li>RDS よりも立ち上がりが速いし、無料</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Cons
+<ul>
+<li><a href="https://jp.heroku.com/pricing">無料の Hobby Dev プラン</a>だと、レコード数 10 K と同時接続数 20 といった制限があるので注意</li>
+</ul>
+</li>
+</ul>
+<h2 id="postgresql-をインストール">PostgreSQL をインストール</h2>
+<p>Heroku CLI 経由で PostgreSQL に接続する際には <code>psql</code> が必要になるため、事前にインストールしておく</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">brew install postgresql
+
+<span class="c1"># PostgreSQL のバージョンを指定したい場合 @ で指定する</span>
+brew install postgresql@12
+
+<span class="c1"># バージョン確認</span>
+psql --version
+</code></pre></div><p>postgresql — Homebrew Formulae<br>
+<a href="https://formulae.brew.sh/formula/postgresql">https://formulae.brew.sh/formula/postgresql</a></p>
+<p>PostgreSQL: Documentation: 12: psql<br>
+<a href="https://www.postgresql.org/docs/12/app-psql.html">https://www.postgresql.org/docs/12/app-psql.html</a></p>
+<p>psql<br>
+<a href="https://www.postgresql.jp/document/12/html/app-psql.html">https://www.postgresql.jp/document/12/html/app-psql.html</a></p>
+<h2 id="heroku-cli-のインストールとセットアップ">Heroku CLI のインストールとセットアップ</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">brew tap heroku/brew <span class="o">&amp;&amp;</span> brew install heroku
+heroku login
+</code></pre></div><p>The Heroku CLI | Heroku Dev Center<br>
+<a href="https://devcenter.heroku.com/articles/heroku-cli">https://devcenter.heroku.com/articles/heroku-cli</a></p>
+<h2 id="heroku-postgres-のセットアップ">Heroku Postgres のセットアップ</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">mkdir my-heroku-postgres-env <span class="o">&amp;&amp;</span> <span class="nb">cd</span> my-heroku-postgres-env
+
+<span class="c1"># Heroku App の作成</span>
+heroku create
+
+<span class="c1"># Heroku Postgres の作成</span>
+heroku addons:create heroku-postgresql:hobby-dev --app myapp
+
+<span class="c1"># Heroku Postgres のバージョンを指定したい場合</span>
+heroku addons:create heroku-postgresql:hobby-dev --version<span class="o">=</span>9.5 --app myapp
+
+<span class="c1"># 作成した Heroku Postgres 情報の確認</span>
+heroku pg:info --app myapp
+</code></pre></div><p>Heroku Postgres | Heroku Dev Center<br>
+<a href="https://devcenter.heroku.com/articles/heroku-postgresql#version-support">https://devcenter.heroku.com/articles/heroku-postgresql#version-support</a></p>
+<hr>
+<p>実行例</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% mkdir my-heroku-postgres-env <span class="o">&amp;&amp;</span> <span class="nb">cd</span> my-heroku-postgres-env
+% heroku create
+Creating app... <span class="k">done</span>, ⬢ fierce-depths-xxx
+https://fierce-depths-xxx.herokuapp.com/ <span class="p">|</span> https://git.heroku.com/fierce-depths-xxx.git
+% heroku addons:create heroku-postgresql:hobby-dev --app fierce-depths-xxx
+Creating heroku-postgresql:hobby-dev on ⬢ fierce-depths-xxx... free
+Database has been created and is available
+ ! This database is empty. If upgrading, you can transfer
+ ! data from another database with pg:copy
+Created postgresql-concave-yyy as DATABASE_URL
+Use heroku addons:docs heroku-postgresql to view documentation
+% heroku pg:info --app fierce-depths-xxx
+<span class="o">===</span> DATABASE_URL
+Plan:                  Hobby-dev
+Status:                Available
+Connections:           0/20
+PG Version:            12.5
+Created:               2021-01-13 17:48 UTC
+Data Size:             7.9 MB
+Tables:                <span class="m">0</span>
+Rows:                  0/10000 <span class="o">(</span>In compliance<span class="o">)</span>
+Fork/Follow:           Unsupported
+Rollback:              Unsupported
+Continuous Protection: Off
+Add-on:                postgresql-concave-yyy
+</code></pre></div><h2 id="heroku-postgres-への接続">Heroku Postgres への接続</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Heroku CLI での認証情報を使った接続</span>
+heroku pg:psql --app myapp
+
+<span class="c1"># PostgreSQL のクレデンシャルを取得して普通に psql でも接続できる</span>
+heroku pg:credentials --app myapp
+
+<span class="c1"># Connection URL での指定(パスワードが含まれるので取り扱い注意)</span>
+psql --dbname<span class="o">=</span>postgres://db-username:db-user-password@db-hostname:db-post/db-name
+
+<span class="c1"># 冗長な指定(コマンド実行後にパスワードを入力する必要あり)</span>
+psql --dbname<span class="o">=</span>db-name --host<span class="o">=</span>ec2-db-hostname --port<span class="o">=</span>db-post --username<span class="o">=</span>db-username --password
+</code></pre></div><hr>
+<p>実行例</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% heroku pg:credentials:url --app fierce-depths-xxx
+Connection information <span class="k">for</span> default credential.
+Connection info string:
+   <span class="s2">&#34;dbname=xxx host=ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com port=5432 user=yyy password=zzz sslmode=require&#34;</span>
+Connection URL:
+   postgres://yyy:zzz@ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com:5432/xxx
+
+% psql --dbname<span class="o">=</span>postgres://yyy:zzz@ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com.com:5432/xxx
+% psql --dbname<span class="o">=</span>xxx --host<span class="o">=</span>ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com --port<span class="o">=</span><span class="m">5432</span> --username<span class="o">=</span>yyy --password
+</code></pre></div><h2 id="クリーンアップ">クリーンアップ</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Heroku Postgres Add-on のみ削除したい場合</span>
+heroku addons:destroy heroku-postgresql:hobby-dev --app myapp
+
+<span class="c1"># Heroku App ごと削除したい場合</span>
+heroku apps:destroy --app myapp
+</code></pre></div><hr>
+<p>実行例</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% heroku addons:destroy heroku-postgresql:hobby-dev --app fierce-depths-xxx
+ ▸    WARNING: Destructive Action
+ ▸    This <span class="nb">command</span> will affect the app fierce-depths-xxx
+ ▸    To proceed, <span class="nb">type</span> fierce-depths-xxx or re-run this <span class="nb">command</span> with --confirm fierce-depths-xxx
+
+&gt; fierce-depths-xxx
+Destroying postgresql-concave-yyy on ⬢ fierce-depths-xxx... <span class="k">done</span>
+
+% heroku apps:destroy --app fierce-depths-xxx
+ ▸    WARNING: This will delete ⬢ fierce-depths-xxx including all add-ons.
+ ▸    To proceed, <span class="nb">type</span> fierce-depths-xxx or re-run this <span class="nb">command</span> with --confirm fierce-depths-xxx
+
+&gt; fierce-depths-xxx
+Destroying ⬢ fierce-depths-xxx <span class="o">(</span>including all add-ons<span class="o">)</span>... <span class="k">done</span>
+</code></pre></div><h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% psql --version
+psql <span class="o">(</span>PostgreSQL<span class="o">)</span> 13.1
+% heroku --version
+heroku/7.47.7 darwin-x64 node-v12.16.2
+</code></pre></div>]]></content>
+		</item>
+		
+		<item>
+			<title>Playwright を golang から使う</title>
+			<link>https://noid11.github.io/posts/hello-playwright-with-golang/</link>
+			<pubDate>Tue, 12 Jan 2021 14:51:07 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/hello-playwright-with-golang/</guid>
+			<description>&lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://playwright.dev/&#34;&gt;playwright&lt;/a&gt; を Go で使える &lt;a href=&#34;https://github.com/mxschmitt/playwright-go&#34;&gt;playwright-go&lt;/a&gt; を動かしたメモ&lt;/li&gt;
 &lt;li&gt;build したバイナリには Chromium などのエンジンは含まれず、バイナリ実行時にダウンロードが発生する
 &lt;ul&gt;
@@ -121,15 +1095,158 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Playwright を TypeScript で動かすまで</title>
-      <link>https://noid11.github.io/posts/hello-playwright-with-typescript/</link>
-      <pubDate>Tue, 12 Jan 2021 12:39:32 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/hello-playwright-with-typescript/</guid>
-      <description>&lt;ul&gt;
+			<content type="html"><![CDATA[<ul>
+<li><a href="https://playwright.dev/">playwright</a> を Go で使える <a href="https://github.com/mxschmitt/playwright-go">playwright-go</a> を動かしたメモ</li>
+<li>build したバイナリには Chromium などのエンジンは含まれず、バイナリ実行時にダウンロードが発生する
+<ul>
+<li>なのでクロスコンパイルして動かしても、バイナリを動かす環境にブラウザエンジンを動かす共有ライブラリが無い場合、ブラウザの起動に失敗してエラーとなる</li>
+</ul>
+</li>
+</ul>
+<h2 id="プロジェクトのセットアップ">プロジェクトのセットアップ</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># directory setup</span>
+mkdir my-playwright-go <span class="o">&amp;&amp;</span> <span class="nb">cd</span> my-playwright-go
+
+<span class="c1"># go modules setup</span>
+go mod init my-playwright-go
+go get github.com/mxschmitt/playwright-go
+
+<span class="c1"># コード書くファイル作成</span>
+touch main.go
+</code></pre></div><h2 id="コードを書く">コードを書く</h2>
+<ul>
+<li><a href="https://news.ycombinator.com">https://news.ycombinator.com</a> にアクセスして各記事のタイトルを出力するコード</li>
+<li><a href="https://github.com/mxschmitt/playwright-go/tree/master/examples">公式サンプルがいくつかある</a>ので、参考にすると良いかも</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;fmt&#34;</span>
+	<span class="s">&#34;log&#34;</span>
+
+	<span class="s">&#34;github.com/mxschmitt/playwright-go&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">pw</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">playwright</span><span class="p">.</span><span class="nf">Run</span><span class="p">()</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;could not start playwright: %v&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">browser</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">pw</span><span class="p">.</span><span class="nx">Chromium</span><span class="p">.</span><span class="nf">Launch</span><span class="p">()</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;could not launch browser: %v&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">page</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">browser</span><span class="p">.</span><span class="nf">NewPage</span><span class="p">()</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;could not create page: %v&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">page</span><span class="p">.</span><span class="nf">Goto</span><span class="p">(</span><span class="s">&#34;https://news.ycombinator.com&#34;</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;could not goto: %v&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">entries</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">page</span><span class="p">.</span><span class="nf">QuerySelectorAll</span><span class="p">(</span><span class="s">&#34;.athing&#34;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;could not get entries: %v&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">entry</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">entries</span> <span class="p">{</span>
+		<span class="nx">titleElement</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">entry</span><span class="p">.</span><span class="nf">QuerySelector</span><span class="p">(</span><span class="s">&#34;td.title &gt; a&#34;</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="nx">log</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;could not get title element: %v&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+		<span class="p">}</span>
+		<span class="nx">title</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">titleElement</span><span class="p">.</span><span class="nf">TextContent</span><span class="p">()</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="nx">log</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;could not get text content: %v&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+		<span class="p">}</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%d: %s\n&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">title</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">browser</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;could not close browser: %v&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">pw</span><span class="p">.</span><span class="nf">Stop</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;could not stop Playwright: %v&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="動かす">動かす</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">go run main.go
+</code></pre></div><h2 id="実行例">実行例</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% go run main.go
+2021/01/12 13:12:19 Downloading driver to /Users/myusername/Library/Caches/ms-playwright-go/0.171.0
+2021/01/12 13:12:34 Downloaded driver successfully
+2021/01/12 13:12:34 Downloading browsers...
+2021/01/12 13:12:36 Downloaded browsers successfully
+1: Theseus: A modern experimental OS written from scratch in Rust
+2: Ubiquiti Networks Breach
+3: Moderna is announcing three new vaccine programs. Seasonal flu, HIV, and Nipah
+4: My ISP Is Killing My Idle SSH Sessions. Yours Might Be Too
+5: Two Worlds: So Much Prosperity, So Much Skepticism
+6: Simple Anomaly Detection Using Plain SQL
+7: Steam<span class="s1">&#39;s login method is kinda interesting
+</span><span class="s1">8: Europe Is Guaranteeing Citizens the Right to Repair
+</span><span class="s1">9: What Is a Gamma Squeeze in the Context of Stock Trading?
+</span><span class="s1">10: My personal wishlist for a decentralized social network
+</span><span class="s1">11: Show HN: Symmetrical Drawing Tool for Doodling
+</span><span class="s1">12: Sirum (YC W15 Nonprofit) hiring engineers to improve healthcare for families
+</span><span class="s1">13: A bit on scaling chess.com&#39;</span>s database
+14: Intruder at the top of the <span class="m">20</span> meter amateur band?
+15: Superintelligence cannot be contained: Lessons from Computability Theory
+16: Stealing Your Private YouTube Videos, One Frame at a Time
+17: Sinovac<span class="s1">&#39;s vaccine efficacy less than 60% in Brazil trial -report
+</span><span class="s1">18: Getting Ready for Launch
+</span><span class="s1">19: Are Experts Real?
+</span><span class="s1">20: Google Sued by YouTube Rival Rumble over Search Rankings
+</span><span class="s1">21: OpenSocial Specification
+</span><span class="s1">22: Is the Schrödinger Equation True?
+</span><span class="s1">23: A 432-year-old manual on social distancing
+</span><span class="s1">24: iPhone 7 with dead NAND netbooting unmodified Ubuntu 20.04 via USB ethernet
+</span><span class="s1">25: We need a new media system
+</span><span class="s1">26: XTerm: It&#39;</span>s Better Than You Thought
+27: Invisible Internet Project <span class="o">(</span>I2P<span class="o">)</span>
+28: A Brief History of Consumer Culture
+29: How to Hear the ISS
+30: Show HN: Thumbnail.ai – Just paste a blog post link and get a thumbnail
+</code></pre></div><h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% go version
+go version go1.15.6 darwin/amd64
+</code></pre></div><p>go.mod</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">module</span> <span class="nx">playwright</span><span class="o">-</span><span class="k">go</span>
+
+<span class="k">go</span> <span class="mf">1.15</span>
+
+<span class="nf">require</span> <span class="p">(</span>
+	<span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">mxschmitt</span><span class="o">/</span><span class="nx">playwright</span><span class="o">-</span><span class="k">go</span> <span class="nx">v0</span><span class="mf">.171.1</span> <span class="c1">// indirect
+</span><span class="c1"></span><span class="p">)</span>
+</code></pre></div><p>go.sum</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">danwakefield</span><span class="o">/</span><span class="nx">fnmatch</span> <span class="nx">v0</span><span class="mf">.0.0</span><span class="o">-</span><span class="mi">20160403171240</span><span class="o">-</span><span class="nx">cbb64ac3d964</span> <span class="nx">h1</span><span class="p">:</span><span class="nx">y5HC9v93H5EPKqaS1UYVg1uYah5Xf51mBfIoWehClUQ</span><span class="p">=</span>
+<span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">danwakefield</span><span class="o">/</span><span class="nx">fnmatch</span> <span class="nx">v0</span><span class="mf">.0.0</span><span class="o">-</span><span class="mi">20160403171240</span><span class="o">-</span><span class="nx">cbb64ac3d964</span><span class="o">/</span><span class="k">go</span><span class="p">.</span><span class="nx">mod</span> <span class="nx">h1</span><span class="p">:</span><span class="nx">Xd9hchkHSWYkEqJwUGisez3G1QY8Ryz0sdWrLPMGjLk</span><span class="p">=</span>
+<span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">davecgh</span><span class="o">/</span><span class="k">go</span><span class="o">-</span><span class="nx">spew</span> <span class="nx">v1</span><span class="mf">.1.0</span><span class="o">/</span><span class="k">go</span><span class="p">.</span><span class="nx">mod</span> <span class="nx">h1</span><span class="p">:</span><span class="nx">J7Y8YcW2NihsgmVo</span><span class="o">/</span><span class="nx">mv3lAwl</span><span class="o">/</span><span class="nx">skON4iLHjSsI</span><span class="o">+</span><span class="nx">c5H38</span><span class="p">=</span>
+<span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">davecgh</span><span class="o">/</span><span class="k">go</span><span class="o">-</span><span class="nx">spew</span> <span class="nx">v1</span><span class="mf">.1.1</span> <span class="nx">h1</span><span class="p">:</span><span class="nx">vj9j</span><span class="o">/</span><span class="nx">u1bqnvCEfJOwUhtlOARqs3</span><span class="o">+</span><span class="nx">rkHYY13jYWTU97c</span><span class="p">=</span>
+<span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">davecgh</span><span class="o">/</span><span class="k">go</span><span class="o">-</span><span class="nx">spew</span> <span class="nx">v1</span><span class="mf">.1.1</span><span class="o">/</span><span class="k">go</span><span class="p">.</span><span class="nx">mod</span> <span class="nx">h1</span><span class="p">:</span><span class="nx">J7Y8YcW2NihsgmVo</span><span class="o">/</span><span class="nx">mv3lAwl</span><span class="o">/</span><span class="nx">skON4iLHjSsI</span><span class="o">+</span><span class="nx">c5H38</span><span class="p">=</span>
+<span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">gorilla</span><span class="o">/</span><span class="nx">websocket</span> <span class="nx">v1</span><span class="mf">.4.2</span><span class="o">/</span><span class="k">go</span><span class="p">.</span><span class="nx">mod</span> <span class="nx">h1</span><span class="p">:</span><span class="nx">YR8l580nyteQvAITg2hZ9XVh4b55</span><span class="o">+</span><span class="nx">EU</span><span class="o">/</span><span class="nx">adAjf1fMHhE</span><span class="p">=</span>
+<span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">h2non</span><span class="o">/</span><span class="nx">filetype</span> <span class="nx">v1</span><span class="mf">.1.0</span><span class="o">/</span><span class="k">go</span><span class="p">.</span><span class="nx">mod</span> <span class="nx">h1</span><span class="p">:</span><span class="mi">319</span><span class="nx">b3zT68BvV</span><span class="o">+</span><span class="nx">WRj7cwy856M2ehB3HqNOt6sy1HndBY</span><span class="p">=</span>
+<span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">mxschmitt</span><span class="o">/</span><span class="nx">playwright</span><span class="o">-</span><span class="k">go</span> <span class="nx">v0</span><span class="mf">.171.1</span> <span class="nx">h1</span><span class="p">:</span><span class="mh">0XE</span><span class="nx">OVQw8Zse</span><span class="o">+</span><span class="nx">Zue</span><span class="o">+</span><span class="nx">d7v8O</span><span class="o">+</span><span class="nx">IfQnFIilWcK</span><span class="o">/</span><span class="nx">uOGSo0U9Q</span><span class="p">=</span>
+<span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">mxschmitt</span><span class="o">/</span><span class="nx">playwright</span><span class="o">-</span><span class="k">go</span> <span class="nx">v0</span><span class="mf">.171.1</span><span class="o">/</span><span class="k">go</span><span class="p">.</span><span class="nx">mod</span> <span class="nx">h1</span><span class="p">:</span><span class="nx">a3SD3v</span><span class="o">+</span><span class="mi">56</span><span class="nx">XMA0sDDxXJXy</span><span class="o">+</span><span class="nx">QGnCfXrNZ</span><span class="o">/+</span><span class="mi">4</span><span class="nx">gwR5ioSgU</span><span class="p">=</span>
+<span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">pmezard</span><span class="o">/</span><span class="k">go</span><span class="o">-</span><span class="nx">difflib</span> <span class="nx">v1</span><span class="mf">.0.0</span> <span class="nx">h1</span><span class="p">:</span><span class="mi">4</span><span class="nx">DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk</span><span class="o">/</span><span class="nx">f1lZbAQM</span><span class="p">=</span>
+<span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">pmezard</span><span class="o">/</span><span class="k">go</span><span class="o">-</span><span class="nx">difflib</span> <span class="nx">v1</span><span class="mf">.0.0</span><span class="o">/</span><span class="k">go</span><span class="p">.</span><span class="nx">mod</span> <span class="nx">h1</span><span class="p">:</span><span class="nx">iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ</span><span class="o">/</span><span class="mi">4</span><span class="p">=</span>
+<span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">stretchr</span><span class="o">/</span><span class="nx">objx</span> <span class="nx">v0</span><span class="mf">.1.0</span><span class="o">/</span><span class="k">go</span><span class="p">.</span><span class="nx">mod</span> <span class="nx">h1</span><span class="p">:</span><span class="nx">HFkY916IF</span><span class="o">+</span><span class="nx">rwdDfMAkV7OtwuqBVzrE8GR6GFx</span><span class="o">+</span><span class="nx">wExME</span><span class="p">=</span>
+<span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">stretchr</span><span class="o">/</span><span class="nx">testify</span> <span class="nx">v1</span><span class="mf">.6.1</span> <span class="nx">h1</span><span class="p">:</span><span class="nx">hDPOHmpOpP40lSULcqw7IrRb</span><span class="o">/</span><span class="nx">u7w6RpDC9399XyoNd0</span><span class="p">=</span>
+<span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">stretchr</span><span class="o">/</span><span class="nx">testify</span> <span class="nx">v1</span><span class="mf">.6.1</span><span class="o">/</span><span class="k">go</span><span class="p">.</span><span class="nx">mod</span> <span class="nx">h1</span><span class="p">:</span><span class="mi">6</span><span class="nx">Fq8oRcR53rry900zMqJjRRixrwX3KX962</span><span class="o">/</span><span class="nx">h</span><span class="o">/</span><span class="nx">Wwjteg</span><span class="p">=</span>
+<span class="nx">gopkg</span><span class="p">.</span><span class="nx">in</span><span class="o">/</span><span class="nx">check</span><span class="p">.</span><span class="nx">v1</span> <span class="nx">v0</span><span class="mf">.0.0</span><span class="o">-</span><span class="mi">20161208181325</span><span class="o">-</span><span class="mi">20</span><span class="nx">d25e280405</span><span class="o">/</span><span class="k">go</span><span class="p">.</span><span class="nx">mod</span> <span class="nx">h1</span><span class="p">:</span><span class="nx">Co6ibVJAznAaIkqp8huTwlJQCZ016jof</span><span class="o">/</span><span class="nx">cbN4VW5Yz0</span><span class="p">=</span>
+<span class="nx">gopkg</span><span class="p">.</span><span class="nx">in</span><span class="o">/</span><span class="nx">square</span><span class="o">/</span><span class="k">go</span><span class="o">-</span><span class="nx">jose</span><span class="p">.</span><span class="nx">v2</span> <span class="nx">v2</span><span class="mf">.5.1</span> <span class="nx">h1</span><span class="p">:</span><span class="mi">7</span><span class="nx">odma5RETjNHWJnR32wx8t</span><span class="o">+</span><span class="nx">Io4djHE1PqxCFx3iiZ2w</span><span class="p">=</span>
+<span class="nx">gopkg</span><span class="p">.</span><span class="nx">in</span><span class="o">/</span><span class="nx">square</span><span class="o">/</span><span class="k">go</span><span class="o">-</span><span class="nx">jose</span><span class="p">.</span><span class="nx">v2</span> <span class="nx">v2</span><span class="mf">.5.1</span><span class="o">/</span><span class="k">go</span><span class="p">.</span><span class="nx">mod</span> <span class="nx">h1</span><span class="p">:</span><span class="nx">M9dMgbHiYLoDGQrXy7OpJDJWiKiU</span><span class="c1">//h+vD76mk0e1AI=
+</span><span class="c1"></span><span class="nx">gopkg</span><span class="p">.</span><span class="nx">in</span><span class="o">/</span><span class="nx">yaml</span><span class="p">.</span><span class="nx">v3</span> <span class="nx">v3</span><span class="mf">.0.0</span><span class="o">-</span><span class="mi">20200313102051</span><span class="o">-</span><span class="mi">9</span><span class="nx">f266ea9e77c</span><span class="o">/</span><span class="k">go</span><span class="p">.</span><span class="nx">mod</span> <span class="nx">h1</span><span class="p">:</span><span class="nx">K4uyk7z7BCEPqu6E</span><span class="o">+</span><span class="nx">C64Yfv1cQ7kz7rIZviUmN</span><span class="o">+</span><span class="nx">EgEM</span><span class="p">=</span>
+</code></pre></div>]]></content>
+		</item>
+		
+		<item>
+			<title>Playwright を TypeScript で動かすまで</title>
+			<link>https://noid11.github.io/posts/hello-playwright-with-typescript/</link>
+			<pubDate>Tue, 12 Jan 2021 12:39:32 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/hello-playwright-with-typescript/</guid>
+			<description>&lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://playwright.dev/&#34;&gt;Playwright&lt;/a&gt; は Microsoft 製のブラウザ自動化ツール
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.chromium.org/&#34;&gt;Chromium&lt;/a&gt;, &lt;a href=&#34;https://www.mozilla.org/en-US/firefox/&#34;&gt;Firefox&lt;/a&gt;, &lt;a href=&#34;https://webkit.org/&#34;&gt;WebKit&lt;/a&gt; に対応している&lt;/li&gt;
@@ -138,52 +1255,1093 @@
 &lt;/li&gt;
 &lt;li&gt;組み込みで TypeScript をサポートしているとあったので、最低限動かす所まで試したメモ&lt;/li&gt;
 &lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>セキュリティを学ぶことでトラブルシューティング能力が向上する・・・気がする</title>
-      <link>https://noid11.github.io/posts/learning-security-will-improve-troubleshooting-skills/</link>
-      <pubDate>Sat, 09 Jan 2021 12:31:00 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/learning-security-will-improve-troubleshooting-skills/</guid>
-      <description>&lt;p&gt;ポエム。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>curl で外部 json ファイルを元に POST リクエストする方法</title>
-      <link>https://noid11.github.io/posts/how-to-curl-with-json/</link>
-      <pubDate>Thu, 07 Jan 2021 08:00:34 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/how-to-curl-with-json/</guid>
-      <description>&lt;p&gt;&lt;code&gt;--data&lt;/code&gt;, &lt;code&gt;-d&lt;/code&gt; オプションで &lt;code&gt;@/file/to/path&lt;/code&gt; という感じで指定すれば良い。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Cognito User Pool の CSV インポート機能</title>
-      <link>https://noid11.github.io/posts/cognito-user-pool-csv-import-feature/</link>
-      <pubDate>Tue, 05 Jan 2021 20:18:51 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/cognito-user-pool-csv-import-feature/</guid>
-      <description>&lt;p&gt;Cognito User Pool における CSV インポート機能についてのメモ&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>AWS Lambda で Go ランタイムを使うのが良いと思っている理由</title>
-      <link>https://noid11.github.io/posts/aws-lambda-love-golang/</link>
-      <pubDate>Fri, 01 Jan 2021 15:05:18 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/aws-lambda-love-golang/</guid>
-      <description>&lt;p&gt;個人的に AWS Lambda では zip 形式で golang ランタイム使うのがコスパ最強な気がしているので、根拠をまとめておくメモ&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>2021 年の目標</title>
-      <link>https://noid11.github.io/posts/2021-goals/</link>
-      <pubDate>Thu, 31 Dec 2020 22:49:26 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/2021-goals/</guid>
-      <description></description>
-    </item>
-    
-  </channel>
+			<content type="html"><![CDATA[<ul>
+<li><a href="https://playwright.dev/">Playwright</a> は Microsoft 製のブラウザ自動化ツール
+<ul>
+<li><a href="https://www.chromium.org/">Chromium</a>, <a href="https://www.mozilla.org/en-US/firefox/">Firefox</a>, <a href="https://webkit.org/">WebKit</a> に対応している</li>
+<li><a href="https://playwright.dev/docs/docker/README/">公式 Docker イメージ</a>も提供されている</li>
+</ul>
+</li>
+<li>組み込みで TypeScript をサポートしているとあったので、最低限動かす所まで試したメモ</li>
+</ul>
+<h2 id="プロジェクトのセットアップ">プロジェクトのセットアップ</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">mkdir my-playwright-project <span class="o">&amp;&amp;</span> <span class="nb">cd</span> my-playwright-project
+
+<span class="c1"># npm 初期化 </span>
+npm init --yes
+
+<span class="c1"># playwright のインストール</span>
+<span class="c1">#   公式では --save-dev オプションを使っているが、不要な気がする・・・と思ったが E2E などのテスト目的で使う場合には --save-dev 使うべきだった</span>
+<span class="c1">#   chromium, firefox, webkit がダウンロードされ、 300 MB 程度のトラフィックが発生するので注意</span>
+npm install playwright
+
+<span class="c1"># typescript セットアップ</span>
+npm install --save-dev typescript @types/node@12 ts-node
+npx tsc --init
+
+<span class="c1"># コードを書いていく</span>
+touch main.ts
+</code></pre></div><h2 id="ミニマムなコード実装">ミニマムなコード実装</h2>
+<div class="highlight"><pre class="chroma"><code class="language-ts" data-lang="ts"><span class="kr">import</span> <span class="p">{</span> <span class="nx">webkit</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;playwright&#39;</span>
+
+<span class="p">(</span><span class="kr">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">browser</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">webkit</span><span class="p">.</span><span class="nx">launch</span><span class="p">()</span>
+  <span class="kr">const</span> <span class="nx">page</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">browser</span><span class="p">.</span><span class="nx">newPage</span><span class="p">()</span>
+  <span class="k">await</span> <span class="nx">page</span><span class="p">.</span><span class="kr">goto</span><span class="p">(</span><span class="s1">&#39;http://whatsmyuseragent.org/&#39;</span><span class="p">)</span>
+  <span class="k">await</span> <span class="nx">page</span><span class="p">.</span><span class="nx">screenshot</span><span class="p">({</span> <span class="nx">path</span><span class="o">:</span> <span class="sb">`example.png`</span> <span class="p">})</span>
+  <span class="k">await</span> <span class="nx">browser</span><span class="p">.</span><span class="nx">close</span><span class="p">()</span>
+<span class="p">})()</span>
+</code></pre></div><h2 id="コード実行">コード実行</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">npx ts-node main.ts
+</code></pre></div><ul>
+<li>同じディレクトリに <a href="http://whatsmyuseragent.org/">http://whatsmyuseragent.org/</a> にアクセスしたスクリーンショットが example.png として保存されれば OK</li>
+<li>上記コードの場合 User-Agent が WebKit になる</li>
+</ul>
+<h2 id="useful-links">Useful Links</h2>
+<p>CLI Commands | npm Docs<br>
+<a href="https://docs.npmjs.com/cli/v6/commands">https://docs.npmjs.com/cli/v6/commands</a></p>
+<p>Getting Started | Playwright<br>
+<a href="https://playwright.dev/docs/intro">https://playwright.dev/docs/intro</a></p>
+<p>TypeScript: The starting point for learning TypeScript<br>
+<a href="https://www.typescriptlang.org/docs">https://www.typescriptlang.org/docs</a></p>
+<h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% node -v
+v12.16.1
+% npm -v
+6.14.8
+</code></pre></div><p>package.json</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;my-playwright-project&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.0.0&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;description&#34;</span><span class="p">:</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;main&#34;</span><span class="p">:</span> <span class="s2">&#34;index.js&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;scripts&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;test&#34;</span><span class="p">:</span> <span class="s2">&#34;echo \&#34;Error: no test specified\&#34; &amp;&amp; exit 1&#34;</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;keywords&#34;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="nt">&#34;author&#34;</span><span class="p">:</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;license&#34;</span><span class="p">:</span> <span class="s2">&#34;ISC&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;dependencies&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;playwright&#34;</span><span class="p">:</span> <span class="s2">&#34;^1.7.1&#34;</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;devDependencies&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;@types/node&#34;</span><span class="p">:</span> <span class="s2">&#34;^12.19.12&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;ts-node&#34;</span><span class="p">:</span> <span class="s2">&#34;^9.1.1&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;typescript&#34;</span><span class="p">:</span> <span class="s2">&#34;^4.1.3&#34;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>package-lock.json</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;my-playwright-project&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.0.0&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;lockfileVersion&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nt">&#34;dependencies&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;@types/node&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;12.19.12&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/@types/node/-/node-12.19.12.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-UwfL2uIU9arX/+/PRcIkT08/iBadGN2z6ExOROA2Dh5mAuWTBj6iJbQX4nekiV5H8cTrEG569LeX+HRco9Cbxw==&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;@types/yauzl&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;2.9.1&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/@types/yauzl/-/yauzl-2.9.1.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-A1b8SU4D10uoPjwb0lnHmmu8wZhR9d+9o2PKBQT2jU5YPTKsxac6M2qGAdY7VcL+dHHhARVUDmeg0rOrcd9EjA==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;optional&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;@types/node&#34;</span><span class="p">:</span> <span class="s2">&#34;*&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;agent-base&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;6.0.2&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/agent-base/-/agent-base-6.0.2.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;debug&#34;</span><span class="p">:</span> <span class="s2">&#34;4&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;arg&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;4.1.3&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/arg/-/arg-4.1.3.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;dev&#34;</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;balanced-match&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.0.0&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.0.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha1-ibTRmasr7kneFk6gK4nORi1xt2c=&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;brace-expansion&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.1.11&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.11.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;balanced-match&#34;</span><span class="p">:</span> <span class="s2">&#34;^1.0.0&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;concat-map&#34;</span><span class="p">:</span> <span class="s2">&#34;0.0.1&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;buffer-crc32&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;0.2.13&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/buffer-crc32/-/buffer-crc32-0.2.13.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha1-DTM+PwDqxQqhRUq9MO+MKl2ackI=&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;buffer-from&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.1.1&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/buffer-from/-/buffer-from-1.1.1.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-MQcXEUbCKtEo7bhqEs6560Hyd4XaovZlO/k9V3hjVUF/zwW7KBVdSK4gIt/bzwS9MbR5qob+F5jusZsb0YQK2A==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;dev&#34;</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;concat-map&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;0.0.1&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;create-require&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.1.1&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/create-require/-/create-require-1.1.1.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;dev&#34;</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;debug&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;4.3.1&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/debug/-/debug-4.3.1.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-doEwdvm4PCeK4K3RQN2ZC2BYUBaxwLARCqZmMjtF8a51J2Rb0xpVloFRnCODwqjpwnAoao4pelN8l3RJdv3gRQ==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;ms&#34;</span><span class="p">:</span> <span class="s2">&#34;2.1.2&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;diff&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;4.0.2&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/diff/-/diff-4.0.2.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;dev&#34;</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;end-of-stream&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.4.4&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/end-of-stream/-/end-of-stream-1.4.4.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;once&#34;</span><span class="p">:</span> <span class="s2">&#34;^1.4.0&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;extract-zip&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;2.0.1&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/extract-zip/-/extract-zip-2.0.1.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-GDhU9ntwuKyGXdZBUgTIe+vXnWj0fppUEtMDL0+idd5Sta8TGpHssn/eusA9mrPr9qNDym6SxAYZjNvCn/9RBg==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;@types/yauzl&#34;</span><span class="p">:</span> <span class="s2">&#34;^2.9.1&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;debug&#34;</span><span class="p">:</span> <span class="s2">&#34;^4.1.1&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;get-stream&#34;</span><span class="p">:</span> <span class="s2">&#34;^5.1.0&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;yauzl&#34;</span><span class="p">:</span> <span class="s2">&#34;^2.10.0&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;fd-slicer&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.1.0&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/fd-slicer/-/fd-slicer-1.1.0.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha1-JcfInLH5B3+IkbvmHY85Dq4lbx4=&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;pend&#34;</span><span class="p">:</span> <span class="s2">&#34;~1.2.0&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;fs.realpath&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.0.0&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha1-FQStJSMVjKpA20onh8sBQRmU6k8=&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;get-stream&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;5.2.0&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/get-stream/-/get-stream-5.2.0.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-nBF+F1rAZVCu/p7rjzgA+Yb4lfYXrpl7a6VmJrU8wF9I1CKvP/QwPNZHnOlwbTkY6dvtFIzFMSyQXbLoTQPRpA==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;pump&#34;</span><span class="p">:</span> <span class="s2">&#34;^3.0.0&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;glob&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;7.1.6&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/glob/-/glob-7.1.6.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;fs.realpath&#34;</span><span class="p">:</span> <span class="s2">&#34;^1.0.0&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;inflight&#34;</span><span class="p">:</span> <span class="s2">&#34;^1.0.4&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;inherits&#34;</span><span class="p">:</span> <span class="s2">&#34;2&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;minimatch&#34;</span><span class="p">:</span> <span class="s2">&#34;^3.0.4&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;once&#34;</span><span class="p">:</span> <span class="s2">&#34;^1.3.0&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;path-is-absolute&#34;</span><span class="p">:</span> <span class="s2">&#34;^1.0.0&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;graceful-fs&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;4.2.4&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.4.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;https-proxy-agent&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;5.0.0&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/https-proxy-agent/-/https-proxy-agent-5.0.0.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-EkYm5BcKUGiduxzSt3Eppko+PiNWNEpa4ySk9vTC6wDsQJW9rHSa+UhGNJoRYp7bz6Ht1eaRIa6QaJqO5rCFbA==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;agent-base&#34;</span><span class="p">:</span> <span class="s2">&#34;6&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;debug&#34;</span><span class="p">:</span> <span class="s2">&#34;4&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;inflight&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.0.6&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/inflight/-/inflight-1.0.6.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha1-Sb1jMdfQLQwJvJEKEHW6gWW1bfk=&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;once&#34;</span><span class="p">:</span> <span class="s2">&#34;^1.3.0&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;wrappy&#34;</span><span class="p">:</span> <span class="s2">&#34;1&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;inherits&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;2.0.4&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;jpeg-js&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;0.4.3&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/jpeg-js/-/jpeg-js-0.4.3.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-ru1HWKek8octvUHFHvE5ZzQ1yAsJmIvRdGWvSoKV52XKyuyYA437QWDttXT8eZXDSbuMpHlLzPDZUPd6idIz+Q==&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;make-error&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.3.6&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/make-error/-/make-error-1.3.6.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;dev&#34;</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;mime&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;2.4.7&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/mime/-/mime-2.4.7.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-dhNd1uA2u397uQk3Nv5LM4lm93WYDUXFn3Fu291FJerns4jyTudqhIWe4W04YLy7Uk1tm1Ore04NpjRvQp/NPA==&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;minimatch&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;3.0.4&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/minimatch/-/minimatch-3.0.4.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;brace-expansion&#34;</span><span class="p">:</span> <span class="s2">&#34;^1.1.7&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;ms&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;2.1.2&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/ms/-/ms-2.1.2.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;once&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.4.0&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/once/-/once-1.4.0.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha1-WDsap3WWHUsROsF9nFC6753Xa9E=&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;wrappy&#34;</span><span class="p">:</span> <span class="s2">&#34;1&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;path-is-absolute&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.0.1&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/path-is-absolute/-/path-is-absolute-1.0.1.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha1-F0uSaHNVNP+8es5r9TpanhtcX18=&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;pend&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.2.0&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/pend/-/pend-1.2.0.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha1-elfrVQpng/kRUzH89GY9XI4AelA=&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;playwright&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.7.1&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/playwright/-/playwright-1.7.1.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-dOSWME42wDedJ/PXv8k0zG0Kxd6d6R2OKA51/05++Z2ISdA4N58gHlWqlVKPDkBog1MI6lu/KNt7QDn19AybWQ==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;debug&#34;</span><span class="p">:</span> <span class="s2">&#34;^4.1.1&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;extract-zip&#34;</span><span class="p">:</span> <span class="s2">&#34;^2.0.1&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;https-proxy-agent&#34;</span><span class="p">:</span> <span class="s2">&#34;^5.0.0&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;jpeg-js&#34;</span><span class="p">:</span> <span class="s2">&#34;^0.4.2&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;mime&#34;</span><span class="p">:</span> <span class="s2">&#34;^2.4.6&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;pngjs&#34;</span><span class="p">:</span> <span class="s2">&#34;^5.0.0&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;progress&#34;</span><span class="p">:</span> <span class="s2">&#34;^2.0.3&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;proper-lockfile&#34;</span><span class="p">:</span> <span class="s2">&#34;^4.1.1&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;proxy-from-env&#34;</span><span class="p">:</span> <span class="s2">&#34;^1.1.0&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;rimraf&#34;</span><span class="p">:</span> <span class="s2">&#34;^3.0.2&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;ws&#34;</span><span class="p">:</span> <span class="s2">&#34;^7.3.1&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;pngjs&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;5.0.0&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/pngjs/-/pngjs-5.0.0.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;progress&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;2.0.3&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/progress/-/progress-2.0.3.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;proper-lockfile&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;4.1.1&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/proper-lockfile/-/proper-lockfile-4.1.1.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-1w6rxXodisVpn7QYvLk706mzprPTAPCYAqxMvctmPN3ekuRk/kuGkGc82pangZiAt4R3lwSuUzheTTn0/Yb7Zg==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;graceful-fs&#34;</span><span class="p">:</span> <span class="s2">&#34;^4.1.11&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;retry&#34;</span><span class="p">:</span> <span class="s2">&#34;^0.12.0&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;signal-exit&#34;</span><span class="p">:</span> <span class="s2">&#34;^3.0.2&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;proxy-from-env&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.1.0&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/proxy-from-env/-/proxy-from-env-1.1.0.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;pump&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;3.0.0&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/pump/-/pump-3.0.0.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-LwZy+p3SFs1Pytd/jYct4wpv49HiYCqd9Rlc5ZVdk0V+8Yzv6jR5Blk3TRmPL1ft69TxP0IMZGJ+WPFU2BFhww==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;end-of-stream&#34;</span><span class="p">:</span> <span class="s2">&#34;^1.1.0&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;once&#34;</span><span class="p">:</span> <span class="s2">&#34;^1.3.1&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;retry&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;0.12.0&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/retry/-/retry-0.12.0.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha1-G0KmJmoh8HQh0bC1S33BZ7AcATs=&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;rimraf&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;3.0.2&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/rimraf/-/rimraf-3.0.2.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;glob&#34;</span><span class="p">:</span> <span class="s2">&#34;^7.1.3&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;signal-exit&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;3.0.3&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.3.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-VUJ49FC8U1OxwZLxIbTTrDvLnf/6TDgxZcK8wxR8zs13xpx7xbG60ndBlhNrFi2EMuFRoeDoJO7wthSLq42EjA==&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;source-map&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;0.6.1&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;dev&#34;</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;source-map-support&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;0.5.19&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/source-map-support/-/source-map-support-0.5.19.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;dev&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;buffer-from&#34;</span><span class="p">:</span> <span class="s2">&#34;^1.0.0&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;source-map&#34;</span><span class="p">:</span> <span class="s2">&#34;^0.6.0&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;ts-node&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;9.1.1&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/ts-node/-/ts-node-9.1.1.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-hPlt7ZACERQGf03M253ytLY3dHbGNGrAq9qIHWUY9XHYl1z7wYngSr3OQ5xmui8o2AaxsONxIzjafLUiWBo1Fg==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;dev&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;arg&#34;</span><span class="p">:</span> <span class="s2">&#34;^4.1.0&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;create-require&#34;</span><span class="p">:</span> <span class="s2">&#34;^1.1.0&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;diff&#34;</span><span class="p">:</span> <span class="s2">&#34;^4.0.1&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;make-error&#34;</span><span class="p">:</span> <span class="s2">&#34;^1.1.1&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;source-map-support&#34;</span><span class="p">:</span> <span class="s2">&#34;^0.5.17&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;yn&#34;</span><span class="p">:</span> <span class="s2">&#34;3.1.1&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;typescript&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;4.1.3&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/typescript/-/typescript-4.1.3.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-B3ZIOf1IKeH2ixgHhj6la6xdwR9QrLC5d1VKeCSY4tvkqhF2eqd9O7txNlS0PO3GrBAFIdr3L1ndNwteUbZLYg==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;dev&#34;</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;wrappy&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1.0.2&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;ws&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;7.4.2&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/ws/-/ws-7.4.2.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-T4tewALS3+qsrpGI/8dqNMLIVdq/g/85U98HPMa6F0m6xTbvhXU6RCQLqPH3+SlomNV/LdY6RXEbBpMH6EOJnA==&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;yauzl&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;2.10.0&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/yauzl/-/yauzl-2.10.0.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha1-x+sXyT4RLLEIb6bY5R+wZnt5pfk=&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;requires&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;buffer-crc32&#34;</span><span class="p">:</span> <span class="s2">&#34;~0.2.3&#34;</span><span class="p">,</span>
+        <span class="nt">&#34;fd-slicer&#34;</span><span class="p">:</span> <span class="s2">&#34;~1.1.0&#34;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;yn&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;3.1.1&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;resolved&#34;</span><span class="p">:</span> <span class="s2">&#34;https://registry.npmjs.org/yn/-/yn-3.1.1.tgz&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;integrity&#34;</span><span class="p">:</span> <span class="s2">&#34;sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;dev&#34;</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>]]></content>
+		</item>
+		
+		<item>
+			<title>セキュリティを学ぶことでトラブルシューティング能力が向上する・・・気がする</title>
+			<link>https://noid11.github.io/posts/learning-security-will-improve-troubleshooting-skills/</link>
+			<pubDate>Sat, 09 Jan 2021 12:31:00 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/learning-security-will-improve-troubleshooting-skills/</guid>
+			<description>&lt;p&gt;ポエム。&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p>ポエム。</p>
+<ul>
+<li>セキュリティを学ぶということは、各種コンポーネントの役割や機能を把握しつつ、それらに関連してどのような問題が発生するのか把握することだと思う</li>
+<li>何か問題が発生してトラブルシューティングをする際には、エスパー能力と言われたりする謎の原因推測能力によって仮説を立てて、検証を行うといった能力が重要になる場面がある
+<ul>
+<li>このエスパー能力はベテランエンジニア等が当たり前のように備えていたりするものの、具体的にどう取得すればよいのかは謎が多い</li>
+<li>個人的には以下の2つがエスパー能力の下地になっていると思う
+<ol>
+<li>経験</li>
+<li>引き出しの多さ</li>
+</ol>
+</li>
+<li>経験については、どんな問題に遭遇して経験を積めるかは運だと思うので、あまり個人の努力によって得られるものではないと思う
+<ul>
+<li>色んな仕事や問題が体験出来そうな職場やチームに身を投じる・・・みたいなものはあるかもしれない</li>
+</ul>
+</li>
+<li>引き出しの多さについては、わりかし個人の努力でカバーできる範囲のように思える
+<ul>
+<li>引き出しの多さというのは、ざっくばらんに言うと、関連する技術や機能の把握だと思う</li>
+<li>セキュリティを学習する場合、同じように関連技術や機能把握といったことが必要になるため、セキュリティの学習とは効率の良い「引き出し増やし」になる</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>なので、もしトラブルシューティング能力を上げたいなぁと思う場面があったら、トラブルシューティングが必要になりそうな分野のセキュリティについて学ぶと良いかもしれない。</p>]]></content>
+		</item>
+		
+		<item>
+			<title>curl で外部 json ファイルを元に POST リクエストする方法</title>
+			<link>https://noid11.github.io/posts/how-to-curl-with-json/</link>
+			<pubDate>Thu, 07 Jan 2021 08:00:34 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/how-to-curl-with-json/</guid>
+			<description>&lt;p&gt;&lt;code&gt;--data&lt;/code&gt;, &lt;code&gt;-d&lt;/code&gt; オプションで &lt;code&gt;@/file/to/path&lt;/code&gt; という感じで指定すれば良い。&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p><code>--data</code>, <code>-d</code> オプションで <code>@/file/to/path</code> という感じで指定すれば良い。</p>
+<h2 id="実行例">実行例</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">ENDPOINT</span><span class="o">=</span>https://www.example.com
+
+<span class="c1"># ミニマムなリクエスト</span>
+<span class="c1"># -d, --data オプションを使用する場合、自動で POST リクエストになるので -X POST は不要</span>
+curl --data @./request.json <span class="nv">$ENDPOINT</span>
+
+<span class="c1"># Content-Type として application/json を指定</span>
+<span class="c1"># 明示的に Content-Type を指定しない場合、 Content-Type は application/x-www-form-urlencoded になる</span>
+curl --data @./request.json -H <span class="s2">&#34;Content-Type: application/json&#34;</span> <span class="nv">$ENDPOINT</span>
+
+<span class="c1"># 標準出力の json を受け取ってリクエスト</span>
+<span class="nb">echo</span> <span class="s1">&#39;{ &#34;hoge&#34;: &#34;fuga&#34;}&#39;</span> <span class="p">|</span> curl --data @- <span class="nv">$ENDPOINT</span>
+</code></pre></div><p>動作検証には <a href="http://httpdump.io/">http://httpdump.io/</a> が便利</p>
+<h2 id="requestjson-サンプル">request.json サンプル</h2>
+<p>JSON 形式であれば何でも良いが、以下の URL にサンプルがあるので試してみると良いかも</p>
+<p>JSON Example<br>
+<a href="https://json.org/example.html">https://json.org/example.html</a></p>
+<h2 id="curl-の-manual-を読む">curl の manual を読む</h2>
+<p>curl - How To Use<br>
+<a href="https://curl.se/docs/manpage.html">https://curl.se/docs/manpage.html</a></p>
+<blockquote>
+<p>-d, &ndash;data <!-- raw HTML omitted --><br>
+(HTTP MQTT) Sends the specified data in a POST request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button. This will cause curl to pass the data to the server using the content-type application/x-www-form-urlencoded. Compare to -F, &ndash;form.<br>
+&ndash;data-raw is almost the same but does not have a special interpretation of the @ character. To post data purely binary, you should instead use the &ndash;data-binary option. To URL-encode the value of a form field you may use &ndash;data-urlencode.
+If any of these options is used more than once on the same command line, the data pieces specified will be merged together with a separating &amp;-symbol. Thus, using &lsquo;-d name=daniel -d skill=lousy&rsquo; would generate a post chunk that looks like &lsquo;name=daniel&amp;skill=lousy&rsquo;.<br>
+If you start the data with the letter @, the rest should be a file name to read the data from, or - if you want curl to read the data from stdin. Posting data from a file named &lsquo;foobar&rsquo; would thus be done with -d, &ndash;data @foobar. When -d, &ndash;data is told to read from a file like that, carriage returns and newlines will be stripped out. If you don&rsquo;t want the @ character to have a special interpretation use &ndash;data-raw instead.<br>
+See also &ndash;data-binary, &ndash;data-urlencode and &ndash;data-raw. This option overrides -F, &ndash;form and -I, &ndash;head and -T, &ndash;upload-file.</p>
+</blockquote>
+<ul>
+<li><code>-d</code>, <code>--data</code> オプションは POST リクエストで指定されたデータを HTTP サーバーに送信する
+<ul>
+<li><code>content-type</code> として <code>application/x-www-form-urlencoded</code> を使用する</li>
+</ul>
+</li>
+<li><code>--data-raw</code> は殆ど同じだが、 <code>@</code> 文字の特別な解釈が無い
+<ul>
+<li>データを純粋にバイナリで送信する場合には <code>--data-binary</code> オプションを使用する必要がある</li>
+<li>フォームフィールドの値を URL エンコードするには <code>--data-urlencode</code> を使用できる</li>
+</ul>
+</li>
+<li>これらのオプションのいずれかが同じコマンドラインで複数回使用される場合、指定されたデータ部分は区切り文字と一緒にマージされる
+<ul>
+<li><code>-d name=daniel -d skill=lousy</code> と指定をすると <code>name=daniel&amp;skill=lousy</code> という post chunk が生成される</li>
+</ul>
+</li>
+<li>データを <code>@</code> で始める場合、残りはデータを読み取るためのファイル名である必要がある
+<ul>
+<li>curl で stdin からデータを読み取る場合は <code>-</code></li>
+<li>foobar というファイルからのデータ投稿をする場合 <code>-d, --data @foobar</code> のように指定する</li>
+<li><code>-d</code>, <code>--data</code> がファイル読み取りを指示されると、キャリッジリターンと改行が削除される</li>
+<li>純粋に <code>@</code> を文字として使用したい場合、 <code>--data-raw</code> を使用する</li>
+</ul>
+</li>
+<li><code>--data-binary</code>, <code>--data-urlencode</code>, <code>--data-raw</code> も参照すると良い
+<ul>
+<li>これらのオプションは <code>-F</code>, <code>--form</code>, <code>-I</code>, <code>--head</code>, <code>-T</code>, <code>--upload-file</code> を上書きする</li>
+</ul>
+</li>
+</ul>
+<h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% uname -v
+Darwin Kernel Version 19.6.0: Tue Nov <span class="m">10</span> 00:10:30 PST 2020<span class="p">;</span> root:xnu-6153.141.10~1/RELEASE_X86_64
+% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% curl --version
+curl 7.64.1 <span class="o">(</span>x86_64-apple-darwin19.0<span class="o">)</span> libcurl/7.64.1 <span class="o">(</span>SecureTransport<span class="o">)</span> LibreSSL/2.8.3 zlib/1.2.11 nghttp2/1.39.2
+Release-Date: 2019-03-27
+Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp smb smbs smtp smtps telnet tftp 
+Features: AsynchDNS GSS-API HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz MultiSSL NTLM NTLM_WB SPNEGO SSL UnixSockets
+</code></pre></div>]]></content>
+		</item>
+		
+		<item>
+			<title>Cognito User Pool の CSV インポート機能</title>
+			<link>https://noid11.github.io/posts/cognito-user-pool-csv-import-feature/</link>
+			<pubDate>Tue, 05 Jan 2021 20:18:51 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/cognito-user-pool-csv-import-feature/</guid>
+			<description>&lt;p&gt;Cognito User Pool における CSV インポート機能についてのメモ&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p>Cognito User Pool における CSV インポート機能についてのメモ</p>
+<h2 id="cognito-user-pool-におけるユーザーインポートの概要">Cognito User Pool におけるユーザーインポートの概要</h2>
+<ul>
+<li>Cognito User Pool におけるユーザーインポート機能は2種類ある<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>
+<ol>
+<li>ユーザー移行 Lambda トリガーを用いたユーザーインポート
+<ul>
+<li>ユーザーが既存のパスワードを使用して移行可能</li>
+<li>ユーザーのサインインアクションが行われたタイミングで移行が行われるため、移行のためにユーザーアクションが必要
+<ul>
+<li>つまり非アクティブなユーザーについては移行されない</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>CSV ファイルを用いたユーザーインポート
+<ul>
+<li>CSV ファイルを用意することでバルクでユーザー移行が可能
+<ul>
+<li>非アクティブなユーザーについても CSV ファイルに含めれば移行されるので、ある程度まとまった単位でユーザー移行したい場合に適している</li>
+</ul>
+</li>
+<li>ユーザーのパスワードは CSV で指定できないため、インポート後各ユーザーのパスワードリセットが必要</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="cognito-user-pool-における-csv-インポート機能とは">Cognito User Pool における CSV インポート機能とは？</h2>
+<ul>
+<li>先述の Cognito User Pool にユーザーをインポートする機能の1つ</li>
+<li>ユーザー情報を記述した CSV ファイルを元に、 Cognito User Pool にユーザーをインポートする機能<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>
+<ul>
+<li>CSV ファイルでユーザーパスワードの設定はサポートされていないため、この方法でインポートされたユーザーは  RESET_REQUIRED ステータスとなり、パスワードリセットが必要となる<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></li>
+</ul>
+</li>
+</ul>
+<p>Cognito User Pool におけるユーザーステータスの遷移図</p>
+<blockquote>
+<p><img src="/images/cognito-user-pool-import-feature/amazon-cognito-sign-in-confirm-user.png" alt="user-status"></p>
+</blockquote>
+<p><a href="https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html">https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html</a> より引用</p>
+<h2 id="csv-ファイルを使ったユーザーインポートの大まかな流れ">CSV ファイルを使ったユーザーインポートの大まかな流れ</h2>
+<ol>
+<li>IAM ロールを作成する
+<ul>
+<li>これは Cognito User Pool が CSV インポートする際に CloudWatch Logs にログ出力を行うため必要となるもの</li>
+</ul>
+</li>
+<li>CSV ファイルを作成
+<ul>
+<li>ユーザー情報を記述した CSV ファイルを作成する</li>
+</ul>
+</li>
+<li>ユーザーインポートジョブを作成
+<ul>
+<li>CSV ファイルをインポートするためのジョブを作成</li>
+<li>ジョブは非同期に実行されるようになっており、ジョブを作成するだけではインポートは行われず、明示的にジョブの開始を行う必要がある</li>
+</ul>
+</li>
+<li>CSV ファイルをアップロード
+<ul>
+<li>ジョブを作成した際に、 CSV ファイルをアップロードするための URL が発行されるので <code>curl</code> コマンド等を用いて CSV ファイルのアップロードを行う</li>
+</ul>
+</li>
+<li>ユーザーインポートジョブを開始</li>
+<li>インポートジョブのログを確認
+<ul>
+<li>CloudWatch Logs に出力される</li>
+</ul>
+</li>
+<li>インポートユーザーがパスワードをリセットするように要求
+<ul>
+<li>これはアプリケーション実装側のトピックとなるので、この記事では省略する</li>
+</ul>
+</li>
+</ol>
+<h2 id="aws-cli-を使ってインポート機能を試してみる">AWS CLI を使ってインポート機能を試してみる</h2>
+<h3 id="0-iam-ロール">0. IAM ロール</h3>
+<ul>
+<li>IAM ロールについてはマネジメントコンソールからインポートを試した際に作成されるサービスロールを使用する<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup></li>
+</ul>
+<p><code>get-role</code> 結果</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% aws iam get-role --role-name Cognito-UserImport-Role   
+<span class="o">{</span>
+    <span class="s2">&#34;Role&#34;</span>: <span class="o">{</span>
+        <span class="s2">&#34;Path&#34;</span>: <span class="s2">&#34;/service-role/&#34;</span>,
+        <span class="s2">&#34;RoleName&#34;</span>: <span class="s2">&#34;Cognito-UserImport-Role&#34;</span>,
+        <span class="s2">&#34;RoleId&#34;</span>: <span class="s2">&#34;AROAIQGN5YPP2UMLFTJVM&#34;</span>,
+        <span class="s2">&#34;Arn&#34;</span>: <span class="s2">&#34;arn:aws:iam::123456789012:role/service-role/Cognito-UserImport-Role&#34;</span>,
+        <span class="s2">&#34;CreateDate&#34;</span>: <span class="s2">&#34;2018-06-30T09:54:58+00:00&#34;</span>,
+        <span class="s2">&#34;AssumeRolePolicyDocument&#34;</span>: <span class="o">{</span>
+            <span class="s2">&#34;Version&#34;</span>: <span class="s2">&#34;2012-10-17&#34;</span>,
+            <span class="s2">&#34;Statement&#34;</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="s2">&#34;Effect&#34;</span>: <span class="s2">&#34;Allow&#34;</span>,
+                    <span class="s2">&#34;Principal&#34;</span>: <span class="o">{</span>
+                        <span class="s2">&#34;Service&#34;</span>: <span class="s2">&#34;cognito-idp.amazonaws.com&#34;</span>
+                    <span class="o">}</span>,
+                    <span class="s2">&#34;Action&#34;</span>: <span class="s2">&#34;sts:AssumeRole&#34;</span>
+                <span class="o">}</span>
+            <span class="o">]</span>
+        <span class="o">}</span>,
+        <span class="s2">&#34;MaxSessionDuration&#34;</span>: 3600,
+        <span class="s2">&#34;RoleLastUsed&#34;</span>: <span class="o">{</span>
+            <span class="s2">&#34;LastUsedDate&#34;</span>: <span class="s2">&#34;2021-01-05T18:35:15+00:00&#34;</span>,
+            <span class="s2">&#34;Region&#34;</span>: <span class="s2">&#34;ap-northeast-1&#34;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><p>自分の環境では、以下のようなマネージドポリシー <code>Cognito-1530352497476</code> がアタッチされた</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="nt">&#34;Version&#34;</span><span class="p">:</span> <span class="s2">&#34;2012-10-17&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;Statement&#34;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&#34;Sid&#34;</span><span class="p">:</span> <span class="s2">&#34;Stmt1467314338000&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;Effect&#34;</span><span class="p">:</span> <span class="s2">&#34;Allow&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;Action&#34;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&#34;logs:CreateLogGroup&#34;</span><span class="p">,</span>
+                <span class="s2">&#34;logs:CreateLogStream&#34;</span><span class="p">,</span>
+                <span class="s2">&#34;logs:DescribeLogStreams&#34;</span><span class="p">,</span>
+                <span class="s2">&#34;logs:PutLogEvents&#34;</span>
+            <span class="p">],</span>
+            <span class="nt">&#34;Resource&#34;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&#34;arn:aws:logs:ap-northeast-1:123456789012:log-group:/aws/cognito/*&#34;</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="1-csv-ファイルを用意">1. CSV ファイルを用意</h3>
+<p>get-csv-header コマンドで CSV に必要となるヘッダーを取得できる<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup></p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">USER_POOL_ID</span><span class="o">=</span>ap-northeast-1_xxx
+aws cognito-idp get-csv-header --user-pool-id <span class="nv">$USER_POOL_ID</span>
+aws cognito-idp get-csv-header --user-pool-id <span class="nv">$USER_POOL_ID</span> --query CSVHeader
+</code></pre></div><p>実行例</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% aws cognito-idp get-csv-header --user-pool-id <span class="nv">$USER_POOL_ID</span> --query CSVHeader --output text
+<span class="o">[</span>
+    <span class="s2">&#34;name&#34;</span>,
+    <span class="s2">&#34;given_name&#34;</span>,
+    <span class="s2">&#34;family_name&#34;</span>,
+    <span class="s2">&#34;middle_name&#34;</span>,
+    <span class="s2">&#34;nickname&#34;</span>,
+    <span class="s2">&#34;preferred_username&#34;</span>,
+    <span class="s2">&#34;profile&#34;</span>,
+    <span class="s2">&#34;picture&#34;</span>,
+    <span class="s2">&#34;website&#34;</span>,
+    <span class="s2">&#34;email&#34;</span>,
+    <span class="s2">&#34;email_verified&#34;</span>,
+    <span class="s2">&#34;gender&#34;</span>,
+    <span class="s2">&#34;birthdate&#34;</span>,
+    <span class="s2">&#34;zoneinfo&#34;</span>,
+    <span class="s2">&#34;locale&#34;</span>,
+    <span class="s2">&#34;phone_number&#34;</span>,
+    <span class="s2">&#34;phone_number_verified&#34;</span>,
+    <span class="s2">&#34;address&#34;</span>,
+    <span class="s2">&#34;updated_at&#34;</span>,
+    <span class="s2">&#34;cognito:mfa_enabled&#34;</span>,
+    <span class="s2">&#34;cognito:username&#34;</span>
+<span class="o">]</span>
+</code></pre></div><p><code>--output</code> を <code>text</code> とするとコマンドを使って加工しやすいかもしれない</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% aws cognito-idp get-csv-header --user-pool-id <span class="nv">$USER_POOL_ID</span> --query CSVHeader --output text
+name    given_name      family_name     middle_name     nickname        preferred_username      profile picture website email   email_verified  gender  birthdate       zoneinfo        locale  phone_number       phone_number_verified   address updated_at      cognito:mfa_enabled     cognito:username
+</code></pre></div><p>これで取得したヘッダーを元に CSV ファイルを作成する</p>
+<pre><code class="language-csv" data-lang="csv">name,given_name,family_name,middle_name,nickname,preferred_username,profile,picture,website,email,email_verified,gender,birthdate,zoneinfo,locale,phone_number,phone_number_verified,address,updated_at,cognito:mfa_enabled,cognito:username
+</code></pre><p>サンプル CSV (User Pool 設定によって必要となる header や属性が異なるので注意)</p>
+<pre><code class="language-csv" data-lang="csv">name,given_name,family_name,middle_name,nickname,preferred_username,profile,picture,website,email,email_verified,gender,birthdate,zoneinfo,locale,phone_number,phone_number_verified,address,updated_at,cognito:mfa_enabled,cognito:username
+johndoe,,,,,,,,,johndoe@example.com,TRUE,,,,,,FALSE,,,FALSE,johndoe
+janeroe,,,,,,,,,janeroe@example.com,TRUE,,,,,,FALSE,,,FALSE,janeroe
+</code></pre><h3 id="2-インポートジョブを作成">2. インポートジョブを作成</h3>
+<p><code>create-user-import-job</code> コマンドでインポートジョブを作成<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup></p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">JOB_NAME</span><span class="o">=</span>myjob
+<span class="nv">CLOUD_WATCH_LOGS_ROLE_ARN</span><span class="o">=</span>arn:aws:iam::123456789012:role/service-role/Cognito-UserImport-Role
+aws cognito-idp create-user-import-job --job-name <span class="nv">$JOB_NAME</span> --user-pool-id <span class="nv">$USER_POOL_ID</span> --cloud-watch-logs-role-arn <span class="nv">$CLOUD_WATCH_LOGS_ROLE_ARN</span>
+</code></pre></div><p>実行例</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% aws cognito-idp create-user-import-job --job-name <span class="nv">$JOB_NAME</span> --user-pool-id <span class="nv">$USER_POOL_ID</span> --cloud-watch-logs-role-arn <span class="nv">$CLOUD_WATCH_LOGS_ROLE_ARN</span>
+<span class="o">{</span>
+    <span class="s2">&#34;UserImportJob&#34;</span>: <span class="o">{</span>
+        <span class="s2">&#34;JobName&#34;</span>: <span class="s2">&#34;myjob&#34;</span>,
+        <span class="s2">&#34;JobId&#34;</span>: <span class="s2">&#34;import-xxx&#34;</span>,
+        <span class="s2">&#34;UserPoolId&#34;</span>: <span class="s2">&#34;ap-northeast-1_xxx&#34;</span>,
+        <span class="s2">&#34;PreSignedUrl&#34;</span>: <span class="s2">&#34;https://aws-cognito-idp-user-import-nrt.s3.ap-northeast-1.amazonaws.com/123456789012/ap-northeast-1_xxx/import-xxx?...&#34;</span>,
+        <span class="s2">&#34;CreationDate&#34;</span>: <span class="s2">&#34;2021-01-05T21:06:37.381000+09:00&#34;</span>,
+        <span class="s2">&#34;Status&#34;</span>: <span class="s2">&#34;Created&#34;</span>,
+        <span class="s2">&#34;CloudWatchLogsRoleArn&#34;</span>: <span class="s2">&#34;arn:aws:iam::123456789012:role/service-role/Cognito-UserImport-Role&#34;</span>,
+        <span class="s2">&#34;ImportedUsers&#34;</span>: 0,
+        <span class="s2">&#34;SkippedUsers&#34;</span>: 0,
+        <span class="s2">&#34;FailedUsers&#34;</span>: <span class="m">0</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><p>CSV ファイルのアップロード</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">PRE_SIGNED_URL</span><span class="o">=</span><span class="s2">&#34;https://aws-cognito-idp-user-import-nrt.s3.ap-northeast-1.amazonaws.com/123456789012/ap-northeast-1_xxx/import-xxx?...&#34;</span>
+curl -v -T ./user-import-csv-template.csv -H <span class="s2">&#34;x-amz-server-side-encryption:aws:kms&#34;</span> <span class="nv">$PRE_SIGNED_URL</span>
+</code></pre></div><h3 id="3-作成したインポートジョブを開始">3. 作成したインポートジョブを開始</h3>
+<p><code>start-user-import-job</code> でジョブを開始<sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup></p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">JOB_ID</span><span class="o">=</span>import-xxx
+aws cognito-idp start-user-import-job --user-pool-id <span class="nv">$USER_POOL_ID</span> --job-id <span class="nv">$JOB_ID</span>
+</code></pre></div><p>実行例</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% aws cognito-idp start-user-import-job --user-pool-id <span class="nv">$USER_POOL_ID</span> --job-id <span class="nv">$JOB_ID</span>
+<span class="o">{</span>
+    <span class="s2">&#34;UserImportJob&#34;</span>: <span class="o">{</span>
+        <span class="s2">&#34;JobName&#34;</span>: <span class="s2">&#34;myjob&#34;</span>,
+        <span class="s2">&#34;JobId&#34;</span>: <span class="s2">&#34;import-xxx&#34;</span>,
+        <span class="s2">&#34;UserPoolId&#34;</span>: <span class="s2">&#34;ap-northeast-1_xxx&#34;</span>,
+        <span class="s2">&#34;PreSignedUrl&#34;</span>: <span class="s2">&#34;https://aws-cognito-idp-user-import-nrt.s3.ap-northeast-1.amazonaws.com/123456789012/ap-northeast-1_xxx/import-xxx?...&#34;</span>,
+        <span class="s2">&#34;CreationDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:49:04.035000+09:00&#34;</span>,
+        <span class="s2">&#34;StartDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:50:45.478000+09:00&#34;</span>,
+        <span class="s2">&#34;Status&#34;</span>: <span class="s2">&#34;Pending&#34;</span>,
+        <span class="s2">&#34;CloudWatchLogsRoleArn&#34;</span>: <span class="s2">&#34;arn:aws:iam::123456789012:role/service-role/Cognito-UserImport-Role&#34;</span>,
+        <span class="s2">&#34;ImportedUsers&#34;</span>: 0,
+        <span class="s2">&#34;SkippedUsers&#34;</span>: 0,
+        <span class="s2">&#34;FailedUsers&#34;</span>: <span class="m">0</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="4-インポートジョブのステータス確認">4. インポートジョブのステータス確認</h3>
+<p><code>describe-user-import-job</code> コマンドでインポートジョブのステータスを確認可能<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup></p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">aws cognito-idp describe-user-import-job --user-pool-id <span class="nv">$USER_POOL_ID</span> --job-id <span class="nv">$JOB_ID</span>
+</code></pre></div><p>実行例</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% aws cognito-idp describe-user-import-job --user-pool-id <span class="nv">$USER_POOL_ID</span> --job-id <span class="nv">$JOB_ID</span>
+<span class="o">{</span>
+    <span class="s2">&#34;UserImportJob&#34;</span>: <span class="o">{</span>
+        <span class="s2">&#34;JobName&#34;</span>: <span class="s2">&#34;myjob&#34;</span>,
+        <span class="s2">&#34;JobId&#34;</span>: <span class="s2">&#34;import-xxx&#34;</span>,
+        <span class="s2">&#34;UserPoolId&#34;</span>: <span class="s2">&#34;ap-northeast-1_xxx&#34;</span>,
+        <span class="s2">&#34;PreSignedUrl&#34;</span>: <span class="s2">&#34;https://aws-cognito-idp-user-import-nrt.s3.ap-northeast-1.amazonaws.com/123456789012/ap-northeast-1_xxx/import-xxx?...&#34;</span>,
+        <span class="s2">&#34;CreationDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:49:04.035000+09:00&#34;</span>,
+        <span class="s2">&#34;StartDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:50:47.752000+09:00&#34;</span>,
+        <span class="s2">&#34;CompletionDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:50:48.531000+09:00&#34;</span>,
+        <span class="s2">&#34;Status&#34;</span>: <span class="s2">&#34;Succeeded&#34;</span>,
+        <span class="s2">&#34;CloudWatchLogsRoleArn&#34;</span>: <span class="s2">&#34;arn:aws:iam::123456789012:role/service-role/Cognito-UserImport-Role&#34;</span>,
+        <span class="s2">&#34;ImportedUsers&#34;</span>: 2,
+        <span class="s2">&#34;SkippedUsers&#34;</span>: 0,
+        <span class="s2">&#34;FailedUsers&#34;</span>: 0,
+        <span class="s2">&#34;CompletionMessage&#34;</span>: <span class="s2">&#34;Import Job Completed Successfully.&#34;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="5-ユーザーが追加されたか確認">5. ユーザーが追加されたか確認</h3>
+<p><code>list-users</code> コマンドで確認<sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup></p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">aws cognito-idp list-users --user-pool-id <span class="nv">$USER_POOL_ID</span>
+</code></pre></div><p>実行例</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% aws cognito-idp list-users --user-pool-id <span class="nv">$USER_POOL_ID</span>
+<span class="o">{</span>
+    <span class="s2">&#34;Users&#34;</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">&#34;Username&#34;</span>: <span class="s2">&#34;janeroe&#34;</span>,
+            <span class="s2">&#34;Attributes&#34;</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;sub&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;c754c8af-55e4-413f-afdb-895bd17e8078&#34;</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;email_verified&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;true&#34;</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;name&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;janeroe&#34;</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;phone_number_verified&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;false&#34;</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;email&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;janeroe@example.com&#34;</span>
+                <span class="o">}</span>
+            <span class="o">]</span>,
+            <span class="s2">&#34;UserCreateDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:50:48.369000+09:00&#34;</span>,
+            <span class="s2">&#34;UserLastModifiedDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:50:48.369000+09:00&#34;</span>,
+            <span class="s2">&#34;Enabled&#34;</span>: true,
+            <span class="s2">&#34;UserStatus&#34;</span>: <span class="s2">&#34;RESET_REQUIRED&#34;</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">&#34;Username&#34;</span>: <span class="s2">&#34;johndoe&#34;</span>,
+            <span class="s2">&#34;Attributes&#34;</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;sub&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;556cdeca-59af-49e2-903c-8d2452ff1cae&#34;</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;email_verified&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;true&#34;</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;name&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;johndoe&#34;</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;phone_number_verified&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;false&#34;</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;email&#34;</span>,
+                    <span class="s2">&#34;Value&#34;</span>: <span class="s2">&#34;johndoe@example.com&#34;</span>
+                <span class="o">}</span>
+            <span class="o">]</span>,
+            <span class="s2">&#34;UserCreateDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:50:48.363000+09:00&#34;</span>,
+            <span class="s2">&#34;UserLastModifiedDate&#34;</span>: <span class="s2">&#34;2021-01-06T03:50:48.363000+09:00&#34;</span>,
+            <span class="s2">&#34;Enabled&#34;</span>: true,
+            <span class="s2">&#34;UserStatus&#34;</span>: <span class="s2">&#34;RESET_REQUIRED&#34;</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="ユーザーインポートジョブのステータス">ユーザーインポートジョブのステータス</h2>
+<ul>
+<li>API Reference の DataType に定義がある<sup id="fnref:10"><a href="#fn:10" class="footnote-ref" role="doc-noteref">10</a></sup>
+<ul>
+<li><code>Created</code>: ジョブが作成されたものの未開始</li>
+<li><code>Pending</code>: ジョブが開始されたもののユーザーはインポートしていない遷移状態</li>
+<li><code>InProgress</code>: ジョブが開始されユーザーをインポート中</li>
+<li><code>Stopping</code>: ジョブの停止をリクエストしたが、ジョブがユーザーインポートを停止していない</li>
+<li><code>Stopped</code>: ジョブがユーザーインポートを停止した</li>
+<li><code>Succeeded</code>: ジョブが正常に完了した</li>
+<li><code>Faild</code>: エラーのためジョブが失敗した</li>
+<li><code>Expired</code>: ジョブを作成したが 24 - 48 時間の間にジョブを開始しなかった。ジョブに関連付けられているデータは全て削除され、ジョブは開始できない</li>
+</ul>
+</li>
+</ul>
+<h2 id="トラブルシュート">トラブルシュート</h2>
+<ul>
+<li>CSV のインポートが失敗する
+<ul>
+<li>CloudWatch Logs に出力されるログを見るとヒントがあるかも</li>
+<li>以下のようなフォーマットで CloudWatch Logs に出力が行われる
+<ul>
+<li>Log Group: <code>/aws/cognito/userpools/ap-northeast-1_xxx/my-user-pool-name</code></li>
+<li>Log Stream: <code>import-job-id/import-job-name</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% uname -v
+Darwin Kernel Version 19.6.0: Tue Nov <span class="m">10</span> 00:10:30 PST 2020<span class="p">;</span> root:xnu-6153.141.10~1/RELEASE_X86_64
+% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% aws --version
+aws-cli/2.1.6 Python/3.7.4 Darwin/19.6.0 exe/x86_64 prompt/off
+</code></pre></div><section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>Importing Users into a User Pool - Amazon Cognito<br>
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-import-users.html">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-import-users.html</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>Importing Users into User Pools From a CSV File - Amazon Cognito<br>
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-using-import-tool.html">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-using-import-tool.html</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p>UserType - Amazon Cognito Identity Provider<br>
+<a href="https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_UserType.html">https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_UserType.html</a> <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4" role="doc-endnote">
+<p>Creating the CloudWatch Logs IAM Role (AWS CLI, API) - Amazon Cognito<br>
+<a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-using-import-tool-cli-cloudwatch-iam-role.html">https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-using-import-tool-cli-cloudwatch-iam-role.html</a> <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5" role="doc-endnote">
+<p><a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cognito-idp/get-csv-header.html">https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cognito-idp/get-csv-header.html</a> <a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:6" role="doc-endnote">
+<p><a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cognito-idp/create-user-import-job.html">https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cognito-idp/create-user-import-job.html</a> <a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:7" role="doc-endnote">
+<p><a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cognito-idp/start-user-import-job.html">https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cognito-idp/start-user-import-job.html</a> <a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:8" role="doc-endnote">
+<p><a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cognito-idp/describe-user-import-job.html">https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cognito-idp/describe-user-import-job.html</a> <a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:9" role="doc-endnote">
+<p><a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cognito-idp/list-users.html">https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cognito-idp/list-users.html</a> <a href="#fnref:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:10" role="doc-endnote">
+<p>UserImportJobType - Amazon Cognito Identity Provider
+<a href="https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_UserImportJobType.html">https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_UserImportJobType.html</a> <a href="#fnref:10" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>]]></content>
+		</item>
+		
+		<item>
+			<title>AWS Lambda で Go ランタイムを使うのが良いと思っている理由</title>
+			<link>https://noid11.github.io/posts/aws-lambda-love-golang/</link>
+			<pubDate>Fri, 01 Jan 2021 15:05:18 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/aws-lambda-love-golang/</guid>
+			<description>&lt;p&gt;個人的に AWS Lambda では zip 形式で golang ランタイム使うのがコスパ最強な気がしているので、根拠をまとめておくメモ&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p>個人的に AWS Lambda では zip 形式で golang ランタイム使うのがコスパ最強な気がしているので、根拠をまとめておくメモ</p>
+<h2 id="パフォーマンス">パフォーマンス</h2>
+<ul>
+<li>コールドスタートの影響が少ない
+<ul>
+<li>JVM 相当のコンポーネントが存在しないためコールドスタートの影響が少ない</li>
+</ul>
+</li>
+<li>マルチコアを活かしやすい
+<ul>
+<li>AWS Lambda では Lambda 関数に設定したメモリサイズに応じて割り当てられる CPU パワーが変化する<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>
+<ul>
+<li>今後変化する可能性もあるものの、現状メモリサイズを最低値である 128 MB としても利用コア数は 2 となる<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></li>
+<li>1,769 MB のメモリ割り当てで 1vCPU 相当になるらしい</li>
+<li>2020/12/01 にメモリ 10GB vCPU 6 コアまでサポートされるようになった<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></li>
+</ul>
+</li>
+<li>goroutine との相性が良い</li>
+</ul>
+</li>
+</ul>
+<h2 id="開発体験">開発体験</h2>
+<ul>
+<li>公式の型定義が使える
+<ul>
+<li>AWS 公式から Lambda 関数が受け取る event の型が定義されている<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup></li>
+<li>TypeScript でもあったりするものの、良くも悪くも DefinitelyTyped による型定義なので公式ではなくコミュニティによるもの<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup></li>
+</ul>
+</li>
+</ul>
+<h2 id="料金">料金</h2>
+<ul>
+<li>goroutine を使って concurrent な処理を実装しやすいため Lambda 関数の実行時間短縮が期待できる
+<ul>
+<li>AWS Lambda の料金はリクエスト数と実行時間を元に算出される<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup>
+<ul>
+<li>さらに 2020/12/01 に AWS Lambda の課金単位が 1ms になった<sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup></li>
+</ul>
+</li>
+<li>そのため基本的に短い時間で処理を完了できるほうがお得</li>
+</ul>
+</li>
+<li>基本的にコンテナイメージより zip 形式の方が安く使える
+<ul>
+<li>従来の zip 形式ではなく、コンテナイメージ形式でコードをデプロイすることが可能になった<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup>
+<ul>
+<li>コンテナイメージとカスタムランタイムは Lambda 関数の初期化時にも課金が発生するため、 zip 形式では実現できない要件がある場合にコンテナイメージを検討するのが良さそう<sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup></li>
+<li>数 GB に渡るような巨大なライブラリやコードを動かしたい場合とか</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>Configuring Lambda function memory - AWS Lambda<br>
+<a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-memory.html">https://docs.aws.amazon.com/lambda/latest/dg/configuration-memory.html</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>Serverless連載2: AWS Lambda×Goの開発Tips | フューチャー技術ブログ<br>
+<a href="https://future-architect.github.io/articles/20200326/">https://future-architect.github.io/articles/20200326/</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p>AWS Lambda now supports up to 10 GB of memory and 6 vCPU cores for Lambda Functions<br>
+<a href="https://aws.amazon.com/jp/about-aws/whats-new/2020/12/aws-lambda-supports-10gb-memory-6-vcpu-cores-lambda-functions/">https://aws.amazon.com/jp/about-aws/whats-new/2020/12/aws-lambda-supports-10gb-memory-6-vcpu-cores-lambda-functions/</a> <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4" role="doc-endnote">
+<p>aws-lambda-go/events at master · aws/aws-lambda-go<br>
+<a href="https://github.com/aws/aws-lambda-go/tree/master/events">https://github.com/aws/aws-lambda-go/tree/master/events</a> <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5" role="doc-endnote">
+<p>DefinitelyTyped/types/aws-lambda at master · DefinitelyTyped/DefinitelyTyped<br>
+<a href="https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/aws-lambda">https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/aws-lambda</a> <a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:6" role="doc-endnote">
+<p>料金 - AWS Lambda ｜AWS<br>
+<a href="https://aws.amazon.com/jp/lambda/pricing/">https://aws.amazon.com/jp/lambda/pricing/</a> <a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:7" role="doc-endnote">
+<p>AWS Lambda changes duration billing granularity from 100ms down to 1ms<br>
+<a href="https://aws.amazon.com/jp/about-aws/whats-new/2020/12/aws-lambda-changes-duration-billing-granularity-from-100ms-to-1ms/">https://aws.amazon.com/jp/about-aws/whats-new/2020/12/aws-lambda-changes-duration-billing-granularity-from-100ms-to-1ms/</a> <a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:8" role="doc-endnote">
+<p>AWS Lambda の新機能 – コンテナイメージのサポート | Amazon Web Services ブログ<br>
+<a href="https://aws.amazon.com/jp/blogs/news/new-for-aws-lambda-container-image-support/">https://aws.amazon.com/jp/blogs/news/new-for-aws-lambda-container-image-support/</a> <a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:9" role="doc-endnote">
+<p>AWS Lambda のカスタムランタイム - AWS Lambda<br>
+<a href="https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/runtimes-custom.html#runtimes-custom-build">https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/runtimes-custom.html#runtimes-custom-build</a> <a href="#fnref:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>]]></content>
+		</item>
+		
+		<item>
+			<title>2021 年の目標</title>
+			<link>https://noid11.github.io/posts/2021-goals/</link>
+			<pubDate>Thu, 31 Dec 2020 22:49:26 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/2021-goals/</guid>
+			<description></description>
+			<content type="html"><![CDATA[<h1 id="技術">技術</h1>
+<ul>
+<li>コーディングスキルにコンプレックスがあるので、もっと書けるようになりたい &amp; 自信をつけたい
+<ul>
+<li>プログラミング言語としては <a href="https://golang.org/">Golang</a>, <a href="https://www.typescriptlang.org/">TypeScript</a>, <a href="https://developer.mozilla.org/ja/docs/Web/JavaScript">JavaScript</a>, <a href="https://www.python.org/">Python</a> あたりにモチベがある</li>
+<li>何か OSS にコントリビュートしてみたい</li>
+<li>RFC 等の仕様を読んで実装してみる・・・みたいなやつもやってみたい</li>
+</ul>
+</li>
+</ul>
+<h1 id="英語">英語</h1>
+<ul>
+<li>コツコツやる
+<ul>
+<li><a href="https://ja.duolingo.com/">Duolingo</a> と <a href="https://ankiweb.net/decks/">Anki Web</a> が良い感じに継続できているので大丈夫そうではある</li>
+<li>スピーキングがお仕事上必要になるようであれば英会話教室とか検討した方が良いかもしれない</li>
+</ul>
+</li>
+</ul>
+<h1 id="仕事">仕事</h1>
+<ul>
+<li>常にキャパシティに余裕を持てるように働きたい
+<ul>
+<li>1日の仕事を7時間程度で終わらせて、1時間は自分への投資に使いたい</li>
+</ul>
+</li>
+</ul>
+<h1 id="健康">健康</h1>
+<ul>
+<li>有酸素運動を習慣化したい
+<ul>
+<li>エアロバイクを腐らせているので毎日やっていきたい</li>
+<li>エアロバイクを漕ぐだけだと継続できない実績があるので、並行してできる良さげなものを探したい</li>
+</ul>
+</li>
+</ul>
+<h1 id="趣味">趣味</h1>
+<ul>
+<li>やりたいことは色々あるけど、目標は無しで自由にやっていきたい</li>
+</ul>]]></content>
+		</item>
+		
+	</channel>
 </rss>
