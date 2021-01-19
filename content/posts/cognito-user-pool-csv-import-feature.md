@@ -2,6 +2,8 @@
 title: "Cognito User Pool の CSV インポート機能"
 date: 2021-01-05T20:18:51+09:00
 toc: true
+tags:
+    - Cognito
 draft: false
 ---
 

@@ -2,6 +2,9 @@
 title: "Playwright を TypeScript で動かすまで"
 date: 2021-01-12T12:39:32+09:00
 toc: true
+tags:
+    - Playwright
+    - TypeScript
 draft: false
 ---
 

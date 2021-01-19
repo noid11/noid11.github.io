@@ -2,6 +2,8 @@
 title: "curl で外部 json ファイルを元に POST リクエストする方法"
 date: 2021-01-07T08:00:34+09:00
 toc: true
+tags:
+    - curl
 draft: false
 ---
 

@@ -1,6 +1,9 @@
 ---
 title: "Windows の情報を PowerShell から確認する方法"
 date: 2021-01-19T14:24:03+09:00
+tags:
+    - PowerShell
+    - Windows
 toc: true
 draft: false
 ---

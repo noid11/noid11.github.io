@@ -2,6 +2,9 @@
 title: "Heroku CLI を使って Heroku Postgres をセットアップする方法"
 date: 2021-01-14T02:29:30+09:00
 toc: true
+tags:
+    - Heroku
+    - PostgreSQL
 draft: false
 ---
 

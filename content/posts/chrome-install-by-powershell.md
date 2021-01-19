@@ -2,6 +2,10 @@
 title: "PowerShell を使って Google Chrome をインストールする方法"
 date: 2021-01-19T15:12:28+09:00
 toc: true
+tags:
+    - PowerShell
+    - Windows
+    - Google Chrome
 draft: false
 ---
 

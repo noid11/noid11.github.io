@@ -2,6 +2,9 @@
 title: "AWS Lambda で Go ランタイムを使うのが良いと思っている理由"
 date: 2021-01-01T15:05:18+09:00
 toc: true
+tags: 
+    - AWS Lambda
+    - Go
 draft: false
 ---
 

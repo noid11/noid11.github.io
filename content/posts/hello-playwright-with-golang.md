@@ -2,6 +2,9 @@
 title: "Playwright を golang から使う"
 date: 2021-01-12T14:51:07+09:00
 toc: ture
+tags:
+    - Playwright
+    - Go
 draft: false
 ---
 

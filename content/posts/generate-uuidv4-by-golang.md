@@ -2,6 +2,9 @@
 title: "UUIDv4 を Go で生成する"
 date: 2021-01-16T11:31:50+09:00
 toc: true
+tags:
+    - Go
+    - UUID
 draft: false
 ---
 

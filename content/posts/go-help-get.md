@@ -2,6 +2,8 @@
 title: "go get コマンドのヘルプを読む"
 date: 2021-01-16T12:10:06+09:00
 toc: true
+tags:
+    - Go
 draft: false
 ---
 

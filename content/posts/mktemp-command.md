@@ -2,6 +2,8 @@
 title: "mktemp コマンド"
 date: 2021-01-16T08:56:33+09:00
 toc: true
+tags:
+    - mktemp
 draft: false
 ---
 

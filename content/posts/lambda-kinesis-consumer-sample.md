@@ -2,6 +2,8 @@
 title: "Kinesis Data Streams のコンシューマーとして動かす AWS Lambda 関数サンプル"
 date: 2021-01-19T08:51:43+09:00
 toc: true
+    - Kinesis Data Streams
+    - AWS Lambda
 draft: false
 ---
 
