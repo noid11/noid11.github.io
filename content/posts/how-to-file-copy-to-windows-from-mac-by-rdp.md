@@ -1,7 +1,7 @@
 ---
 title: "RDP を使って Mac から Windows にファイルをコピーする方法"
 date: 2021-01-19T22:16:16+09:00
-draft: true
+draft: false
 toc: false
 images: 
 tags: 

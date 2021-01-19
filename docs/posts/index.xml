@@ -6,8 +6,61 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Tue, 19 Jan 2021 16:11:20 +0900</lastBuildDate>
+		<lastBuildDate>Tue, 19 Jan 2021 22:16:16 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>RDP を使って Mac から Windows にファイルをコピーする方法</title>
+			<link>https://noid11.github.io/posts/how-to-file-copy-to-windows-from-mac-by-rdp/</link>
+			<pubDate>Tue, 19 Jan 2021 22:16:16 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/how-to-file-copy-to-windows-from-mac-by-rdp/</guid>
+			<description>クリップボードにコピーして貼り付るのが手軽で良い Mac 側でコピーしたいファイルを選択し、クリップボードにコピー RDP で Windows に接続し、ファイルを送信した</description>
+			<content type="html"><![CDATA[<ul>
+<li>クリップボードにコピーして貼り付るのが手軽で良い
+<ol>
+<li>Mac 側でコピーしたいファイルを選択し、クリップボードにコピー</li>
+<li>RDP で Windows に接続し、ファイルを送信したいディレクトリをよしなに選択してペースト</li>
+</ol>
+</li>
+<li>RDP 設定の <code>Devices &amp; Audio</code> で <code>Clipboard</code> にチェックが入っていることを確認すること</li>
+</ul>
+<p><img src="/images/how-to-file-copy-to-windows-from-mac-by-rdp/rdp-setting.png" alt="rdp-setting"></p>
+<h2 id="この記事を試した環境">この記事を試した環境</h2>
+<p>Mac</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+</code></pre></div><hr>
+<p>Microsoft Remote Desktop</p>
+<ul>
+<li>Version 10.4.0 (1811)</li>
+<li>Download:
+<ul>
+<li><a href="https://apps.apple.com/jp/app/microsoft-remote-desktop/id1295203466">https://apps.apple.com/jp/app/microsoft-remote-desktop/id1295203466</a></li>
+<li><a href="https://install.appcenter.ms/orgs/rdmacios-k2vy/apps/microsoft-remote-desktop-for-mac/distribution_groups/all-users-of-microsoft-remote-desktop-for-mac">https://install.appcenter.ms/orgs/rdmacios-k2vy/apps/microsoft-remote-desktop-for-mac/distribution_groups/all-users-of-microsoft-remote-desktop-for-mac</a></li>
+</ul>
+</li>
+<li>Release Notes:
+<ul>
+<li><a href="https://docs.microsoft.com/ja-jp/windows-server/remote/remote-desktop-services/clients/mac-whatsnew">https://docs.microsoft.com/ja-jp/windows-server/remote/remote-desktop-services/clients/mac-whatsnew</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>Windows</p>
+<div class="highlight"><pre class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">PS </span><span class="n">C:</span><span class="p">\</span><span class="n">Users</span><span class="p">\</span><span class="n">Administrator</span><span class="p">&gt;</span> <span class="nb">Get-WmiObject</span> <span class="n">Win32_OperatingSystem</span>
+
+
+<span class="n">SystemDirectory</span> <span class="err">:</span> <span class="n">C:</span><span class="p">\</span><span class="n">Windows</span><span class="p">\</span><span class="n">system32</span>
+<span class="n">Organization</span>    <span class="err">:</span> <span class="n">Amazon</span><span class="p">.</span><span class="n">com</span>
+<span class="n">BuildNumber</span>     <span class="err">:</span> <span class="n">17763</span>
+<span class="n">RegisteredUser</span>  <span class="err">:</span> <span class="n">EC2</span>
+<span class="n">SerialNumber</span>    <span class="err">:</span> <span class="n">00430</span><span class="p">-</span><span class="n">00000</span><span class="p">-</span><span class="n">00000-AA379</span>
+<span class="n">Version</span>         <span class="err">:</span> <span class="n">10</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">17763</span>
+</code></pre></div>]]></content>
+		</item>
 		
 		<item>
 			<title>PowerShell を使って Windows アカウントユーザーのパスワード失効を無効化する方法</title>

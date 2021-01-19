@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mac on noid11.github.io</title>
+    <link>https://noid11.github.io/tags/mac/</link>
+    <description>Recent content in Mac on noid11.github.io</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>&amp;#169; noid11</copyright>
+    <lastBuildDate>Tue, 19 Jan 2021 22:16:16 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/mac/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RDP を使って Mac から Windows にファイルをコピーする方法</title>
+      <link>https://noid11.github.io/posts/how-to-file-copy-to-windows-from-mac-by-rdp/</link>
+      <pubDate>Tue, 19 Jan 2021 22:16:16 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/how-to-file-copy-to-windows-from-mac-by-rdp/</guid>
+      <description>クリップボードにコピーして貼り付るのが手軽で良い Mac 側でコピーしたいファイルを選択し、クリップボードにコピー RDP で Windows に接続し、ファイルを送信した</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Tue, 19 Jan 2021 16:11:20 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/windows/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 19 Jan 2021 22:16:16 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/windows/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RDP を使って Mac から Windows にファイルをコピーする方法</title>
+      <link>https://noid11.github.io/posts/how-to-file-copy-to-windows-from-mac-by-rdp/</link>
+      <pubDate>Tue, 19 Jan 2021 22:16:16 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/how-to-file-copy-to-windows-from-mac-by-rdp/</guid>
+      <description>クリップボードにコピーして貼り付るのが手軽で良い Mac 側でコピーしたいファイルを選択し、クリップボードにコピー RDP で Windows に接続し、ファイルを送信した</description>
+    </item>
+    
     <item>
       <title>PowerShell を使って Windows アカウントユーザーのパスワード失効を無効化する方法</title>
       <link>https://noid11.github.io/posts/enable-user-password-never-expires-at-windows/</link>
