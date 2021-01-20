@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Tue, 19 Jan 2021 22:16:16 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Jan 2021 19:54:25 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AWS CLI を使って Amazon Connect Tasks を作成・削除する</title>
+      <link>https://noid11.github.io/posts/how-to-control-connect-tasks-by-aws-cli/</link>
+      <pubDate>Wed, 20 Jan 2021 19:54:25 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/how-to-control-connect-tasks-by-aws-cli/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>RDP を使って Mac から Windows にファイルをコピーする方法</title>
       <link>https://noid11.github.io/posts/how-to-file-copy-to-windows-from-mac-by-rdp/</link>
@@ -112,22 +121,6 @@
 &lt;li&gt;Cons
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://jp.heroku.com/pricing&#34;&gt;無料の Hobby Dev プラン&lt;/a&gt;だと、レコード数 10 K と同時接続数 20 といった制限があるので注意&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Playwright を golang から使う</title>
-      <link>https://noid11.github.io/posts/hello-playwright-with-golang/</link>
-      <pubDate>Tue, 12 Jan 2021 14:51:07 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/hello-playwright-with-golang/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://playwright.dev/&#34;&gt;playwright&lt;/a&gt; を Go で使える &lt;a href=&#34;https://github.com/mxschmitt/playwright-go&#34;&gt;playwright-go&lt;/a&gt; を動かしたメモ&lt;/li&gt;
-&lt;li&gt;build したバイナリには Chromium などのエンジンは含まれず、バイナリ実行時にダウンロードが発生する
-&lt;ul&gt;
-&lt;li&gt;なのでクロスコンパイルして動かしても、バイナリを動かす環境にブラウザエンジンを動かす共有ライブラリが無い場合、ブラウザの起動に失敗してエラーとなる&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;</description>

@@ -1,7 +1,7 @@
 ---
 title: "AWS CLI を使って Amazon Connect Tasks を作成・削除する"
 date: 2021-01-20T19:54:25+09:00
-draft: true
+draft: false
 toc: true
 images:
 tags: 

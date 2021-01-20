@@ -6,8 +6,92 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Tue, 19 Jan 2021 22:16:16 +0900</lastBuildDate>
+		<lastBuildDate>Wed, 20 Jan 2021 19:54:25 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>AWS CLI を使って Amazon Connect Tasks を作成・削除する</title>
+			<link>https://noid11.github.io/posts/how-to-control-connect-tasks-by-aws-cli/</link>
+			<pubDate>Wed, 20 Jan 2021 19:54:25 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/how-to-control-connect-tasks-by-aws-cli/</guid>
+			<description></description>
+			<content type="html"><![CDATA[<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">REGION</span><span class="o">=</span>ap-northeast-1
+<span class="nv">INSTANCE_ID</span><span class="o">=</span>xxx
+<span class="nv">CONTACT_FLOW_ID</span><span class="o">=</span>yyy
+<span class="nv">TASK_NAME</span><span class="o">=</span>mytask
+<span class="nv">CONTACT_ID</span><span class="o">=</span><span class="k">$(</span>aws --region <span class="nv">$REGION</span> connect start-task-contact --instance-id <span class="nv">$INSTANCE_ID</span> --contact-flow-id <span class="nv">$CONTACT_FLOW_ID</span> --name <span class="nv">$TASK_NAME</span> --query ContactId --output text<span class="k">)</span>
+aws --region <span class="nv">$REGION</span> connect stop-contact --contact-id <span class="nv">$CONTACT_ID</span> --instance-id <span class="nv">$INSTANCE_ID</span>
+</code></pre></div><h2 id="amazon-connect-tasks-とは">Amazon Connect Tasks とは</h2>
+<ul>
+<li>Amazon Connect を使用している各エージェントに対して「タスク」を与える機能<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></li>
+<li>タスクとは、雑に言うと ToDo リストみたいなもの
+<ul>
+<li>コールと同じようにエージェントにルーティングされて、エージェントが承諾したら特定のタスクに取り組む・・・といった感じで使う
+<ul>
+<li>Salesforce 等の外部サービスと連携することも出来るらしい<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></li>
+</ul>
+</li>
+<li>ドキュメントには以下のようなユースケースが書いてある<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>
+<ul>
+<li>Salesforce 等の CRM: Customer Relationship Management ソリューションと連携したカスタマーへのフォローアップ</li>
+<li>コールを使用したカスタマーへのフォローアップ
+<ul>
+<li>タスクを確認して、エージェントから特定のカスタマーにアウトバウンドコールする的な</li>
+</ul>
+</li>
+<li>カスタマーに関連して行うビジネス固有のアクション</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="aws-cli-でタスクを作成">AWS CLI でタスクを作成</h2>
+<p><a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/connect/start-task-contact.html">start-task-contact</a> コマンドを使う<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup></p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">REGION</span><span class="o">=</span>ap-northeast-1
+<span class="nv">INSTANCE_ID</span><span class="o">=</span>xxx
+<span class="nv">CONTACT_FLOW_ID</span><span class="o">=</span>yyy
+<span class="nv">TASK_NAME</span><span class="o">=</span>mytask
+aws --region <span class="nv">$REGION</span> connect start-task-contact --instance-id <span class="nv">$INSTANCE_ID</span> --contact-flow-id <span class="nv">$CONTACT_FLOW_ID</span> --name <span class="nv">$TASK_NAME</span>
+</code></pre></div><h2 id="aws-cli-でタスクを削除">AWS CLI でタスクを削除</h2>
+<p><a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/connect/stop-contact.html">stop-contact</a> コマンドを使う<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup></p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">REGION</span><span class="o">=</span>ap-northeast-1
+<span class="nv">INSTANCE_ID</span><span class="o">=</span>xxx
+<span class="nv">CONTACT_ID</span><span class="o">=</span>yyy
+aws --region <span class="nv">$REGION</span> connect stop-contact --contact-id <span class="nv">$CONTACT_ID</span> --instance-id <span class="nv">$INSTANCE_ID</span>
+</code></pre></div><h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% aws --version
+aws-cli/2.1.6 Python/3.7.4 Darwin/19.6.0 exe/x86_64 prompt/off
+</code></pre></div><section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>Amazon Connect Tasks (エージェントのタスクを自動化、追跡、管理) | AWS<br>
+<a href="https://aws.amazon.com/jp/connect/tasks/">https://aws.amazon.com/jp/connect/tasks/</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>Amazon Connect – よりスマートになり、サードパーティーツールとの統合が向上 | Amazon Web Services ブログ<br>
+<a href="https://aws.amazon.com/jp/blogs/news/amazon-connect-smarter-and-more-integrated/">https://aws.amazon.com/jp/blogs/news/amazon-connect-smarter-and-more-integrated/</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p>Tasks - Amazon Connect<br>
+<a href="https://docs.aws.amazon.com/connect/latest/adminguide/tasks.html">https://docs.aws.amazon.com/connect/latest/adminguide/tasks.html</a> <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4" role="doc-endnote">
+<p>StartTaskContact - Amazon Connect Service<br>
+<a href="https://docs.aws.amazon.com/connect/latest/APIReference/API_StartTaskContact.html">https://docs.aws.amazon.com/connect/latest/APIReference/API_StartTaskContact.html</a> <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5" role="doc-endnote">
+<p>StopContact - Amazon Connect Service<br>
+<a href="https://docs.aws.amazon.com/connect/latest/APIReference/API_StopContact.html">https://docs.aws.amazon.com/connect/latest/APIReference/API_StopContact.html</a> <a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>]]></content>
+		</item>
 		
 		<item>
 			<title>RDP を使って Mac から Windows にファイルをコピーする方法</title>
