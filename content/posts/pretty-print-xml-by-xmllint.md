@@ -1,7 +1,7 @@
 ---
 title: "xmllint コマンドで XML を整形して出力する"
 date: 2021-01-21T10:26:45+09:00
-draft: true
+draft: false
 toc: true
 images:
 tags: 

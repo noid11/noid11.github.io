@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="xmllint コマンドで XML を整形して出力する">
+<meta itemprop="description" content="XML をファイルとして保存して、 --format オプションで整形できる
+xmllint --format ./myfile.xml
+">
+<meta itemprop="datePublished" content="2021-01-21T10:26:45+09:00" />
+<meta itemprop="dateModified" content="2021-01-21T10:43:05+09:00" />
+<meta itemprop="wordCount" content="1628">
+
+
+
+<meta itemprop="keywords" content="XML,xmllint," />
+<meta property="og:title" content="xmllint コマンドで XML を整形して出力する" />
+<meta property="og:description" content="XML をファイルとして保存して、 --format オプションで整形できる
+xmllint --format ./myfile.xml
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noid11.github.io/posts/pretty-print-xml-by-xmllint/" />
+<meta property="article:published_time" content="2021-01-21T10:26:45+09:00" />
+<meta property="article:modified_time" content="2021-01-21T10:43:05+09:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="xmllint コマンドで XML を整形して出力する"/>
+<meta name="twitter:description" content="XML をファイルとして保存して、 --format オプションで整形できる
+xmllint --format ./myfile.xml
+"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>xmllint コマンドで XML を整形して出力する</title>
+	<link rel="stylesheet" href="https://noid11.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://noid11.github.io/">noid11.github.io</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://noid11.github.io/posts/">Posts</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="toc-btn" class="hdr-btn desktop-only-ib" title="Table of Contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="https://twitter.com/_noid11" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://github.com/noid11" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://noid11.github.io/posts/">Posts</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>2021/01/21</span></div>
+				<h1>xmllint コマンドで XML を整形して出力する</h1>
+			</header>
+			<div class="content">
+				<p>XML をファイルとして保存して、 <code>--format</code> オプションで整形できる</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">xmllint --format ./myfile.xml
+</code></pre></div><h2 id="manual">manual<a href="#manual" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">XMLLINT<span class="o">(</span>1<span class="o">)</span>                                                             xmllint Manual                                                            XMLLINT<span class="o">(</span>1<span class="o">)</span>
+
+NAME
+       xmllint - <span class="nb">command</span> line XML tool
+
+SYNOPSIS
+       xmllint <span class="o">[</span>--version <span class="p">|</span> --debug <span class="p">|</span> --shell <span class="p">|</span> --xpath <span class="s2">&#34;XPath_expression&#34;</span> <span class="p">|</span> --debugent <span class="p">|</span> --copy <span class="p">|</span> --recover <span class="p">|</span> --noent <span class="p">|</span> --noout <span class="p">|</span> --nonet <span class="p">|</span>
+               --path <span class="s2">&#34;PATH(S)&#34;</span> <span class="p">|</span> --load-trace <span class="p">|</span> --htmlout <span class="p">|</span> --nowrap <span class="p">|</span> --valid <span class="p">|</span> --postvalid <span class="p">|</span> --dtdvalid URL <span class="p">|</span> --dtdvalidfpi FPI <span class="p">|</span> --timing <span class="p">|</span>
+               --output FILE <span class="p">|</span> --repeat <span class="p">|</span> --insert <span class="p">|</span> --compress <span class="p">|</span> --html <span class="p">|</span> --xmlout <span class="p">|</span> --push <span class="p">|</span> --memory <span class="p">|</span> --maxmem NBBYTES <span class="p">|</span> --nowarning <span class="p">|</span> --noblanks <span class="p">|</span>
+               --nocdata <span class="p">|</span> --format <span class="p">|</span> --encode ENCODING <span class="p">|</span> --dropdtd <span class="p">|</span> --nsclean <span class="p">|</span> --testIO <span class="p">|</span> --catalogs <span class="p">|</span> --nocatalogs <span class="p">|</span> --auto <span class="p">|</span> --xinclude <span class="p">|</span>
+               --noxincludenode <span class="p">|</span> --loaddtd <span class="p">|</span> --dtdattr <span class="p">|</span> --stream <span class="p">|</span> --walker <span class="p">|</span> --pattern PATTERNVALUE <span class="p">|</span> --chkregister <span class="p">|</span> --relaxng SCHEMA <span class="p">|</span> --schema SCHEMA
+               <span class="p">|</span> --c14n<span class="o">]</span> <span class="o">{</span>XML-FILE<span class="o">(</span>S<span class="o">)</span>... <span class="p">|</span> -<span class="o">}</span>
+
+       xmllint --help
+
+DESCRIPTION
+       The xmllint program parses one or more XML files, specified on the <span class="nb">command</span> line as XML-FILE <span class="o">(</span>or the standard input <span class="k">if</span> the filename provided is - <span class="o">)</span>.
+       It prints various types of output, depending upon the options selected. It is useful <span class="k">for</span> detecting errors both in XML code and in the XML parser itself.
+
+       xmllint is included in libxml<span class="o">(</span>3<span class="o">)</span>.
+
+OPTIONS
+       xmllint accepts the following options <span class="o">(</span>in alphabetical order<span class="o">)</span>:
+
+       --auto
+           Generate a small document <span class="k">for</span> testing purposes.
+
+       --catalogs
+           Use the SGML catalog<span class="o">(</span>s<span class="o">)</span> from SGML_CATALOG_FILES. Otherwise XML catalogs starting from /etc/xml/catalog are used by default.
+
+       --chkregister
+           Turn on node registration. Useful <span class="k">for</span> developers testing libxml<span class="o">(</span>3<span class="o">)</span> node tracking code.
+
+       --compress
+           Turn on gzip<span class="o">(</span>1<span class="o">)</span> compression of output.
+
+       --copy
+           Test the internal copy implementation.
+
+       --c14n
+           Use the W3C XML Canonicalisation <span class="o">(</span>C14N<span class="o">)</span> to serialize the result of parsing to stdout. It keeps comments in the result.
+
+       --dtdvalid URL
+           Use the DTD specified by an URL <span class="k">for</span> validation.
+
+       --dtdvalidfpi FPI
+           Use the DTD specified by a Formal Public Identifier FPI <span class="k">for</span> validation, note that this will require a catalog exporting that Formal Public Identifier to work.
+
+       --debug
+           Parse a file and output an annotated tree of the in-memory version of the document.
+
+       --debugent
+           Debug the entities defined in the document.
+
+       --dropdtd
+           Remove DTD from output.
+
+       --dtdattr
+           Fetch external DTD and populate the tree with inherited attributes.
+
+       --encode ENCODING
+           Output in the given encoding. Note that this works <span class="k">for</span> full document not fragments or result from XPath queries.
+
+       --format
+           Reformat and reindent the output. The XMLLINT_INDENT environment variable controls the indentation. The default value is two spaces <span class="s2">&#34; &#34;</span><span class="o">)</span>.
+
+       --help
+           Print out a short usage summary <span class="k">for</span> xmllint.
+
+       --html
+           Use the HTML parser.
+
+       --htmlout
+           Output results as an HTML file. 
+           This causes xmllint to output the necessary HTML tags surrounding the result tree output so the results can be displayed/viewed in a browser.
+
+       --insert
+           Test <span class="k">for</span> valid insertions.
+
+       --loaddtd
+           Fetch an external DTD.
+
+       --load-trace
+           Display all the documents loaded during the processing to stderr.
+
+       --maxmem NNBYTES
+           Test the parser memory support.  
+           NNBYTES is the maximum number of bytes the library is allowed to allocate. 
+           This can also be used to make sure batch processing of XML files will not exhaust the virtual memory of the server running them.
+
+       --memory
+           Parse from memory.
+
+       --noblanks
+           Drop ignorable blank spaces.
+
+       --nocatalogs
+           Do not use any catalogs.
+
+       --nocdata
+           Substitute CDATA section by equivalent text nodes.
+
+       --noent
+           Substitute entity values <span class="k">for</span> entity references. By default, xmllint leaves entity references in place.
+
+       --nonet
+           Do not use the Internet to fetch DTDs or entities.
+
+       --noout
+           Suppress output. By default, xmllint outputs the result tree.
+
+       --nowarning
+           Do not emit warnings from the parser and/or validator.
+
+       --nowrap
+           Do not output HTML doc wrapper.
+
+       --noxincludenode
+           Do XInclude processing but <span class="k">do</span> not generate XInclude start and end nodes.
+
+       --nsclean
+           Remove redundant namespace declarations.
+
+       --output FILE
+           Define a file path where xmllint will save the result of parsing. 
+           Usually the programs build a tree and save it on stdout, with this option the result XML instance will be saved onto a file.
+
+       --path <span class="s2">&#34;PATH(S)&#34;</span>
+           Use the <span class="o">(</span>space- or colon-separated<span class="o">)</span> list of filesystem paths specified by PATHS to load DTDs or entities. 
+           Enclose space-separated lists by quotation marks.
+
+       --pattern PATTERNVALUE
+           Used to exercise the pattern recognition engine, which can be used with the reader interface to the parser. 
+           It allows to <span class="k">select</span> some nodes in the document based on an XPath <span class="o">(</span>subset<span class="o">)</span> expression. Used <span class="k">for</span> debugging.
+
+       --postvalid
+           Validate after parsing has completed.
+
+       --push
+           Use the push mode of the parser.
+
+       --recover
+           Output any parsable portions of an invalid document.
+
+       --relaxng SCHEMA
+           Use RelaxNG file named SCHEMA <span class="k">for</span> validation.
+
+       --repeat
+           Repeat <span class="m">100</span> times, <span class="k">for</span> timing or profiling.
+
+       --schema SCHEMA
+           Use a W3C XML Schema file named SCHEMA <span class="k">for</span> validation.
+
+       --shell
+           Run a navigating shell. Details on available commands in shell mode are below <span class="o">(</span>see the section called <span class="s2">&#34;SHELL COMMANDS&#34;</span><span class="o">)</span>.
+
+       --xpath <span class="s2">&#34;XPath_expression&#34;</span>
+           Run an XPath expression given as argument and print the result. 
+           In <span class="k">case</span> of a nodeset result, each node in the node <span class="nb">set</span> is serialized in full in the output. 
+           In <span class="k">case</span> of an empty node <span class="nb">set</span> the <span class="s2">&#34;XPath set is empty&#34;</span> result will be shown and an error <span class="nb">exit</span> code will be returned.
+
+       --stream
+           Use streaming API - useful when used in combination with --relaxng or --valid options <span class="k">for</span> validation of files that are too large to be held in memory.
+
+       --testIO
+           Test user input/output support.
+
+       --timing
+           Output information about the <span class="nb">time</span> it takes xmllint to perform the various steps.
+
+       --valid
+           Determine <span class="k">if</span> the document is a valid instance of the included Document Type Definition <span class="o">(</span>DTD<span class="o">)</span>. 
+           A DTD to be validated against also can be specified at the <span class="nb">command</span> line using the --dtdvalid option. 
+           By default, xmllint also checks to determine <span class="k">if</span> the document is well-formed.
+
+       --version
+           Display the version of libxml<span class="o">(</span>3<span class="o">)</span> used.
+
+       --walker
+           Test the walker module, which is a reader interface but <span class="k">for</span> a document tree, instead of using the reader API on an unparsed document it works on an existing in-memory tree. 
+           Used <span class="k">for</span> debugging.
+
+       --xinclude
+           Do XInclude processing.
+
+       --xmlout
+           Used in conjunction with --html. 
+           Usually when HTML is parsed the document is saved with the HTML serializer. 
+           But with this option the resulting document is saved with the XML serializer. 
+           This is primarily used to generate XHTML from HTML input.
+
+SHELL COMMANDS
+       xmllint offers an interactive shell mode invoked with the --shell command. Available commands in shell mode include <span class="o">(</span>in alphabetical order<span class="o">)</span>:
+
+       base
+           Display XML base of the node.
+
+       bye
+           Leave the shell.
+
+       cat NODE
+           Display the given node or the current one.
+
+       <span class="nb">cd</span> PATH
+           Change the current node to the given path <span class="o">(</span><span class="k">if</span> unique<span class="o">)</span> or root <span class="k">if</span> no argument is given.
+
+       dir PATH
+           Dumps information about the node <span class="o">(</span>namespace, attributes, content<span class="o">)</span>.
+
+       du PATH
+           Show the structure of the subtree under the given path or the current node.
+
+       <span class="nb">exit</span>
+           Leave the shell.
+
+       <span class="nb">help</span>
+           Show this help.
+
+       free
+           Display memory usage.
+
+       load FILENAME
+           Load a new document with the given filename.
+
+       ls PATH
+           List contents of the given path or the current directory.
+
+       <span class="nb">pwd</span>
+           Display the path to the current node.
+
+       quit
+           Leave the shell.
+
+       save FILENAME
+           Save the current document to the given filename or to the original name.
+
+       validate
+           Check the document <span class="k">for</span> errors.
+
+       write FILENAME
+           Write the current node to the given filename.
+
+ENVIRONMENT
+       SGML_CATALOG_FILES
+           SGML catalog behavior can be changed by redirecting queries to the user<span class="s1">&#39;s own set of catalogs. 
+</span><span class="s1">           This can be done by setting the SGML_CATALOG_FILES environment variable to a list of catalogs. 
+</span><span class="s1">           An empty one should deactivate loading the default /etc/sgml/catalog catalog.
+</span><span class="s1">
+</span><span class="s1">       XML_CATALOG_FILES
+</span><span class="s1">           XML catalog behavior can be changed by redirecting queries to the user&#39;</span>s own <span class="nb">set</span> of catalogs. 
+           This can be <span class="k">done</span> by setting the XML_CATALOG_FILES environment variable to a list of catalogs. 
+           An empty one should deactivate loading the default /etc/xml/catalog catalog.
+
+       XML_DEBUG_CATALOG
+           Setting the environment variable XML_DEBUG_CATALOG to non-zero using the <span class="nb">export</span> <span class="nb">command</span> outputs debugging information related to catalog operations.
+
+       XMLLINT_INDENT
+           Setting the environment variable XMLLINT_INDENT controls the indentation. The default value is two spaces <span class="s2">&#34; &#34;</span>.
+
+DIAGNOSTICS
+       xmllint <span class="k">return</span> codes provide information that can be used when calling it from scripts.
+
+       <span class="m">0</span>
+           No error
+
+       <span class="m">1</span>
+           Unclassified
+
+       <span class="m">2</span>
+           Error in DTD
+
+       <span class="m">3</span>
+           Validation error
+
+       <span class="m">4</span>
+           Validation error
+
+       <span class="m">5</span>
+           Error in schema compilation
+
+       <span class="m">6</span>
+           Error writing output
+
+       <span class="m">7</span>
+           Error in pattern <span class="o">(</span>generated when --pattern option is used<span class="o">)</span>
+
+       <span class="m">8</span>
+           Error in Reader registration <span class="o">(</span>generated when --chkregister option is used<span class="o">)</span>
+
+       <span class="m">9</span>
+           Out of memory error
+
+SEE ALSO
+       libxml<span class="o">(</span>3<span class="o">)</span>
+
+       More information can be found at
+
+       o   libxml<span class="o">(</span>3<span class="o">)</span> web page http://www.xmlsoft.org/
+
+       o   W3C XSLT page http://www.w3.org/TR/xslt
+
+AUTHORS
+       John Fleck &lt;jfleck@inkstain.net&gt;
+           Author.
+
+       Ziying Sherwin &lt;sherwin@nlm.nih.gov&gt;
+           Author.
+
+       Heiko Rupp &lt;hwr@pilhuhn.de&gt;
+           Author.
+
+COPYRIGHT
+       Copyright <span class="o">(</span>C<span class="o">)</span> 2001, <span class="m">2004</span>
+
+libxml2                                                                    <span class="nv">$Date</span>$                                                                XMLLINT<span class="o">(</span>1<span class="o">)</span>
+</code></pre></div><h2 id="実行例">実行例<a href="#実行例" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li><a href="https://samltool.io/">https://samltool.io/</a> で公開されている SAML レスポンスを <code>saml.xml</code> として保存</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% xmllint --format ./saml.xml 
+&lt;?xml <span class="nv">version</span><span class="o">=</span><span class="s2">&#34;1.0&#34;</span>?&gt;
+&lt;samlp:Response xmlns:samlp<span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:2.0:protocol&#34;</span> <span class="nv">ID</span><span class="o">=</span><span class="s2">&#34;_621c4c4ae5d60c768cc2&#34;</span> <span class="nv">Version</span><span class="o">=</span><span class="s2">&#34;2.0&#34;</span> <span class="nv">IssueInstant</span><span class="o">=</span><span class="s2">&#34;2014-10-14T14:32:17Z&#34;</span> <span class="nv">Destination</span><span class="o">=</span><span class="s2">&#34;https://app.auth0.com/tester/samlp&#34;</span>&gt;
+  &lt;saml:Issuer xmlns:saml<span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34;</span>&gt;urn:matugit.auth0.com&lt;/saml:Issuer&gt;
+  &lt;samlp:Status&gt;
+    &lt;samlp:StatusCode <span class="nv">Value</span><span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:2.0:status:Success&#34;</span>/&gt;
+  &lt;/samlp:Status&gt;
+  &lt;saml:Assertion xmlns:saml<span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34;</span> <span class="nv">Version</span><span class="o">=</span><span class="s2">&#34;2.0&#34;</span> <span class="nv">ID</span><span class="o">=</span><span class="s2">&#34;_5VK7LT7FliUkkaQuW6r4brF0DG5E3X76&#34;</span> <span class="nv">IssueInstant</span><span class="o">=</span><span class="s2">&#34;2014-10-14T14:32:17.251Z&#34;</span>&gt;
+    &lt;saml:Issuer&gt;urn:matugit.auth0.com&lt;/saml:Issuer&gt;
+    &lt;Signature <span class="nv">xmlns</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2000/09/xmldsig#&#34;</span>&gt;
+      &lt;SignedInfo&gt;
+        &lt;CanonicalizationMethod <span class="nv">Algorithm</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;</span>/&gt;
+        &lt;SignatureMethod <span class="nv">Algorithm</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2000/09/xmldsig#rsa-sha1&#34;</span>/&gt;
+        &lt;Reference <span class="nv">URI</span><span class="o">=</span><span class="s2">&#34;#_5VK7LT7FliUkkaQuW6r4brF0DG5E3X76&#34;</span>&gt;
+          &lt;Transforms&gt;
+            &lt;Transform <span class="nv">Algorithm</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2000/09/xmldsig#enveloped-signature&#34;</span>/&gt;
+            &lt;Transform <span class="nv">Algorithm</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;</span>/&gt;
+          &lt;/Transforms&gt;
+          &lt;DigestMethod <span class="nv">Algorithm</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2000/09/xmldsig#sha1&#34;</span>/&gt;
+          &lt;DigestValue&gt;ZDkfGO3H1Tu50hawzQVjsACzJwc<span class="o">=</span>&lt;/DigestValue&gt;
+        &lt;/Reference&gt;
+      &lt;/SignedInfo&gt;
+      &lt;SignatureValue&gt;1Fgpt7AaHcME2gTA158achvGQVqDwHSHsHF3/a5s7djeO1AaZ84Gz5eiWD+cdIz6hoT1j2v/7Qtfj5bsMNxulBnSzfL4TT4++AK/zFO4ad2mwABFjMMNiogwwT3tzy3aRwjgSfl3VKESoz3Zp8KL/JNm/TRKz95TD7H6WnfKZoLwErGzNw6gVs1y9XYxIEg46GzUb07g23TFmrv3wHlx2TpKUN/ne4Z28KAQzXqVyykJVaKQ/gbBNC/8AQKlol8fLGSheOKQ0vgEE1vFnVVCEmp30YapdKeWW2qcqHb7Oqdm+9b2mOUkqbaxH5ixBbYaqZaQCt5WF4P5BxnMe4Bp8w<span class="o">==</span>&lt;/SignatureValue&gt;
+      &lt;KeyInfo&gt;
+        &lt;X509Data&gt;
+          &lt;X509Certificate&gt;MIIDODCCAiCgAwIBAgIJAN7O9hef05RJMA0GCSqGSIb3DQEBBQUAMBwxGjAYBgNVBAMTEW1hdHVnaXQuYXV0aDAuY29tMB4XDTEzMDYxNjEzMjQwNloXDTI3MDIyMzEzMjQwNlowHDEaMBgGA1UEAxMRbWF0dWdpdC5hdXRoMC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQD8kEfEcLiyMK0q4E4xT/mglcXsf9oCWdTjB0vswFXQPCDgUk5daJmO4oRrCIuWgtChDyMc5M5MTexqrCntQlKpnexkzDxCvPX/IRJstjJDSH+WXljRYDbXTgAZAjjjAKqDBIeUWaw1FcUy3SOmQVtyUdfjXNqLzxKS8SUWYY3Ia6PT/uoUjUFmUuJEFpBlB79GW+Tv/ZidY53gHyhEYOBzm1vKZS1vtPfxxpBqu7Vkf+5lq3RYjuoVUYN03TIJveaa7BBL0je8z7UvvOGgrGuodSKHneq7ueex4OCscCJZbK7MlfbmFiuSniVCg/yMrx/okDme38sOXH1A/zJu2lYpAgMBAAGjfTB7MB0GA1UdDgQWBBQL3cuDXNXu4USrpv44dzfGyHIXDTBMBgNVHSMERTBDgBQL3cuDXNXu4USrpv44dzfGyHIXDaEgpB4wHDEaMBgGA1UEAxMRbWF0dWdpdC5hdXRoMC5jb22CCQDezvYXn9OUSTAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4IBAQCAtAmKHoX7OerzFUQ0Ojrg9C1uzT6fOLIlXyaDswk2tLE6ftFhSiVzT1TtgTFv2o6IA47tW6bqL7t6Z5JN/L8cno+kxeKOgPz2CvbUTJmtROvFV/TDkFsYmFJZ8+6nZOAtXRZPWFpa6KE4Lc5+7J94sX2AiYPFCnXRvZGMhJ6qtc+jh54QEIlxZtkxWUBGs2fhOQm+Ux0uy1qxSzhp3lmvNa79KdvmQirSitDovyidalpwX750WGNfQoISe94e3clWa4uKXgZ7AYmhd1w4kNs7seFdtvCcqQJrKYT2cBTINztL6SeqeF/xC//lGDo9UJic4pcrqj1P3WGHYIslOWBQ&lt;/X509Certificate&gt;
+        &lt;/X509Data&gt;
+      &lt;/KeyInfo&gt;
+    &lt;/Signature&gt;
+    &lt;saml:Subject&gt;
+      &lt;saml:NameID <span class="nv">Format</span><span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified&#34;</span>&gt;github<span class="p">|</span>175880&lt;/saml:NameID&gt;
+      &lt;saml:SubjectConfirmation <span class="nv">Method</span><span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:2.0:cm:bearer&#34;</span>&gt;
+        &lt;saml:SubjectConfirmationData <span class="nv">NotOnOrAfter</span><span class="o">=</span><span class="s2">&#34;2014-10-14T15:32:17.251Z&#34;</span> <span class="nv">Recipient</span><span class="o">=</span><span class="s2">&#34;https://app.auth0.com/tester/samlp&#34;</span>/&gt;
+      &lt;/saml:SubjectConfirmation&gt;
+    &lt;/saml:Subject&gt;
+    &lt;saml:Conditions <span class="nv">NotBefore</span><span class="o">=</span><span class="s2">&#34;2014-10-14T14:32:17.251Z&#34;</span> <span class="nv">NotOnOrAfter</span><span class="o">=</span><span class="s2">&#34;2014-10-14T15:32:17.251Z&#34;</span>&gt;
+      &lt;saml:AudienceRestriction&gt;
+        &lt;saml:Audience&gt;urn:foo&lt;/saml:Audience&gt;
+      &lt;/saml:AudienceRestriction&gt;
+    &lt;/saml:Conditions&gt;
+    &lt;saml:AttributeStatement xmlns:xs<span class="o">=</span><span class="s2">&#34;http://www.w3.org/2001/XMLSchema&#34;</span> xmlns:xsi<span class="o">=</span><span class="s2">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier&#34;</span>&gt;
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;github<span class="p">|</span>175880&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress&#34;</span>&gt;
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;matiasw@gmail.com&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name&#34;</span>&gt;
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;Matias Woloski&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn&#34;</span>&gt;
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;matiasw@gmail.com&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.auth0.com/identities/default/access_token&#34;</span>&gt;
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;3a7d0dfeffe12812c37112daa830abef570089b4&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.auth0.com/identities/default/provider&#34;</span>&gt;
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;github&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.auth0.com/identities/default/connection&#34;</span>&gt;
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;github&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.auth0.com/identities/default/isSocial&#34;</span>&gt;
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;true&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+    &lt;/saml:AttributeStatement&gt;
+    &lt;saml:AuthnStatement <span class="nv">AuthnInstant</span><span class="o">=</span><span class="s2">&#34;2014-10-14T14:32:17.251Z&#34;</span>&gt;
+      &lt;saml:AuthnContext&gt;
+        &lt;saml:AuthnContextClassRef&gt;urn:oasis:names:tc:SAML:2.0:ac:classes:unspecified&lt;/saml:AuthnContextClassRef&gt;
+      &lt;/saml:AuthnContext&gt;
+    &lt;/saml:AuthnStatement&gt;
+  &lt;/saml:Assertion&gt;
+&lt;/samlp:Response&gt;
+</code></pre></div><h2 id="この記事を試した環境">この記事を試した環境<a href="#この記事を試した環境" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% xmllint --version
+xmllint: using libxml version <span class="m">20904</span>
+   compiled with: Threads Tree Output Push Reader Patterns Writer SAXv1 FTP HTTP DTDValid HTML Legacy C14N Catalog XPath XPointer XInclude ICU ISO8859X Unicode Regexps Automata Expr Schemas Schematron Modules Debug Zlib 
+</code></pre></div>
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://noid11.github.io/tags/xml">XML</a></span><span class="tag"><a href="https://noid11.github.io/tags/xmllint">xmllint</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1628 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2021/01/21 10:26 &#43;0900</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/noid11/noid11.github.io/commit/40a4e9728aa5a3a95f9bab6a76325ac87b6c96f5" target="_blank" rel="noopener">40a4e97</a> @ 2021/01/21</p>
+			</footer>
+		</article>
+		<aside id="toc" class="show-toc">
+			<div class="toc-title">Table of Contents</div>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#manual">manual</a></li>
+    <li><a href="#実行例">実行例</a></li>
+    <li><a href="#この記事を試した環境">この記事を試した環境</a></li>
+  </ul>
+</nav>
+		</aside>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://noid11.github.io/posts/pretty-print-xml-by-tidy/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>tidy コマンドで XML を整形して出力する</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2021 <a href="https://noid11.github.io/"></a>&#183; noid11</p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://noid11.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://noid11.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>
