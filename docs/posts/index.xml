@@ -175,11 +175,7 @@ AUTHORS
                                                                       December 1, <span class="m">2002</span>                                                              TIDY<span class="o">(</span>1<span class="o">)</span>
 </code></pre></div><h2 id="実行例">実行例</h2>
 <ul>
-<li><a href="https://samltool.io/">https://samltool.io/</a> で公開されている SAML レスポンスを <code>saml.xml</code> として保存
-<ul>
-<li><a href="https://samltool.io/">https://samltool.io/</a></li>
-</ul>
-</li>
+<li><a href="https://samltool.io/">https://samltool.io/</a> で公開されている SAML レスポンスを <code>saml.xml</code> として保存</li>
 </ul>
 <div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% tidy -xml -indent ./saml.xml 
 No warnings or errors were found.

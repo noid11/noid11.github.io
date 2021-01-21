@@ -180,7 +180,6 @@ AUTHORS
 ## 実行例
 
 - https://samltool.io/ で公開されている SAML レスポンスを `saml.xml` として保存
-  - https://samltool.io/
 
 ```zsh
 % tidy -xml -indent ./saml.xml 
