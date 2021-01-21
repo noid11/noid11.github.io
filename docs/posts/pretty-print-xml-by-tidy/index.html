@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="tidy コマンドで XML を整形して出力する">
+<meta itemprop="description" content="XML をファイルとして保存して、 tidy コマンドで -xml, -indent オプションで整形できる
+tidy -xml -indent ./myfile.xml
+">
+<meta itemprop="datePublished" content="2021-01-21T09:58:15+09:00" />
+<meta itemprop="dateModified" content="2021-01-21T09:58:15+09:00" />
+<meta itemprop="wordCount" content="960">
+
+
+
+<meta itemprop="keywords" content="tidy,XML," />
+<meta property="og:title" content="tidy コマンドで XML を整形して出力する" />
+<meta property="og:description" content="XML をファイルとして保存して、 tidy コマンドで -xml, -indent オプションで整形できる
+tidy -xml -indent ./myfile.xml
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noid11.github.io/posts/pretty-print-xml-by-tidy/" />
+<meta property="article:published_time" content="2021-01-21T09:58:15+09:00" />
+<meta property="article:modified_time" content="2021-01-21T09:58:15+09:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="tidy コマンドで XML を整形して出力する"/>
+<meta name="twitter:description" content="XML をファイルとして保存して、 tidy コマンドで -xml, -indent オプションで整形できる
+tidy -xml -indent ./myfile.xml
+"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>tidy コマンドで XML を整形して出力する</title>
+	<link rel="stylesheet" href="https://noid11.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://noid11.github.io/">noid11.github.io</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://noid11.github.io/posts/">Posts</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="toc-btn" class="hdr-btn desktop-only-ib" title="Table of Contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="https://twitter.com/_noid11" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://github.com/noid11" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://noid11.github.io/posts/">Posts</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>2021/01/21</span></div>
+				<h1>tidy コマンドで XML を整形して出力する</h1>
+			</header>
+			<div class="content">
+				<p>XML をファイルとして保存して、 <code>tidy</code> コマンドで <code>-xml</code>, <code>-indent</code> オプションで整形できる</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">tidy -xml -indent ./myfile.xml
+</code></pre></div><h2 id="-xml-オプション"><code>-xml</code> オプション<a href="#-xml-オプション" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>input するファイルのフォーマットが XML であることを指定</li>
+</ul>
+<h2 id="-indent-オプション"><code>-indent</code> オプション<a href="#-indent-オプション" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>各要素をインデントして出力する</li>
+</ul>
+<h2 id="manual">manual<a href="#manual" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">TIDY<span class="o">(</span>1<span class="o">)</span>                                                                                                                                             TIDY<span class="o">(</span>1<span class="o">)</span>
+
+NAME
+       tidy - validate, correct, and pretty-print HTML files
+
+SYNOPSIS
+       tidy <span class="o">[</span>option ...<span class="o">]</span> <span class="o">[</span>file ...<span class="o">]</span> <span class="o">[</span>option ...<span class="o">]</span> <span class="o">[</span>file ...<span class="o">]</span>
+
+DESCRIPTION
+       Tidy  reads HTML, XHTML and XML files and writes cleaned up markup.  
+       For HTML varians, it detects and corrects many common coding errors and strives to produce visually equivalent markup that is both W3C complaint and works on most browsers.  
+       A common use of Tidy is to convert plain HTML to XHTML.  
+       For generic XML files, Tidy is limited to correcting basic well-formedness errors and pretty printing.
+
+       If no markup file is specified, Tidy reads the standard input.  
+       If no output file is specified, Tidy writes markup to the standard output.  
+       If no error file is specified, Tidy writes messages to the standard error.
+
+OPTIONS
+       Processing directives
+
+       -indent or -i  to indent element content
+
+       -omit          to omit optional end tags
+
+       -wrap &lt;column&gt; to wrap text at the specified &lt;column&gt; <span class="o">(</span>default is 68<span class="o">)</span>
+
+       -upper or -u   to force tags to upper <span class="k">case</span> <span class="o">(</span>default is lower <span class="k">case</span><span class="o">)</span>
+
+       -clean or -c   to replace FONT, NOBR and CENTER tags by CSS
+
+       -bare or -b    to strip out smart quotes and em dashes, etc.
+
+       -numeric or -n to output numeric rather than named entities
+
+       -errors or -e  to only show errors
+
+       -quiet or -q   to suppress nonessential output
+
+       -xml           to specify the input is well formed XML
+
+       -asxml         to convert HTML to well formed XHTML
+
+       -asxhtml       to convert HTML to well formed XHTML
+
+       -ashtml        to force XHTML to well formed HTML
+
+       -access &lt;level&gt;
+                      to <span class="k">do</span> additional accessibility checks <span class="o">(</span>&lt;level&gt; <span class="o">=</span> 1, 2, 3<span class="o">)</span>
+
+       Character encodings
+
+       -raw           to output values above <span class="m">127</span> without conversion to entities
+
+       -ascii         to use US-ASCII <span class="k">for</span> output, ISO-8859-1 <span class="k">for</span> input
+
+       -latin1        to use ISO-8859-1 <span class="k">for</span> both input and output
+
+       -iso2022       to use ISO-2022 <span class="k">for</span> both input and output
+
+       -utf8          to use UTF-8 <span class="k">for</span> both input and output
+
+       -mac           to use MacRoman <span class="k">for</span> input, US-ASCII <span class="k">for</span> output
+
+       -utf16le       to use UTF-16LE <span class="k">for</span> both input and output
+
+       -utf16be       to use UTF-16BE <span class="k">for</span> both input and output
+
+       -utf16         to use UTF-16 <span class="k">for</span> both input and output
+
+       -win1252       to use Windows-1252 <span class="k">for</span> input, US-ASCII <span class="k">for</span> output
+
+       -big5          to use Big5 <span class="k">for</span> both input and output
+
+       -shiftjis      to use Shift_JIS <span class="k">for</span> both input and output
+
+       -language &lt;lang&gt;
+                      to <span class="nb">set</span> the two-letter language code &lt;lang&gt; <span class="o">(</span><span class="k">for</span> future use<span class="o">)</span>
+
+       File manipulation
+
+       -output or -o &lt;file&gt;
+                      to write output to the specified &lt;file&gt;
+
+       -f &lt;file&gt;      to write errors to the specified &lt;file&gt;
+
+       -config &lt;file&gt; to <span class="nb">set</span> configuration options from the specified &lt;file&gt;
+
+       -modify or -m  to modify the original input files
+
+       Miscellaneous
+
+       -version or -v to show the version of Tidy
+
+       -help, -h or -?
+                      to list the <span class="nb">command</span> line options
+
+       -help-config   to list all configuration options
+
+       -show-config   to list the current configuration settings
+
+
+USAGE
+       Use --blah blarg <span class="k">for</span> any configuration option <span class="s2">&#34;blah&#34;</span> with argument <span class="s2">&#34;blarg&#34;</span>
+
+       Input/Output default to stdin/stdout respectively Single letter options apart from -f and -o may be combined as in:  tidy -f errs.txt -imu  foo.html
+       For further info on HTML see http://www.w3.org/MarkUp
+
+       For more information about HTML Tidy, visit the project home page at http://tidy.sourceforge.net.  Here, you will find links to documentation, mail-
+       ing lists <span class="o">(</span>with searchable archives<span class="o">)</span> and links to report bugs.
+
+ENVIRONMENT
+       HTML_TIDY      Name of the default configuration file.  This should be an absolute path, since you will probably invoke tidy from different directo-
+                      ries.   The value of HTML_TIDY will be parsed after the compiled-in default <span class="o">(</span>defined with -DCONFIG_FILE<span class="o">)</span>, but before any of the files
+                      specified using -config.
+
+EXIT STATUS
+       <span class="m">0</span>      All input files were processed successfully.
+
+       <span class="m">1</span>      There were warnings.
+
+       <span class="m">2</span>      There were errors.
+
+SEE ALSO
+       HTML Tidy Project Page at http://tidy.sourceforge.net
+
+       Dave Raggett<span class="err">&#39;</span>s Tidy Overview at http://www.w3.org/People/Raggett/tidy/
+
+       Tidy Quick Reference at http://tidy.sourceforge.net/docs/quickref.html
+
+       For information about TidyLib, see http://tidy.sourceforge.net/libintro.html
+
+AUTHORS
+       Dave Raggett &lt;dsr@w3.org&gt;.
+
+       Terry Teague &lt;terry_teague@users.sourceforge.net&gt;.
+
+       Bjoern Hoehrmann &lt;bjoern@hoehrmann.de&gt;
+
+       Charles Reitzel &lt;creitzel@rcn.com&gt;
+
+       This manual page was written by Matej Vela &lt;vela@debian.org&gt; and updated by Charles Reitzel.
+
+                                                                      December 1, <span class="m">2002</span>                                                              TIDY<span class="o">(</span>1<span class="o">)</span>
+</code></pre></div><h2 id="実行例">実行例<a href="#実行例" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li><a href="https://samltool.io/">https://samltool.io/</a> で公開されている SAML レスポンスを <code>saml.xml</code> として保存
+<ul>
+<li><a href="https://samltool.io/">https://samltool.io/</a></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% tidy -xml -indent ./saml.xml 
+No warnings or errors were found.
+
+&lt;samlp:Response xmlns:samlp<span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:2.0:protocol&#34;</span>
+<span class="nv">ID</span><span class="o">=</span><span class="s2">&#34;_621c4c4ae5d60c768cc2&#34;</span> <span class="nv">Version</span><span class="o">=</span><span class="s2">&#34;2.0&#34;</span>
+<span class="nv">IssueInstant</span><span class="o">=</span><span class="s2">&#34;2014-10-14T14:32:17Z&#34;</span>
+<span class="nv">Destination</span><span class="o">=</span><span class="s2">&#34;https://app.auth0.com/tester/samlp&#34;</span>&gt;
+  &lt;saml:Issuer xmlns:saml<span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34;</span>&gt;
+  urn:matugit.auth0.com&lt;/saml:Issuer&gt;
+  &lt;samlp:Status&gt;
+    &lt;samlp:StatusCode <span class="nv">Value</span><span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:2.0:status:Success&#34;</span> /&gt;
+  &lt;/samlp:Status&gt;
+  &lt;saml:Assertion xmlns:saml<span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34;</span>
+  <span class="nv">Version</span><span class="o">=</span><span class="s2">&#34;2.0&#34;</span> <span class="nv">ID</span><span class="o">=</span><span class="s2">&#34;_5VK7LT7FliUkkaQuW6r4brF0DG5E3X76&#34;</span>
+  <span class="nv">IssueInstant</span><span class="o">=</span><span class="s2">&#34;2014-10-14T14:32:17.251Z&#34;</span>&gt;
+    &lt;saml:Issuer&gt;urn:matugit.auth0.com&lt;/saml:Issuer&gt;
+    &lt;Signature <span class="nv">xmlns</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2000/09/xmldsig#&#34;</span>&gt;
+      &lt;SignedInfo&gt;
+        &lt;CanonicalizationMethod <span class="nv">Algorithm</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;</span> /&gt;
+        &lt;SignatureMethod <span class="nv">Algorithm</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2000/09/xmldsig#rsa-sha1&#34;</span> /&gt;
+        &lt;Reference <span class="nv">URI</span><span class="o">=</span><span class="s2">&#34;#_5VK7LT7FliUkkaQuW6r4brF0DG5E3X76&#34;</span>&gt;
+          &lt;Transforms&gt;
+            &lt;Transform <span class="nv">Algorithm</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2000/09/xmldsig#enveloped-signature&#34;</span> /&gt;
+            &lt;Transform <span class="nv">Algorithm</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;</span> /&gt;
+          &lt;/Transforms&gt;
+          &lt;DigestMethod <span class="nv">Algorithm</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2000/09/xmldsig#sha1&#34;</span> /&gt;
+          &lt;DigestValue&gt;ZDkfGO3H1Tu50hawzQVjsACzJwc<span class="o">=</span>&lt;/DigestValue&gt;
+        &lt;/Reference&gt;
+      &lt;/SignedInfo&gt;
+      &lt;SignatureValue&gt;
+      1Fgpt7AaHcME2gTA158achvGQVqDwHSHsHF3/a5s7djeO1AaZ84Gz5eiWD+cdIz6hoT1j2v/7Qtfj5bsMNxulBnSzfL4TT4++AK/zFO4ad2mwABFjMMNiogwwT3tzy3aRwjgSfl3VKESoz3Zp8KL/JNm/TRKz95TD7H6WnfKZoLwErGzNw6gVs1y9XYxIEg46GzUb07g23TFmrv3wHlx2TpKUN/ne4Z28KAQzXqVyykJVaKQ/gbBNC/8AQKlol8fLGSheOKQ0vgEE1vFnVVCEmp30YapdKeWW2qcqHb7Oqdm+9b2mOUkqbaxH5ixBbYaqZaQCt5WF4P5BxnMe4Bp8w<span class="o">==</span>&lt;/SignatureValue&gt;
+      &lt;KeyInfo&gt;
+        &lt;X509Data&gt;
+          &lt;X509Certificate&gt;
+          MIIDODCCAiCgAwIBAgIJAN7O9hef05RJMA0GCSqGSIb3DQEBBQUAMBwxGjAYBgNVBAMTEW1hdHVnaXQuYXV0aDAuY29tMB4XDTEzMDYxNjEzMjQwNloXDTI3MDIyMzEzMjQwNlowHDEaMBgGA1UEAxMRbWF0dWdpdC5hdXRoMC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQD8kEfEcLiyMK0q4E4xT/mglcXsf9oCWdTjB0vswFXQPCDgUk5daJmO4oRrCIuWgtChDyMc5M5MTexqrCntQlKpnexkzDxCvPX/IRJstjJDSH+WXljRYDbXTgAZAjjjAKqDBIeUWaw1FcUy3SOmQVtyUdfjXNqLzxKS8SUWYY3Ia6PT/uoUjUFmUuJEFpBlB79GW+Tv/ZidY53gHyhEYOBzm1vKZS1vtPfxxpBqu7Vkf+5lq3RYjuoVUYN03TIJveaa7BBL0je8z7UvvOGgrGuodSKHneq7ueex4OCscCJZbK7MlfbmFiuSniVCg/yMrx/okDme38sOXH1A/zJu2lYpAgMBAAGjfTB7MB0GA1UdDgQWBBQL3cuDXNXu4USrpv44dzfGyHIXDTBMBgNVHSMERTBDgBQL3cuDXNXu4USrpv44dzfGyHIXDaEgpB4wHDEaMBgGA1UEAxMRbWF0dWdpdC5hdXRoMC5jb22CCQDezvYXn9OUSTAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4IBAQCAtAmKHoX7OerzFUQ0Ojrg9C1uzT6fOLIlXyaDswk2tLE6ftFhSiVzT1TtgTFv2o6IA47tW6bqL7t6Z5JN/L8cno+kxeKOgPz2CvbUTJmtROvFV/TDkFsYmFJZ8+6nZOAtXRZPWFpa6KE4Lc5+7J94sX2AiYPFCnXRvZGMhJ6qtc+jh54QEIlxZtkxWUBGs2fhOQm+Ux0uy1qxSzhp3lmvNa79KdvmQirSitDovyidalpwX750WGNfQoISe94e3clWa4uKXgZ7AYmhd1w4kNs7seFdtvCcqQJrKYT2cBTINztL6SeqeF/xC//lGDo9UJic4pcrqj1P3WGHYIslOWBQ&lt;/X509Certificate&gt;
+        &lt;/X509Data&gt;
+      &lt;/KeyInfo&gt;
+    &lt;/Signature&gt;
+    &lt;saml:Subject&gt;
+      &lt;saml:NameID <span class="nv">Format</span><span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified&#34;</span>&gt;
+      github<span class="p">|</span>175880&lt;/saml:NameID&gt;
+      &lt;saml:SubjectConfirmation <span class="nv">Method</span><span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:2.0:cm:bearer&#34;</span>&gt;
+
+        &lt;saml:SubjectConfirmationData <span class="nv">NotOnOrAfter</span><span class="o">=</span><span class="s2">&#34;2014-10-14T15:32:17.251Z&#34;</span>
+        <span class="nv">Recipient</span><span class="o">=</span><span class="s2">&#34;https://app.auth0.com/tester/samlp&#34;</span> /&gt;
+      &lt;/saml:SubjectConfirmation&gt;
+    &lt;/saml:Subject&gt;
+    &lt;saml:Conditions <span class="nv">NotBefore</span><span class="o">=</span><span class="s2">&#34;2014-10-14T14:32:17.251Z&#34;</span>
+    <span class="nv">NotOnOrAfter</span><span class="o">=</span><span class="s2">&#34;2014-10-14T15:32:17.251Z&#34;</span>&gt;
+      &lt;saml:AudienceRestriction&gt;
+        &lt;saml:Audience&gt;urn:foo&lt;/saml:Audience&gt;
+      &lt;/saml:AudienceRestriction&gt;
+    &lt;/saml:Conditions&gt;
+    &lt;saml:AttributeStatement xmlns:xs<span class="o">=</span><span class="s2">&#34;http://www.w3.org/2001/XMLSchema&#34;</span>
+    xmlns:xsi<span class="o">=</span><span class="s2">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier&#34;</span>&gt;
+
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;
+        github<span class="p">|</span>175880&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress&#34;</span>&gt;
+
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;
+        matiasw@gmail.com&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name&#34;</span>&gt;
+
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;Matias
+        Woloski&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn&#34;</span>&gt;
+
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;
+        matiasw@gmail.com&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.auth0.com/identities/default/access_token&#34;</span>&gt;
+
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;
+        3a7d0dfeffe12812c37112daa830abef570089b4&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.auth0.com/identities/default/provider&#34;</span>&gt;
+
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;
+        github&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.auth0.com/identities/default/connection&#34;</span>&gt;
+
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;
+        github&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.auth0.com/identities/default/isSocial&#34;</span>&gt;
+
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;
+        true&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+    &lt;/saml:AttributeStatement&gt;
+    &lt;saml:AuthnStatement <span class="nv">AuthnInstant</span><span class="o">=</span><span class="s2">&#34;2014-10-14T14:32:17.251Z&#34;</span>&gt;
+      &lt;saml:AuthnContext&gt;
+        &lt;saml:AuthnContextClassRef&gt;
+        urn:oasis:names:tc:SAML:2.0:ac:classes:unspecified&lt;/saml:AuthnContextClassRef&gt;
+      &lt;/saml:AuthnContext&gt;
+    &lt;/saml:AuthnStatement&gt;
+  &lt;/saml:Assertion&gt;
+&lt;/samlp:Response&gt;
+
+To learn more about HTML Tidy see http://tidy.sourceforge.net
+Please send bug reports to html-tidy@w3.org
+HTML and CSS specifications are available from http://www.w3.org/
+Lobby your company to join W3C, see http://www.w3.org/Consortium
+</code></pre></div><h2 id="この記事を試した環境">この記事を試した環境<a href="#この記事を試した環境" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+</code></pre></div>
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://noid11.github.io/tags/tidy">tidy</a></span><span class="tag"><a href="https://noid11.github.io/tags/xml">XML</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>960 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2021/01/21 09:58 &#43;0900</p>
+			</footer>
+		</article>
+		<aside id="toc" class="show-toc">
+			<div class="toc-title">Table of Contents</div>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#-xml-オプション"><code>-xml</code> オプション</a></li>
+    <li><a href="#-indent-オプション"><code>-indent</code> オプション</a></li>
+    <li><a href="#manual">manual</a></li>
+    <li><a href="#実行例">実行例</a></li>
+    <li><a href="#この記事を試した環境">この記事を試した環境</a></li>
+  </ul>
+</nav>
+		</aside>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://noid11.github.io/posts/how-to-control-connect-tasks-by-aws-cli/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>AWS CLI を使って Amazon Connect Tasks を作成・削除する</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2021 <a href="https://noid11.github.io/"></a>&#183; noid11</p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://noid11.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://noid11.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>
