@@ -7,7 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Wed, 20 Jan 2021 19:54:25 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 21 Jan 2021 09:58:15 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>tidy</title>
+      <link>https://noid11.github.io/tags/tidy/</link>
+      <pubDate>Thu, 21 Jan 2021 09:58:15 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/tidy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>XML</title>
+      <link>https://noid11.github.io/tags/xml/</link>
+      <pubDate>Thu, 21 Jan 2021 09:58:15 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/xml/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Amazon Connect</title>
       <link>https://noid11.github.io/tags/amazon-connect/</link>
@@ -77,24 +95,6 @@
       <pubDate>Sat, 16 Jan 2021 12:10:06 +0900</pubDate>
       
       <guid>https://noid11.github.io/tags/go/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>UUID</title>
-      <link>https://noid11.github.io/tags/uuid/</link>
-      <pubDate>Sat, 16 Jan 2021 11:31:50 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/uuid/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>mktemp</title>
-      <link>https://noid11.github.io/tags/mktemp/</link>
-      <pubDate>Sat, 16 Jan 2021 08:56:33 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/mktemp/</guid>
       <description></description>
     </item>
     

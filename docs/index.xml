@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Wed, 20 Jan 2021 19:54:25 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 21 Jan 2021 09:58:15 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>tidy コマンドで XML を整形して出力する</title>
+      <link>https://noid11.github.io/posts/pretty-print-xml/</link>
+      <pubDate>Thu, 21 Jan 2021 09:58:15 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/pretty-print-xml/</guid>
+      <description>&lt;p&gt;XML をファイルとして保存して、 &lt;code&gt;tidy&lt;/code&gt; コマンドで &lt;code&gt;-xml&lt;/code&gt;, &lt;code&gt;-indent&lt;/code&gt; オプションで整形できる&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;tidy -xml -indent ./myfile.xml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
     <item>
       <title>AWS CLI を使って Amazon Connect Tasks を作成・削除する</title>
       <link>https://noid11.github.io/posts/how-to-control-connect-tasks-by-aws-cli/</link>
@@ -98,32 +109,6 @@
 &lt;/ul&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;(mktemp -d)&amp;#34;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>Heroku CLI を使って Heroku Postgres をセットアップする方法</title>
-      <link>https://noid11.github.io/posts/setup-heroku-postgres-by-heroku-cli/</link>
-      <pubDate>Thu, 14 Jan 2021 02:29:30 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/setup-heroku-postgres-by-heroku-cli/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://jp.heroku.com/postgres&#34;&gt;Heroku が提供するマネージドデータベースである Heroku Postgres&lt;/a&gt; を &lt;a href=&#34;https://devcenter.heroku.com/ja/articles/heroku-cli&#34;&gt;Heroku CLI&lt;/a&gt; からセットアップして接続するまでを試す手順&lt;/li&gt;
-&lt;li&gt;Pros
-&lt;ul&gt;
-&lt;li&gt;PostgreSQL や SQL を学習したい時にサクッと使えて便利&lt;/li&gt;
-&lt;li&gt;AWS Lambda 等ローカル環境の PostgreSQL が接続できない環境から、ちょっとしたデータベース接続を試したいような場合に便利
-&lt;ul&gt;
-&lt;li&gt;RDS よりも立ち上がりが速いし、無料&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Cons
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://jp.heroku.com/pricing&#34;&gt;無料の Hobby Dev プラン&lt;/a&gt;だと、レコード数 10 K と同時接続数 20 といった制限があるので注意&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</description>
     </item>
     
   </channel>

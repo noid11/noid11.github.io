@@ -6,8 +6,297 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Wed, 20 Jan 2021 19:54:25 +0900</lastBuildDate>
+		<lastBuildDate>Thu, 21 Jan 2021 09:58:15 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>tidy コマンドで XML を整形して出力する</title>
+			<link>https://noid11.github.io/posts/pretty-print-xml/</link>
+			<pubDate>Thu, 21 Jan 2021 09:58:15 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/pretty-print-xml/</guid>
+			<description>&lt;p&gt;XML をファイルとして保存して、 &lt;code&gt;tidy&lt;/code&gt; コマンドで &lt;code&gt;-xml&lt;/code&gt;, &lt;code&gt;-indent&lt;/code&gt; オプションで整形できる&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;tidy -xml -indent ./myfile.xml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+			<content type="html"><![CDATA[<p>XML をファイルとして保存して、 <code>tidy</code> コマンドで <code>-xml</code>, <code>-indent</code> オプションで整形できる</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">tidy -xml -indent ./myfile.xml
+</code></pre></div><h2 id="-xml-オプション"><code>-xml</code> オプション</h2>
+<ul>
+<li>input するファイルのフォーマットが XML であることを指定</li>
+</ul>
+<h2 id="-indent-オプション"><code>-indent</code> オプション</h2>
+<ul>
+<li>各要素をインデントして出力する</li>
+</ul>
+<h2 id="manual">manual</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">TIDY<span class="o">(</span>1<span class="o">)</span>                                                                                                                                             TIDY<span class="o">(</span>1<span class="o">)</span>
+
+NAME
+       tidy - validate, correct, and pretty-print HTML files
+
+SYNOPSIS
+       tidy <span class="o">[</span>option ...<span class="o">]</span> <span class="o">[</span>file ...<span class="o">]</span> <span class="o">[</span>option ...<span class="o">]</span> <span class="o">[</span>file ...<span class="o">]</span>
+
+DESCRIPTION
+       Tidy  reads HTML, XHTML and XML files and writes cleaned up markup.  
+       For HTML varians, it detects and corrects many common coding errors and strives to produce visually equivalent markup that is both W3C complaint and works on most browsers.  
+       A common use of Tidy is to convert plain HTML to XHTML.  
+       For generic XML files, Tidy is limited to correcting basic well-formedness errors and pretty printing.
+
+       If no markup file is specified, Tidy reads the standard input.  
+       If no output file is specified, Tidy writes markup to the standard output.  
+       If no error file is specified, Tidy writes messages to the standard error.
+
+OPTIONS
+       Processing directives
+
+       -indent or -i  to indent element content
+
+       -omit          to omit optional end tags
+
+       -wrap &lt;column&gt; to wrap text at the specified &lt;column&gt; <span class="o">(</span>default is 68<span class="o">)</span>
+
+       -upper or -u   to force tags to upper <span class="k">case</span> <span class="o">(</span>default is lower <span class="k">case</span><span class="o">)</span>
+
+       -clean or -c   to replace FONT, NOBR and CENTER tags by CSS
+
+       -bare or -b    to strip out smart quotes and em dashes, etc.
+
+       -numeric or -n to output numeric rather than named entities
+
+       -errors or -e  to only show errors
+
+       -quiet or -q   to suppress nonessential output
+
+       -xml           to specify the input is well formed XML
+
+       -asxml         to convert HTML to well formed XHTML
+
+       -asxhtml       to convert HTML to well formed XHTML
+
+       -ashtml        to force XHTML to well formed HTML
+
+       -access &lt;level&gt;
+                      to <span class="k">do</span> additional accessibility checks <span class="o">(</span>&lt;level&gt; <span class="o">=</span> 1, 2, 3<span class="o">)</span>
+
+       Character encodings
+
+       -raw           to output values above <span class="m">127</span> without conversion to entities
+
+       -ascii         to use US-ASCII <span class="k">for</span> output, ISO-8859-1 <span class="k">for</span> input
+
+       -latin1        to use ISO-8859-1 <span class="k">for</span> both input and output
+
+       -iso2022       to use ISO-2022 <span class="k">for</span> both input and output
+
+       -utf8          to use UTF-8 <span class="k">for</span> both input and output
+
+       -mac           to use MacRoman <span class="k">for</span> input, US-ASCII <span class="k">for</span> output
+
+       -utf16le       to use UTF-16LE <span class="k">for</span> both input and output
+
+       -utf16be       to use UTF-16BE <span class="k">for</span> both input and output
+
+       -utf16         to use UTF-16 <span class="k">for</span> both input and output
+
+       -win1252       to use Windows-1252 <span class="k">for</span> input, US-ASCII <span class="k">for</span> output
+
+       -big5          to use Big5 <span class="k">for</span> both input and output
+
+       -shiftjis      to use Shift_JIS <span class="k">for</span> both input and output
+
+       -language &lt;lang&gt;
+                      to <span class="nb">set</span> the two-letter language code &lt;lang&gt; <span class="o">(</span><span class="k">for</span> future use<span class="o">)</span>
+
+       File manipulation
+
+       -output or -o &lt;file&gt;
+                      to write output to the specified &lt;file&gt;
+
+       -f &lt;file&gt;      to write errors to the specified &lt;file&gt;
+
+       -config &lt;file&gt; to <span class="nb">set</span> configuration options from the specified &lt;file&gt;
+
+       -modify or -m  to modify the original input files
+
+       Miscellaneous
+
+       -version or -v to show the version of Tidy
+
+       -help, -h or -?
+                      to list the <span class="nb">command</span> line options
+
+       -help-config   to list all configuration options
+
+       -show-config   to list the current configuration settings
+
+
+USAGE
+       Use --blah blarg <span class="k">for</span> any configuration option <span class="s2">&#34;blah&#34;</span> with argument <span class="s2">&#34;blarg&#34;</span>
+
+       Input/Output default to stdin/stdout respectively Single letter options apart from -f and -o may be combined as in:  tidy -f errs.txt -imu  foo.html
+       For further info on HTML see http://www.w3.org/MarkUp
+
+       For more information about HTML Tidy, visit the project home page at http://tidy.sourceforge.net.  Here, you will find links to documentation, mail-
+       ing lists <span class="o">(</span>with searchable archives<span class="o">)</span> and links to report bugs.
+
+ENVIRONMENT
+       HTML_TIDY      Name of the default configuration file.  This should be an absolute path, since you will probably invoke tidy from different directo-
+                      ries.   The value of HTML_TIDY will be parsed after the compiled-in default <span class="o">(</span>defined with -DCONFIG_FILE<span class="o">)</span>, but before any of the files
+                      specified using -config.
+
+EXIT STATUS
+       <span class="m">0</span>      All input files were processed successfully.
+
+       <span class="m">1</span>      There were warnings.
+
+       <span class="m">2</span>      There were errors.
+
+SEE ALSO
+       HTML Tidy Project Page at http://tidy.sourceforge.net
+
+       Dave Raggett<span class="err">&#39;</span>s Tidy Overview at http://www.w3.org/People/Raggett/tidy/
+
+       Tidy Quick Reference at http://tidy.sourceforge.net/docs/quickref.html
+
+       For information about TidyLib, see http://tidy.sourceforge.net/libintro.html
+
+AUTHORS
+       Dave Raggett &lt;dsr@w3.org&gt;.
+
+       Terry Teague &lt;terry_teague@users.sourceforge.net&gt;.
+
+       Bjoern Hoehrmann &lt;bjoern@hoehrmann.de&gt;
+
+       Charles Reitzel &lt;creitzel@rcn.com&gt;
+
+       This manual page was written by Matej Vela &lt;vela@debian.org&gt; and updated by Charles Reitzel.
+
+                                                                      December 1, <span class="m">2002</span>                                                              TIDY<span class="o">(</span>1<span class="o">)</span>
+</code></pre></div><h2 id="実行例">実行例</h2>
+<ul>
+<li><a href="https://samltool.io/">https://samltool.io/</a> で公開されている SAML レスポンスを <code>saml.xml</code> として保存
+<ul>
+<li><a href="https://samltool.io/">https://samltool.io/</a></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% tidy -xml -indent ./saml.xml 
+No warnings or errors were found.
+
+&lt;samlp:Response xmlns:samlp<span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:2.0:protocol&#34;</span>
+<span class="nv">ID</span><span class="o">=</span><span class="s2">&#34;_621c4c4ae5d60c768cc2&#34;</span> <span class="nv">Version</span><span class="o">=</span><span class="s2">&#34;2.0&#34;</span>
+<span class="nv">IssueInstant</span><span class="o">=</span><span class="s2">&#34;2014-10-14T14:32:17Z&#34;</span>
+<span class="nv">Destination</span><span class="o">=</span><span class="s2">&#34;https://app.auth0.com/tester/samlp&#34;</span>&gt;
+  &lt;saml:Issuer xmlns:saml<span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34;</span>&gt;
+  urn:matugit.auth0.com&lt;/saml:Issuer&gt;
+  &lt;samlp:Status&gt;
+    &lt;samlp:StatusCode <span class="nv">Value</span><span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:2.0:status:Success&#34;</span> /&gt;
+  &lt;/samlp:Status&gt;
+  &lt;saml:Assertion xmlns:saml<span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34;</span>
+  <span class="nv">Version</span><span class="o">=</span><span class="s2">&#34;2.0&#34;</span> <span class="nv">ID</span><span class="o">=</span><span class="s2">&#34;_5VK7LT7FliUkkaQuW6r4brF0DG5E3X76&#34;</span>
+  <span class="nv">IssueInstant</span><span class="o">=</span><span class="s2">&#34;2014-10-14T14:32:17.251Z&#34;</span>&gt;
+    &lt;saml:Issuer&gt;urn:matugit.auth0.com&lt;/saml:Issuer&gt;
+    &lt;Signature <span class="nv">xmlns</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2000/09/xmldsig#&#34;</span>&gt;
+      &lt;SignedInfo&gt;
+        &lt;CanonicalizationMethod <span class="nv">Algorithm</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;</span> /&gt;
+        &lt;SignatureMethod <span class="nv">Algorithm</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2000/09/xmldsig#rsa-sha1&#34;</span> /&gt;
+        &lt;Reference <span class="nv">URI</span><span class="o">=</span><span class="s2">&#34;#_5VK7LT7FliUkkaQuW6r4brF0DG5E3X76&#34;</span>&gt;
+          &lt;Transforms&gt;
+            &lt;Transform <span class="nv">Algorithm</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2000/09/xmldsig#enveloped-signature&#34;</span> /&gt;
+            &lt;Transform <span class="nv">Algorithm</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;</span> /&gt;
+          &lt;/Transforms&gt;
+          &lt;DigestMethod <span class="nv">Algorithm</span><span class="o">=</span><span class="s2">&#34;http://www.w3.org/2000/09/xmldsig#sha1&#34;</span> /&gt;
+          &lt;DigestValue&gt;ZDkfGO3H1Tu50hawzQVjsACzJwc<span class="o">=</span>&lt;/DigestValue&gt;
+        &lt;/Reference&gt;
+      &lt;/SignedInfo&gt;
+      &lt;SignatureValue&gt;
+      1Fgpt7AaHcME2gTA158achvGQVqDwHSHsHF3/a5s7djeO1AaZ84Gz5eiWD+cdIz6hoT1j2v/7Qtfj5bsMNxulBnSzfL4TT4++AK/zFO4ad2mwABFjMMNiogwwT3tzy3aRwjgSfl3VKESoz3Zp8KL/JNm/TRKz95TD7H6WnfKZoLwErGzNw6gVs1y9XYxIEg46GzUb07g23TFmrv3wHlx2TpKUN/ne4Z28KAQzXqVyykJVaKQ/gbBNC/8AQKlol8fLGSheOKQ0vgEE1vFnVVCEmp30YapdKeWW2qcqHb7Oqdm+9b2mOUkqbaxH5ixBbYaqZaQCt5WF4P5BxnMe4Bp8w<span class="o">==</span>&lt;/SignatureValue&gt;
+      &lt;KeyInfo&gt;
+        &lt;X509Data&gt;
+          &lt;X509Certificate&gt;
+          MIIDODCCAiCgAwIBAgIJAN7O9hef05RJMA0GCSqGSIb3DQEBBQUAMBwxGjAYBgNVBAMTEW1hdHVnaXQuYXV0aDAuY29tMB4XDTEzMDYxNjEzMjQwNloXDTI3MDIyMzEzMjQwNlowHDEaMBgGA1UEAxMRbWF0dWdpdC5hdXRoMC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQD8kEfEcLiyMK0q4E4xT/mglcXsf9oCWdTjB0vswFXQPCDgUk5daJmO4oRrCIuWgtChDyMc5M5MTexqrCntQlKpnexkzDxCvPX/IRJstjJDSH+WXljRYDbXTgAZAjjjAKqDBIeUWaw1FcUy3SOmQVtyUdfjXNqLzxKS8SUWYY3Ia6PT/uoUjUFmUuJEFpBlB79GW+Tv/ZidY53gHyhEYOBzm1vKZS1vtPfxxpBqu7Vkf+5lq3RYjuoVUYN03TIJveaa7BBL0je8z7UvvOGgrGuodSKHneq7ueex4OCscCJZbK7MlfbmFiuSniVCg/yMrx/okDme38sOXH1A/zJu2lYpAgMBAAGjfTB7MB0GA1UdDgQWBBQL3cuDXNXu4USrpv44dzfGyHIXDTBMBgNVHSMERTBDgBQL3cuDXNXu4USrpv44dzfGyHIXDaEgpB4wHDEaMBgGA1UEAxMRbWF0dWdpdC5hdXRoMC5jb22CCQDezvYXn9OUSTAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4IBAQCAtAmKHoX7OerzFUQ0Ojrg9C1uzT6fOLIlXyaDswk2tLE6ftFhSiVzT1TtgTFv2o6IA47tW6bqL7t6Z5JN/L8cno+kxeKOgPz2CvbUTJmtROvFV/TDkFsYmFJZ8+6nZOAtXRZPWFpa6KE4Lc5+7J94sX2AiYPFCnXRvZGMhJ6qtc+jh54QEIlxZtkxWUBGs2fhOQm+Ux0uy1qxSzhp3lmvNa79KdvmQirSitDovyidalpwX750WGNfQoISe94e3clWa4uKXgZ7AYmhd1w4kNs7seFdtvCcqQJrKYT2cBTINztL6SeqeF/xC//lGDo9UJic4pcrqj1P3WGHYIslOWBQ&lt;/X509Certificate&gt;
+        &lt;/X509Data&gt;
+      &lt;/KeyInfo&gt;
+    &lt;/Signature&gt;
+    &lt;saml:Subject&gt;
+      &lt;saml:NameID <span class="nv">Format</span><span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified&#34;</span>&gt;
+      github<span class="p">|</span>175880&lt;/saml:NameID&gt;
+      &lt;saml:SubjectConfirmation <span class="nv">Method</span><span class="o">=</span><span class="s2">&#34;urn:oasis:names:tc:SAML:2.0:cm:bearer&#34;</span>&gt;
+
+        &lt;saml:SubjectConfirmationData <span class="nv">NotOnOrAfter</span><span class="o">=</span><span class="s2">&#34;2014-10-14T15:32:17.251Z&#34;</span>
+        <span class="nv">Recipient</span><span class="o">=</span><span class="s2">&#34;https://app.auth0.com/tester/samlp&#34;</span> /&gt;
+      &lt;/saml:SubjectConfirmation&gt;
+    &lt;/saml:Subject&gt;
+    &lt;saml:Conditions <span class="nv">NotBefore</span><span class="o">=</span><span class="s2">&#34;2014-10-14T14:32:17.251Z&#34;</span>
+    <span class="nv">NotOnOrAfter</span><span class="o">=</span><span class="s2">&#34;2014-10-14T15:32:17.251Z&#34;</span>&gt;
+      &lt;saml:AudienceRestriction&gt;
+        &lt;saml:Audience&gt;urn:foo&lt;/saml:Audience&gt;
+      &lt;/saml:AudienceRestriction&gt;
+    &lt;/saml:Conditions&gt;
+    &lt;saml:AttributeStatement xmlns:xs<span class="o">=</span><span class="s2">&#34;http://www.w3.org/2001/XMLSchema&#34;</span>
+    xmlns:xsi<span class="o">=</span><span class="s2">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier&#34;</span>&gt;
+
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;
+        github<span class="p">|</span>175880&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress&#34;</span>&gt;
+
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;
+        matiasw@gmail.com&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name&#34;</span>&gt;
+
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;Matias
+        Woloski&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn&#34;</span>&gt;
+
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;
+        matiasw@gmail.com&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.auth0.com/identities/default/access_token&#34;</span>&gt;
+
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;
+        3a7d0dfeffe12812c37112daa830abef570089b4&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.auth0.com/identities/default/provider&#34;</span>&gt;
+
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;
+        github&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.auth0.com/identities/default/connection&#34;</span>&gt;
+
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;
+        github&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+      &lt;saml:Attribute <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;http://schemas.auth0.com/identities/default/isSocial&#34;</span>&gt;
+
+        &lt;saml:AttributeValue xsi:type<span class="o">=</span><span class="s2">&#34;xs:anyType&#34;</span>&gt;
+        true&lt;/saml:AttributeValue&gt;
+      &lt;/saml:Attribute&gt;
+    &lt;/saml:AttributeStatement&gt;
+    &lt;saml:AuthnStatement <span class="nv">AuthnInstant</span><span class="o">=</span><span class="s2">&#34;2014-10-14T14:32:17.251Z&#34;</span>&gt;
+      &lt;saml:AuthnContext&gt;
+        &lt;saml:AuthnContextClassRef&gt;
+        urn:oasis:names:tc:SAML:2.0:ac:classes:unspecified&lt;/saml:AuthnContextClassRef&gt;
+      &lt;/saml:AuthnContext&gt;
+    &lt;/saml:AuthnStatement&gt;
+  &lt;/saml:Assertion&gt;
+&lt;/samlp:Response&gt;
+
+To learn more about HTML Tidy see http://tidy.sourceforge.net
+Please send bug reports to html-tidy@w3.org
+HTML and CSS specifications are available from http://www.w3.org/
+Lobby your company to join W3C, see http://www.w3.org/Consortium
+</code></pre></div><h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+</code></pre></div>]]></content>
+		</item>
 		
 		<item>
 			<title>AWS CLI を使って Amazon Connect Tasks を作成・削除する</title>
