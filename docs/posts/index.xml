@@ -291,6 +291,8 @@ Lobby your company to join W3C, see http://www.w3.org/Consortium
 ProductName:    Mac OS X
 ProductVersion: 10.15.7
 BuildVersion:   19H114
+% tidy -version 
+HTML Tidy <span class="k">for</span> Mac OS X released on <span class="m">31</span> October <span class="m">2006</span> - Apple Inc. build 17.2
 </code></pre></div>]]></content>
 		</item>
 		

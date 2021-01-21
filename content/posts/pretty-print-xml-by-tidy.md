@@ -301,4 +301,6 @@ Lobby your company to join W3C, see http://www.w3.org/Consortium
 ProductName:    Mac OS X
 ProductVersion: 10.15.7
 BuildVersion:   19H114
+% tidy -version 
+HTML Tidy for Mac OS X released on 31 October 2006 - Apple Inc. build 17.2
 ```
