@@ -9,7 +9,7 @@ tags:
   - XML
 ---
 
-XML をファイルとして保存して、 `tidy` コマンドで `-xml`, `-indent` オプションで整形できる
+XML をファイルとして保存して、 `-xml`, `-indent` オプションで整形できる
 
 ```bash
 tidy -xml -indent ./myfile.xml
