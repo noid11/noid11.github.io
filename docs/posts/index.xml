@@ -6,8 +6,36 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Thu, 21 Jan 2021 10:26:45 +0900</lastBuildDate>
+		<lastBuildDate>Fri, 22 Jan 2021 09:30:07 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Mac に Docker Machine をインストールする方法</title>
+			<link>https://noid11.github.io/posts/how-to-install-docker-machine-to-mac/</link>
+			<pubDate>Fri, 22 Jan 2021 09:30:07 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/how-to-install-docker-machine-to-mac/</guid>
+			<description>&lt;p&gt;ググっても公式情報がヒットしづらかったのでメモ&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p>ググっても公式情報がヒットしづらかったのでメモ</p>
+<ul>
+<li><a href="https://docs.docker.com/machine/">Docker Machine</a> は <a href="https://docs.docker.com/docker-for-mac/install/">Docker Desktop on Mac</a> に含まれなくなったので別途個別にインストールが必要</li>
+<li>インストール方法は<a href="https://docs.docker.com/machine/install-machine/">公式ドキュメント</a>に全て書いてある</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># インストール</span>
+<span class="nv">base</span><span class="o">=</span>https://github.com/docker/machine/releases/download/v0.16.0 <span class="o">&amp;&amp;</span> curl -L <span class="nv">$base</span>/docker-machine-<span class="k">$(</span>uname -s<span class="k">)</span>-<span class="k">$(</span>uname -m<span class="k">)</span> &gt;/usr/local/bin/docker-machine <span class="o">&amp;&amp;</span> chmod +x /usr/local/bin/docker-machine
+
+<span class="c1"># インストールできたか確認</span>
+docker-machine version
+</code></pre></div><hr>
+<p>この記事を試した環境</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% docker-machine version
+docker-machine version 0.16.0, build 702c267f
+</code></pre></div>]]></content>
+		</item>
 		
 		<item>
 			<title>xmllint コマンドで XML を整形して出力する</title>
