@@ -1,7 +1,7 @@
 ---
 title: "AWS CLI v2 を使って CloudWatch Logs を `tail -f` っぽく見る方法"
 date: 2021-01-23T14:33:50+09:00
-draft: true
+draft: false
 toc: false
 images:
 tags: 

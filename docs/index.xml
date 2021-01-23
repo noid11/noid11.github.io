@@ -7,7 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Fri, 22 Jan 2021 09:30:07 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 23 Jan 2021 14:33:50 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AWS CLI v2 を使って CloudWatch Logs を `tail -f` っぽく見る方法</title>
+      <link>https://noid11.github.io/posts/how-to-cloudwatch-logs-tail-follow-by-aws-cli-v2/</link>
+      <pubDate>Sat, 23 Jan 2021 14:33:50 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/how-to-cloudwatch-logs-tail-follow-by-aws-cli-v2/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;AWS Lambda を動かしている時にマネジメントコンソールを開かなくてもログを確認できて便利&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;LOG_GROUP&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/aws/lambda/myfunc
+aws logs tail &lt;span class=&#34;nv&#34;&gt;$LOG_GROUP&lt;/span&gt; --follow
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
     <item>
       <title>Mac に Docker Machine をインストールする方法</title>
       <link>https://noid11.github.io/posts/how-to-install-docker-machine-to-mac/</link>
@@ -97,15 +111,6 @@
 &lt;li&gt;Kinesis Data Streams に連携されるデータを確認したい場合等に使う&lt;/li&gt;
 &lt;li&gt;ログの出力先等として Kinesis Data Streams に連携するサービスは結構存在するので、サクッと試す分にはマネジメントコンソールから編集可能な Python, Node.js 等を使うのが便利&lt;/li&gt;
 &lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>go get コマンドのヘルプを読む</title>
-      <link>https://noid11.github.io/posts/go-help-get/</link>
-      <pubDate>Sat, 16 Jan 2021 12:10:06 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/go-help-get/</guid>
-      <description>&lt;p&gt;&lt;code&gt;go get&lt;/code&gt; コマンドのヘルプ &lt;code&gt;go help get&lt;/code&gt; を読んだメモ&lt;/p&gt;</description>
     </item>
     
   </channel>

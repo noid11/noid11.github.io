@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="AWS CLI v2 を使って CloudWatch Logs を `tail -f` っぽく見る方法">
+<meta itemprop="description" content="
+AWS Lambda を動かしている時にマネジメントコンソールを開かなくてもログを確認できて便利
+
+LOG_GROUP=/aws/lambda/myfunc
+aws logs tail $LOG_GROUP --follow
+">
+<meta itemprop="datePublished" content="2021-01-23T14:33:50+09:00" />
+<meta itemprop="dateModified" content="2021-01-23T15:07:11+09:00" />
+<meta itemprop="wordCount" content="637">
+
+
+
+<meta itemprop="keywords" content="AWS CLI,CloudWatch Logs," />
+<meta property="og:title" content="AWS CLI v2 を使って CloudWatch Logs を `tail -f` っぽく見る方法" />
+<meta property="og:description" content="
+AWS Lambda を動かしている時にマネジメントコンソールを開かなくてもログを確認できて便利
+
+LOG_GROUP=/aws/lambda/myfunc
+aws logs tail $LOG_GROUP --follow
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noid11.github.io/posts/how-to-cloudwatch-logs-tail-follow-by-aws-cli-v2/" />
+<meta property="article:published_time" content="2021-01-23T14:33:50+09:00" />
+<meta property="article:modified_time" content="2021-01-23T15:07:11+09:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="AWS CLI v2 を使って CloudWatch Logs を `tail -f` っぽく見る方法"/>
+<meta name="twitter:description" content="
+AWS Lambda を動かしている時にマネジメントコンソールを開かなくてもログを確認できて便利
+
+LOG_GROUP=/aws/lambda/myfunc
+aws logs tail $LOG_GROUP --follow
+"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>AWS CLI v2 を使って CloudWatch Logs を `tail -f` っぽく見る方法</title>
+	<link rel="stylesheet" href="https://noid11.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://noid11.github.io/">noid11.github.io</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://noid11.github.io/posts/">Posts</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://twitter.com/_noid11" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://github.com/noid11" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://noid11.github.io/posts/">Posts</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>2021/01/23</span></div>
+				<h1>AWS CLI v2 を使って CloudWatch Logs を `tail -f` っぽく見る方法</h1>
+			</header>
+			<div class="content">
+				<ul>
+<li>AWS Lambda を動かしている時にマネジメントコンソールを開かなくてもログを確認できて便利</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">LOG_GROUP</span><span class="o">=</span>/aws/lambda/myfunc
+aws logs tail <span class="nv">$LOG_GROUP</span> --follow
+</code></pre></div><h2 id="help">help<a href="#help" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p><a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/logs/tail.html">https://awscli.amazonaws.com/v2/documentation/api/latest/reference/logs/tail.html</a></p>
+<ul>
+<li><code>trail -f</code> のような形式じゃなくても、過去 1時間 のログデータを取得するような使い方も可能
+<ul>
+<li><code>aws logs tail $LOG_GROUP --since 1h</code></li>
+</ul>
+</li>
+<li><code>--format</code> を <code>short</code> と設定することで、ログストリーム名やタイムスタンプのミリ秒単位を省略して表示できる
+<ul>
+<li><code>aws logs tail $LOG_GROUP --follow --format short</code></li>
+</ul>
+</li>
+<li><code>--filter-pattern</code> を指定することで、表示内容をフィルタできる
+<ul>
+<li>特定 Lambda 関数における、過去1週間の Duration や Max Memory Used を確認したい場合・・・
+<ul>
+<li><code>aws logs tail $LOG_GROUP --since 7d --filter-pattern &quot;?REPORT&quot;</code></li>
+</ul>
+</li>
+<li>特定リクエスト ID でフィルタしたい場合・・・
+<ul>
+<li><code>aws logs tail $LOG_GROUP --since 2d --filter-pattern '&quot;my-request-id&quot;'</code>
+<ul>
+<li>CloudWatch Logs におけるフィルタパターンで完全一致はダブルクォーテーションで囲む必要があるので <code>'&quot;hoge&quot;'</code> のような指定が必要</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>フィルタパターンとして指定できる構文については CloudWatch Logs のドキュメントを参照
+<ul>
+<li><a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html">https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% aws logs tail <span class="nb">help</span>
+TAIL<span class="o">()</span>                                                                  TAIL<span class="o">()</span>
+
+
+
+NAME
+       tail -
+
+DESCRIPTION
+       Tails the logs <span class="k">for</span> a CloudWatch Logs group. 
+       By default, the <span class="nb">command</span> returns logs from all associated CloudWatch Logs streams during the past ten minutes. 
+       Note that there is no guarantee <span class="k">for</span> exact timestamp ordering of logs.
+
+       See <span class="s1">&#39;aws help&#39;</span> <span class="k">for</span> descriptions of global parameters.
+
+SYNOPSIS
+            tail
+          group_name &lt;value&gt;
+          <span class="o">[</span>--since &lt;value&gt;<span class="o">]</span>
+          <span class="o">[</span>--follow<span class="o">]</span>
+          <span class="o">[</span>--format &lt;value&gt;<span class="o">]</span>
+          <span class="o">[</span>--filter-pattern &lt;value&gt;<span class="o">]</span>
+
+OPTIONS
+       group_name <span class="o">(</span>string<span class="o">)</span> The name of the CloudWatch Logs group.
+
+       --since <span class="o">(</span>string<span class="o">)</span> From what <span class="nb">time</span> to begin displaying logs.  
+       By  default, logs will be displayed starting from ten minutes in the past. 
+       The value provided can be an ISO <span class="m">8601</span> timestamp or a relative time. 
+       For relative times, provide a number and a single unit. 
+       Supported units include:
+
+          o s - seconds
+          o m - minutes
+          o h - hours
+          o d - days
+          o w - weeks
+
+          For  example, a value of 5m would indicate to display logs starting
+          five minutes in the past.
+          Note that multiple units are not supported <span class="o">(</span>i.e. 5h30m<span class="o">)</span>
+
+       --follow <span class="o">(</span>boolean<span class="o">)</span> Whether to continuously poll <span class="k">for</span> new logs. 
+       By default, the <span class="nb">command</span> will <span class="nb">exit</span> once there are no more logs to display.
+       To <span class="nb">exit</span> from this mode, use Control-C.
+
+       --format <span class="o">(</span>string<span class="o">)</span> The format to display the logs. 
+       The following formats are supported:
+
+          o detailed - This the default format. 
+            It prints  out  the  timestamp with millisecond precision and timezones, the log stream name, and the log message.
+
+          o short - A shortened format. 
+            It prints out the a shortened timestamp and the log message.
+
+       --filter-pattern <span class="o">(</span>string<span class="o">)</span> The filter pattern to use. 
+       See Filter and Pattern Syntax <span class="k">for</span> details. 
+       If not provided, all the events are matched
+
+       See <span class="s1">&#39;aws help&#39;</span> <span class="k">for</span> descriptions of global parameters.
+
+
+
+                                                                        TAIL<span class="o">()</span>
+</code></pre></div><h2 id="この記事を試した環境">この記事を試した環境<a href="#この記事を試した環境" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:	Mac OS X
+ProductVersion:	10.15.7
+BuildVersion:	19H114
+% aws --version
+aws-cli/2.1.6 Python/3.7.4 Darwin/19.6.0 exe/x86_64 prompt/off
+</code></pre></div>
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://noid11.github.io/tags/aws-cli">AWS CLI</a></span><span class="tag"><a href="https://noid11.github.io/tags/cloudwatch-logs">CloudWatch Logs</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>637 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2021/01/23 14:33 &#43;0900</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/noid11/noid11.github.io/commit/f10679b013b9fd068113141a063cc2c20028fb93" target="_blank" rel="noopener">f10679b</a> @ 2021/01/23</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://noid11.github.io/posts/how-to-install-docker-machine-to-mac/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Mac に Docker Machine をインストールする方法</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2021 <a href="https://noid11.github.io/"></a>&#183; noid11</p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://noid11.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://noid11.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

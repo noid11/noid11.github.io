@@ -6,8 +6,136 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Fri, 22 Jan 2021 09:30:07 +0900</lastBuildDate>
+		<lastBuildDate>Sat, 23 Jan 2021 14:33:50 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>AWS CLI v2 を使って CloudWatch Logs を `tail -f` っぽく見る方法</title>
+			<link>https://noid11.github.io/posts/how-to-cloudwatch-logs-tail-follow-by-aws-cli-v2/</link>
+			<pubDate>Sat, 23 Jan 2021 14:33:50 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/how-to-cloudwatch-logs-tail-follow-by-aws-cli-v2/</guid>
+			<description>&lt;ul&gt;
+&lt;li&gt;AWS Lambda を動かしている時にマネジメントコンソールを開かなくてもログを確認できて便利&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;LOG_GROUP&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/aws/lambda/myfunc
+aws logs tail &lt;span class=&#34;nv&#34;&gt;$LOG_GROUP&lt;/span&gt; --follow
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+			<content type="html"><![CDATA[<ul>
+<li>AWS Lambda を動かしている時にマネジメントコンソールを開かなくてもログを確認できて便利</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">LOG_GROUP</span><span class="o">=</span>/aws/lambda/myfunc
+aws logs tail <span class="nv">$LOG_GROUP</span> --follow
+</code></pre></div><h2 id="help">help</h2>
+<p><a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/logs/tail.html">https://awscli.amazonaws.com/v2/documentation/api/latest/reference/logs/tail.html</a></p>
+<ul>
+<li><code>trail -f</code> のような形式じゃなくても、過去 1時間 のログデータを取得するような使い方も可能
+<ul>
+<li><code>aws logs tail $LOG_GROUP --since 1h</code></li>
+</ul>
+</li>
+<li><code>--format</code> を <code>short</code> と設定することで、ログストリーム名やタイムスタンプのミリ秒単位を省略して表示できる
+<ul>
+<li><code>aws logs tail $LOG_GROUP --follow --format short</code></li>
+</ul>
+</li>
+<li><code>--filter-pattern</code> を指定することで、表示内容をフィルタできる
+<ul>
+<li>特定 Lambda 関数における、過去1週間の Duration や Max Memory Used を確認したい場合・・・
+<ul>
+<li><code>aws logs tail $LOG_GROUP --since 7d --filter-pattern &quot;?REPORT&quot;</code></li>
+</ul>
+</li>
+<li>特定リクエスト ID でフィルタしたい場合・・・
+<ul>
+<li><code>aws logs tail $LOG_GROUP --since 2d --filter-pattern '&quot;my-request-id&quot;'</code>
+<ul>
+<li>CloudWatch Logs におけるフィルタパターンで完全一致はダブルクォーテーションで囲む必要があるので <code>'&quot;hoge&quot;'</code> のような指定が必要</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>フィルタパターンとして指定できる構文については CloudWatch Logs のドキュメントを参照
+<ul>
+<li><a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html">https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% aws logs tail <span class="nb">help</span>
+TAIL<span class="o">()</span>                                                                  TAIL<span class="o">()</span>
+
+
+
+NAME
+       tail -
+
+DESCRIPTION
+       Tails the logs <span class="k">for</span> a CloudWatch Logs group. 
+       By default, the <span class="nb">command</span> returns logs from all associated CloudWatch Logs streams during the past ten minutes. 
+       Note that there is no guarantee <span class="k">for</span> exact timestamp ordering of logs.
+
+       See <span class="s1">&#39;aws help&#39;</span> <span class="k">for</span> descriptions of global parameters.
+
+SYNOPSIS
+            tail
+          group_name &lt;value&gt;
+          <span class="o">[</span>--since &lt;value&gt;<span class="o">]</span>
+          <span class="o">[</span>--follow<span class="o">]</span>
+          <span class="o">[</span>--format &lt;value&gt;<span class="o">]</span>
+          <span class="o">[</span>--filter-pattern &lt;value&gt;<span class="o">]</span>
+
+OPTIONS
+       group_name <span class="o">(</span>string<span class="o">)</span> The name of the CloudWatch Logs group.
+
+       --since <span class="o">(</span>string<span class="o">)</span> From what <span class="nb">time</span> to begin displaying logs.  
+       By  default, logs will be displayed starting from ten minutes in the past. 
+       The value provided can be an ISO <span class="m">8601</span> timestamp or a relative time. 
+       For relative times, provide a number and a single unit. 
+       Supported units include:
+
+          o s - seconds
+          o m - minutes
+          o h - hours
+          o d - days
+          o w - weeks
+
+          For  example, a value of 5m would indicate to display logs starting
+          five minutes in the past.
+          Note that multiple units are not supported <span class="o">(</span>i.e. 5h30m<span class="o">)</span>
+
+       --follow <span class="o">(</span>boolean<span class="o">)</span> Whether to continuously poll <span class="k">for</span> new logs. 
+       By default, the <span class="nb">command</span> will <span class="nb">exit</span> once there are no more logs to display.
+       To <span class="nb">exit</span> from this mode, use Control-C.
+
+       --format <span class="o">(</span>string<span class="o">)</span> The format to display the logs. 
+       The following formats are supported:
+
+          o detailed - This the default format. 
+            It prints  out  the  timestamp with millisecond precision and timezones, the log stream name, and the log message.
+
+          o short - A shortened format. 
+            It prints out the a shortened timestamp and the log message.
+
+       --filter-pattern <span class="o">(</span>string<span class="o">)</span> The filter pattern to use. 
+       See Filter and Pattern Syntax <span class="k">for</span> details. 
+       If not provided, all the events are matched
+
+       See <span class="s1">&#39;aws help&#39;</span> <span class="k">for</span> descriptions of global parameters.
+
+
+
+                                                                        TAIL<span class="o">()</span>
+</code></pre></div><h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:	Mac OS X
+ProductVersion:	10.15.7
+BuildVersion:	19H114
+% aws --version
+aws-cli/2.1.6 Python/3.7.4 Darwin/19.6.0 exe/x86_64 prompt/off
+</code></pre></div>]]></content>
+		</item>
 		
 		<item>
 			<title>Mac に Docker Machine をインストールする方法</title>

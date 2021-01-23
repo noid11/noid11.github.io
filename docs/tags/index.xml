@@ -7,7 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Fri, 22 Jan 2021 09:30:07 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 23 Jan 2021 14:33:50 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AWS CLI</title>
+      <link>https://noid11.github.io/tags/aws-cli/</link>
+      <pubDate>Sat, 23 Jan 2021 14:33:50 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/aws-cli/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CloudWatch Logs</title>
+      <link>https://noid11.github.io/tags/cloudwatch-logs/</link>
+      <pubDate>Sat, 23 Jan 2021 14:33:50 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/cloudwatch-logs/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Docker</title>
       <link>https://noid11.github.io/tags/docker/</link>
@@ -63,15 +81,6 @@
     </item>
     
     <item>
-      <title>AWS CLI</title>
-      <link>https://noid11.github.io/tags/aws-cli/</link>
-      <pubDate>Wed, 20 Jan 2021 19:54:25 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/aws-cli/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>RDP</title>
       <link>https://noid11.github.io/tags/rdp/</link>
       <pubDate>Tue, 19 Jan 2021 22:16:16 +0900</pubDate>
@@ -86,15 +95,6 @@
       <pubDate>Tue, 19 Jan 2021 22:16:16 +0900</pubDate>
       
       <guid>https://noid11.github.io/tags/windows/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>PowerShell</title>
-      <link>https://noid11.github.io/tags/powershell/</link>
-      <pubDate>Tue, 19 Jan 2021 16:11:20 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/powershell/</guid>
       <description></description>
     </item>
     
