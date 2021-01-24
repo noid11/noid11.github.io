@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SQS on noid11.github.io</title>
+    <link>https://noid11.github.io/tags/sqs/</link>
+    <description>Recent content in SQS on noid11.github.io</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>&amp;#169; noid11</copyright>
+    <lastBuildDate>Sun, 24 Jan 2021 16:50:17 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/sqs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Using Amazon SQS dead-letter queues to replay messages 読んだメモ</title>
+      <link>https://noid11.github.io/posts/read-using-amazon-sqs-dead-letter-queues-to-replay-messages/</link>
+      <pubDate>Sun, 24 Jan 2021 16:50:17 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/read-using-amazon-sqs-dead-letter-queues-to-replay-messages/</guid>
+      <description>&lt;p&gt;以下のブログ記事を読んだメモ&lt;/p&gt;
+&lt;p&gt;Using Amazon SQS dead-letter queues to replay messages | AWS Compute Blog&lt;br&gt;
+&lt;a href=&#34;https://aws.amazon.com/jp/blogs/compute/using-amazon-sqs-dead-letter-queues-to-replay-messages/&#34;&gt;https://aws.amazon.com/jp/blogs/compute/using-amazon-sqs-dead-letter-queues-to-replay-messages/&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SQS の DLQ を扱う方法として、 DLQ を 2つ 使う構成&lt;/li&gt;
+&lt;li&gt;1つめの DLQ は Lambda 関数のトリガーとして設定し、アプリケーションで処理されなかったメッセージを Lambda 関数によって再処理する
+&lt;ul&gt;
+&lt;li&gt;この Lambda 関数で処理できなかったものに関しては SQS メッセージ属性にて再試行回数をカウントして、所定のリトライ回数を超えたら 2つめ の DLQ にメッセージを送信し、あとは手動で処理する&lt;/li&gt;
+&lt;li&gt;Lambda 関数による DLQ のリトライではメッセージ属性を使ってエクスポネンシャルバックオフによる間隔調整を行う&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

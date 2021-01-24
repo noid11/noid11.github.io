@@ -1,7 +1,7 @@
 ---
 title: "Using Amazon SQS dead-letter queues to replay messages 読んだメモ"
 date: 2021-01-24T16:50:17+09:00
-draft: true
+draft: false
 toc: true
 images:
 tags: 

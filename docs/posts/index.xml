@@ -6,8 +6,212 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Sat, 23 Jan 2021 14:33:50 +0900</lastBuildDate>
+		<lastBuildDate>Sun, 24 Jan 2021 16:50:17 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Using Amazon SQS dead-letter queues to replay messages 読んだメモ</title>
+			<link>https://noid11.github.io/posts/read-using-amazon-sqs-dead-letter-queues-to-replay-messages/</link>
+			<pubDate>Sun, 24 Jan 2021 16:50:17 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/read-using-amazon-sqs-dead-letter-queues-to-replay-messages/</guid>
+			<description>&lt;p&gt;以下のブログ記事を読んだメモ&lt;/p&gt;
+&lt;p&gt;Using Amazon SQS dead-letter queues to replay messages | AWS Compute Blog&lt;br&gt;
+&lt;a href=&#34;https://aws.amazon.com/jp/blogs/compute/using-amazon-sqs-dead-letter-queues-to-replay-messages/&#34;&gt;https://aws.amazon.com/jp/blogs/compute/using-amazon-sqs-dead-letter-queues-to-replay-messages/&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SQS の DLQ を扱う方法として、 DLQ を 2つ 使う構成&lt;/li&gt;
+&lt;li&gt;1つめの DLQ は Lambda 関数のトリガーとして設定し、アプリケーションで処理されなかったメッセージを Lambda 関数によって再処理する
+&lt;ul&gt;
+&lt;li&gt;この Lambda 関数で処理できなかったものに関しては SQS メッセージ属性にて再試行回数をカウントして、所定のリトライ回数を超えたら 2つめ の DLQ にメッセージを送信し、あとは手動で処理する&lt;/li&gt;
+&lt;li&gt;Lambda 関数による DLQ のリトライではメッセージ属性を使ってエクスポネンシャルバックオフによる間隔調整を行う&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+			<content type="html"><![CDATA[<p>以下のブログ記事を読んだメモ</p>
+<p>Using Amazon SQS dead-letter queues to replay messages | AWS Compute Blog<br>
+<a href="https://aws.amazon.com/jp/blogs/compute/using-amazon-sqs-dead-letter-queues-to-replay-messages/">https://aws.amazon.com/jp/blogs/compute/using-amazon-sqs-dead-letter-queues-to-replay-messages/</a></p>
+<ul>
+<li>SQS の DLQ を扱う方法として、 DLQ を 2つ 使う構成</li>
+<li>1つめの DLQ は Lambda 関数のトリガーとして設定し、アプリケーションで処理されなかったメッセージを Lambda 関数によって再処理する
+<ul>
+<li>この Lambda 関数で処理できなかったものに関しては SQS メッセージ属性にて再試行回数をカウントして、所定のリトライ回数を超えたら 2つめ の DLQ にメッセージを送信し、あとは手動で処理する</li>
+<li>Lambda 関数による DLQ のリトライではメッセージ属性を使ってエクスポネンシャルバックオフによる間隔調整を行う</li>
+</ul>
+</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<ul>
+<li>SQS はフルマネージドなキューイングサービス
+<ul>
+<li>マイクロサービス、分散システム、サーバーレスアプリケーションを分離して拡張できる</li>
+<li>SQS の一般的に使用される機能は、デッドレターキュー
+<ul>
+<li>DLQ: Dead Letter Queue は、正常に処理（消費）できないメッセージを格納するために使用する</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>この記事では、既存の SQS キューに自動復元機能を追加する方法を解説
+<ul>
+<li>DLQ を監視し、メッセージをメインキューに戻して、再度処理できるかどうかを確認する
+<ul>
+<li>特定のアルゴリズムを使用して、これが永久に繰り返されないようにする</li>
+<li>メッセージの再処理を試みるたびに、メッセージが最終的に無効と見なされるまで、再生時間が長くなる</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>SQS DLQ, AWS Lambda, および特定のアルゴリズムを使用して、失敗したメッセージの再試行率を下げる
+<ul>
+<li>このサーバーレスソリューションはパッケージ化して AWS サーバーレスアプリケーションリポジトリに公開している</li>
+</ul>
+</li>
+</ul>
+<h2 id="dead-letter-queues-and-message-replay">Dead-letter queues and message replay</h2>
+<ul>
+<li>DLQ の主なタスクは、メッセージの失敗を処理すること
+<ul>
+<li>これにより、未処理のメッセージを脇に置いて分離し、処理が失敗した理由を判別できる</li>
+<li>多くの場合、これらの失敗したメッセージはアプリケーションエラーが原因で発生する
+<ul>
+<li>たとえば、コンシューマアプリケーションがメッセージを正しく解析できず、未処理の例外をスローするとする</li>
+<li>この例外により、メッセージを DLQ に送信するエラーレスポンスがトリガーされる</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>失敗したメッセージを処理するために、エクスポネンシャルバックオフアルゴリズムを実装して再試行メカニズムを構築する
+<ul>
+<li>エクスポネンシャルバックオフの背後にある考え方は、連続するエラーレスポンスを再試行するまでの待機時間を徐々に長くすること</li>
+<li>ほとんどのエクスポネンシャルバックオフアルゴリズムは、ジッター（ランダム化された遅延）を使用して、連続する衝突を防ぐ
+<ul>
+<li>これにより、メッセージの再試行が時間全体でより均等に分散され、より効率的に処理できるようになる</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="solution-overview">Solution overview</h2>
+<p><img src="/images/read-using-amazon-sqs-dead-letter-queues-to-replay-messages/sqs-newarch.png" alt="sqs-newarch.png"></p>
+<ul>
+<li>プロデューサーから SQS に送信されるメッセージのフロー
+<ol>
+<li>プロデューサーはメッセージを SQS キューに送信</li>
+<li>コンシューマーが同じ SQS キュー内のメッセージの処理に失敗</li>
+<li>メッセージは、コンポーネントの設定に従って、メインの SQS キューからデフォルトのデッドレターキューに移動される</li>
+<li>Lambda 関数は SQS メインデッドレターキューをイベントソースとして設定</li>
+</ol>
+<ul>
+<li>メッセージを受信して元のキューに送り返し、メッセージタイマーを追加</li>
+</ul>
+<ol start="5">
+<li>メッセージタイマーは、エクスポネンシャルバックオフおよびジッターアルゴリズムによって定義される</li>
+<li>再試行の回数を制限</li>
+</ol>
+<ul>
+<li>メッセージがこの制限を超えると、メッセージは 2番目 の DLQ に移動され、オペレーターが手動で処理する</li>
+</ul>
+</li>
+</ul>
+<h2 id="how-the-replay-function-works">How the replay function works</h2>
+<ul>
+<li>SQS DLQ がメッセージを受信するたびに Lambda がトリガーされて再生機能が実行される</li>
+<li>リプレイコードは SQS メッセージ属性 <code>sqs-dlq-replay-nb</code> を、現在試行されている再試行回数の永続的なカウンターとして使用する
+<ul>
+<li>再試行の回数は、（アプリケーション構成ファイルで定義されている）最大回数と比較する
+<ul>
+<li>最大値を超えると、メッセージは人間が操作するキューに移動する</li>
+<li>そうでない場合、この関数は AWS Lambda イベントデータを使用して SQS メインキューの新しいメッセージを作成する</li>
+<li>最後に、再試行カウンターを更新し、メッセージに新しいメッセージタイマーを追加して、メッセージをメインキューに送り返す</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-py" data-lang="py"><span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Lambda function handler.&#34;&#34;&#34;</span>
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">]:</span>
+        <span class="n">nbReplay</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># number of replay</span>
+        <span class="k">if</span> <span class="s1">&#39;sqs-dlq-replay-nb&#39;</span> <span class="ow">in</span> <span class="n">record</span><span class="p">[</span><span class="s1">&#39;messageAttributes&#39;</span><span class="p">]:</span>
+            <span class="n">nbReplay</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;messageAttributes&#39;</span><span class="p">][</span><span class="s1">&#39;sqs-dlq-replay-nb&#39;</span><span class="p">][</span><span class="s2">&#34;stringValue&#34;</span><span class="p">])</span>
+
+        <span class="n">nbReplay</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">nbReplay</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">MAX_ATTEMPS</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MaxAttempsError</span><span class="p">(</span><span class="n">replay</span><span class="o">=</span><span class="n">nbReplay</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">MAX_ATTEMPS</span><span class="p">)</span>
+
+        <span class="c1"># SQS attributes</span>
+        <span class="n">attributes</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s1">&#39;messageAttributes&#39;</span><span class="p">]</span>
+        <span class="n">attributes</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;sqs-dlq-replay-nb&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;StringValue&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">nbReplay</span><span class="p">),</span> <span class="s1">&#39;DataType&#39;</span><span class="p">:</span> <span class="s1">&#39;Number&#39;</span><span class="p">}})</span>
+
+        <span class="n">_sqs_attributes_cleaner</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
+
+        <span class="c1"># Backoff</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">backoff</span><span class="o">.</span><span class="n">ExpoBackoffFullJitter</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">BACKOFF_RATE</span><span class="p">,</span> <span class="n">cap</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">MESSAGE_RETENTION_PERIOD</span><span class="p">)</span>
+        <span class="n">delaySeconds</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">backoff</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">nbReplay</span><span class="p">))</span>
+
+        <span class="c1"># SQS</span>
+        <span class="n">SQS</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span>
+            <span class="n">QueueUrl</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">SQS_MAIN_URL</span><span class="p">,</span>
+            <span class="n">MessageBody</span><span class="o">=</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;body&#39;</span><span class="p">],</span>
+            <span class="n">DelaySeconds</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">delaySeconds</span><span class="p">),</span>
+            <span class="n">MessageAttributes</span><span class="o">=</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;messageAttributes&#39;</span><span class="p">]</span>
+        <span class="p">)</span>
+</code></pre></div><h2 id="how-to-use-the-application">How to use the application</h2>
+<ul>
+<li>このサーバーレスアプリケーションは、次の方法で使用できる
+<ul>
+<li>Lambda コンソール:「サーバーレスアプリリポジトリの参照」オプションを選択して関数を作成</li>
+<li>パブリックアプリケーションリポジトリで amazon-sqs-dlq-replay-backoff アプリケーションを選択
+<ul>
+<li>デフォルトの SQS パラメーターとリプレイ機能パラメーターを使用してアプリケーションを設定</li>
+<li>このブログ投稿で YanCui によって説明されている、サーバーレスフレームワーク</li>
+<li><code>AWS::ServerlessRepo::Application</code> リソースを使用した CloudFormation テンプレート</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>AWS サーバーレスアプリケーションリポジトリアプリケーションを使用した CloudFormation テンプレートの例</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">AWSTemplateFormatVersion</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;2010-09-09&#39;</span><span class="w">
+</span><span class="w"></span><span class="nt">Transform</span><span class="p">:</span><span class="w"> </span><span class="l">AWS::Serverless-2016-10-31</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">Resources</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">ReplaySqsQueue</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l">AWS::Serverless::Application</span><span class="w">
+</span><span class="w">    </span><span class="nt">Properties</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">Location</span><span class="p">:</span><span class="w"> 
+</span><span class="w">        </span><span class="nt">ApplicationId</span><span class="p">:</span><span class="w"> </span><span class="l">arn:aws:serverlessrepo:eu-west-1:1234123412:applications~sqs-dlq-replay</span><span class="w">
+</span><span class="w">        </span><span class="nt">SemanticVersion</span><span class="p">:</span><span class="w"> </span><span class="m">1.0.0</span><span class="w">
+</span><span class="w">      </span><span class="nt">Parameters</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">BackoffRate</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2&#34;</span><span class="w">
+</span><span class="w">        </span><span class="nt">MaxAttempts</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;3&#34;</span><span class="w">
+</span></code></pre></div><h2 id="conclusion">Conclusion</h2>
+<ul>
+<li>エクスポネンシャルバックオフアルゴリズム（ジッターあり）が SQS キューのメッセージ処理機能をどのように強化するかについて説明
+<ul>
+<li>これで amazon-sqs-dlq-replay-backoff アプリケーションが AWS サーバーレスアプリケーションリポジトリにある
+<ul>
+<li>GitHub リポジトリでも公開している: <a href="https://github.com/aws-samples/amazon-sqs-dlq-replay-backoff">https://github.com/aws-samples/amazon-sqs-dlq-replay-backoff</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>SQS のデッドレターキューの使用を開始するには、以下
+<ul>
+<li><a href="http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html">http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html</a></li>
+<li><a href="http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/MonitorSQSwithCloudWatch.html">http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/MonitorSQSwithCloudWatch.html</a></li>
+</ul>
+</li>
+<li>再生メカニズムを実装するには、以下を参照
+<ul>
+<li><a href="https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/">https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-timers.html">https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-timers.html</a></li>
+</ul>
+</li>
+<li>サーバーレス学習リソースの詳細については http:////serverlessland.com</li>
+</ul>]]></content>
+		</item>
 		
 		<item>
 			<title>AWS CLI v2 を使って CloudWatch Logs を `tail -f` っぽく見る方法</title>

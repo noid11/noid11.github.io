@@ -7,7 +7,27 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Sat, 23 Jan 2021 14:33:50 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 24 Jan 2021 16:50:17 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Using Amazon SQS dead-letter queues to replay messages 読んだメモ</title>
+      <link>https://noid11.github.io/posts/read-using-amazon-sqs-dead-letter-queues-to-replay-messages/</link>
+      <pubDate>Sun, 24 Jan 2021 16:50:17 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/read-using-amazon-sqs-dead-letter-queues-to-replay-messages/</guid>
+      <description>&lt;p&gt;以下のブログ記事を読んだメモ&lt;/p&gt;
+&lt;p&gt;Using Amazon SQS dead-letter queues to replay messages | AWS Compute Blog&lt;br&gt;
+&lt;a href=&#34;https://aws.amazon.com/jp/blogs/compute/using-amazon-sqs-dead-letter-queues-to-replay-messages/&#34;&gt;https://aws.amazon.com/jp/blogs/compute/using-amazon-sqs-dead-letter-queues-to-replay-messages/&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SQS の DLQ を扱う方法として、 DLQ を 2つ 使う構成&lt;/li&gt;
+&lt;li&gt;1つめの DLQ は Lambda 関数のトリガーとして設定し、アプリケーションで処理されなかったメッセージを Lambda 関数によって再処理する
+&lt;ul&gt;
+&lt;li&gt;この Lambda 関数で処理できなかったものに関しては SQS メッセージ属性にて再試行回数をカウントして、所定のリトライ回数を超えたら 2つめ の DLQ にメッセージを送信し、あとは手動で処理する&lt;/li&gt;
+&lt;li&gt;Lambda 関数による DLQ のリトライではメッセージ属性を使ってエクスポネンシャルバックオフによる間隔調整を行う&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
     <item>
       <title>AWS CLI v2 を使って CloudWatch Logs を `tail -f` っぽく見る方法</title>
       <link>https://noid11.github.io/posts/how-to-cloudwatch-logs-tail-follow-by-aws-cli-v2/</link>
@@ -99,18 +119,6 @@ aws logs tail &lt;span class=&#34;nv&#34;&gt;$LOG_GROUP&lt;/span&gt; --follow
       
       <guid>https://noid11.github.io/posts/view-windows-info/</guid>
       <description>&lt;p&gt;Windows Server のバージョン情報を PowerShell から確認する方法を調べたメモ&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Kinesis Data Streams のコンシューマーとして動かす AWS Lambda 関数サンプル</title>
-      <link>https://noid11.github.io/posts/lambda-kinesis-consumer-sample/</link>
-      <pubDate>Tue, 19 Jan 2021 08:51:43 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/lambda-kinesis-consumer-sample/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;Kinesis Data Streams に連携されるデータを確認したい場合等に使う&lt;/li&gt;
-&lt;li&gt;ログの出力先等として Kinesis Data Streams に連携するサービスは結構存在するので、サクッと試す分にはマネジメントコンソールから編集可能な Python, Node.js 等を使うのが便利&lt;/li&gt;
-&lt;/ul&gt;</description>
     </item>
     
   </channel>

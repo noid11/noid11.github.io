@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="Using Amazon SQS dead-letter queues to replay messages 読んだメモ">
+<meta itemprop="description" content="以下のブログ記事を読んだメモ
+Using Amazon SQS dead-letter queues to replay messages | AWS Compute Blog
+https://aws.amazon.com/jp/blogs/compute/using-amazon-sqs-dead-letter-queues-to-replay-messages/
+
+SQS の DLQ を扱う方法として、 DLQ を 2つ 使う構成
+1つめの DLQ は Lambda 関数のトリガーとして設定し、アプリケーションで処理されなかったメッセージを Lambda 関数によって再処理する
+
+この Lambda 関数で処理できなかったものに関しては SQS メッセージ属性にて再試行回数をカウントして、所定のリトライ回数を超えたら 2つめ の DLQ にメッセージを送信し、あとは手動で処理する
+Lambda 関数による DLQ のリトライではメッセージ属性を使ってエクスポネンシャルバックオフによる間隔調整を行う
+
+
+">
+<meta itemprop="datePublished" content="2021-01-24T16:50:17+09:00" />
+<meta itemprop="dateModified" content="2021-01-24T18:27:37+09:00" />
+<meta itemprop="wordCount" content="2059">
+
+
+
+<meta itemprop="keywords" content="SQS," />
+<meta property="og:title" content="Using Amazon SQS dead-letter queues to replay messages 読んだメモ" />
+<meta property="og:description" content="以下のブログ記事を読んだメモ
+Using Amazon SQS dead-letter queues to replay messages | AWS Compute Blog
+https://aws.amazon.com/jp/blogs/compute/using-amazon-sqs-dead-letter-queues-to-replay-messages/
+
+SQS の DLQ を扱う方法として、 DLQ を 2つ 使う構成
+1つめの DLQ は Lambda 関数のトリガーとして設定し、アプリケーションで処理されなかったメッセージを Lambda 関数によって再処理する
+
+この Lambda 関数で処理できなかったものに関しては SQS メッセージ属性にて再試行回数をカウントして、所定のリトライ回数を超えたら 2つめ の DLQ にメッセージを送信し、あとは手動で処理する
+Lambda 関数による DLQ のリトライではメッセージ属性を使ってエクスポネンシャルバックオフによる間隔調整を行う
+
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noid11.github.io/posts/read-using-amazon-sqs-dead-letter-queues-to-replay-messages/" />
+<meta property="article:published_time" content="2021-01-24T16:50:17+09:00" />
+<meta property="article:modified_time" content="2021-01-24T18:27:37+09:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Using Amazon SQS dead-letter queues to replay messages 読んだメモ"/>
+<meta name="twitter:description" content="以下のブログ記事を読んだメモ
+Using Amazon SQS dead-letter queues to replay messages | AWS Compute Blog
+https://aws.amazon.com/jp/blogs/compute/using-amazon-sqs-dead-letter-queues-to-replay-messages/
+
+SQS の DLQ を扱う方法として、 DLQ を 2つ 使う構成
+1つめの DLQ は Lambda 関数のトリガーとして設定し、アプリケーションで処理されなかったメッセージを Lambda 関数によって再処理する
+
+この Lambda 関数で処理できなかったものに関しては SQS メッセージ属性にて再試行回数をカウントして、所定のリトライ回数を超えたら 2つめ の DLQ にメッセージを送信し、あとは手動で処理する
+Lambda 関数による DLQ のリトライではメッセージ属性を使ってエクスポネンシャルバックオフによる間隔調整を行う
+
+
+"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Using Amazon SQS dead-letter queues to replay messages 読んだメモ</title>
+	<link rel="stylesheet" href="https://noid11.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://noid11.github.io/">noid11.github.io</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://noid11.github.io/posts/">Posts</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="toc-btn" class="hdr-btn desktop-only-ib" title="Table of Contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="https://twitter.com/_noid11" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://github.com/noid11" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://noid11.github.io/posts/">Posts</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>2021/01/24</span></div>
+				<h1>Using Amazon SQS dead-letter queues to replay messages 読んだメモ</h1>
+			</header>
+			<div class="content">
+				<p>以下のブログ記事を読んだメモ</p>
+<p>Using Amazon SQS dead-letter queues to replay messages | AWS Compute Blog<br>
+<a href="https://aws.amazon.com/jp/blogs/compute/using-amazon-sqs-dead-letter-queues-to-replay-messages/">https://aws.amazon.com/jp/blogs/compute/using-amazon-sqs-dead-letter-queues-to-replay-messages/</a></p>
+<ul>
+<li>SQS の DLQ を扱う方法として、 DLQ を 2つ 使う構成</li>
+<li>1つめの DLQ は Lambda 関数のトリガーとして設定し、アプリケーションで処理されなかったメッセージを Lambda 関数によって再処理する
+<ul>
+<li>この Lambda 関数で処理できなかったものに関しては SQS メッセージ属性にて再試行回数をカウントして、所定のリトライ回数を超えたら 2つめ の DLQ にメッセージを送信し、あとは手動で処理する</li>
+<li>Lambda 関数による DLQ のリトライではメッセージ属性を使ってエクスポネンシャルバックオフによる間隔調整を行う</li>
+</ul>
+</li>
+</ul>
+<h2 id="introduction">Introduction<a href="#introduction" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>SQS はフルマネージドなキューイングサービス
+<ul>
+<li>マイクロサービス、分散システム、サーバーレスアプリケーションを分離して拡張できる</li>
+<li>SQS の一般的に使用される機能は、デッドレターキュー
+<ul>
+<li>DLQ: Dead Letter Queue は、正常に処理（消費）できないメッセージを格納するために使用する</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>この記事では、既存の SQS キューに自動復元機能を追加する方法を解説
+<ul>
+<li>DLQ を監視し、メッセージをメインキューに戻して、再度処理できるかどうかを確認する
+<ul>
+<li>特定のアルゴリズムを使用して、これが永久に繰り返されないようにする</li>
+<li>メッセージの再処理を試みるたびに、メッセージが最終的に無効と見なされるまで、再生時間が長くなる</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>SQS DLQ, AWS Lambda, および特定のアルゴリズムを使用して、失敗したメッセージの再試行率を下げる
+<ul>
+<li>このサーバーレスソリューションはパッケージ化して AWS サーバーレスアプリケーションリポジトリに公開している</li>
+</ul>
+</li>
+</ul>
+<h2 id="dead-letter-queues-and-message-replay">Dead-letter queues and message replay<a href="#dead-letter-queues-and-message-replay" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>DLQ の主なタスクは、メッセージの失敗を処理すること
+<ul>
+<li>これにより、未処理のメッセージを脇に置いて分離し、処理が失敗した理由を判別できる</li>
+<li>多くの場合、これらの失敗したメッセージはアプリケーションエラーが原因で発生する
+<ul>
+<li>たとえば、コンシューマアプリケーションがメッセージを正しく解析できず、未処理の例外をスローするとする</li>
+<li>この例外により、メッセージを DLQ に送信するエラーレスポンスがトリガーされる</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>失敗したメッセージを処理するために、エクスポネンシャルバックオフアルゴリズムを実装して再試行メカニズムを構築する
+<ul>
+<li>エクスポネンシャルバックオフの背後にある考え方は、連続するエラーレスポンスを再試行するまでの待機時間を徐々に長くすること</li>
+<li>ほとんどのエクスポネンシャルバックオフアルゴリズムは、ジッター（ランダム化された遅延）を使用して、連続する衝突を防ぐ
+<ul>
+<li>これにより、メッセージの再試行が時間全体でより均等に分散され、より効率的に処理できるようになる</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="solution-overview">Solution overview<a href="#solution-overview" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p><img src="/images/read-using-amazon-sqs-dead-letter-queues-to-replay-messages/sqs-newarch.png" alt="sqs-newarch.png"></p>
+<ul>
+<li>プロデューサーから SQS に送信されるメッセージのフロー
+<ol>
+<li>プロデューサーはメッセージを SQS キューに送信</li>
+<li>コンシューマーが同じ SQS キュー内のメッセージの処理に失敗</li>
+<li>メッセージは、コンポーネントの設定に従って、メインの SQS キューからデフォルトのデッドレターキューに移動される</li>
+<li>Lambda 関数は SQS メインデッドレターキューをイベントソースとして設定</li>
+</ol>
+<ul>
+<li>メッセージを受信して元のキューに送り返し、メッセージタイマーを追加</li>
+</ul>
+<ol start="5">
+<li>メッセージタイマーは、エクスポネンシャルバックオフおよびジッターアルゴリズムによって定義される</li>
+<li>再試行の回数を制限</li>
+</ol>
+<ul>
+<li>メッセージがこの制限を超えると、メッセージは 2番目 の DLQ に移動され、オペレーターが手動で処理する</li>
+</ul>
+</li>
+</ul>
+<h2 id="how-the-replay-function-works">How the replay function works<a href="#how-the-replay-function-works" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>SQS DLQ がメッセージを受信するたびに Lambda がトリガーされて再生機能が実行される</li>
+<li>リプレイコードは SQS メッセージ属性 <code>sqs-dlq-replay-nb</code> を、現在試行されている再試行回数の永続的なカウンターとして使用する
+<ul>
+<li>再試行の回数は、（アプリケーション構成ファイルで定義されている）最大回数と比較する
+<ul>
+<li>最大値を超えると、メッセージは人間が操作するキューに移動する</li>
+<li>そうでない場合、この関数は AWS Lambda イベントデータを使用して SQS メインキューの新しいメッセージを作成する</li>
+<li>最後に、再試行カウンターを更新し、メッセージに新しいメッセージタイマーを追加して、メッセージをメインキューに送り返す</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-py" data-lang="py"><span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Lambda function handler.&#34;&#34;&#34;</span>
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">]:</span>
+        <span class="n">nbReplay</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># number of replay</span>
+        <span class="k">if</span> <span class="s1">&#39;sqs-dlq-replay-nb&#39;</span> <span class="ow">in</span> <span class="n">record</span><span class="p">[</span><span class="s1">&#39;messageAttributes&#39;</span><span class="p">]:</span>
+            <span class="n">nbReplay</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;messageAttributes&#39;</span><span class="p">][</span><span class="s1">&#39;sqs-dlq-replay-nb&#39;</span><span class="p">][</span><span class="s2">&#34;stringValue&#34;</span><span class="p">])</span>
+
+        <span class="n">nbReplay</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">nbReplay</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">MAX_ATTEMPS</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MaxAttempsError</span><span class="p">(</span><span class="n">replay</span><span class="o">=</span><span class="n">nbReplay</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">MAX_ATTEMPS</span><span class="p">)</span>
+
+        <span class="c1"># SQS attributes</span>
+        <span class="n">attributes</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s1">&#39;messageAttributes&#39;</span><span class="p">]</span>
+        <span class="n">attributes</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;sqs-dlq-replay-nb&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;StringValue&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">nbReplay</span><span class="p">),</span> <span class="s1">&#39;DataType&#39;</span><span class="p">:</span> <span class="s1">&#39;Number&#39;</span><span class="p">}})</span>
+
+        <span class="n">_sqs_attributes_cleaner</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
+
+        <span class="c1"># Backoff</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">backoff</span><span class="o">.</span><span class="n">ExpoBackoffFullJitter</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">BACKOFF_RATE</span><span class="p">,</span> <span class="n">cap</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">MESSAGE_RETENTION_PERIOD</span><span class="p">)</span>
+        <span class="n">delaySeconds</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">backoff</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">nbReplay</span><span class="p">))</span>
+
+        <span class="c1"># SQS</span>
+        <span class="n">SQS</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span>
+            <span class="n">QueueUrl</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">SQS_MAIN_URL</span><span class="p">,</span>
+            <span class="n">MessageBody</span><span class="o">=</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;body&#39;</span><span class="p">],</span>
+            <span class="n">DelaySeconds</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">delaySeconds</span><span class="p">),</span>
+            <span class="n">MessageAttributes</span><span class="o">=</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;messageAttributes&#39;</span><span class="p">]</span>
+        <span class="p">)</span>
+</code></pre></div><h2 id="how-to-use-the-application">How to use the application<a href="#how-to-use-the-application" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>このサーバーレスアプリケーションは、次の方法で使用できる
+<ul>
+<li>Lambda コンソール:「サーバーレスアプリリポジトリの参照」オプションを選択して関数を作成</li>
+<li>パブリックアプリケーションリポジトリで amazon-sqs-dlq-replay-backoff アプリケーションを選択
+<ul>
+<li>デフォルトの SQS パラメーターとリプレイ機能パラメーターを使用してアプリケーションを設定</li>
+<li>このブログ投稿で YanCui によって説明されている、サーバーレスフレームワーク</li>
+<li><code>AWS::ServerlessRepo::Application</code> リソースを使用した CloudFormation テンプレート</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>AWS サーバーレスアプリケーションリポジトリアプリケーションを使用した CloudFormation テンプレートの例</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">AWSTemplateFormatVersion</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;2010-09-09&#39;</span><span class="w">
+</span><span class="w"></span><span class="nt">Transform</span><span class="p">:</span><span class="w"> </span><span class="l">AWS::Serverless-2016-10-31</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">Resources</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">ReplaySqsQueue</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">Type</span><span class="p">:</span><span class="w"> </span><span class="l">AWS::Serverless::Application</span><span class="w">
+</span><span class="w">    </span><span class="nt">Properties</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">Location</span><span class="p">:</span><span class="w"> 
+</span><span class="w">        </span><span class="nt">ApplicationId</span><span class="p">:</span><span class="w"> </span><span class="l">arn:aws:serverlessrepo:eu-west-1:1234123412:applications~sqs-dlq-replay</span><span class="w">
+</span><span class="w">        </span><span class="nt">SemanticVersion</span><span class="p">:</span><span class="w"> </span><span class="m">1.0.0</span><span class="w">
+</span><span class="w">      </span><span class="nt">Parameters</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">BackoffRate</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2&#34;</span><span class="w">
+</span><span class="w">        </span><span class="nt">MaxAttempts</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;3&#34;</span><span class="w">
+</span></code></pre></div><h2 id="conclusion">Conclusion<a href="#conclusion" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>エクスポネンシャルバックオフアルゴリズム（ジッターあり）が SQS キューのメッセージ処理機能をどのように強化するかについて説明
+<ul>
+<li>これで amazon-sqs-dlq-replay-backoff アプリケーションが AWS サーバーレスアプリケーションリポジトリにある
+<ul>
+<li>GitHub リポジトリでも公開している: <a href="https://github.com/aws-samples/amazon-sqs-dlq-replay-backoff">https://github.com/aws-samples/amazon-sqs-dlq-replay-backoff</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>SQS のデッドレターキューの使用を開始するには、以下
+<ul>
+<li><a href="http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html">http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html</a></li>
+<li><a href="http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/MonitorSQSwithCloudWatch.html">http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/MonitorSQSwithCloudWatch.html</a></li>
+</ul>
+</li>
+<li>再生メカニズムを実装するには、以下を参照
+<ul>
+<li><a href="https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/">https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-timers.html">https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-timers.html</a></li>
+</ul>
+</li>
+<li>サーバーレス学習リソースの詳細については http:////serverlessland.com</li>
+</ul>
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://noid11.github.io/tags/sqs">SQS</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>2059 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2021/01/24 16:50 &#43;0900</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/noid11/noid11.github.io/commit/4f672f2e2c93bdc2b86e22b07c8b55611b7192c0" target="_blank" rel="noopener">4f672f2</a> @ 2021/01/24</p>
+			</footer>
+		</article>
+		<aside id="toc" class="show-toc">
+			<div class="toc-title">Table of Contents</div>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#dead-letter-queues-and-message-replay">Dead-letter queues and message replay</a></li>
+    <li><a href="#solution-overview">Solution overview</a></li>
+    <li><a href="#how-the-replay-function-works">How the replay function works</a></li>
+    <li><a href="#how-to-use-the-application">How to use the application</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+		</aside>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://noid11.github.io/posts/how-to-cloudwatch-logs-tail-follow-by-aws-cli-v2/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>AWS CLI v2 を使って CloudWatch Logs を `tail -f` っぽく見る方法</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2021 <a href="https://noid11.github.io/"></a>&#183; noid11</p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://noid11.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://noid11.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>
