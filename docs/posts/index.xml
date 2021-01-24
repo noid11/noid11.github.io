@@ -6,8 +6,443 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Sun, 24 Jan 2021 16:50:17 +0900</lastBuildDate>
+		<lastBuildDate>Mon, 25 Jan 2021 01:01:38 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Apache Bench ノート</title>
+			<link>https://noid11.github.io/posts/apache-bench-note/</link>
+			<pubDate>Mon, 25 Jan 2021 01:01:38 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/apache-bench-note/</guid>
+			<description>&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ab&lt;/code&gt;: Apache Bench について調べたノート&lt;/li&gt;
+&lt;li&gt;基本形
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ab -c 10 -n 10 http://example.com/&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;オプション
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-A&lt;/code&gt;: Basic 認証での user/password 指定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-c&lt;/code&gt;: concurrency. 並行実行するコネクション数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-C&lt;/code&gt;: Cookie 指定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-H&lt;/code&gt;: 任意の HTTP リクエストヘッダー指定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-k&lt;/code&gt;: HTTP KeepAlive を有効化&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-m&lt;/code&gt;: HTTP Method を指定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-n&lt;/code&gt;: 生成する HTTP リクエスト数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-p&lt;/code&gt;: POST file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-s&lt;/code&gt;: タイムアウト設定。デフォルト 30 秒&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-t&lt;/code&gt;: ベンチマークのタイムリミット。デフォルトでは無制限&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-T&lt;/code&gt;: POST, PUT メソッドを使用する場合の Content-Type ヘッダー値。デフォルトでは text/plain だが application/x-www-form-urlencoded 等を指定できる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;実行結果
+&lt;ul&gt;
+&lt;li&gt;1秒 あたりに行ったリクエスト数が知りたい: &lt;code&gt;Requests per second&lt;/code&gt; を確認&lt;/li&gt;
+&lt;li&gt;失敗したリクエストを知りたい: &lt;code&gt;Non-2xx responses&lt;/code&gt; を確認&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+			<content type="html"><![CDATA[<ul>
+<li><code>ab</code>: Apache Bench について調べたノート</li>
+<li>基本形
+<ul>
+<li><code>ab -c 10 -n 10 http://example.com/</code></li>
+</ul>
+</li>
+<li>オプション
+<ul>
+<li><code>-A</code>: Basic 認証での user/password 指定</li>
+<li><code>-c</code>: concurrency. 並行実行するコネクション数</li>
+<li><code>-C</code>: Cookie 指定</li>
+<li><code>-H</code>: 任意の HTTP リクエストヘッダー指定</li>
+<li><code>-k</code>: HTTP KeepAlive を有効化</li>
+<li><code>-m</code>: HTTP Method を指定</li>
+<li><code>-n</code>: 生成する HTTP リクエスト数</li>
+<li><code>-p</code>: POST file</li>
+<li><code>-s</code>: タイムアウト設定。デフォルト 30 秒</li>
+<li><code>-t</code>: ベンチマークのタイムリミット。デフォルトでは無制限</li>
+<li><code>-T</code>: POST, PUT メソッドを使用する場合の Content-Type ヘッダー値。デフォルトでは text/plain だが application/x-www-form-urlencoded 等を指定できる</li>
+</ul>
+</li>
+<li>実行結果
+<ul>
+<li>1秒 あたりに行ったリクエスト数が知りたい: <code>Requests per second</code> を確認</li>
+<li>失敗したリクエストを知りたい: <code>Non-2xx responses</code> を確認</li>
+</ul>
+</li>
+</ul>
+<h2 id="基本的な使い方">基本的な使い方</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">ab -c <span class="m">10</span> -n <span class="m">10</span> http://example.com/
+</code></pre></div><hr>
+<p>実行例</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ ab -c <span class="m">10</span> -n <span class="m">10</span> http://example.com/
+This is ApacheBench, Version 2.3 &lt;<span class="nv">$Revision</span>: <span class="m">1879490</span> $&gt;
+Copyright <span class="m">1996</span> Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking example.com <span class="o">(</span>be patient<span class="o">)</span>.....done
+
+
+Server Software:        ECS
+Server Hostname:        example.com
+Server Port:            <span class="m">80</span>
+
+Document Path:          /
+Document Length:        <span class="m">1256</span> bytes
+
+Concurrency Level:      <span class="m">10</span>
+Time taken <span class="k">for</span> tests:   0.466 seconds
+Complete requests:      <span class="m">10</span>
+Failed requests:        <span class="m">0</span>
+Total transferred:      <span class="m">16159</span> bytes
+HTML transferred:       <span class="m">12560</span> bytes
+Requests per second:    21.46 <span class="o">[</span><span class="c1">#/sec] (mean)</span>
+Time per request:       465.913 <span class="o">[</span>ms<span class="o">]</span> <span class="o">(</span>mean<span class="o">)</span>
+Time per request:       46.591 <span class="o">[</span>ms<span class="o">]</span> <span class="o">(</span>mean, across all concurrent requests<span class="o">)</span>
+Transfer rate:          33.87 <span class="o">[</span>Kbytes/sec<span class="o">]</span> received
+
+Connection Times <span class="o">(</span>ms<span class="o">)</span>
+              min  mean<span class="o">[</span>+/-sd<span class="o">]</span> median   max
+Connect:      <span class="m">106</span>  <span class="m">112</span>   5.6    <span class="m">110</span>     <span class="m">124</span>
+Processing:   <span class="m">106</span>  <span class="m">112</span>   5.6    <span class="m">110</span>     <span class="m">124</span>
+Waiting:      <span class="m">106</span>  <span class="m">112</span>   5.6    <span class="m">110</span>     <span class="m">124</span>
+Total:        <span class="m">212</span>  <span class="m">224</span>  11.2    <span class="m">220</span>     <span class="m">248</span>
+
+Percentage of the requests served within a certain <span class="nb">time</span> <span class="o">(</span>ms<span class="o">)</span>
+  50%    <span class="m">220</span>
+  66%    <span class="m">224</span>
+  75%    <span class="m">232</span>
+  80%    <span class="m">234</span>
+  90%    <span class="m">248</span>
+  95%    <span class="m">248</span>
+  98%    <span class="m">248</span>
+  99%    <span class="m">248</span>
+ 100%    <span class="m">248</span> <span class="o">(</span>longest request<span class="o">)</span>
+</code></pre></div><h2 id="post-リクエストをベンチマークする">POST リクエストをベンチマークする</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">ab -c <span class="m">10</span> -n <span class="m">10</span> -p ./sample.json -T application/json https://httpbin.org/post
+</code></pre></div><hr>
+<p>実行例</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ cat ./sample.json 
+<span class="o">{</span>
+    <span class="s2">&#34;key&#34;</span>: <span class="s2">&#34;value&#34;</span>
+<span class="o">}</span>
+$ ab -c <span class="m">10</span> -n <span class="m">10</span> -p ./sample.json -T application/json https://httpbin.org/post
+This is ApacheBench, Version 2.3 &lt;<span class="nv">$Revision</span>: <span class="m">1879490</span> $&gt;
+Copyright <span class="m">1996</span> Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking httpbin.org <span class="o">(</span>be patient<span class="o">)</span>.....done
+
+
+Server Software:        gunicorn/19.9.0
+Server Hostname:        httpbin.org
+Server Port:            <span class="m">443</span>
+SSL/TLS Protocol:       TLSv1.2,ECDHE-RSA-AES128-GCM-SHA256,2048,128
+Server Temp Key:        ECDH P-256 <span class="m">256</span> bits
+TLS Server Name:        httpbin.org
+
+Document Path:          /post
+Document Length:        <span class="m">439</span> bytes
+
+Concurrency Level:      <span class="m">10</span>
+Time taken <span class="k">for</span> tests:   1.358 seconds
+Complete requests:      <span class="m">10</span>
+Failed requests:        <span class="m">0</span>
+Total transferred:      <span class="m">6640</span> bytes
+Total body sent:        <span class="m">1580</span>
+HTML transferred:       <span class="m">4390</span> bytes
+Requests per second:    7.36 <span class="o">[</span><span class="c1">#/sec] (mean)</span>
+Time per request:       1358.083 <span class="o">[</span>ms<span class="o">]</span> <span class="o">(</span>mean<span class="o">)</span>
+Time per request:       135.808 <span class="o">[</span>ms<span class="o">]</span> <span class="o">(</span>mean, across all concurrent requests<span class="o">)</span>
+Transfer rate:          4.77 <span class="o">[</span>Kbytes/sec<span class="o">]</span> received
+                        1.14 kb/s sent
+                        5.91 kb/s total
+
+Connection Times <span class="o">(</span>ms<span class="o">)</span>
+              min  mean<span class="o">[</span>+/-sd<span class="o">]</span> median   max
+Connect:      <span class="m">495</span>  <span class="m">502</span>   6.4    <span class="m">500</span>     <span class="m">512</span>
+Processing:   <span class="m">167</span>  <span class="m">172</span>   8.1    <span class="m">169</span>     <span class="m">194</span>
+Waiting:      <span class="m">167</span>  <span class="m">172</span>   8.2    <span class="m">169</span>     <span class="m">194</span>
+Total:        <span class="m">662</span>  <span class="m">674</span>   9.8    <span class="m">672</span>     <span class="m">690</span>
+
+Percentage of the requests served within a certain <span class="nb">time</span> <span class="o">(</span>ms<span class="o">)</span>
+  50%    <span class="m">672</span>
+  66%    <span class="m">681</span>
+  75%    <span class="m">682</span>
+  80%    <span class="m">684</span>
+  90%    <span class="m">690</span>
+  95%    <span class="m">690</span>
+  98%    <span class="m">690</span>
+  99%    <span class="m">690</span>
+ 100%    <span class="m">690</span> <span class="o">(</span>longest request<span class="o">)</span>
+</code></pre></div><h2 id="help">help</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ ab
+ab: wrong number of arguments
+Usage: ab <span class="o">[</span>options<span class="o">]</span> <span class="o">[</span>http<span class="o">[</span>s<span class="o">]</span>://<span class="o">]</span>hostname<span class="o">[</span>:port<span class="o">]</span>/path
+Options are:
+    -n requests     Number of requests to perform
+    -c concurrency  Number of multiple requests to make at a <span class="nb">time</span>
+    -t timelimit    Seconds to max. to spend on benchmarking This implies -n <span class="m">50000</span>
+    -s timeout      Seconds to max. <span class="nb">wait</span> <span class="k">for</span> each response Default is <span class="m">30</span> seconds
+    -b windowsize   Size of TCP send/receive buffer, in bytes
+    -B address      Address to <span class="nb">bind</span> to when making outgoing connections
+    -p postfile     File containing data to POST. Remember also to <span class="nb">set</span> -T
+    -u putfile      File containing data to PUT. Remember also to <span class="nb">set</span> -T
+    -T content-type Content-type header to use <span class="k">for</span> POST/PUT data, eg. <span class="s1">&#39;application/x-www-form-urlencoded&#39;</span> Default is <span class="s1">&#39;text/plain&#39;</span>
+    -v verbosity    How much troubleshooting info to print
+    -w              Print out results in HTML tables
+    -i              Use HEAD instead of GET
+    -x attributes   String to insert as table attributes
+    -y attributes   String to insert as tr attributes
+    -z attributes   String to insert as td or th attributes
+    -C attribute    Add cookie, eg. <span class="s1">&#39;Apache=1234&#39;</span>. <span class="o">(</span>repeatable<span class="o">)</span>
+    -H attribute    Add Arbitrary header line, eg. <span class="s1">&#39;Accept-Encoding: gzip&#39;</span> Inserted after all normal header lines. <span class="o">(</span>repeatable<span class="o">)</span>
+    -A attribute    Add Basic WWW Authentication, the attributes are a colon separated username and password.
+    -P attribute    Add Basic Proxy Authentication, the attributes are a colon separated username and password.
+    -X proxy:port   Proxyserver and port number to use
+    -V              Print version number and <span class="nb">exit</span>
+    -k              Use HTTP KeepAlive feature
+    -d              Do not show percentiles served table.
+    -S              Do not show confidence estimators and warnings.
+    -q              Do not show progress when doing more than <span class="m">150</span> requests
+    -l              Accept variable document length <span class="o">(</span>use this <span class="k">for</span> dynamic pages<span class="o">)</span>
+    -g filename     Output collected data to gnuplot format file.
+    -e filename     Output CSV file with percentages served
+    -r              Don<span class="se">\&#39;</span>t <span class="nb">exit</span> on socket receive errors.
+    -m method       Method name
+    -h              Display usage information <span class="o">(</span>this message<span class="o">)</span>
+    -I              Disable TLS Server Name Indication <span class="o">(</span>SNI<span class="o">)</span> extension
+    -Z ciphersuite  Specify SSL/TLS cipher suite <span class="o">(</span>See openssl ciphers<span class="o">)</span>
+    -f protocol     Specify SSL/TLS protocol <span class="o">(</span>SSL3, TLS1, TLS1.1, TLS1.2 or ALL<span class="o">)</span>
+    -E certfile     Specify optional client certificate chain and private key
+</code></pre></div><h2 id="manual">manual</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">AB<span class="o">(</span>1<span class="o">)</span>                                                                             ab                                                                            AB<span class="o">(</span>1<span class="o">)</span>
+
+NAME
+       ab - Apache HTTP server benchmarking tool
+
+SYNOPSIS
+       ab  <span class="o">[</span>  -A  auth-username:password <span class="o">]</span> <span class="o">[</span> -b windowsize <span class="o">]</span> <span class="o">[</span> -B local-address <span class="o">]</span> <span class="o">[</span> -c concurrency <span class="o">]</span> <span class="o">[</span> -C cookie-name<span class="o">=</span>value <span class="o">]</span> <span class="o">[</span> -d <span class="o">]</span> <span class="o">[</span> -e csv-file <span class="o">]</span> <span class="o">[</span> -E client-cer‐tificate file <span class="o">]</span> <span class="o">[</span> -f protocol <span class="o">]</span> <span class="o">[</span> -g gnuplot-file <span class="o">]</span> <span class="o">[</span> -h <span class="o">]</span> <span class="o">[</span> -H custom-header <span class="o">]</span> <span class="o">[</span> -i <span class="o">]</span> <span class="o">[</span> -k <span class="o">]</span> <span class="o">[</span> -l <span class="o">]</span> <span class="o">[</span> -m HTTP-method <span class="o">]</span> <span class="o">[</span> -n requests <span class="o">]</span> <span class="o">[</span> -p POST-file <span class="o">]</span> <span class="o">[</span> -P proxy-auth-username:password  <span class="o">]</span>  <span class="o">[</span>  -q  <span class="o">]</span> <span class="o">[</span> -r <span class="o">]</span> <span class="o">[</span> -s timeout <span class="o">]</span> <span class="o">[</span> -S <span class="o">]</span> <span class="o">[</span> -t timelimit <span class="o">]</span> <span class="o">[</span> -T content-type <span class="o">]</span> <span class="o">[</span> -u PUT-file <span class="o">]</span> <span class="o">[</span> -v verbosity<span class="o">]</span> <span class="o">[</span> -V <span class="o">]</span> <span class="o">[</span> -w <span class="o">]</span> <span class="o">[</span> -x &lt;table&gt;-attributes <span class="o">]</span> <span class="o">[</span> -X proxy<span class="o">[</span>:port<span class="o">]</span> <span class="o">]</span> <span class="o">[</span> -y &lt;tr&gt;-attributes <span class="o">]</span> <span class="o">[</span> -z &lt;td&gt;-attributes <span class="o">]</span> <span class="o">[</span> -Z ciphersuite <span class="o">]</span> <span class="o">[</span>http<span class="o">[</span>s<span class="o">]</span>://<span class="o">]</span>hostname<span class="o">[</span>:port<span class="o">]</span>/path
+
+SUMMARY
+       ab is a tool <span class="k">for</span> benchmarking your Apache Hypertext Transfer Protocol <span class="o">(</span>HTTP<span class="o">)</span> server. 
+       It is designed to give you an impression of how your current Apache installation performs. 
+       This especially shows you how many requests per second your Apache installation is capable of serving.
+
+OPTIONS
+       -A auth-username:password
+              Supply  BASIC  Authentication credentials to the server. 
+              The username and password are separated by a single : and sent on the wire base64 encoded. 
+              The string is sent regardless of whether the server needs it <span class="o">(</span>i.e., has sent an <span class="m">401</span> authentication needed<span class="o">)</span>.
+
+       -b windowsize
+              Size of TCP send/receive buffer, in bytes.
+
+       -B local-address
+              Address to <span class="nb">bind</span> to when making outgoing connections.
+
+       -c concurrency
+              Number of multiple requests to perform at a time. 
+              Default is one request at a time.
+
+       -C cookie-name<span class="o">=</span>value
+              Add a Cookie: line to the request. 
+              The argument is typically in the form of a <span class="nv">name</span><span class="o">=</span>value pair. 
+              This field is repeatable.
+
+       -d     Do not display the <span class="s2">&#34;percentage served within XX [ms] table&#34;</span>. <span class="o">(</span>legacy support<span class="o">)</span>.
+
+       -e csv-file
+              Write a Comma separated value <span class="o">(</span>CSV<span class="o">)</span> file which contains <span class="k">for</span> each percentage <span class="o">(</span>from 1% to 100%<span class="o">)</span> the <span class="nb">time</span> <span class="o">(</span>in milliseconds<span class="o">)</span> it took to serve that percentage of the requests. 
+              This is usually more useful than the <span class="s1">&#39;gnuplot&#39;</span> file<span class="p">;</span> as the results are already <span class="s1">&#39;binned&#39;</span>.
+
+       -E client-certificate-file
+              When connecting to an SSL website, use the provided client certificate in PEM format to authenticate with the server. 
+              The file is expected to contain the client certificate, followed by intermediate certificates, followed by the private key. Available in 2.4.36 and later.
+
+       -f protocol
+              Specify SSL/TLS protocol <span class="o">(</span>SSL2, SSL3, TLS1, TLS1.1, TLS1.2, or ALL<span class="o">)</span>. TLS1.1 and TLS1.2 support available in 2.4.4 and later.
+
+       -g gnuplot-file
+              Write all measured values out as a <span class="s1">&#39;gnuplot&#39;</span> or TSV <span class="o">(</span>Tab separate values<span class="o">)</span> file. 
+              This file can easily be imported into packages like Gnuplot, IDL, Mathematica, Igor or even Excel. 
+              The labels are on the first line of the file.
+
+       -h     Display usage information.
+
+       -H custom-header
+              Append extra headers to the request. 
+              The argument is typically in the form of a valid header line, containing a colon-separated field-value pair <span class="o">(</span>i.e., <span class="s2">&#34;Accept-Encoding: zip/zop;8bit&#34;</span><span class="o">)</span>.
+
+       -i     Do HEAD requests instead of GET.
+
+       -k     Enable the HTTP KeepAlive feature, i.e., perform multiple requests within one HTTP session. Default is no KeepAlive.
+
+       -l     Do not report errors <span class="k">if</span> the length of the responses is not constant. This can be useful <span class="k">for</span> dynamic pages. Available in 2.4.7 and later.
+
+       -m HTTP-method
+              Custom HTTP method <span class="k">for</span> the requests. Available in 2.4.10 and later.
+
+       -n requests
+              Number of requests to perform <span class="k">for</span> the benchmarking session. 
+              The default is to just perform a single request which usually leads to non-representative benchmarking results.
+
+       -p POST-file
+              File containing data to POST. Remember to also <span class="nb">set</span> -T.
+
+       -P proxy-auth-username:password
+              Supply BASIC Authentication credentials to a proxy en-route. 
+              The username and password are separated by a single : and sent on the wire base64 encoded.
+              The string is sent regardless of whether the proxy needs it <span class="o">(</span>i.e., has sent an <span class="m">407</span> proxy authentication needed<span class="o">)</span>.
+
+       -q     When processing more than <span class="m">150</span> requests, ab outputs a progress count on stderr every 10% or <span class="m">100</span> requests or so. 
+              The -q flag will suppress these messages.
+
+       -r     Don<span class="se">\&#39;</span>t <span class="nb">exit</span> on socket receive errors.
+
+       -s timeout
+              Maximum number of seconds to <span class="nb">wait</span> before the socket <span class="nb">times</span> out. 
+              Default is <span class="m">30</span> seconds. 
+              Available in 2.4.4 and later.
+
+       -S     Do  not  display  the median and standard deviation values, nor display the warning/error messages when the average and median are more than one or two <span class="nb">times</span> the standard deviation apart. 
+              And default to the min/avg/max values. <span class="o">(</span>legacy support<span class="o">)</span>.
+
+       -t timelimit
+              Maximum number of seconds to spend <span class="k">for</span> benchmarking. This implies a -n <span class="m">50000</span> internally. 
+              Use this to benchmark the server within a fixed total amount of time. 
+              Per default there is no timelimit.
+
+       -T content-type
+              Content-type header to use <span class="k">for</span> POST/PUT data, eg. application/x-www-form-urlencoded. Default is text/plain.
+
+       -u PUT-file
+              File containing data to PUT. Remember to also <span class="nb">set</span> -T.
+
+       -v verbosity
+              Set verbosity level - <span class="m">4</span> and above prints information on headers, <span class="m">3</span> and above prints response codes <span class="o">(</span>404, 200, etc.<span class="o">)</span>, <span class="m">2</span> and above prints warnings and info.
+
+       -V     Display version number and exit.
+
+       -w     Print out results in HTML tables. Default table is two columns wide, with a white background.
+
+       -x &lt;table&gt;-attributes
+              String to use as attributes <span class="k">for</span> &lt;table&gt;. Attributes are inserted &lt;table here&gt;.
+
+       -X proxy<span class="o">[</span>:port<span class="o">]</span>
+              Use a proxy server <span class="k">for</span> the requests.
+
+       -y &lt;tr&gt;-attributes
+              String to use as attributes <span class="k">for</span> &lt;tr&gt;.
+
+       -z &lt;td&gt;-attributes
+              String to use as attributes <span class="k">for</span> &lt;td&gt;.
+
+       -Z ciphersuite
+              Specify SSL/TLS cipher suite <span class="o">(</span>See openssl ciphers<span class="o">)</span>
+
+OUTPUT
+       The following list describes the values returned by ab:
+
+       Server Software
+              The value, <span class="k">if</span> any, returned in the server HTTP header of the first successful response. 
+              This includes all characters in the header from beginning to the point a character with decimal value of <span class="m">32</span> <span class="o">(</span>most notably: a space or CR/LF<span class="o">)</span> is detected.
+
+       Server Hostname
+              The DNS or IP address given on the <span class="nb">command</span> line
+
+       Server Port
+              The port to which ab is connecting. 
+              If no port is given on the <span class="nb">command</span> line, this will default to <span class="m">80</span> <span class="k">for</span> http and <span class="m">443</span> <span class="k">for</span> https.
+
+       SSL/TLS Protocol
+              The protocol parameters negotiated between the client and server. 
+              This will only be printed <span class="k">if</span> SSL is used.
+
+       Document Path
+              The request URI parsed from the <span class="nb">command</span> line string.
+
+       Document Length
+              This is the size in bytes of the first successfully returned document. 
+              If the document length changes during testing, the response is considered an error.
+
+       Concurrency Level
+              The number of concurrent clients used during the <span class="nb">test</span>
+
+       Time taken <span class="k">for</span> tests
+              This is the <span class="nb">time</span> taken from the moment the first socket connection is created to the moment the last response is received
+
+       Complete requests
+              The number of successful responses received
+
+       Failed requests
+              The number of requests that were considered a failure. 
+              If the number is greater than zero, another line will be printed showing the number of requests that failed due to connecting, reading, incorrect content length, or exceptions.
+
+       Write errors
+              The number of errors that failed during write <span class="o">(</span>broken pipe<span class="o">)</span>.
+
+       Non-2xx responses
+              The number of responses that were not in the <span class="m">200</span> series of response codes. If all responses were 200, this field is not printed.
+
+       Keep-Alive requests
+              The number of connections that resulted in Keep-Alive requests
+
+       Total body sent
+              If  configured  to  send  data  as part of the test, this is the total number of bytes sent during the tests. 
+              This field is omitted <span class="k">if</span> the <span class="nb">test</span> did not include a body to send.
+
+       Total transferred
+              The total number of bytes received from the server. 
+              This number is essentially the number of bytes sent over the wire.
+
+       HTML transferred
+              The total number of document bytes received from the server. 
+              This number excludes bytes received in HTTP headers
+
+       Requests per second
+              This is the number of requests per second. 
+              This value is the result of dividing the number of requests by the total <span class="nb">time</span> taken
+
+       Time per request
+              The average <span class="nb">time</span> spent per request. 
+              The first value is calculated with the formula concurrency * timetaken * <span class="m">1000</span> / <span class="k">done</span> <span class="k">while</span> the second value is calculated with the formula timetaken * <span class="m">1000</span> / <span class="k">done</span>
+
+       Transfer rate
+              The rate of transfer as calculated by the formula totalread / <span class="m">1024</span> / timetaken
+
+BUGS
+       There are  various  statically  declared buffers of fixed length. 
+       Combined with the lazy parsing of the <span class="nb">command</span> line arguments, the response headers from the server and other external inputs, this might bite you.
+
+       It does not implement HTTP/1.x fully<span class="p">;</span> only accepts some <span class="s1">&#39;expected&#39;</span> forms of responses. 
+       The rather heavy use of strstr<span class="o">(</span>3<span class="o">)</span> shows up top in profile, which might indicate a performance problem<span class="p">;</span> i.e., you would measure the ab performance rather than the server<span class="se">\&#39;</span>s.
+
+Apache HTTP Server                                                            2018-10-10                                                                        AB<span class="o">(</span>1<span class="o">)</span>
+</code></pre></div><h2 id="official-web-info">Official Web Info</h2>
+<p>ab - Apache HTTP server benchmarking tool - Apache HTTP Server Version 2.4<br>
+<a href="https://httpd.apache.org/docs/2.4/programs/ab.html">https://httpd.apache.org/docs/2.4/programs/ab.html</a></p>
+<h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ cat /etc/os-release 
+<span class="nv">NAME</span><span class="o">=</span><span class="s2">&#34;Amazon Linux&#34;</span>
+<span class="nv">VERSION</span><span class="o">=</span><span class="s2">&#34;2&#34;</span>
+<span class="nv">ID</span><span class="o">=</span><span class="s2">&#34;amzn&#34;</span>
+<span class="nv">ID_LIKE</span><span class="o">=</span><span class="s2">&#34;centos rhel fedora&#34;</span>
+<span class="nv">VERSION_ID</span><span class="o">=</span><span class="s2">&#34;2&#34;</span>
+<span class="nv">PRETTY_NAME</span><span class="o">=</span><span class="s2">&#34;Amazon Linux 2&#34;</span>
+<span class="nv">ANSI_COLOR</span><span class="o">=</span><span class="s2">&#34;0;33&#34;</span>
+<span class="nv">CPE_NAME</span><span class="o">=</span><span class="s2">&#34;cpe:2.3:o\:amazon:amazon_linux:2&#34;</span>
+<span class="nv">HOME_URL</span><span class="o">=</span><span class="s2">&#34;https://amazonlinux.com/&#34;</span>
+$ uname --kernel-name --kernel-release --kernel-version --machine
+Linux 4.14.209-160.339.amzn2.x86_64 <span class="c1">#1 SMP Wed Dec 16 22:44:04 UTC 2020 x86_64</span>
+$ ab -V
+This is ApacheBench, Version 2.3 &lt;<span class="nv">$Revision</span>: <span class="m">1879490</span> $&gt;
+Copyright <span class="m">1996</span> Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+</code></pre></div>]]></content>
+		</item>
 		
 		<item>
 			<title>Using Amazon SQS dead-letter queues to replay messages 読んだメモ</title>

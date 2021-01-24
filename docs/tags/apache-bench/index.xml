@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Apache Bench on noid11.github.io</title>
+    <link>https://noid11.github.io/tags/apache-bench/</link>
+    <description>Recent content in Apache Bench on noid11.github.io</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>&amp;#169; noid11</copyright>
+    <lastBuildDate>Mon, 25 Jan 2021 01:01:38 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/apache-bench/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Apache Bench ノート</title>
+      <link>https://noid11.github.io/posts/apache-bench-note/</link>
+      <pubDate>Mon, 25 Jan 2021 01:01:38 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/apache-bench-note/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ab&lt;/code&gt;: Apache Bench について調べたノート&lt;/li&gt;
+&lt;li&gt;基本形
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ab -c 10 -n 10 http://example.com/&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;オプション
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-A&lt;/code&gt;: Basic 認証での user/password 指定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-c&lt;/code&gt;: concurrency. 並行実行するコネクション数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-C&lt;/code&gt;: Cookie 指定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-H&lt;/code&gt;: 任意の HTTP リクエストヘッダー指定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-k&lt;/code&gt;: HTTP KeepAlive を有効化&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-m&lt;/code&gt;: HTTP Method を指定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-n&lt;/code&gt;: 生成する HTTP リクエスト数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-p&lt;/code&gt;: POST file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-s&lt;/code&gt;: タイムアウト設定。デフォルト 30 秒&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-t&lt;/code&gt;: ベンチマークのタイムリミット。デフォルトでは無制限&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-T&lt;/code&gt;: POST, PUT メソッドを使用する場合の Content-Type ヘッダー値。デフォルトでは text/plain だが application/x-www-form-urlencoded 等を指定できる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;実行結果
+&lt;ul&gt;
+&lt;li&gt;1秒 あたりに行ったリクエスト数が知りたい: &lt;code&gt;Requests per second&lt;/code&gt; を確認&lt;/li&gt;
+&lt;li&gt;失敗したリクエストを知りたい: &lt;code&gt;Non-2xx responses&lt;/code&gt; を確認&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -7,7 +7,44 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Sun, 24 Jan 2021 16:50:17 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 25 Jan 2021 01:01:38 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Apache Bench ノート</title>
+      <link>https://noid11.github.io/posts/apache-bench-note/</link>
+      <pubDate>Mon, 25 Jan 2021 01:01:38 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/apache-bench-note/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ab&lt;/code&gt;: Apache Bench について調べたノート&lt;/li&gt;
+&lt;li&gt;基本形
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ab -c 10 -n 10 http://example.com/&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;オプション
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-A&lt;/code&gt;: Basic 認証での user/password 指定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-c&lt;/code&gt;: concurrency. 並行実行するコネクション数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-C&lt;/code&gt;: Cookie 指定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-H&lt;/code&gt;: 任意の HTTP リクエストヘッダー指定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-k&lt;/code&gt;: HTTP KeepAlive を有効化&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-m&lt;/code&gt;: HTTP Method を指定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-n&lt;/code&gt;: 生成する HTTP リクエスト数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-p&lt;/code&gt;: POST file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-s&lt;/code&gt;: タイムアウト設定。デフォルト 30 秒&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-t&lt;/code&gt;: ベンチマークのタイムリミット。デフォルトでは無制限&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-T&lt;/code&gt;: POST, PUT メソッドを使用する場合の Content-Type ヘッダー値。デフォルトでは text/plain だが application/x-www-form-urlencoded 等を指定できる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;実行結果
+&lt;ul&gt;
+&lt;li&gt;1秒 あたりに行ったリクエスト数が知りたい: &lt;code&gt;Requests per second&lt;/code&gt; を確認&lt;/li&gt;
+&lt;li&gt;失敗したリクエストを知りたい: &lt;code&gt;Non-2xx responses&lt;/code&gt; を確認&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
     <item>
       <title>Using Amazon SQS dead-letter queues to replay messages 読んだメモ</title>
       <link>https://noid11.github.io/posts/read-using-amazon-sqs-dead-letter-queues-to-replay-messages/</link>
@@ -110,15 +147,6 @@ aws logs tail &lt;span class=&#34;nv&#34;&gt;$LOG_GROUP&lt;/span&gt; --follow
       
       <guid>https://noid11.github.io/posts/chrome-install-by-powershell/</guid>
       <description>&lt;p&gt;Windows Server 構築で毎回 Internet Explorer の設定を変える・・・みたいな作業が減るので便利&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Windows の情報を PowerShell から確認する方法</title>
-      <link>https://noid11.github.io/posts/view-windows-info/</link>
-      <pubDate>Tue, 19 Jan 2021 14:24:03 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/view-windows-info/</guid>
-      <description>&lt;p&gt;Windows Server のバージョン情報を PowerShell から確認する方法を調べたメモ&lt;/p&gt;</description>
     </item>
     
   </channel>
