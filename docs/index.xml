@@ -7,7 +7,50 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Tue, 26 Jan 2021 01:44:20 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 26 Jan 2021 02:40:20 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go で作成した Web アプリを EB CLI を使ってデプロイする方法</title>
+      <link>https://noid11.github.io/posts/how-to-deploy-goapp-by-eb-cli/</link>
+      <pubDate>Tue, 26 Jan 2021 02:40:20 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/how-to-deploy-goapp-by-eb-cli/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;ほぼほぼ&lt;a href=&#34;https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/go-tutorial.html&#34;&gt;公式のチュートリアル&lt;/a&gt;をなぞっただけ&lt;/li&gt;
+&lt;li&gt;良い点
+&lt;ul&gt;
+&lt;li&gt;とりあえず Go で Web アプリ作って動かしたいような場合に便利
+&lt;ul&gt;
+&lt;li&gt;ミドルウェアの事とか考えなくて良い&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;5分程度でインターネット経由でアクセス出来る環境にデプロイできる&lt;/li&gt;
+&lt;li&gt;大体の場合、&lt;a href=&#34;https://aws.amazon.com/jp/free/&#34;&gt;12ヶ月間無料枠&lt;/a&gt;で済む
+&lt;ul&gt;
+&lt;li&gt;新しく始めるプロジェクトの PoC やプロトタイプを動かすようなシナリオに相性が良い&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;やる気になれば&lt;a href=&#34;https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-logs.html&#34;&gt;ログを確認&lt;/a&gt;したり、&lt;a href=&#34;https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-ssh.html&#34;&gt;アプリケーションが動作する EC2 インスタンスに SSH 接続したり&lt;/a&gt;できる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;注意点
+&lt;ul&gt;
+&lt;li&gt;HTTPS ではなく HTTP でのアクセスとなる&lt;/li&gt;
+&lt;li&gt;デフォルトでは EC2 インスタンスロールを設定しないので AWS SDK を使いたい場合には工夫が必要
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;eb create&lt;/code&gt; するときに &lt;code&gt;--instance_profile&lt;/code&gt; で指定しておくとか&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;簡易的な設定で動作するため、複雑な要件が必要なプロダクション環境には向かないかも
+&lt;ul&gt;
+&lt;li&gt;ちゃんと設定内容を精査して調整した方が良い&lt;/li&gt;
+&lt;li&gt;複雑な要件が必要なら EB CLI, EB ではない方法で管理した方が良いかもしれない&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
     <item>
       <title>EB CLI v3 のヘルプを読んだメモ</title>
       <link>https://noid11.github.io/posts/read-eb-cli-v3-help/</link>
@@ -147,15 +190,6 @@ aws logs tail &lt;span class=&#34;nv&#34;&gt;$LOG_GROUP&lt;/span&gt; --follow
       
       <guid>https://noid11.github.io/posts/how-to-control-connect-tasks-by-aws-cli/</guid>
       <description></description>
-    </item>
-    
-    <item>
-      <title>RDP を使って Mac から Windows にファイルをコピーする方法</title>
-      <link>https://noid11.github.io/posts/how-to-file-copy-to-windows-from-mac-by-rdp/</link>
-      <pubDate>Tue, 19 Jan 2021 22:16:16 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/how-to-file-copy-to-windows-from-mac-by-rdp/</guid>
-      <description>クリップボードにコピーして貼り付るのが手軽で良い Mac 側でコピーしたいファイルを選択し、クリップボードにコピー RDP で Windows に接続し、ファイルを送信した</description>
     </item>
     
   </channel>

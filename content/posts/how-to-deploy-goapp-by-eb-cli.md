@@ -1,7 +1,7 @@
 ---
 title: "Go で作成した Web アプリを EB CLI を使ってデプロイする方法"
 date: 2021-01-26T02:40:20+09:00
-draft: true
+draft: false
 toc: true
 images:
 tags: 

@@ -6,8 +6,185 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Tue, 26 Jan 2021 01:44:20 +0900</lastBuildDate>
+		<lastBuildDate>Tue, 26 Jan 2021 02:40:20 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Go で作成した Web アプリを EB CLI を使ってデプロイする方法</title>
+			<link>https://noid11.github.io/posts/how-to-deploy-goapp-by-eb-cli/</link>
+			<pubDate>Tue, 26 Jan 2021 02:40:20 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/how-to-deploy-goapp-by-eb-cli/</guid>
+			<description>&lt;ul&gt;
+&lt;li&gt;ほぼほぼ&lt;a href=&#34;https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/go-tutorial.html&#34;&gt;公式のチュートリアル&lt;/a&gt;をなぞっただけ&lt;/li&gt;
+&lt;li&gt;良い点
+&lt;ul&gt;
+&lt;li&gt;とりあえず Go で Web アプリ作って動かしたいような場合に便利
+&lt;ul&gt;
+&lt;li&gt;ミドルウェアの事とか考えなくて良い&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;5分程度でインターネット経由でアクセス出来る環境にデプロイできる&lt;/li&gt;
+&lt;li&gt;大体の場合、&lt;a href=&#34;https://aws.amazon.com/jp/free/&#34;&gt;12ヶ月間無料枠&lt;/a&gt;で済む
+&lt;ul&gt;
+&lt;li&gt;新しく始めるプロジェクトの PoC やプロトタイプを動かすようなシナリオに相性が良い&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;やる気になれば&lt;a href=&#34;https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-logs.html&#34;&gt;ログを確認&lt;/a&gt;したり、&lt;a href=&#34;https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-ssh.html&#34;&gt;アプリケーションが動作する EC2 インスタンスに SSH 接続したり&lt;/a&gt;できる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;注意点
+&lt;ul&gt;
+&lt;li&gt;HTTPS ではなく HTTP でのアクセスとなる&lt;/li&gt;
+&lt;li&gt;デフォルトでは EC2 インスタンスロールを設定しないので AWS SDK を使いたい場合には工夫が必要
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;eb create&lt;/code&gt; するときに &lt;code&gt;--instance_profile&lt;/code&gt; で指定しておくとか&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;簡易的な設定で動作するため、複雑な要件が必要なプロダクション環境には向かないかも
+&lt;ul&gt;
+&lt;li&gt;ちゃんと設定内容を精査して調整した方が良い&lt;/li&gt;
+&lt;li&gt;複雑な要件が必要なら EB CLI, EB ではない方法で管理した方が良いかもしれない&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+			<content type="html"><![CDATA[<ul>
+<li>ほぼほぼ<a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/go-tutorial.html">公式のチュートリアル</a>をなぞっただけ</li>
+<li>良い点
+<ul>
+<li>とりあえず Go で Web アプリ作って動かしたいような場合に便利
+<ul>
+<li>ミドルウェアの事とか考えなくて良い</li>
+</ul>
+</li>
+<li>5分程度でインターネット経由でアクセス出来る環境にデプロイできる</li>
+<li>大体の場合、<a href="https://aws.amazon.com/jp/free/">12ヶ月間無料枠</a>で済む
+<ul>
+<li>新しく始めるプロジェクトの PoC やプロトタイプを動かすようなシナリオに相性が良い</li>
+</ul>
+</li>
+<li>やる気になれば<a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-logs.html">ログを確認</a>したり、<a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-ssh.html">アプリケーションが動作する EC2 インスタンスに SSH 接続したり</a>できる</li>
+</ul>
+</li>
+<li>注意点
+<ul>
+<li>HTTPS ではなく HTTP でのアクセスとなる</li>
+<li>デフォルトでは EC2 インスタンスロールを設定しないので AWS SDK を使いたい場合には工夫が必要
+<ul>
+<li><code>eb create</code> するときに <code>--instance_profile</code> で指定しておくとか</li>
+</ul>
+</li>
+<li>簡易的な設定で動作するため、複雑な要件が必要なプロダクション環境には向かないかも
+<ul>
+<li>ちゃんと設定内容を精査して調整した方が良い</li>
+<li>複雑な要件が必要なら EB CLI, EB ではない方法で管理した方が良いかもしれない</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="手順">手順</h2>
+<p>プロジェクトディレクトリを作成し <code>application.go</code> として Go のコードを書く</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">mkdir eb-go <span class="o">&amp;&amp;</span> <span class="nb">cd</span> eb-go
+touch application.go
+</code></pre></div><hr>
+<p>application.go</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;fmt&#34;</span>
+	<span class="s">&#34;net/http&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">handler</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span> <span class="o">==</span> <span class="s">&#34;/&#34;</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;Hello World! Append a name to the URL to say hello. For example, use %s/Mary to say hello to Mary.&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">.</span><span class="nx">Host</span><span class="p">)</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;Hello, %s!&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">http</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span>
+	<span class="nx">http</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:5000&#34;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><hr>
+<p>アプリケーションをローカルで動かす</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">go run application.go
+
+<span class="c1"># 別のターミナルやブラウザで http://localhost:5000 にアクセスすれば OK</span>
+<span class="c1"># EB 環境にデプロイする際にはポート 80 で公開される</span>
+curl http://localhost:5000
+</code></pre></div><hr>
+<p>Elastic Beanstalk 環境の構築・デプロイ</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">eb init --platform go go-tutorial --region ap-northeast-1
+
+<span class="c1"># ここで EB 環境に用いる EC2 インスタンスやらのリソースが CloudFormation 経由でプロビジョニングされるため、 5分 程度の時間がかかる</span>
+eb create go-env
+</code></pre></div><hr>
+<p>デプロイされた Web アプリをブラウザで開く</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">eb open
+</code></pre></div><hr>
+<p>クリーンアップ</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">eb terminate
+</code></pre></div><h2 id="実行ログ例">実行ログ例</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% eb init -p go go-tutorial --region ap-northeast-1
+Application go-tutorial has been created.
+% eb create go-env
+Creating application version archive <span class="s2">&#34;app-210126_023350&#34;</span>.
+Uploading go-tutorial/app-210126_023350.zip to S3. This may take a <span class="k">while</span>.
+Upload Complete.
+Environment details <span class="k">for</span>: go-env
+  Application name: go-tutorial
+  Region: ap-northeast-1
+  Deployed Version: app-210126_023350
+  Environment ID: e-mhb6jbhawa
+  Platform: arn:aws:elasticbeanstalk:ap-northeast-1::platform/Go <span class="m">1</span> running on 64bit Amazon Linux/2.17.2
+  Tier: WebServer-Standard-1.0
+  CNAME: UNKNOWN
+  Updated: 2021-01-25 17:33:52.752000+00:00
+Printing Status:
+2021-01-25 17:33:51    INFO    createEnvironment is starting.
+2021-01-25 17:33:52    INFO    Using elasticbeanstalk-ap-northeast-1-123456789012 as Amazon S3 storage bucket <span class="k">for</span> environment data.
+2021-01-25 17:34:14    INFO    Created load balancer named: awseb-e-m-AWSEBLoa-1QR55QWY2AVZX
+2021-01-25 17:34:14    INFO    Created security group named: awseb-e-mhb6jbhawa-stack-AWSEBSecurityGroup-1WRY5JQKP69QQ
+2021-01-25 17:34:17    INFO    Created Auto Scaling launch configuration named: awseb-e-mhb6jbhawa-stack-AWSEBAutoScalingLaunchConfiguration-GOVWI86F79E3
+2021-01-25 17:35:20    INFO    Created Auto Scaling group named: awseb-e-mhb6jbhawa-stack-AWSEBAutoScalingGroup-MW08E9EZ94AT
+2021-01-25 17:35:20    INFO    Waiting <span class="k">for</span> EC2 instances to launch. This may take a few minutes.
+2021-01-25 17:35:20    INFO    Created Auto Scaling group policy named: arn:aws:autoscaling:ap-northeast-1:123456789012:scalingPolicy:9f066c87-60b4-407f-a339-70b0517dcd2a:autoScalingGroupName/awseb-e-mhb6jbhawa-stack-AWSEBAutoScalingGroup-MW08E9EZ94AT:policyName/awseb-e-mhb6jbhawa-stack-AWSEBAutoScalingScaleUpPolicy-1KC69AR7HGIY7
+2021-01-25 17:35:20    INFO    Created Auto Scaling group policy named: arn:aws:autoscaling:ap-northeast-1:123456789012:scalingPolicy:f7442ed6-3f7e-456d-9338-941e85f4057b:autoScalingGroupName/awseb-e-mhb6jbhawa-stack-AWSEBAutoScalingGroup-MW08E9EZ94AT:policyName/awseb-e-mhb6jbhawa-stack-AWSEBAutoScalingScaleDownPolicy-82YZ8T3H24VQ
+2021-01-25 17:35:36    INFO    Created CloudWatch alarm named: awseb-e-mhb6jbhawa-stack-AWSEBCloudwatchAlarmHigh-Z3HRCDA02JTS
+2021-01-25 17:35:36    INFO    Created CloudWatch alarm named: awseb-e-mhb6jbhawa-stack-AWSEBCloudwatchAlarmLow-8WILR7PPYF5F
+2021-01-25 17:36:36    INFO    Application available at go-env.eba-psw5vsuv.ap-northeast-1.elasticbeanstalk.com.
+2021-01-25 17:36:37    INFO    Successfully launched environment: go-env
+% eb terminate
+The environment <span class="s2">&#34;go-env&#34;</span> and all associated instances will be terminated.
+To confirm, <span class="nb">type</span> the environment name: go-env
+2021-01-25 17:39:05    INFO    terminateEnvironment is starting.
+2021-01-25 17:39:23    INFO    Deleted CloudWatch alarm named: awseb-e-mhb6jbhawa-stack-AWSEBCloudwatchAlarmHigh-Z3HRCDA02JTS 
+2021-01-25 17:39:23    INFO    Deleted CloudWatch alarm named: awseb-e-mhb6jbhawa-stack-AWSEBCloudwatchAlarmLow-8WILR7PPYF5F 
+2021-01-25 17:39:23    INFO    Deleted Auto Scaling group policy named: arn:aws:autoscaling:ap-northeast-1:123456789012:scalingPolicy:9f066c87-60b4-407f-a339-70b0517dcd2a:autoScalingGroupName/awseb-e-mhb6jbhawa-stack-AWSEBAutoScalingGroup-MW08E9EZ94AT:policyName/awseb-e-mhb6jbhawa-stack-AWSEBAutoScalingScaleUpPolicy-1KC69AR7HGIY7
+2021-01-25 17:39:23    INFO    Deleted Auto Scaling group policy named: arn:aws:autoscaling:ap-northeast-1:123456789012:scalingPolicy:f7442ed6-3f7e-456d-9338-941e85f4057b:autoScalingGroupName/awseb-e-mhb6jbhawa-stack-AWSEBAutoScalingGroup-MW08E9EZ94AT:policyName/awseb-e-mhb6jbhawa-stack-AWSEBAutoScalingScaleDownPolicy-82YZ8T3H24VQ
+2021-01-25 17:39:23    INFO    Waiting <span class="k">for</span> EC2 instances to terminate. This may take a few minutes.
+2021-01-25 17:41:25    INFO    Deleted Auto Scaling group named: awseb-e-mhb6jbhawa-stack-AWSEBAutoScalingGroup-MW08E9EZ94AT
+2021-01-25 17:41:25    INFO    Deleted load balancer named: awseb-e-m-AWSEBLoa-1QR55QWY2AVZX
+2021-01-25 17:41:25    INFO    Deleted Auto Scaling launch configuration named: awseb-e-mhb6jbhawa-stack-AWSEBAutoScalingLaunchConfiguration-GOVWI86F79E3
+2021-01-25 17:41:25    INFO    Deleted security group named: awseb-e-mhb6jbhawa-stack-AWSEBSecurityGroup-1WRY5JQKP69QQ
+2021-01-25 17:41:30    INFO    Deleting SNS topic <span class="k">for</span> environment go-env.
+2021-01-25 17:41:32    INFO    terminateEnvironment completed successfully.
+</code></pre></div><h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% go version
+go version go1.15.6 darwin/amd64
+% eb --version
+EB CLI 3.19.3 <span class="o">(</span>Python 3.9.1<span class="o">)</span>
+</code></pre></div>]]></content>
+		</item>
 		
 		<item>
 			<title>EB CLI v3 のヘルプを読んだメモ</title>
