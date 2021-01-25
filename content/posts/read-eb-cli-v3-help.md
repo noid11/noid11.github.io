@@ -1,7 +1,7 @@
 ---
 title: "EB CLI v3 のヘルプを読んだメモ"
 date: 2021-01-26T01:44:20+09:00
-draft: true
+draft: false
 toc: true
 images:
 tags: 

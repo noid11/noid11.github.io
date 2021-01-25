@@ -7,7 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Mon, 25 Jan 2021 14:42:12 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 26 Jan 2021 01:44:20 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>EB</title>
+      <link>https://noid11.github.io/tags/eb/</link>
+      <pubDate>Tue, 26 Jan 2021 01:44:20 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/eb/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>EB CLI</title>
+      <link>https://noid11.github.io/tags/eb-cli/</link>
+      <pubDate>Tue, 26 Jan 2021 01:44:20 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/eb-cli/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>AWS CLI</title>
       <link>https://noid11.github.io/tags/aws-cli/</link>
@@ -77,24 +95,6 @@
       <pubDate>Fri, 22 Jan 2021 09:30:07 +0900</pubDate>
       
       <guid>https://noid11.github.io/tags/mac/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>XML</title>
-      <link>https://noid11.github.io/tags/xml/</link>
-      <pubDate>Thu, 21 Jan 2021 10:26:45 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/xml/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>xmllint</title>
-      <link>https://noid11.github.io/tags/xmllint/</link>
-      <pubDate>Thu, 21 Jan 2021 10:26:45 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/xmllint/</guid>
       <description></description>
     </item>
     

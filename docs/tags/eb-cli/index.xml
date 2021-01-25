@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>EB CLI on noid11.github.io</title>
+    <link>https://noid11.github.io/tags/eb-cli/</link>
+    <description>Recent content in EB CLI on noid11.github.io</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>&amp;#169; noid11</copyright>
+    <lastBuildDate>Tue, 26 Jan 2021 01:44:20 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/eb-cli/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>EB CLI v3 のヘルプを読んだメモ</title>
+      <link>https://noid11.github.io/posts/read-eb-cli-v3-help/</link>
+      <pubDate>Tue, 26 Jan 2021 01:44:20 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/read-eb-cli-v3-help/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/aws/aws-elastic-beanstalk-cli&#34;&gt;Elastic Beanstalk CLI v3&lt;/a&gt; の詳細なヘルプがネット上に無さそうだったので読んだメモ
+&lt;ul&gt;
+&lt;li&gt;基本的な使い方なら&lt;a href=&#34;https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-getting-started.html&#34;&gt;ドキュメント&lt;/a&gt;がある&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;と思ったら &lt;a href=&#34;https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-cmd-commands.html&#34;&gt;reference&lt;/a&gt; あった・・・&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

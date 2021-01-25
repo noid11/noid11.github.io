@@ -15,7 +15,7 @@ aws ec2 describe-regions と jq によって利用可能な全てのリージョ
 aws ec2 describe-regions | jq --raw-output &#34;.Regions[].RegionName&#34; | xargs -n 1 -I{} -P 5 aws --region {} ec2 describe-instances
 ">
 <meta itemprop="datePublished" content="2021-01-25T14:42:12+09:00" />
-<meta itemprop="dateModified" content="2021-01-25T20:08:37+09:00" />
+<meta itemprop="dateModified" content="2021-01-26T00:42:39+09:00" />
 <meta itemprop="wordCount" content="897">
 
 
@@ -31,7 +31,7 @@ aws ec2 describe-regions | jq --raw-output &#34;.Regions[].RegionName&#34; | xar
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://noid11.github.io/posts/how-to-aws-cli-command-to-available-regions/" />
 <meta property="article:published_time" content="2021-01-25T14:42:12+09:00" />
-<meta property="article:modified_time" content="2021-01-25T20:08:37+09:00" />
+<meta property="article:modified_time" content="2021-01-26T00:42:39+09:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="AWS CLI コマンドを利用可能な全てのリージョンに対して実行する方法"/>
 <meta name="twitter:description" content="
@@ -167,7 +167,7 @@ jq-1.6
 				</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>897 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2021/01/25 14:42 &#43;0900</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/noid11/noid11.github.io/commit/595ebfde61c56a089bb5272c17e7f2d7fe031580" target="_blank" rel="noopener">595ebfd</a> @ 2021/01/25</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/noid11/noid11.github.io/commit/14e7e09fc046352389f50131f4b939af99ee47e6" target="_blank" rel="noopener">14e7e09</a> @ 2021/01/26</p>
 			</footer>
 		</article>
 		<aside id="toc" class="show-toc">
@@ -181,6 +181,9 @@ jq-1.6
 </nav>
 		</aside>
 		<div class="post-nav thin">
+			<a class="next-post" href="https://noid11.github.io/posts/read-eb-cli-v3-help/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;Newer</span><br><span>EB CLI v3 のヘルプを読んだメモ</span>
+			</a>
 			<a class="prev-post" href="https://noid11.github.io/posts/apache-bench-note/">
 				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Apache Bench ノート</span>
 			</a>
