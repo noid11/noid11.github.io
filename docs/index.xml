@@ -7,7 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Mon, 25 Jan 2021 01:01:38 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 25 Jan 2021 14:42:12 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AWS CLI コマンドを利用可能な全てのリージョンに対して実行する方法</title>
+      <link>https://noid11.github.io/posts/how-to-aws-cli-command-to-available-regions/</link>
+      <pubDate>Mon, 25 Jan 2021 14:42:12 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/how-to-aws-cli-command-to-available-regions/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;aws ec2 describe-regions&lt;/code&gt; と &lt;code&gt;jq&lt;/code&gt; によって利用可能な全てのリージョンを取得し、 &lt;code&gt;xargs&lt;/code&gt; コマンドで全てのリージョンに対して任意の AWS CLI コマンドを実行すれば OK&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;全リージョンに対して &lt;code&gt;ec2 describe-instances&lt;/code&gt; を実行する例&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;aws ec2 describe-regions &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; jq --raw-output &lt;span class=&#34;s2&#34;&gt;&amp;#34;.Regions[].RegionName&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; xargs -n &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; -I&lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt; -P &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt; aws --region &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt; ec2 describe-instances
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
     <item>
       <title>Apache Bench ノート</title>
       <link>https://noid11.github.io/posts/apache-bench-note/</link>
@@ -138,15 +152,6 @@ aws logs tail &lt;span class=&#34;nv&#34;&gt;$LOG_GROUP&lt;/span&gt; --follow
 &lt;li&gt;Windows Server で特定ユーザーのパスワード失効を無効化したい場合に便利&lt;/li&gt;
 &lt;li&gt;デフォルトでは一定期間でローテートするような設定なので、セキュリティに注意した上で使おう&lt;/li&gt;
 &lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>PowerShell を使って Google Chrome をインストールする方法</title>
-      <link>https://noid11.github.io/posts/chrome-install-by-powershell/</link>
-      <pubDate>Tue, 19 Jan 2021 15:12:28 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/chrome-install-by-powershell/</guid>
-      <description>&lt;p&gt;Windows Server 構築で毎回 Internet Explorer の設定を変える・・・みたいな作業が減るので便利&lt;/p&gt;</description>
     </item>
     
   </channel>

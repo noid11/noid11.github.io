@@ -3,28 +3,48 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://noid11.github.io/tags/apache-bench/</loc>
-    <lastmod>2021-01-25T02:26:09+09:00</lastmod>
+    <loc>https://noid11.github.io/tags/aws-cli/</loc>
+    <lastmod>2021-01-25T20:08:37+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://noid11.github.io/posts/apache-bench-note/</loc>
-    <lastmod>2021-01-25T02:26:09+09:00</lastmod>
+    <loc>https://noid11.github.io/posts/how-to-aws-cli-command-to-available-regions/</loc>
+    <lastmod>2021-01-25T20:08:37+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/jq/</loc>
+    <lastmod>2021-01-25T20:08:37+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://noid11.github.io/</loc>
-    <lastmod>2021-01-25T02:26:09+09:00</lastmod>
+    <lastmod>2021-01-25T20:08:37+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://noid11.github.io/posts/</loc>
-    <lastmod>2021-01-25T02:26:09+09:00</lastmod>
+    <lastmod>2021-01-25T20:08:37+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://noid11.github.io/tags/</loc>
-    <lastmod>2021-01-25T02:26:09+09:00</lastmod>
+    <lastmod>2021-01-25T20:08:37+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/xargs/</loc>
+    <lastmod>2021-01-25T20:08:37+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/apache-bench/</loc>
+    <lastmod>2021-01-25T02:26:30+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/posts/apache-bench-note/</loc>
+    <lastmod>2021-01-25T02:26:30+09:00</lastmod>
   </url>
   
   <url>
@@ -35,11 +55,6 @@
   <url>
     <loc>https://noid11.github.io/posts/read-using-amazon-sqs-dead-letter-queues-to-replay-messages/</loc>
     <lastmod>2021-01-24T18:28:02+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://noid11.github.io/tags/aws-cli/</loc>
-    <lastmod>2021-01-23T15:07:34+09:00</lastmod>
   </url>
   
   <url>

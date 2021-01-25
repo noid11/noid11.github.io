@@ -6,8 +6,95 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Mon, 25 Jan 2021 01:01:38 +0900</lastBuildDate>
+		<lastBuildDate>Mon, 25 Jan 2021 14:42:12 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>AWS CLI コマンドを利用可能な全てのリージョンに対して実行する方法</title>
+			<link>https://noid11.github.io/posts/how-to-aws-cli-command-to-available-regions/</link>
+			<pubDate>Mon, 25 Jan 2021 14:42:12 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/how-to-aws-cli-command-to-available-regions/</guid>
+			<description>&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;aws ec2 describe-regions&lt;/code&gt; と &lt;code&gt;jq&lt;/code&gt; によって利用可能な全てのリージョンを取得し、 &lt;code&gt;xargs&lt;/code&gt; コマンドで全てのリージョンに対して任意の AWS CLI コマンドを実行すれば OK&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;全リージョンに対して &lt;code&gt;ec2 describe-instances&lt;/code&gt; を実行する例&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;aws ec2 describe-regions &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; jq --raw-output &lt;span class=&#34;s2&#34;&gt;&amp;#34;.Regions[].RegionName&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; xargs -n &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; -I&lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt; -P &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt; aws --region &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt; ec2 describe-instances
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+			<content type="html"><![CDATA[<ul>
+<li><code>aws ec2 describe-regions</code> と <code>jq</code> によって利用可能な全てのリージョンを取得し、 <code>xargs</code> コマンドで全てのリージョンに対して任意の AWS CLI コマンドを実行すれば OK</li>
+</ul>
+<p>全リージョンに対して <code>ec2 describe-instances</code> を実行する例</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">aws ec2 describe-regions <span class="p">|</span> jq --raw-output <span class="s2">&#34;.Regions[].RegionName&#34;</span> <span class="p">|</span> xargs -n <span class="m">1</span> -I<span class="o">{}</span> -P <span class="m">5</span> aws --region <span class="o">{}</span> ec2 describe-instances
+</code></pre></div><h2 id="利用可能な-aws-リージョンの取得">利用可能な AWS リージョンの取得</h2>
+<ul>
+<li>EC2 で提供されている <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeRegions.html">DescribeRegions API</a> でリージョン情報を取得できる</li>
+<li>AWS CLI の場合 <a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/describe-regions.html"><code>ec2 describe-regions</code> コマンド</a></li>
+<li>厳密に全ての AWS リージョンを取得する場合 <code>--all-regions</code> オプションを指定する必要があるが、これは使用するためにオプトインが必要なリージョンがあり、どの AWS アカウントでも全てのリージョンが利用可能では無いので注意</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">aws ec2 describe-regions
+</code></pre></div><hr>
+<ul>
+<li><code>xargs</code> コマンドに連携するためにリージョン情報を改行された raw text に整形するため <code>jq</code> を使う</li>
+<li><a href="https://stedolan.github.io/jq/manual/"><code>jq</code> マニュアル</a></li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">aws ec2 describe-regions <span class="p">|</span> jq --raw-output <span class="s2">&#34;.Regions[].RegionName&#34;</span>
+</code></pre></div><h2 id="xargs-あれこれ">xargs あれこれ</h2>
+<ul>
+<li><code>xargs</code> は標準入力で受け取った文字列を使って任意のコマンドを実行できる
+<ul>
+<li>この任意のコマンドはマルチプロセスで動かすことも可能なので、複数の処理が必要な場合に便利</li>
+</ul>
+</li>
+<li>オプション
+<ul>
+<li><code>-n</code>: 1コマンドラインが受け取る最大引数の個数</li>
+<li><code>-P</code>: 最大プロセス数。 0 を指定すると可能な限り多くのプロセスを使う
+<ul>
+<li>しかし Mac 環境で 0 指定すると <code>xargs: max. processes must be &gt;0</code> というエラーが発生する。 BSD というより Mac 独自の制約かもしれない。</li>
+</ul>
+</li>
+<li><code>-I</code>: 入力内容の置換
+<ul>
+<li><code>-I{}</code> と指定することで、任意のコマンドを実行する際に <code>{}</code> を使い、入力を挿入することができる</li>
+<li>標準入力関係なく、あるコマンドをマルチプロセスで実行したいような場合 <code>seq 10 | xargs -n 1 -P 5 -I{} uuidgen</code> という感じで <code>seq</code> コマンドで回数指定しつつ <code>-I{}</code> の <code>{}</code> を使わないことで特定コマンドを任意の回数、マルチプロセスで動かせる
+<ul>
+<li>マルチプロセスで SQS にメッセージ投入する例: <code>seq 100 | xargs -n 1 -P 0 -I{} aws sqs send-message --queue-url $QUEUE_URL --message-body mybody</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">xargs -n <span class="m">1</span> -I<span class="o">{}</span> -P <span class="m">3</span> aws --region <span class="o">{}</span> ec2 describe-instances
+</code></pre></div><hr>
+<p>■ <code>-P</code> 調整例</p>
+<p><code>-P</code>: 1</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% <span class="nb">time</span> aws ec2 describe-regions <span class="p">|</span> jq --raw-output <span class="s2">&#34;.Regions[].RegionName&#34;</span> <span class="p">|</span> xargs -n <span class="m">1</span> -I<span class="o">{}</span> -P <span class="m">1</span> aws --region <span class="o">{}</span> ec2 describe-instances
+...
+aws ec2 describe-regions  0.65s user 0.24s system 87% cpu 1.009 total
+jq --raw-output <span class="s2">&#34;.Regions[].RegionName&#34;</span>  0.03s user 0.01s system 3% cpu 1.008 total
+xargs -n <span class="m">1</span> -I<span class="o">{}</span> -P <span class="m">1</span> aws --region <span class="o">{}</span> ec2 describe-instances  11.51s user 4.33s system 44% cpu 35.704 total
+</code></pre></div><p><code>-P</code>: 5</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% <span class="nb">time</span> aws ec2 describe-regions <span class="p">|</span> jq --raw-output <span class="s2">&#34;.Regions[].RegionName&#34;</span> <span class="p">|</span> xargs -n <span class="m">1</span> -I<span class="o">{}</span> -P <span class="m">5</span> aws --region <span class="o">{}</span> ec2 describe-instances
+...
+aws ec2 describe-regions  0.73s user 0.32s system 65% cpu 1.600 total
+jq --raw-output <span class="s2">&#34;.Regions[].RegionName&#34;</span>  0.03s user 0.00s system 2% cpu 1.599 total
+xargs -n <span class="m">1</span> -I<span class="o">{}</span> -P <span class="m">5</span> aws --region <span class="o">{}</span> ec2 describe-instances  15.39s user 5.32s system 148% cpu 13.934 total
+</code></pre></div><h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% aws --version
+aws-cli/2.1.6 Python/3.7.4 Darwin/19.6.0 exe/x86_64 prompt/off
+% jq --version
+jq-1.6
+</code></pre></div><ul>
+<li><code>xargs</code> はバージョン表示する機能が見当たらなかったが Mac に標準でインストールされているものを使用した</li>
+</ul>]]></content>
+		</item>
 		
 		<item>
 			<title>Apache Bench ノート</title>

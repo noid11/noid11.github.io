@@ -1,7 +1,7 @@
 ---
 title: "AWS CLI コマンドを利用可能な全てのリージョンに対して実行する方法"
 date: 2021-01-25T14:42:12+09:00
-draft: true
+draft: false
 toc: true
 images:
 tags: 

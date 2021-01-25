@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>AWS CLI on noid11.github.io</title>
-    <link>https://noid11.github.io/tags/aws-cli/</link>
-    <description>Recent content in AWS CLI on noid11.github.io</description>
+    <title>jq on noid11.github.io</title>
+    <link>https://noid11.github.io/tags/jq/</link>
+    <description>Recent content in jq on noid11.github.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Mon, 25 Jan 2021 14:42:12 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/aws-cli/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 25 Jan 2021 14:42:12 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/jq/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AWS CLI コマンドを利用可能な全てのリージョンに対して実行する方法</title>
       <link>https://noid11.github.io/posts/how-to-aws-cli-command-to-available-regions/</link>
@@ -20,29 +20,6 @@
 &lt;p&gt;全リージョンに対して &lt;code&gt;ec2 describe-instances&lt;/code&gt; を実行する例&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;aws ec2 describe-regions &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; jq --raw-output &lt;span class=&#34;s2&#34;&gt;&amp;#34;.Regions[].RegionName&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; xargs -n &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; -I&lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt; -P &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt; aws --region &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt; ec2 describe-instances
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>AWS CLI v2 を使って CloudWatch Logs を `tail -f` っぽく見る方法</title>
-      <link>https://noid11.github.io/posts/how-to-cloudwatch-logs-tail-follow-by-aws-cli-v2/</link>
-      <pubDate>Sat, 23 Jan 2021 14:33:50 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/how-to-cloudwatch-logs-tail-follow-by-aws-cli-v2/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;AWS Lambda を動かしている時にマネジメントコンソールを開かなくてもログを確認できて便利&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;LOG_GROUP&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/aws/lambda/myfunc
-aws logs tail &lt;span class=&#34;nv&#34;&gt;$LOG_GROUP&lt;/span&gt; --follow
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>AWS CLI を使って Amazon Connect Tasks を作成・削除する</title>
-      <link>https://noid11.github.io/posts/how-to-control-connect-tasks-by-aws-cli/</link>
-      <pubDate>Wed, 20 Jan 2021 19:54:25 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/how-to-control-connect-tasks-by-aws-cli/</guid>
-      <description></description>
     </item>
     
   </channel>
