@@ -6,8 +6,49 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Tue, 26 Jan 2021 02:40:20 +0900</lastBuildDate>
+		<lastBuildDate>Mon, 01 Feb 2021 21:47:26 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>AWS STS における GetCallerIdentity API に許可は必要ないという話</title>
+			<link>https://noid11.github.io/posts/no-need-permission-sts-get-caller-identity/</link>
+			<pubDate>Mon, 01 Feb 2021 21:47:26 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/no-need-permission-sts-get-caller-identity/</guid>
+			<description>&lt;ul&gt;
+&lt;li&gt;AWS STS には GetCallerIdentity API という、使用しているクレデンシャルから AWS アカウントや IAM User, IAM Role 情報を取得する API がある&lt;/li&gt;
+&lt;li&gt;この API は自分が想定した IAM User, IAM Role のクレデンシャルを取得できているのか確認するのに便利だが、使用する IAM Policy に sts:GetCallerIdentity アクションを Allow しなくても使用することが可能&lt;/li&gt;
+&lt;li&gt;API Reference に書いてある&lt;/li&gt;
+&lt;/ul&gt;</description>
+			<content type="html"><![CDATA[<ul>
+<li>AWS STS には GetCallerIdentity API という、使用しているクレデンシャルから AWS アカウントや IAM User, IAM Role 情報を取得する API がある</li>
+<li>この API は自分が想定した IAM User, IAM Role のクレデンシャルを取得できているのか確認するのに便利だが、使用する IAM Policy に sts:GetCallerIdentity アクションを Allow しなくても使用することが可能</li>
+<li>API Reference に書いてある</li>
+</ul>
+<h2 id="api-reference-を確認">API Reference を確認</h2>
+<p>GetCallerIdentity - AWS Security Token Service<br>
+<a href="https://docs.aws.amazon.com/STS/latest/APIReference/API_GetCallerIdentity.html">https://docs.aws.amazon.com/STS/latest/APIReference/API_GetCallerIdentity.html</a></p>
+<blockquote>
+<p>No permissions are required to perform this operation.<br>
+If an administrator adds a policy to your IAM user or role that explicitly denies access to the sts:GetCallerIdentity action, you can still perform this operation.<br>
+Permissions are not required because the same information is returned when an IAM user or role is denied access.</p>
+</blockquote>
+<ul>
+<li>この操作を実行するために権限は必要ない</li>
+<li>管理者が明示的な拒否ポリシーを設定した場合においても sts:GetCallerIdentity の呼び出しは可能</li>
+<li>IAM User, IAM Role のアクセスが拒否された場合でも同じ情報が返されるため、アクセス許可が不要</li>
+</ul>
+<h2 id="note">Note</h2>
+<ul>
+<li>明示的な許可が不要なのは便利である反面、明示的もできない点に注意</li>
+<li>例えば Cognito ID Pool 等を用いて一時的なクレデンシャルを発行するようなアプリケーションでは、そのクレデンシャルを使って GetCallerIdentity を呼び出すことによって、ゲストユーザーであっても AWS アカウント ID や IAM Role の ARN を取得することができてしまう
+<ul>
+<li>具体的な実害があるかは思いつかないが、ちょっとしたリスクではある</li>
+</ul>
+</li>
+<li>GetCallerIdentity による情報取得を防ぎたい場合、エンドユーザーに対して一時的なクレデンシャルを発行するようなアーキテクチャは避けたほうが良いかもしれない</li>
+</ul>]]></content>
+		</item>
 		
 		<item>
 			<title>Go で作成した Web アプリを EB CLI を使ってデプロイする方法</title>

@@ -7,7 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Tue, 26 Jan 2021 02:40:20 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 01 Feb 2021 21:47:26 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AWS IAM</title>
+      <link>https://noid11.github.io/tags/aws-iam/</link>
+      <pubDate>Mon, 01 Feb 2021 21:47:26 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/aws-iam/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AWS STS</title>
+      <link>https://noid11.github.io/tags/aws-sts/</link>
+      <pubDate>Mon, 01 Feb 2021 21:47:26 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/aws-sts/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>EB</title>
       <link>https://noid11.github.io/tags/eb/</link>
@@ -77,24 +95,6 @@
       <pubDate>Sun, 24 Jan 2021 16:50:17 +0900</pubDate>
       
       <guid>https://noid11.github.io/tags/sqs/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>CloudWatch Logs</title>
-      <link>https://noid11.github.io/tags/cloudwatch-logs/</link>
-      <pubDate>Sat, 23 Jan 2021 14:33:50 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/cloudwatch-logs/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Docker</title>
-      <link>https://noid11.github.io/tags/docker/</link>
-      <pubDate>Fri, 22 Jan 2021 09:30:07 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/docker/</guid>
       <description></description>
     </item>
     

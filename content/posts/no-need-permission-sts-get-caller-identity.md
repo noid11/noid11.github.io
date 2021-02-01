@@ -1,7 +1,7 @@
 ---
 title: "AWS STS における GetCallerIdentity API に許可は必要ないという話"
 date: 2021-02-01T21:47:26+09:00
-draft: true
+draft: false
 toc: false
 images:
 tags: 
