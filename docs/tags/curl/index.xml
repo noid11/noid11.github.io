@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Thu, 07 Jan 2021 08:00:34 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/curl/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 02 Feb 2021 22:07:44 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/curl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AWS 上に Proxy 環境を構築するメモ</title>
+      <link>https://noid11.github.io/posts/how-to-build-proxy-env-on-aws/</link>
+      <pubDate>Tue, 02 Feb 2021 22:07:44 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/how-to-build-proxy-env-on-aws/</guid>
+      <description>これは何？ AWS 上に HTTP Proxy を構築して検証する機会があったので、構築手順をメモしておく 大まかな流れ [事前準備] VPC と public subnet, private subnet を用意しておく public subnet は Internet Gateway を</description>
+    </item>
+    
     <item>
       <title>curl で外部 json ファイルを元に POST リクエストする方法</title>
       <link>https://noid11.github.io/posts/how-to-curl-with-json/</link>

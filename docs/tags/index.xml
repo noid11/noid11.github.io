@@ -7,7 +7,61 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Mon, 01 Feb 2021 21:47:26 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 02 Feb 2021 22:07:44 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AWS CLI</title>
+      <link>https://noid11.github.io/tags/aws-cli/</link>
+      <pubDate>Tue, 02 Feb 2021 22:07:44 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/aws-cli/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>curl</title>
+      <link>https://noid11.github.io/tags/curl/</link>
+      <pubDate>Tue, 02 Feb 2021 22:07:44 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/curl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>EC2</title>
+      <link>https://noid11.github.io/tags/ec2/</link>
+      <pubDate>Tue, 02 Feb 2021 22:07:44 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/ec2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Squid</title>
+      <link>https://noid11.github.io/tags/squid/</link>
+      <pubDate>Tue, 02 Feb 2021 22:07:44 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/squid/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>wget</title>
+      <link>https://noid11.github.io/tags/wget/</link>
+      <pubDate>Tue, 02 Feb 2021 22:07:44 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/wget/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>yum</title>
+      <link>https://noid11.github.io/tags/yum/</link>
+      <pubDate>Tue, 02 Feb 2021 22:07:44 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/yum/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>AWS IAM</title>
       <link>https://noid11.github.io/tags/aws-iam/</link>
@@ -41,60 +95,6 @@
       <pubDate>Tue, 26 Jan 2021 02:40:20 +0900</pubDate>
       
       <guid>https://noid11.github.io/tags/eb-cli/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Go</title>
-      <link>https://noid11.github.io/tags/go/</link>
-      <pubDate>Tue, 26 Jan 2021 02:40:20 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/go/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>AWS CLI</title>
-      <link>https://noid11.github.io/tags/aws-cli/</link>
-      <pubDate>Mon, 25 Jan 2021 14:42:12 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/aws-cli/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>jq</title>
-      <link>https://noid11.github.io/tags/jq/</link>
-      <pubDate>Mon, 25 Jan 2021 14:42:12 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/jq/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>xargs</title>
-      <link>https://noid11.github.io/tags/xargs/</link>
-      <pubDate>Mon, 25 Jan 2021 14:42:12 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/xargs/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Apache Bench</title>
-      <link>https://noid11.github.io/tags/apache-bench/</link>
-      <pubDate>Mon, 25 Jan 2021 01:01:38 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/apache-bench/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>SQS</title>
-      <link>https://noid11.github.io/tags/sqs/</link>
-      <pubDate>Sun, 24 Jan 2021 16:50:17 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/sqs/</guid>
       <description></description>
     </item>
     

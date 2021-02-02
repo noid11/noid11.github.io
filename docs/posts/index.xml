@@ -6,8 +6,198 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Mon, 01 Feb 2021 21:47:26 +0900</lastBuildDate>
+		<lastBuildDate>Tue, 02 Feb 2021 22:07:44 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>AWS 上に Proxy 環境を構築するメモ</title>
+			<link>https://noid11.github.io/posts/how-to-build-proxy-env-on-aws/</link>
+			<pubDate>Tue, 02 Feb 2021 22:07:44 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/how-to-build-proxy-env-on-aws/</guid>
+			<description>これは何？ AWS 上に HTTP Proxy を構築して検証する機会があったので、構築手順をメモしておく 大まかな流れ [事前準備] VPC と public subnet, private subnet を用意しておく public subnet は Internet Gateway を</description>
+			<content type="html"><![CDATA[<h2 id="これは何">これは何？</h2>
+<ul>
+<li>AWS 上に HTTP Proxy を構築して検証する機会があったので、構築手順をメモしておく</li>
+</ul>
+<h2 id="大まかな流れ">大まかな流れ</h2>
+<ul>
+<li>[事前準備] VPC と public subnet, private subnet を用意しておく
+<ul>
+<li>public subnet は Internet Gateway を使ってインターネット接続できるようにしておく</li>
+<li>private subnet は public subnet に構築する proxy を経由してインターネット接続するので NAT Gateway, NAT インスタンスは不要</li>
+</ul>
+</li>
+<li>public subnet に EC2 インスタンスを作成して <a href="http://www.squid-cache.org/">Squid</a> をインストールして動かす</li>
+<li>private subnet に EC2 インスタンスを作成して Proxy 設定を行い、動作を確認する</li>
+<li>各 EC2 インスタンスでは OS として Amazon Linux 2 を使用する</li>
+</ul>
+<h2 id="各-subnet-に-ec2-インスタンスを構築して-ssh-接続">各 subnet に EC2 インスタンスを構築して SSH 接続</h2>
+<ul>
+<li>public subnet に関してはセキュリティグループで ssh のポートを開放しておけば良い</li>
+<li>private subnet については <a href="https://dev.classmethod.jp/articles/direct-ssh-by-proxycommand/">public subnet に構築した EC2 インスタンスを踏み台として SSH 接続</a>する
+<ul>
+<li><a href="https://dev.classmethod.jp/articles/private-subnet-instance-ssm-ssh/">SSH を直接使用せず AWS Systems Manager の Session Manager を使って private subnet の EC2 インスタンスに接続する方法</a>もあるものの、 VPC エンドポイントの設定等が必要となり、検証の邪魔になる可能性を考慮して使用を控えた</li>
+</ul>
+</li>
+</ul>
+<p>ssh コマンドを使った接続例</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># シェル変数のセットアップ</span>
+<span class="nv">PUBLIC_HOST</span><span class="o">=</span>ec2-x-x-x-x.ap-northeast-1.compute.amazonaws.com
+<span class="nv">PUBLIC_HOST_USER</span><span class="o">=</span>ec2-user
+<span class="nv">PROVATE_HOST</span><span class="o">=</span>ip-172-31-200-153.ap-northeast-1.compute.internal
+<span class="nv">PROVATE_HOST_USER</span><span class="o">=</span>ec2-user
+
+<span class="c1"># public subnet host への接続</span>
+ssh <span class="nv">$PUBLIC_HOST_USER</span>@<span class="nv">$PUBLIC_HOST</span>
+
+<span class="c1"># private subnet host への接続</span>
+ssh -o <span class="nv">ProxyCommand</span><span class="o">=</span><span class="s2">&#34;ssh -W %h:%p </span><span class="nv">$PUBLIC_HOST_USER</span><span class="s2">@</span><span class="nv">$PUBLIC_HOST</span><span class="s2">&#34;</span> <span class="nv">$PROVATE_HOST_USER</span>@<span class="nv">$PROVATE_HOST</span>
+</code></pre></div><ul>
+<li><code>-o</code>: ssh config で使用される形式でオプションを指定する
+<ul>
+<li><a href="https://man.openbsd.org/ssh#o">https://man.openbsd.org/ssh#o</a></li>
+</ul>
+</li>
+<li><code>ProxyCommand</code>: サーバーに接続するためのコマンドを指定する
+<ul>
+<li><a href="https://man.openbsd.org/ssh_config.5#ProxyCommand">https://man.openbsd.org/ssh_config.5#ProxyCommand</a></li>
+<li>別途定義されているトークンを使用することが可能
+<ul>
+<li><a href="https://man.openbsd.org/ssh_config.5#TOKENS">https://man.openbsd.org/ssh_config.5#TOKENS</a></li>
+<li><code>%h</code>: リモートホストネーム</li>
+<li><code>%p</code>: リモートポート</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>-W</code>: クライアントの標準入力と標準出力を、セキュリティで保護されたチャネルを介してポート上のホストに転送するようリクエストする
+<ul>
+<li><a href="https://man.openbsd.org/ssh#W">https://man.openbsd.org/ssh#W</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="public-subnet-に-squid-を構築">public subnet に Squid を構築</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">sudo yum update
+sudo yum install squid
+squid -v
+sudo systemctl <span class="nb">enable</span> squid
+sudo systemctl restart squid
+sudo lsof -i:3128
+</code></pre></div><ul>
+<li>これで Squid をインストールして 3128 ポートで動作することが確認できる</li>
+<li>ログを確認したい場合、以下のようにして確認できる
+<ul>
+<li>プロキシを経由したアクセスを行っていない状態ではログが出力されないためログファイル自体が存在しない場合があるので注意</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">sudo -s
+less /var/log/squid/access.log
+less /var/log/squid/cache.log
+</code></pre></div><h2 id="private-subnet-で-proxy-設定を行い接続を試す">private subnet で Proxy 設定を行い接続を試す</h2>
+<h3 id="aws-cli">AWS CLI</h3>
+<ul>
+<li>HTTP_PROXY, HTTPS_PROXY 環境変数を設定すれば良い
+<ul>
+<li><a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-proxy.html">https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-proxy.html</a></li>
+<li>EC2 インスタンスで IAM Role を使用する場合、インスタンスメタデータにアクセスが行われるため <code>NO_PROXY=169.254.169.254</code> が必要と記載があるが、 NOPROXY を設定しなくても動作が確認できたのでスキップしている</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Squid を設定した EC2 インスタンスのプライベート IP アドレスが 172.31.28.104 だとする</span>
+<span class="nb">export</span> <span class="nv">HTTP_PROXY</span><span class="o">=</span>http://172.31.28.104:3128
+<span class="nb">export</span> <span class="nv">HTTPS_PROXY</span><span class="o">=</span>http://172.31.28.104:3128
+</code></pre></div><p>動作検証</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">aws sts get-caller-identity
+</code></pre></div><p>HTTP Proxy 設定を消す場合</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> -n HTTP_PROXY
+<span class="nb">export</span> -n HTTPS_PROXY
+</code></pre></div><h3 id="curl">curl</h3>
+<ul>
+<li><code>~/.curlrc</code> にプロキシ設定を記述する or <code>--proxy</code> オプションでプロキシを指定する
+<ul>
+<li><code>--proxy</code> オプションで指定するのが楽</li>
+<li><a href="https://curl.se/docs/manual.html">https://curl.se/docs/manual.html</a></li>
+<li><a href="https://curl.se/docs/manpage.html#-x">https://curl.se/docs/manpage.html#-x</a></li>
+</ul>
+</li>
+</ul>
+<p>curl コマンドの動作確認</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl --proxy http://172.31.28.104:3128 -I http://example.com
+curl --proxy http://172.31.28.104:3128 -I https://example.com
+</code></pre></div><h3 id="wget">wget</h3>
+<ul>
+<li><code>/etc/wgetrc</code> にプロキシ設定を記述する or http_proxy, https_proxy 環境変数を設定する
+<ul>
+<li>環境変数は case sensitive なので AWS CLI で設定した環境変数とは異なるので注意</li>
+<li><a href="https://www.gnu.org/software/wget/manual/wget.html#Proxies">https://www.gnu.org/software/wget/manual/wget.html#Proxies</a></li>
+</ul>
+</li>
+<li>環境変数使う方法のほうがファイル操作が不要なので個人的にセットアップが楽</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">http_proxy</span><span class="o">=</span>http://172.31.28.104:3128
+<span class="nb">export</span> <span class="nv">https_proxy</span><span class="o">=</span>http://172.31.28.104:3128
+</code></pre></div><p>動作確認</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">wget http://example.com
+wget https://example.com
+</code></pre></div><p>HTTP Proxy 設定を消す場合</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> -n http_proxy
+<span class="nb">export</span> -n https_proxy
+</code></pre></div><h3 id="yum">yum</h3>
+<ul>
+<li><code>/etc/yum.conf</code> にプロキシ設定を記述する必要がある
+<ul>
+<li><a href="https://man7.org/linux/man-pages/man5/yum.conf.5.html">https://man7.org/linux/man-pages/man5/yum.conf.5.html</a></li>
+</ul>
+</li>
+</ul>
+<p><code>/etc/yum.conf</code> 設定例</p>
+<pre><code>proxy=http://172.31.28.104:3128
+</code></pre><p>動作確認</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">sudo yum update
+</code></pre></div><h2 id="参考">参考</h2>
+<p>Squidで検証用のプロキシを作ってみた | Developers.IO<br>
+<a href="https://dev.classmethod.jp/articles/squid-proxy-setup/">https://dev.classmethod.jp/articles/squid-proxy-setup/</a></p>
+<h2 id="この記事を試した環境">この記事を試した環境</h2>
+<p>クライアント</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% ssh -V
+OpenSSH_8.1p1, LibreSSL 2.7.3
+</code></pre></div><p>EC2 インスタンスとして使用した Amazon Linux 2</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>ec2-user@ip-172-31-28-104 ~<span class="o">]</span>$ uname -a
+Linux ip-172-31-28-104.ap-northeast-1.compute.internal 4.14.214-160.339.amzn2.x86_64 <span class="c1">#1 SMP Sun Jan 10 05:53:05 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux</span>
+<span class="o">[</span>ec2-user@ip-172-31-28-104 ~<span class="o">]</span>$ cat /etc/os-release 
+<span class="nv">NAME</span><span class="o">=</span><span class="s2">&#34;Amazon Linux&#34;</span>
+<span class="nv">VERSION</span><span class="o">=</span><span class="s2">&#34;2&#34;</span>
+<span class="nv">ID</span><span class="o">=</span><span class="s2">&#34;amzn&#34;</span>
+<span class="nv">ID_LIKE</span><span class="o">=</span><span class="s2">&#34;centos rhel fedora&#34;</span>
+<span class="nv">VERSION_ID</span><span class="o">=</span><span class="s2">&#34;2&#34;</span>
+<span class="nv">PRETTY_NAME</span><span class="o">=</span><span class="s2">&#34;Amazon Linux 2&#34;</span>
+<span class="nv">ANSI_COLOR</span><span class="o">=</span><span class="s2">&#34;0;33&#34;</span>
+<span class="nv">CPE_NAME</span><span class="o">=</span><span class="s2">&#34;cpe:2.3:o\:amazon:amazon_linux:2&#34;</span>
+<span class="nv">HOME_URL</span><span class="o">=</span><span class="s2">&#34;https://amazonlinux.com/&#34;</span>
+<span class="o">[</span>ec2-user@ip-172-31-28-104 ~<span class="o">]</span>$ ssh -V
+OpenSSH_7.4p1, OpenSSL 1.0.2k-fips  <span class="m">26</span> Jan <span class="m">2017</span>
+<span class="o">[</span>ec2-user@ip-172-31-28-104 ~<span class="o">]</span>$ squid -v <span class="p">|</span> head -n <span class="m">2</span>
+Squid Cache: Version 3.5.20
+Service Name: squid
+<span class="o">[</span>ec2-user@ip-172-31-28-104 ~<span class="o">]</span>$ aws --version
+aws-cli/1.18.147 Python/2.7.18 Linux/4.14.214-160.339.amzn2.x86_64 botocore/1.18.6
+<span class="o">[</span>ec2-user@ip-172-31-28-104 ~<span class="o">]</span>$ curl --version
+curl 7.61.1 <span class="o">(</span>x86_64-koji-linux-gnu<span class="o">)</span> libcurl/7.61.1 OpenSSL/1.0.2k zlib/1.2.7 libidn2/2.3.0 libssh2/1.4.3 nghttp2/1.41.0
+Release-Date: 2018-09-05
+Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp 
+Features: AsynchDNS IDN IPv6 Largefile GSS-API Kerberos SPNEGO NTLM NTLM_WB SSL libz HTTP2 UnixSockets HTTPS-proxy Metalink
+<span class="o">[</span>ec2-user@ip-172-31-28-104 ~<span class="o">]</span>$ wget --version <span class="p">|</span> head -n <span class="m">1</span>
+GNU Wget 1.14 built on linux-gnu.
+<span class="o">[</span>ec2-user@ip-172-31-28-104 ~<span class="o">]</span>$ yum --version <span class="p">|</span> head -n <span class="m">1</span>
+3.4.3
+</code></pre></div>]]></content>
+		</item>
 		
 		<item>
 			<title>AWS STS における GetCallerIdentity API に許可は必要ないという話</title>

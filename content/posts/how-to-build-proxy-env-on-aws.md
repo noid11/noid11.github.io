@@ -1,7 +1,7 @@
 ---
 title: "AWS 上に Proxy 環境を構築するメモ"
 date: 2021-02-02T22:07:44+09:00
-draft: true
+draft: false
 toc: true
 images:
 tags: 

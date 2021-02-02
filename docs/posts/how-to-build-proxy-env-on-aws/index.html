@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="AWS 上に Proxy 環境を構築するメモ">
+<meta itemprop="description" content="これは何？ AWS 上に HTTP Proxy を構築して検証する機会があったので、構築手順をメモしておく 大まかな流れ [事前準備] VPC と public subnet, private subnet を用意しておく public subnet は Internet Gateway を">
+<meta itemprop="datePublished" content="2021-02-02T22:07:44+09:00" />
+<meta itemprop="dateModified" content="2021-02-02T23:43:47+09:00" />
+<meta itemprop="wordCount" content="1338">
+
+
+
+<meta itemprop="keywords" content="EC2,Squid,AWS CLI,curl,wget,yum," />
+<meta property="og:title" content="AWS 上に Proxy 環境を構築するメモ" />
+<meta property="og:description" content="これは何？ AWS 上に HTTP Proxy を構築して検証する機会があったので、構築手順をメモしておく 大まかな流れ [事前準備] VPC と public subnet, private subnet を用意しておく public subnet は Internet Gateway を" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noid11.github.io/posts/how-to-build-proxy-env-on-aws/" />
+<meta property="article:published_time" content="2021-02-02T22:07:44+09:00" />
+<meta property="article:modified_time" content="2021-02-02T23:43:47+09:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="AWS 上に Proxy 環境を構築するメモ"/>
+<meta name="twitter:description" content="これは何？ AWS 上に HTTP Proxy を構築して検証する機会があったので、構築手順をメモしておく 大まかな流れ [事前準備] VPC と public subnet, private subnet を用意しておく public subnet は Internet Gateway を"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>AWS 上に Proxy 環境を構築するメモ</title>
+	<link rel="stylesheet" href="https://noid11.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://noid11.github.io/">noid11.github.io</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://noid11.github.io/posts/">Posts</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="toc-btn" class="hdr-btn desktop-only-ib" title="Table of Contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="https://twitter.com/_noid11" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://github.com/noid11" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://noid11.github.io/posts/">Posts</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>2021/02/02</span></div>
+				<h1>AWS 上に Proxy 環境を構築するメモ</h1>
+			</header>
+			<div class="content">
+				<h2 id="これは何">これは何？<a href="#これは何" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>AWS 上に HTTP Proxy を構築して検証する機会があったので、構築手順をメモしておく</li>
+</ul>
+<h2 id="大まかな流れ">大まかな流れ<a href="#大まかな流れ" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>[事前準備] VPC と public subnet, private subnet を用意しておく
+<ul>
+<li>public subnet は Internet Gateway を使ってインターネット接続できるようにしておく</li>
+<li>private subnet は public subnet に構築する proxy を経由してインターネット接続するので NAT Gateway, NAT インスタンスは不要</li>
+</ul>
+</li>
+<li>public subnet に EC2 インスタンスを作成して <a href="http://www.squid-cache.org/">Squid</a> をインストールして動かす</li>
+<li>private subnet に EC2 インスタンスを作成して Proxy 設定を行い、動作を確認する</li>
+<li>各 EC2 インスタンスでは OS として Amazon Linux 2 を使用する</li>
+</ul>
+<h2 id="各-subnet-に-ec2-インスタンスを構築して-ssh-接続">各 subnet に EC2 インスタンスを構築して SSH 接続<a href="#各-subnet-に-ec2-インスタンスを構築して-ssh-接続" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>public subnet に関してはセキュリティグループで ssh のポートを開放しておけば良い</li>
+<li>private subnet については <a href="https://dev.classmethod.jp/articles/direct-ssh-by-proxycommand/">public subnet に構築した EC2 インスタンスを踏み台として SSH 接続</a>する
+<ul>
+<li><a href="https://dev.classmethod.jp/articles/private-subnet-instance-ssm-ssh/">SSH を直接使用せず AWS Systems Manager の Session Manager を使って private subnet の EC2 インスタンスに接続する方法</a>もあるものの、 VPC エンドポイントの設定等が必要となり、検証の邪魔になる可能性を考慮して使用を控えた</li>
+</ul>
+</li>
+</ul>
+<p>ssh コマンドを使った接続例</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># シェル変数のセットアップ</span>
+<span class="nv">PUBLIC_HOST</span><span class="o">=</span>ec2-x-x-x-x.ap-northeast-1.compute.amazonaws.com
+<span class="nv">PUBLIC_HOST_USER</span><span class="o">=</span>ec2-user
+<span class="nv">PROVATE_HOST</span><span class="o">=</span>ip-172-31-200-153.ap-northeast-1.compute.internal
+<span class="nv">PROVATE_HOST_USER</span><span class="o">=</span>ec2-user
+
+<span class="c1"># public subnet host への接続</span>
+ssh <span class="nv">$PUBLIC_HOST_USER</span>@<span class="nv">$PUBLIC_HOST</span>
+
+<span class="c1"># private subnet host への接続</span>
+ssh -o <span class="nv">ProxyCommand</span><span class="o">=</span><span class="s2">&#34;ssh -W %h:%p </span><span class="nv">$PUBLIC_HOST_USER</span><span class="s2">@</span><span class="nv">$PUBLIC_HOST</span><span class="s2">&#34;</span> <span class="nv">$PROVATE_HOST_USER</span>@<span class="nv">$PROVATE_HOST</span>
+</code></pre></div><ul>
+<li><code>-o</code>: ssh config で使用される形式でオプションを指定する
+<ul>
+<li><a href="https://man.openbsd.org/ssh#o">https://man.openbsd.org/ssh#o</a></li>
+</ul>
+</li>
+<li><code>ProxyCommand</code>: サーバーに接続するためのコマンドを指定する
+<ul>
+<li><a href="https://man.openbsd.org/ssh_config.5#ProxyCommand">https://man.openbsd.org/ssh_config.5#ProxyCommand</a></li>
+<li>別途定義されているトークンを使用することが可能
+<ul>
+<li><a href="https://man.openbsd.org/ssh_config.5#TOKENS">https://man.openbsd.org/ssh_config.5#TOKENS</a></li>
+<li><code>%h</code>: リモートホストネーム</li>
+<li><code>%p</code>: リモートポート</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>-W</code>: クライアントの標準入力と標準出力を、セキュリティで保護されたチャネルを介してポート上のホストに転送するようリクエストする
+<ul>
+<li><a href="https://man.openbsd.org/ssh#W">https://man.openbsd.org/ssh#W</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="public-subnet-に-squid-を構築">public subnet に Squid を構築<a href="#public-subnet-に-squid-を構築" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">sudo yum update
+sudo yum install squid
+squid -v
+sudo systemctl <span class="nb">enable</span> squid
+sudo systemctl restart squid
+sudo lsof -i:3128
+</code></pre></div><ul>
+<li>これで Squid をインストールして 3128 ポートで動作することが確認できる</li>
+<li>ログを確認したい場合、以下のようにして確認できる
+<ul>
+<li>プロキシを経由したアクセスを行っていない状態ではログが出力されないためログファイル自体が存在しない場合があるので注意</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">sudo -s
+less /var/log/squid/access.log
+less /var/log/squid/cache.log
+</code></pre></div><h2 id="private-subnet-で-proxy-設定を行い接続を試す">private subnet で Proxy 設定を行い接続を試す<a href="#private-subnet-で-proxy-設定を行い接続を試す" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<h3 id="aws-cli">AWS CLI<a href="#aws-cli" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li>HTTP_PROXY, HTTPS_PROXY 環境変数を設定すれば良い
+<ul>
+<li><a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-proxy.html">https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-proxy.html</a></li>
+<li>EC2 インスタンスで IAM Role を使用する場合、インスタンスメタデータにアクセスが行われるため <code>NO_PROXY=169.254.169.254</code> が必要と記載があるが、 NOPROXY を設定しなくても動作が確認できたのでスキップしている</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Squid を設定した EC2 インスタンスのプライベート IP アドレスが 172.31.28.104 だとする</span>
+<span class="nb">export</span> <span class="nv">HTTP_PROXY</span><span class="o">=</span>http://172.31.28.104:3128
+<span class="nb">export</span> <span class="nv">HTTPS_PROXY</span><span class="o">=</span>http://172.31.28.104:3128
+</code></pre></div><p>動作検証</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">aws sts get-caller-identity
+</code></pre></div><p>HTTP Proxy 設定を消す場合</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> -n HTTP_PROXY
+<span class="nb">export</span> -n HTTPS_PROXY
+</code></pre></div><h3 id="curl">curl<a href="#curl" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li><code>~/.curlrc</code> にプロキシ設定を記述する or <code>--proxy</code> オプションでプロキシを指定する
+<ul>
+<li><code>--proxy</code> オプションで指定するのが楽</li>
+<li><a href="https://curl.se/docs/manual.html">https://curl.se/docs/manual.html</a></li>
+<li><a href="https://curl.se/docs/manpage.html#-x">https://curl.se/docs/manpage.html#-x</a></li>
+</ul>
+</li>
+</ul>
+<p>curl コマンドの動作確認</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl --proxy http://172.31.28.104:3128 -I http://example.com
+curl --proxy http://172.31.28.104:3128 -I https://example.com
+</code></pre></div><h3 id="wget">wget<a href="#wget" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li><code>/etc/wgetrc</code> にプロキシ設定を記述する or http_proxy, https_proxy 環境変数を設定する
+<ul>
+<li>環境変数は case sensitive なので AWS CLI で設定した環境変数とは異なるので注意</li>
+<li><a href="https://www.gnu.org/software/wget/manual/wget.html#Proxies">https://www.gnu.org/software/wget/manual/wget.html#Proxies</a></li>
+</ul>
+</li>
+<li>環境変数使う方法のほうがファイル操作が不要なので個人的にセットアップが楽</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">http_proxy</span><span class="o">=</span>http://172.31.28.104:3128
+<span class="nb">export</span> <span class="nv">https_proxy</span><span class="o">=</span>http://172.31.28.104:3128
+</code></pre></div><p>動作確認</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">wget http://example.com
+wget https://example.com
+</code></pre></div><p>HTTP Proxy 設定を消す場合</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> -n http_proxy
+<span class="nb">export</span> -n https_proxy
+</code></pre></div><h3 id="yum">yum<a href="#yum" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li><code>/etc/yum.conf</code> にプロキシ設定を記述する必要がある
+<ul>
+<li><a href="https://man7.org/linux/man-pages/man5/yum.conf.5.html">https://man7.org/linux/man-pages/man5/yum.conf.5.html</a></li>
+</ul>
+</li>
+</ul>
+<p><code>/etc/yum.conf</code> 設定例</p>
+<pre><code>proxy=http://172.31.28.104:3128
+</code></pre><p>動作確認</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">sudo yum update
+</code></pre></div><h2 id="参考">参考<a href="#参考" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>Squidで検証用のプロキシを作ってみた | Developers.IO<br>
+<a href="https://dev.classmethod.jp/articles/squid-proxy-setup/">https://dev.classmethod.jp/articles/squid-proxy-setup/</a></p>
+<h2 id="この記事を試した環境">この記事を試した環境<a href="#この記事を試した環境" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>クライアント</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+% ssh -V
+OpenSSH_8.1p1, LibreSSL 2.7.3
+</code></pre></div><p>EC2 インスタンスとして使用した Amazon Linux 2</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>ec2-user@ip-172-31-28-104 ~<span class="o">]</span>$ uname -a
+Linux ip-172-31-28-104.ap-northeast-1.compute.internal 4.14.214-160.339.amzn2.x86_64 <span class="c1">#1 SMP Sun Jan 10 05:53:05 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux</span>
+<span class="o">[</span>ec2-user@ip-172-31-28-104 ~<span class="o">]</span>$ cat /etc/os-release 
+<span class="nv">NAME</span><span class="o">=</span><span class="s2">&#34;Amazon Linux&#34;</span>
+<span class="nv">VERSION</span><span class="o">=</span><span class="s2">&#34;2&#34;</span>
+<span class="nv">ID</span><span class="o">=</span><span class="s2">&#34;amzn&#34;</span>
+<span class="nv">ID_LIKE</span><span class="o">=</span><span class="s2">&#34;centos rhel fedora&#34;</span>
+<span class="nv">VERSION_ID</span><span class="o">=</span><span class="s2">&#34;2&#34;</span>
+<span class="nv">PRETTY_NAME</span><span class="o">=</span><span class="s2">&#34;Amazon Linux 2&#34;</span>
+<span class="nv">ANSI_COLOR</span><span class="o">=</span><span class="s2">&#34;0;33&#34;</span>
+<span class="nv">CPE_NAME</span><span class="o">=</span><span class="s2">&#34;cpe:2.3:o\:amazon:amazon_linux:2&#34;</span>
+<span class="nv">HOME_URL</span><span class="o">=</span><span class="s2">&#34;https://amazonlinux.com/&#34;</span>
+<span class="o">[</span>ec2-user@ip-172-31-28-104 ~<span class="o">]</span>$ ssh -V
+OpenSSH_7.4p1, OpenSSL 1.0.2k-fips  <span class="m">26</span> Jan <span class="m">2017</span>
+<span class="o">[</span>ec2-user@ip-172-31-28-104 ~<span class="o">]</span>$ squid -v <span class="p">|</span> head -n <span class="m">2</span>
+Squid Cache: Version 3.5.20
+Service Name: squid
+<span class="o">[</span>ec2-user@ip-172-31-28-104 ~<span class="o">]</span>$ aws --version
+aws-cli/1.18.147 Python/2.7.18 Linux/4.14.214-160.339.amzn2.x86_64 botocore/1.18.6
+<span class="o">[</span>ec2-user@ip-172-31-28-104 ~<span class="o">]</span>$ curl --version
+curl 7.61.1 <span class="o">(</span>x86_64-koji-linux-gnu<span class="o">)</span> libcurl/7.61.1 OpenSSL/1.0.2k zlib/1.2.7 libidn2/2.3.0 libssh2/1.4.3 nghttp2/1.41.0
+Release-Date: 2018-09-05
+Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp 
+Features: AsynchDNS IDN IPv6 Largefile GSS-API Kerberos SPNEGO NTLM NTLM_WB SSL libz HTTP2 UnixSockets HTTPS-proxy Metalink
+<span class="o">[</span>ec2-user@ip-172-31-28-104 ~<span class="o">]</span>$ wget --version <span class="p">|</span> head -n <span class="m">1</span>
+GNU Wget 1.14 built on linux-gnu.
+<span class="o">[</span>ec2-user@ip-172-31-28-104 ~<span class="o">]</span>$ yum --version <span class="p">|</span> head -n <span class="m">1</span>
+3.4.3
+</code></pre></div>
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://noid11.github.io/tags/ec2">EC2</a></span><span class="tag"><a href="https://noid11.github.io/tags/squid">Squid</a></span><span class="tag"><a href="https://noid11.github.io/tags/aws-cli">AWS CLI</a></span><span class="tag"><a href="https://noid11.github.io/tags/curl">curl</a></span><span class="tag"><a href="https://noid11.github.io/tags/wget">wget</a></span><span class="tag"><a href="https://noid11.github.io/tags/yum">yum</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1338 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2021/02/02 22:07 &#43;0900</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/noid11/noid11.github.io/commit/ed24368743ceb15f125ffaec15ac378e89c2d7ad" target="_blank" rel="noopener">ed24368</a> @ 2021/02/02</p>
+			</footer>
+		</article>
+		<aside id="toc" class="show-toc">
+			<div class="toc-title">Table of Contents</div>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#これは何">これは何？</a></li>
+    <li><a href="#大まかな流れ">大まかな流れ</a></li>
+    <li><a href="#各-subnet-に-ec2-インスタンスを構築して-ssh-接続">各 subnet に EC2 インスタンスを構築して SSH 接続</a></li>
+    <li><a href="#public-subnet-に-squid-を構築">public subnet に Squid を構築</a></li>
+    <li><a href="#private-subnet-で-proxy-設定を行い接続を試す">private subnet で Proxy 設定を行い接続を試す</a>
+      <ul>
+        <li><a href="#aws-cli">AWS CLI</a></li>
+        <li><a href="#curl">curl</a></li>
+        <li><a href="#wget">wget</a></li>
+        <li><a href="#yum">yum</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
+    <li><a href="#この記事を試した環境">この記事を試した環境</a></li>
+  </ul>
+</nav>
+		</aside>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://noid11.github.io/posts/no-need-permission-sts-get-caller-identity/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>AWS STS における GetCallerIdentity API に許可は必要ないという話</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2021 <a href="https://noid11.github.io/"></a>&#183; noid11</p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://noid11.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://noid11.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

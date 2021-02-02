@@ -3,33 +3,68 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://noid11.github.io/tags/aws-iam/</loc>
-    <lastmod>2021-02-01T22:04:26+09:00</lastmod>
+    <loc>https://noid11.github.io/tags/aws-cli/</loc>
+    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://noid11.github.io/tags/aws-sts/</loc>
-    <lastmod>2021-02-01T22:04:26+09:00</lastmod>
+    <loc>https://noid11.github.io/posts/how-to-build-proxy-env-on-aws/</loc>
+    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://noid11.github.io/posts/no-need-permission-sts-get-caller-identity/</loc>
-    <lastmod>2021-02-01T22:04:26+09:00</lastmod>
+    <loc>https://noid11.github.io/tags/curl/</loc>
+    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/ec2/</loc>
+    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://noid11.github.io/</loc>
-    <lastmod>2021-02-01T22:04:26+09:00</lastmod>
+    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://noid11.github.io/posts/</loc>
-    <lastmod>2021-02-01T22:04:26+09:00</lastmod>
+    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/squid/</loc>
+    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://noid11.github.io/tags/</loc>
-    <lastmod>2021-02-01T22:04:26+09:00</lastmod>
+    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/wget/</loc>
+    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/yum/</loc>
+    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/aws-iam/</loc>
+    <lastmod>2021-02-01T22:04:47+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/aws-sts/</loc>
+    <lastmod>2021-02-01T22:04:47+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/posts/no-need-permission-sts-get-caller-identity/</loc>
+    <lastmod>2021-02-01T22:04:47+09:00</lastmod>
   </url>
   
   <url>
@@ -55,11 +90,6 @@
   <url>
     <loc>https://noid11.github.io/posts/read-eb-cli-v3-help/</loc>
     <lastmod>2021-01-26T02:20:25+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://noid11.github.io/tags/aws-cli/</loc>
-    <lastmod>2021-01-26T00:42:39+09:00</lastmod>
   </url>
   
   <url>
@@ -274,11 +304,6 @@
   
   <url>
     <loc>https://noid11.github.io/posts/learning-security-will-improve-troubleshooting-skills/</loc>
-    <lastmod>2021-01-19T22:02:43+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://noid11.github.io/tags/curl/</loc>
     <lastmod>2021-01-19T22:02:43+09:00</lastmod>
   </url>
   
