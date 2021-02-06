@@ -1,0 +1,237 @@
+---
+title: "bash, zsh で環境変数を使う方法"
+date: 2021-02-06T15:12:57+09:00
+draft: true
+toc: true
+images:
+tags: 
+  - bash
+  - zsh
+---
+
+- `export` で設定
+- `printenv` で確認
+- `unset` で削除
+  - `export -n` でも削除できるが、これは多分 bash でしか使えないので `unset` 使ったほうが良い
+
+コマンド例
+
+```zsh
+export MYVALUE="HOGE"
+printenv MYVALUE
+unset MYVALUE
+printenv MYVALUE
+```
+
+実行例
+
+```zsh
+% export MYVALUE="HOGE"
+% printenv MYVALUE
+HOGE
+% unset MYVALUE
+% printenv MYVALUE
+```
+
+<!--more-->
+
+## export, unset manual
+
+```zsh
+% man export
+BUILTIN(1)                BSD General Commands Manual               BUILTIN(1)
+
+NAME
+     builtin, !, %, ., :, @, {, }, alias, alloc, bg, bind, bindkey, break, breaksw, builtins, case, cd, chdir, command, complete, continue, default, dirs,
+     do, done, echo, echotc, elif, else, end, endif, endsw, esac, eval, exec, exit, export, false, fc, fg, filetest, fi, for, foreach, getopts, glob, goto,
+     hash, hashstat, history, hup, if, jobid, jobs, kill, limit, local, log, login, logout, ls-F, nice, nohup, notify, onintr, popd, printenv, pushd, pwd,
+     read, readonly, rehash, repeat, return, sched, set, setenv, settc, setty, setvar, shift, source, stop, suspend, switch, telltc, test, then, time,
+     times, trap, true, type, ulimit, umask, unalias, uncomplete, unhash, unlimit, unset, unsetenv, until, wait, where, which, while -- shell built-in com-
+     mands
+
+SYNOPSIS
+     builtin [-options] [args ...]
+
+DESCRIPTION
+     Shell builtin commands are commands that can be executed within the running shell\'s process.
+     Note that, in the case of csh(1) builtin commands, the command is executed in a subshell if it occurs as any component of a pipeline except the last.
+
+     If a command specified to the shell contains a slash ``/'', the shell will not execute a builtin command, even if the last component of the specified command matches the name of a builtin command.  Thus, while specifying ``echo'' causes a builtin command to be executed under shells that support the echo builtin command, specifying ``/bin/echo'' or ``./echo'' does not.
+
+     While some builtin commands may exist in more than one shell, their operation may be different under each shell which supports them.
+     Below is a table which lists shell builtin commands, the standard shells that support them and whether they exist as standalone utilities.
+
+     Only builtin commands for the csh(1) and sh(1) shells are listed here.
+     Consult a shell\'s manual page for details on the operation of its builtin commands.
+     Beware that the sh(1) manual page, at least, calls some of these commands ``built-in commands'' and some of them ``reserved words''.
+     Users of other shells may need to consult an info(1) page or other sources of documentation.
+
+     Commands marked ``No**'' under External do exist externally, but are implemented as scripts using a builtin command of the same name.
+
+           Command       External    csh(1)    sh(1)
+           !             No          No        Yes
+           %             No          Yes       No
+           .             No          No        Yes
+           :             No          Yes       Yes
+           @             No          Yes       Yes
+           {             No          No        Yes
+           }             No          No        Yes
+           alias         No**        Yes       Yes
+           alloc         No          Yes       No
+           bg            No**        Yes       Yes
+           bind          No          No        Yes
+           bindkey       No          Yes       No
+           break         No          Yes       Yes
+           breaksw       No          Yes       No
+           builtin       No          No        Yes
+           builtins      No          Yes       No
+           case          No          Yes       Yes
+           cd            No**        Yes       Yes
+           chdir         No          Yes       Yes
+           command       No**        No        Yes
+           complete      No          Yes       No
+           continue      No          Yes       Yes
+           default       No          Yes       No
+           dirs          No          Yes       No
+           do            No          No        Yes
+           done          No          No        Yes
+           echo          Yes         Yes       Yes
+           echotc        No          Yes       No
+           elif          No          No        Yes
+           else          No          Yes       Yes
+           end           No          Yes       No
+           endif         No          Yes       No
+           endsw         No          Yes       No
+           esac          No          No        Yes
+           eval          No          Yes       Yes
+           exec          No          Yes       Yes
+           exit          No          Yes       Yes
+           export        No          No        Yes
+           false         Yes         No        Yes
+           fc            No**        No        Yes
+           fg            No**        Yes       Yes
+           filetest      No          Yes       No
+           fi            No          No        Yes
+           for           No          No        Yes
+           foreach       No          Yes       No
+           getopts       No**        No        Yes
+           glob          No          Yes       No
+           goto          No          Yes       No
+           hash          No          No        Yes
+           hashstat      No          Yes       No
+           history       No          Yes       No
+           hup           No          Yes       No
+           if            No          Yes       Yes
+           jobid         No          No        Yes
+           jobs          No**        Yes       Yes
+           kill          Yes         Yes       No
+           limit         No          Yes       No
+           local         No          No        Yes
+           log           No          Yes       No
+           login         Yes         Yes       No
+           logout        No          Yes       No
+           ls-F          No          Yes       No
+           nice          Yes         Yes       No
+           nohup         Yes         Yes       No
+           notify        No          Yes       No
+           onintr        No          Yes       No
+           popd          No          Yes       No
+           printenv      Yes         Yes       No
+           pushd         No          Yes       No
+           pwd           Yes         No        Yes
+           read          No**        No        Yes
+           readonly      No          No        Yes
+           rehash        No          Yes       No
+           repeat        No          Yes       No
+           return        No          No        Yes
+           sched         No          Yes       No
+           set           No          Yes       Yes
+           setenv        No          Yes       No
+           settc         No          Yes       No
+           setty         No          Yes       No
+           setvar        No          No        Yes
+           shift         No          Yes       Yes
+           source        No          Yes       No
+           stop          No          Yes       No
+           suspend       No          Yes       No
+           switch        No          Yes       No
+           telltc        No          Yes       No
+           test          Yes         No        Yes
+           then          No          No        Yes
+           time          Yes         Yes       No
+           times         No          No        Yes
+           trap          No          No        Yes
+           true          Yes         No        Yes
+           type          No          No        Yes
+           ulimit        No          No        Yes
+           umask         No**        Yes       Yes
+           unalias       No**        Yes       Yes
+           uncomplete    No          Yes       No
+           unhash        No          Yes       No
+           unlimit       No          Yes       No
+           unset         No          Yes       Yes
+           unsetenv      No          Yes       No
+           until         No          No        Yes
+           wait          No**        Yes       Yes
+           where         No          Yes       No
+           which         Yes         Yes       No
+           while         No          Yes       Yes
+
+SEE ALSO
+     csh(1), dash(1), echo(1), false(1), info(1), kill(1), login(1), nice(1), nohup(1), printenv(1), pwd(1), sh(1), test(1), time(1), true(1), which(1),
+     zsh(1)
+
+HISTORY
+     The builtin manual page first appeared in FreeBSD 3.4.
+
+AUTHORS
+     This manual page was written by Sheldon Hearn <sheldonh@FreeBSD.org>.
+
+BSD                            February 23, 2005                           BSD
+```
+
+
+## printenv manual
+
+```zsh
+% man printenv
+PRINTENV(1)               BSD General Commands Manual              PRINTENV(1)
+
+NAME
+     printenv -- print out the environment
+
+SYNOPSIS
+     printenv [name]
+
+DESCRIPTION
+     The printenv utility prints out the names and values of the variables in the environment, with one name/value pair per line.  
+     If name is specified, only its value is printed.
+
+     Some shells may provide a builtin printenv command which is similar or identical to this utility.  
+     Consult the builtin(1) manual page.
+
+EXIT STATUS
+     The printenv utility exits 0 on success, and >0 if an error occurs.
+
+SEE ALSO
+     csh(1), env(1), sh(1), environ(7)
+
+STANDARDS
+     The printenv utility is provided for compatibility with earlier BSD and FreeBSD releases and is not specified by any standards.  
+     The functionality of printenv can be duplicated with the echo(1) and env(1) utilities.
+
+HISTORY
+     The printenv command appeared in 3.0BSD.
+
+BSD                              May 12, 2003                              BSD
+```
+
+
+## この記事を試した環境
+
+```zsh
+% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+```
