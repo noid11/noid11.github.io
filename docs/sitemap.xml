@@ -3,53 +3,68 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://noid11.github.io/tags/aws-cli/</loc>
-    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
+    <loc>https://noid11.github.io/tags/bash/</loc>
+    <lastmod>2021-02-06T15:31:24+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://noid11.github.io/posts/how-to-build-proxy-env-on-aws/</loc>
-    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://noid11.github.io/tags/curl/</loc>
-    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://noid11.github.io/tags/ec2/</loc>
-    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
+    <loc>https://noid11.github.io/posts/how-to-use-envrionment-variables-at-bash-and-zsh/</loc>
+    <lastmod>2021-02-06T15:31:24+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://noid11.github.io/</loc>
-    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
+    <lastmod>2021-02-06T15:31:24+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://noid11.github.io/posts/</loc>
-    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://noid11.github.io/tags/squid/</loc>
-    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
+    <lastmod>2021-02-06T15:31:24+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://noid11.github.io/tags/</loc>
-    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
+    <lastmod>2021-02-06T15:31:24+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/zsh/</loc>
+    <lastmod>2021-02-06T15:31:24+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/aws-cli/</loc>
+    <lastmod>2021-02-02T23:44:05+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/posts/how-to-build-proxy-env-on-aws/</loc>
+    <lastmod>2021-02-02T23:44:05+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/curl/</loc>
+    <lastmod>2021-02-02T23:44:05+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/ec2/</loc>
+    <lastmod>2021-02-02T23:44:05+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/squid/</loc>
+    <lastmod>2021-02-02T23:44:05+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://noid11.github.io/tags/wget/</loc>
-    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
+    <lastmod>2021-02-02T23:44:05+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://noid11.github.io/tags/yum/</loc>
-    <lastmod>2021-02-02T23:43:47+09:00</lastmod>
+    <lastmod>2021-02-02T23:44:05+09:00</lastmod>
   </url>
   
   <url>

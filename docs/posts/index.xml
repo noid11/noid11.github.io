@@ -6,8 +6,245 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Tue, 02 Feb 2021 22:07:44 +0900</lastBuildDate>
+		<lastBuildDate>Sat, 06 Feb 2021 15:12:57 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>bash, zsh で環境変数を使う方法</title>
+			<link>https://noid11.github.io/posts/how-to-use-envrionment-variables-at-bash-and-zsh/</link>
+			<pubDate>Sat, 06 Feb 2021 15:12:57 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/how-to-use-envrionment-variables-at-bash-and-zsh/</guid>
+			<description>&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;export&lt;/code&gt; で設定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;printenv&lt;/code&gt; で確認&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;unset&lt;/code&gt; で削除
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;export -n&lt;/code&gt; でも削除できるが、これは多分 bash でしか使えないので &lt;code&gt;unset&lt;/code&gt; 使ったほうが良い&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;コマンド例&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;MYVALUE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;HOGE&amp;#34;&lt;/span&gt;
+printenv MYVALUE
+&lt;span class=&#34;nb&#34;&gt;unset&lt;/span&gt; MYVALUE
+printenv MYVALUE
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;実行例&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;% &lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;MYVALUE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;HOGE&amp;#34;&lt;/span&gt;
+% printenv MYVALUE
+HOGE
+% &lt;span class=&#34;nb&#34;&gt;unset&lt;/span&gt; MYVALUE
+% printenv MYVALUE
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+			<content type="html"><![CDATA[<ul>
+<li><code>export</code> で設定</li>
+<li><code>printenv</code> で確認</li>
+<li><code>unset</code> で削除
+<ul>
+<li><code>export -n</code> でも削除できるが、これは多分 bash でしか使えないので <code>unset</code> 使ったほうが良い</li>
+</ul>
+</li>
+</ul>
+<p>コマンド例</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nb">export</span> <span class="nv">MYVALUE</span><span class="o">=</span><span class="s2">&#34;HOGE&#34;</span>
+printenv MYVALUE
+<span class="nb">unset</span> MYVALUE
+printenv MYVALUE
+</code></pre></div><p>実行例</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% <span class="nb">export</span> <span class="nv">MYVALUE</span><span class="o">=</span><span class="s2">&#34;HOGE&#34;</span>
+% printenv MYVALUE
+HOGE
+% <span class="nb">unset</span> MYVALUE
+% printenv MYVALUE
+</code></pre></div><h2 id="export-unset-manual">export, unset manual</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% man <span class="nb">export</span>
+BUILTIN<span class="o">(</span>1<span class="o">)</span>                BSD General Commands Manual               BUILTIN<span class="o">(</span>1<span class="o">)</span>
+
+NAME
+     builtin, !, %, ., :, @, <span class="o">{</span>, <span class="o">}</span>, alias, alloc, bg, bind, bindkey, break, breaksw, builtins, <span class="k">case</span>, cd, chdir, command, complete, <span class="k">continue</span>, default, dirs,
+     <span class="k">do</span>, <span class="k">done</span>, echo, echotc, <span class="k">elif</span>, <span class="k">else</span>, end, endif, endsw, <span class="k">esac</span>, eval, exec, exit, export, false, fc, fg, filetest, <span class="k">fi</span>, <span class="k">for</span>, foreach, getopts, glob, goto,
+     hash, hashstat, history, hup, <span class="k">if</span>, jobid, jobs, kill, limit, local, log, login, logout, ls-F, nice, nohup, notify, onintr, popd, printenv, pushd, pwd,
+     read, readonly, rehash, repeat, <span class="k">return</span>, sched, set, setenv, settc, setty, setvar, shift, source, stop, suspend, switch, telltc, test, <span class="k">then</span>, time,
+     times, trap, true, type, ulimit, umask, unalias, uncomplete, unhash, unlimit, unset, unsetenv, <span class="k">until</span>, wait, where, which, <span class="k">while</span> -- shell built-in com-
+     mands
+
+SYNOPSIS
+     <span class="nb">builtin</span> <span class="o">[</span>-options<span class="o">]</span> <span class="o">[</span>args ...<span class="o">]</span>
+
+DESCRIPTION
+     Shell <span class="nb">builtin</span> commands are commands that can be executed within the running shell<span class="se">\&#39;</span>s process.
+     Note that, in the <span class="k">case</span> of csh<span class="o">(</span>1<span class="o">)</span> <span class="nb">builtin</span> commands, the <span class="nb">command</span> is executed in a subshell <span class="k">if</span> it occurs as any component of a pipeline except the last.
+
+     If a <span class="nb">command</span> specified to the shell contains a slash <span class="sb">``</span>/<span class="s1">&#39;&#39;</span>, the shell will not execute a <span class="nb">builtin</span> command, even <span class="k">if</span> the last component of the specified <span class="nb">command</span> matches the name of a <span class="nb">builtin</span> command.  Thus, <span class="k">while</span> specifying <span class="sb">``</span>echo<span class="s1">&#39;&#39;</span> causes a <span class="nb">builtin</span> <span class="nb">command</span> to be executed under shells that support the <span class="nb">echo</span> <span class="nb">builtin</span> command, specifying <span class="sb">``</span>/bin/echo<span class="s1">&#39;&#39;</span> or <span class="sb">``</span>./echo<span class="s1">&#39;&#39;</span> does not.
+
+     While some <span class="nb">builtin</span> commands may exist in more than one shell, their operation may be different under each shell which supports them.
+     Below is a table which lists shell <span class="nb">builtin</span> commands, the standard shells that support them and whether they exist as standalone utilities.
+
+     Only <span class="nb">builtin</span> commands <span class="k">for</span> the csh<span class="o">(</span>1<span class="o">)</span> and sh<span class="o">(</span>1<span class="o">)</span> shells are listed here.
+     Consult a shell<span class="se">\&#39;</span>s manual page <span class="k">for</span> details on the operation of its <span class="nb">builtin</span> commands.
+     Beware that the sh<span class="o">(</span>1<span class="o">)</span> manual page, at least, calls some of these commands <span class="sb">``</span>built-in commands<span class="s1">&#39;&#39;</span> and some of them <span class="sb">``</span>reserved words<span class="s1">&#39;&#39;</span>.
+     Users of other shells may need to consult an info<span class="o">(</span>1<span class="o">)</span> page or other sources of documentation.
+
+     Commands marked <span class="sb">``</span>No**<span class="s1">&#39;&#39;</span> under External <span class="k">do</span> exist externally, but are implemented as scripts using a <span class="nb">builtin</span> <span class="nb">command</span> of the same name.
+
+           Command       External    csh<span class="o">(</span>1<span class="o">)</span>    sh<span class="o">(</span>1<span class="o">)</span>
+           !             No          No        Yes
+           %             No          Yes       No
+           .             No          No        Yes
+           :             No          Yes       Yes
+           @             No          Yes       Yes
+           <span class="o">{</span>             No          No        Yes
+           <span class="o">}</span>             No          No        Yes
+           <span class="nb">alias</span>         No**        Yes       Yes
+           alloc         No          Yes       No
+           <span class="nb">bg</span>            No**        Yes       Yes
+           <span class="nb">bind</span>          No          No        Yes
+           bindkey       No          Yes       No
+           <span class="nb">break</span>         No          Yes       Yes
+           breaksw       No          Yes       No
+           <span class="nb">builtin</span>       No          No        Yes
+           builtins      No          Yes       No
+           <span class="k">case</span>          No          Yes       Yes
+           <span class="nb">cd</span>            No**        Yes       Yes
+           chdir         No          Yes       Yes
+           <span class="nb">command</span>       No**        No        Yes
+           <span class="nb">complete</span>      No          Yes       No
+           <span class="k">continue</span>      No          Yes       Yes
+           default       No          Yes       No
+           <span class="nb">dirs</span>          No          Yes       No
+           <span class="k">do</span>            No          No        Yes
+           <span class="k">done</span>          No          No        Yes
+           <span class="nb">echo</span>          Yes         Yes       Yes
+           echotc        No          Yes       No
+           <span class="k">elif</span>          No          No        Yes
+           <span class="k">else</span>          No          Yes       Yes
+           end           No          Yes       No
+           endif         No          Yes       No
+           endsw         No          Yes       No
+           <span class="k">esac</span>          No          No        Yes
+           <span class="nb">eval</span>          No          Yes       Yes
+           <span class="nb">exec</span>          No          Yes       Yes
+           <span class="nb">exit</span>          No          Yes       Yes
+           <span class="nb">export</span>        No          No        Yes
+           <span class="nb">false</span>         Yes         No        Yes
+           <span class="nb">fc</span>            No**        No        Yes
+           <span class="nb">fg</span>            No**        Yes       Yes
+           filetest      No          Yes       No
+           <span class="k">fi</span>            No          No        Yes
+           <span class="k">for</span>           No          No        Yes
+           foreach       No          Yes       No
+           <span class="nb">getopts</span>       No**        No        Yes
+           glob          No          Yes       No
+           goto          No          Yes       No
+           <span class="nb">hash</span>          No          No        Yes
+           hashstat      No          Yes       No
+           <span class="nb">history</span>       No          Yes       No
+           hup           No          Yes       No
+           <span class="k">if</span>            No          Yes       Yes
+           jobid         No          No        Yes
+           <span class="nb">jobs</span>          No**        Yes       Yes
+           <span class="nb">kill</span>          Yes         Yes       No
+           limit         No          Yes       No
+           <span class="nb">local</span>         No          No        Yes
+           log           No          Yes       No
+           login         Yes         Yes       No
+           <span class="nb">logout</span>        No          Yes       No
+           ls-F          No          Yes       No
+           nice          Yes         Yes       No
+           nohup         Yes         Yes       No
+           notify        No          Yes       No
+           onintr        No          Yes       No
+           <span class="nb">popd</span>          No          Yes       No
+           printenv      Yes         Yes       No
+           <span class="nb">pushd</span>         No          Yes       No
+           <span class="nb">pwd</span>           Yes         No        Yes
+           <span class="nb">read</span>          No**        No        Yes
+           <span class="nb">readonly</span>      No          No        Yes
+           rehash        No          Yes       No
+           repeat        No          Yes       No
+           <span class="k">return</span>        No          No        Yes
+           sched         No          Yes       No
+           <span class="nb">set</span>           No          Yes       Yes
+           setenv        No          Yes       No
+           settc         No          Yes       No
+           setty         No          Yes       No
+           setvar        No          No        Yes
+           <span class="nb">shift</span>         No          Yes       Yes
+           <span class="nb">source</span>        No          Yes       No
+           stop          No          Yes       No
+           <span class="nb">suspend</span>       No          Yes       No
+           switch        No          Yes       No
+           telltc        No          Yes       No
+           <span class="nb">test</span>          Yes         No        Yes
+           <span class="k">then</span>          No          No        Yes
+           <span class="nb">time</span>          Yes         Yes       No
+           <span class="nb">times</span>         No          No        Yes
+           <span class="nb">trap</span>          No          No        Yes
+           <span class="nb">true</span>          Yes         No        Yes
+           <span class="nb">type</span>          No          No        Yes
+           <span class="nb">ulimit</span>        No          No        Yes
+           <span class="nb">umask</span>         No**        Yes       Yes
+           <span class="nb">unalias</span>       No**        Yes       Yes
+           uncomplete    No          Yes       No
+           unhash        No          Yes       No
+           unlimit       No          Yes       No
+           <span class="nb">unset</span>         No          Yes       Yes
+           unsetenv      No          Yes       No
+           <span class="k">until</span>         No          No        Yes
+           <span class="nb">wait</span>          No**        Yes       Yes
+           where         No          Yes       No
+           which         Yes         Yes       No
+           <span class="k">while</span>         No          Yes       Yes
+
+SEE ALSO
+     csh<span class="o">(</span>1<span class="o">)</span>, dash<span class="o">(</span>1<span class="o">)</span>, echo<span class="o">(</span>1<span class="o">)</span>, false<span class="o">(</span>1<span class="o">)</span>, info<span class="o">(</span>1<span class="o">)</span>, kill<span class="o">(</span>1<span class="o">)</span>, login<span class="o">(</span>1<span class="o">)</span>, nice<span class="o">(</span>1<span class="o">)</span>, nohup<span class="o">(</span>1<span class="o">)</span>, printenv<span class="o">(</span>1<span class="o">)</span>, pwd<span class="o">(</span>1<span class="o">)</span>, sh<span class="o">(</span>1<span class="o">)</span>, test<span class="o">(</span>1<span class="o">)</span>, time<span class="o">(</span>1<span class="o">)</span>, true<span class="o">(</span>1<span class="o">)</span>, which<span class="o">(</span>1<span class="o">)</span>,
+     zsh<span class="o">(</span>1<span class="o">)</span>
+
+HISTORY
+     The <span class="nb">builtin</span> manual page first appeared in FreeBSD 3.4.
+
+AUTHORS
+     This manual page was written by Sheldon Hearn &lt;sheldonh@FreeBSD.org&gt;.
+
+BSD                            February 23, <span class="m">2005</span>                           BSD
+</code></pre></div><h2 id="printenv-manual">printenv manual</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% man printenv
+PRINTENV<span class="o">(</span>1<span class="o">)</span>               BSD General Commands Manual              PRINTENV<span class="o">(</span>1<span class="o">)</span>
+
+NAME
+     printenv -- print out the environment
+
+SYNOPSIS
+     printenv <span class="o">[</span>name<span class="o">]</span>
+
+DESCRIPTION
+     The printenv utility prints out the names and values of the variables in the environment, with one name/value pair per line.  
+     If name is specified, only its value is printed.
+
+     Some shells may provide a <span class="nb">builtin</span> printenv <span class="nb">command</span> which is similar or identical to this utility.  
+     Consult the builtin<span class="o">(</span>1<span class="o">)</span> manual page.
+
+EXIT STATUS
+     The printenv utility exits <span class="m">0</span> on success, and &gt;0 <span class="k">if</span> an error occurs.
+
+SEE ALSO
+     csh<span class="o">(</span>1<span class="o">)</span>, env<span class="o">(</span>1<span class="o">)</span>, sh<span class="o">(</span>1<span class="o">)</span>, environ<span class="o">(</span>7<span class="o">)</span>
+
+STANDARDS
+     The printenv utility is provided <span class="k">for</span> compatibility with earlier BSD and FreeBSD releases and is not specified by any standards.  
+     The functionality of printenv can be duplicated with the echo<span class="o">(</span>1<span class="o">)</span> and env<span class="o">(</span>1<span class="o">)</span> utilities.
+
+HISTORY
+     The printenv <span class="nb">command</span> appeared in 3.0BSD.
+
+BSD                              May 12, <span class="m">2003</span>                              BSD
+</code></pre></div><h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+</code></pre></div>]]></content>
+		</item>
 		
 		<item>
 			<title>AWS 上に Proxy 環境を構築するメモ</title>

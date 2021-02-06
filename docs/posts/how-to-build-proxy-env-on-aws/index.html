@@ -10,7 +10,7 @@
 <meta itemprop="name" content="AWS 上に Proxy 環境を構築するメモ">
 <meta itemprop="description" content="これは何？ AWS 上に HTTP Proxy を構築して検証する機会があったので、構築手順をメモしておく 大まかな流れ [事前準備] VPC と public subnet, private subnet を用意しておく public subnet は Internet Gateway を">
 <meta itemprop="datePublished" content="2021-02-02T22:07:44+09:00" />
-<meta itemprop="dateModified" content="2021-02-02T23:43:47+09:00" />
+<meta itemprop="dateModified" content="2021-02-02T23:44:05+09:00" />
 <meta itemprop="wordCount" content="1338">
 
 
@@ -21,7 +21,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://noid11.github.io/posts/how-to-build-proxy-env-on-aws/" />
 <meta property="article:published_time" content="2021-02-02T22:07:44+09:00" />
-<meta property="article:modified_time" content="2021-02-02T23:43:47+09:00" />
+<meta property="article:modified_time" content="2021-02-02T23:44:05+09:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="AWS 上に Proxy 環境を構築するメモ"/>
 <meta name="twitter:description" content="これは何？ AWS 上に HTTP Proxy を構築して検証する機会があったので、構築手順をメモしておく 大まかな流れ [事前準備] VPC と public subnet, private subnet を用意しておく public subnet は Internet Gateway を"/>
@@ -260,7 +260,7 @@ GNU Wget 1.14 built on linux-gnu.
 				</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1338 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2021/02/02 22:07 &#43;0900</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/noid11/noid11.github.io/commit/ed24368743ceb15f125ffaec15ac378e89c2d7ad" target="_blank" rel="noopener">ed24368</a> @ 2021/02/02</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/noid11/noid11.github.io/commit/1b7b03591946829295a6c479a68760e28b76da57" target="_blank" rel="noopener">1b7b035</a> @ 2021/02/02</p>
 			</footer>
 		</article>
 		<aside id="toc" class="show-toc">
@@ -285,6 +285,9 @@ GNU Wget 1.14 built on linux-gnu.
 </nav>
 		</aside>
 		<div class="post-nav thin">
+			<a class="next-post" href="https://noid11.github.io/posts/how-to-use-envrionment-variables-at-bash-and-zsh/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;Newer</span><br><span>bash, zsh で環境変数を使う方法</span>
+			</a>
 			<a class="prev-post" href="https://noid11.github.io/posts/no-need-permission-sts-get-caller-identity/">
 				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>AWS STS における GetCallerIdentity API に許可は必要ないという話</span>
 			</a>

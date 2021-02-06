@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>zsh on noid11.github.io</title>
+    <link>https://noid11.github.io/tags/zsh/</link>
+    <description>Recent content in zsh on noid11.github.io</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>&amp;#169; noid11</copyright>
+    <lastBuildDate>Sat, 06 Feb 2021 15:12:57 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/zsh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>bash, zsh で環境変数を使う方法</title>
+      <link>https://noid11.github.io/posts/how-to-use-envrionment-variables-at-bash-and-zsh/</link>
+      <pubDate>Sat, 06 Feb 2021 15:12:57 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/how-to-use-envrionment-variables-at-bash-and-zsh/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;export&lt;/code&gt; で設定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;printenv&lt;/code&gt; で確認&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;unset&lt;/code&gt; で削除
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;export -n&lt;/code&gt; でも削除できるが、これは多分 bash でしか使えないので &lt;code&gt;unset&lt;/code&gt; 使ったほうが良い&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;コマンド例&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;MYVALUE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;HOGE&amp;#34;&lt;/span&gt;
+printenv MYVALUE
+&lt;span class=&#34;nb&#34;&gt;unset&lt;/span&gt; MYVALUE
+printenv MYVALUE
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;実行例&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;% &lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;MYVALUE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;HOGE&amp;#34;&lt;/span&gt;
+% printenv MYVALUE
+HOGE
+% &lt;span class=&#34;nb&#34;&gt;unset&lt;/span&gt; MYVALUE
+% printenv MYVALUE
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

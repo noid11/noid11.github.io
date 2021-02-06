@@ -1,7 +1,7 @@
 ---
 title: "bash, zsh で環境変数を使う方法"
 date: 2021-02-06T15:12:57+09:00
-draft: true
+draft: false
 toc: true
 images:
 tags: 
