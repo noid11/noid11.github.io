@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Sat, 06 Feb 2021 15:12:57 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 07 Feb 2021 19:37:56 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>個人的な AWS Cloud9 の使い方 TIPS</title>
+      <link>https://noid11.github.io/posts/my-cloud9-tips/</link>
+      <pubDate>Sun, 07 Feb 2021 19:37:56 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/my-cloud9-tips/</guid>
+      <description>AWS Cloud9 を稀に使うのでセットアップ方法メモ セットアップ SSH key 作成 ssh-keygen -t rsa -b 4096 -C &amp;#34;Cloud9 環境の ARN&amp;#34; あとは GitHub に登録したり https://github.com/settings/keys ssh-keygen manual -t: アルゴリズム -b: bit 数 -C: コメント ユニ</description>
+    </item>
+    
     <item>
       <title>bash, zsh で環境変数を使う方法</title>
       <link>https://noid11.github.io/posts/how-to-use-envrionment-variables-at-bash-and-zsh/</link>
@@ -201,15 +210,6 @@ HOGE
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;nv&#34;&gt;LOG_GROUP&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/aws/lambda/myfunc
 aws logs tail &lt;span class=&#34;nv&#34;&gt;$LOG_GROUP&lt;/span&gt; --follow
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>Mac に Docker Machine をインストールする方法</title>
-      <link>https://noid11.github.io/posts/how-to-install-docker-machine-to-mac/</link>
-      <pubDate>Fri, 22 Jan 2021 09:30:07 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/how-to-install-docker-machine-to-mac/</guid>
-      <description>&lt;p&gt;ググっても公式情報がヒットしづらかったのでメモ&lt;/p&gt;</description>
     </item>
     
   </channel>
