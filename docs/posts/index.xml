@@ -6,8 +6,55 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Mon, 08 Feb 2021 23:56:05 +0900</lastBuildDate>
+		<lastBuildDate>Tue, 09 Feb 2021 05:54:16 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>AWS アカウントのセットアップ TIPS</title>
+			<link>https://noid11.github.io/posts/my-aws-account-setup-tips/</link>
+			<pubDate>Tue, 09 Feb 2021 05:54:16 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/my-aws-account-setup-tips/</guid>
+			<description>&lt;ul&gt;
+&lt;li&gt;個人的に使っている AWS アカウントの管理とかセットアップに関する TIPS&lt;/li&gt;
+&lt;/ul&gt;</description>
+			<content type="html"><![CDATA[<ul>
+<li>個人的に使っている AWS アカウントの管理とかセットアップに関する TIPS</li>
+</ul>
+<h2 id="aws-アカウントの管理には-control-tower-を使う">AWS アカウントの管理には Control Tower を使う</h2>
+<ul>
+<li><a href="https://aws.amazon.com/jp/controltower/">AWS Control Tower</a> はマルチアカウント環境をセキュアに管理・構築してくれるサービス</li>
+<li>複数の AWS アカウントの管理と言えば <a href="https://aws.amazon.com/jp/organizations/">AWS Organizations</a> や <a href="https://aws.amazon.com/jp/single-sign-on/">AWS Single Sign-On</a> といったサービスがメジャーな気がするが、 Control Tower はこれらをまとめて管理してくれる</li>
+<li>特に便利なのが <a href="https://aws.amazon.com/jp/servicecatalog/">AWS Service Catalog</a> を使用した AWS アカウント作成で、一々 AWS アカウントのサインアップをする必要がなくなるので大変便利
+<ul>
+<li>何か検証が必要になったら検証用の AWS アカウントを作成する・・・みたいな事が手軽にできるようになる</li>
+</ul>
+</li>
+</ul>
+<p>Provision and manage accounts with Account Factory - AWS Control Tower<br>
+<a href="https://docs.aws.amazon.com/controltower/latest/userguide/account-factory.html">https://docs.aws.amazon.com/controltower/latest/userguide/account-factory.html</a></p>
+<h2 id="aws-cli-v2-の-sso-設定をしておく">AWS CLI v2 の SSO 設定をしておく</h2>
+<ul>
+<li>AWS CLI v2 からは AWS SSO に対応したプロファイル設定が可能</li>
+<li>特定の AWS アカウントに対して AWS CLI で操作したい場面は割とあるので、 AWS アカウントの作成時にセットアップしておくと良い
+<ul>
+<li>サクッと実行する分には AWS SSO でマネジメントコンソールにアクセスして CloudShell から AWS CLI を実行する・・・という方法でも良い</li>
+</ul>
+</li>
+</ul>
+<p>Configuring the AWS CLI to use AWS Single Sign-On - AWS Command Line Interface<br>
+<a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html">https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html</a></p>
+<h2 id="aws-から送信されるマーケティングメールの登録を解除しておく">AWS から送信されるマーケティングメールの登録を解除しておく</h2>
+<p>AWS Email Preference Center<br>
+<a href="https://pages.awscloud.com/jp/communication-preferences.html?languages=japanese">https://pages.awscloud.com/jp/communication-preferences.html?languages=japanese</a></p>
+<ul>
+<li>作成した AWS アカウントのメールアドレスに同じお知らせメールが届くので、基本的には速攻解除しておくのが吉
+<ul>
+<li>油断してメンテナンスのお知らせとか気付けないとヤバいことになる可能性もある</li>
+</ul>
+</li>
+</ul>]]></content>
+		</item>
 		
 		<item>
 			<title>ファイルの圧縮や展開関連のコマンド</title>

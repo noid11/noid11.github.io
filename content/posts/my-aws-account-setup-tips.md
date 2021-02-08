@@ -1,7 +1,7 @@
 ---
 title: "AWS アカウントのセットアップ TIPS"
 date: 2021-02-09T05:54:16+09:00
-draft: true
+draft: false
 toc: true
 images:
 tags: 

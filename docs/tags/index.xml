@@ -7,7 +7,52 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Mon, 08 Feb 2021 23:56:05 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 09 Feb 2021 05:54:16 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AWS</title>
+      <link>https://noid11.github.io/tags/aws/</link>
+      <pubDate>Tue, 09 Feb 2021 05:54:16 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/aws/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AWS Control Tower</title>
+      <link>https://noid11.github.io/tags/aws-control-tower/</link>
+      <pubDate>Tue, 09 Feb 2021 05:54:16 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/aws-control-tower/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AWS Organizations</title>
+      <link>https://noid11.github.io/tags/aws-organizations/</link>
+      <pubDate>Tue, 09 Feb 2021 05:54:16 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/aws-organizations/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AWS Service Catalog</title>
+      <link>https://noid11.github.io/tags/aws-service-catalog/</link>
+      <pubDate>Tue, 09 Feb 2021 05:54:16 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/aws-service-catalog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AWS Single Sign-On</title>
+      <link>https://noid11.github.io/tags/aws-single-sign-on/</link>
+      <pubDate>Tue, 09 Feb 2021 05:54:16 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/aws-single-sign-on/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>bzip2</title>
       <link>https://noid11.github.io/tags/bzip2/</link>
@@ -50,51 +95,6 @@
       <pubDate>Mon, 08 Feb 2021 23:56:05 +0900</pubDate>
       
       <guid>https://noid11.github.io/tags/zip/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Cloud9</title>
-      <link>https://noid11.github.io/tags/cloud9/</link>
-      <pubDate>Sun, 07 Feb 2021 19:37:56 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/cloud9/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>bash</title>
-      <link>https://noid11.github.io/tags/bash/</link>
-      <pubDate>Sat, 06 Feb 2021 15:12:57 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/bash/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>zsh</title>
-      <link>https://noid11.github.io/tags/zsh/</link>
-      <pubDate>Sat, 06 Feb 2021 15:12:57 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/zsh/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>AWS CLI</title>
-      <link>https://noid11.github.io/tags/aws-cli/</link>
-      <pubDate>Tue, 02 Feb 2021 22:07:44 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/aws-cli/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>curl</title>
-      <link>https://noid11.github.io/tags/curl/</link>
-      <pubDate>Tue, 02 Feb 2021 22:07:44 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/curl/</guid>
       <description></description>
     </item>
     

@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Mon, 08 Feb 2021 23:56:05 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 09 Feb 2021 05:54:16 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AWS アカウントのセットアップ TIPS</title>
+      <link>https://noid11.github.io/posts/my-aws-account-setup-tips/</link>
+      <pubDate>Tue, 09 Feb 2021 05:54:16 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/my-aws-account-setup-tips/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;個人的に使っている AWS アカウントの管理とかセットアップに関する TIPS&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
     <item>
       <title>ファイルの圧縮や展開関連のコマンド</title>
       <link>https://noid11.github.io/posts/file-compress-and-decompress-commands/</link>
@@ -184,26 +195,6 @@ HOGE
 &lt;ul&gt;
 &lt;li&gt;1秒 あたりに行ったリクエスト数が知りたい: &lt;code&gt;Requests per second&lt;/code&gt; を確認&lt;/li&gt;
 &lt;li&gt;失敗したリクエストを知りたい: &lt;code&gt;Non-2xx responses&lt;/code&gt; を確認&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Using Amazon SQS dead-letter queues to replay messages 読んだメモ</title>
-      <link>https://noid11.github.io/posts/read-using-amazon-sqs-dead-letter-queues-to-replay-messages/</link>
-      <pubDate>Sun, 24 Jan 2021 16:50:17 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/read-using-amazon-sqs-dead-letter-queues-to-replay-messages/</guid>
-      <description>&lt;p&gt;以下のブログ記事を読んだメモ&lt;/p&gt;
-&lt;p&gt;Using Amazon SQS dead-letter queues to replay messages | AWS Compute Blog&lt;br&gt;
-&lt;a href=&#34;https://aws.amazon.com/jp/blogs/compute/using-amazon-sqs-dead-letter-queues-to-replay-messages/&#34;&gt;https://aws.amazon.com/jp/blogs/compute/using-amazon-sqs-dead-letter-queues-to-replay-messages/&lt;/a&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;SQS の DLQ を扱う方法として、 DLQ を 2つ 使う構成&lt;/li&gt;
-&lt;li&gt;1つめの DLQ は Lambda 関数のトリガーとして設定し、アプリケーションで処理されなかったメッセージを Lambda 関数によって再処理する
-&lt;ul&gt;
-&lt;li&gt;この Lambda 関数で処理できなかったものに関しては SQS メッセージ属性にて再試行回数をカウントして、所定のリトライ回数を超えたら 2つめ の DLQ にメッセージを送信し、あとは手動で処理する&lt;/li&gt;
-&lt;li&gt;Lambda 関数による DLQ のリトライではメッセージ属性を使ってエクスポネンシャルバックオフによる間隔調整を行う&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;</description>
