@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="ファイルの圧縮や展開関連のコマンド">
+<meta itemprop="description" content="
+オプションとか関連コマンドが多く、とても覚えきれないのでメモ
+">
+<meta itemprop="datePublished" content="2021-02-08T23:56:05+09:00" />
+<meta itemprop="dateModified" content="2021-02-09T01:52:07+09:00" />
+<meta itemprop="wordCount" content="1103">
+
+
+
+<meta itemprop="keywords" content="zip,gzip,bzip2,xz,tar," />
+<meta property="og:title" content="ファイルの圧縮や展開関連のコマンド" />
+<meta property="og:description" content="
+オプションとか関連コマンドが多く、とても覚えきれないのでメモ
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noid11.github.io/posts/file-compress-and-decompress-commands/" />
+<meta property="article:published_time" content="2021-02-08T23:56:05+09:00" />
+<meta property="article:modified_time" content="2021-02-09T01:52:07+09:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ファイルの圧縮や展開関連のコマンド"/>
+<meta name="twitter:description" content="
+オプションとか関連コマンドが多く、とても覚えきれないのでメモ
+"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>ファイルの圧縮や展開関連のコマンド</title>
+	<link rel="stylesheet" href="https://noid11.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://noid11.github.io/">noid11.github.io</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://noid11.github.io/posts/">Posts</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="toc-btn" class="hdr-btn desktop-only-ib" title="Table of Contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="https://twitter.com/_noid11" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://github.com/noid11" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://noid11.github.io/posts/">Posts</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>2021/02/08</span></div>
+				<h1>ファイルの圧縮や展開関連のコマンド</h1>
+			</header>
+			<div class="content">
+				<ul>
+<li>オプションとか関連コマンドが多く、とても覚えきれないのでメモ</li>
+</ul>
+<h2 id="zip">zip<a href="#zip" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ファイル圧縮</span>
+zip myzip.zip sample.txt
+
+<span class="c1"># ディレクトリ圧縮</span>
+zip -r myzip.zip /path/to/dir
+
+<span class="c1"># 展開</span>
+unzip myzip.zip
+</code></pre></div><p>Manpage of ZIP<br>
+<a href="http://linux.math.tifr.res.in/manuals/man/zip.html">http://linux.math.tifr.res.in/manuals/man/zip.html</a></p>
+<p>zip(1)<br>
+<a href="https://www.freebsd.org/cgi/man.cgi?query=zip&amp;apropos=0&amp;sektion=1">https://www.freebsd.org/cgi/man.cgi?query=zip&amp;apropos=0&amp;sektion=1</a></p>
+<h2 id="unix-compress">UNIX Compress<a href="#unix-compress" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 圧縮</span>
+compress sample.txt
+
+<span class="c1"># 展開</span>
+uncompress sample.txt.Z
+</code></pre></div><p>compress(1p) - Linux manual page<br>
+<a href="https://man7.org/linux/man-pages/man1/compress.1p.html">https://man7.org/linux/man-pages/man1/compress.1p.html</a></p>
+<p>compress(1)<br>
+<a href="https://www.freebsd.org/cgi/man.cgi?query=compress&amp;sektion=1">https://www.freebsd.org/cgi/man.cgi?query=compress&amp;sektion=1</a></p>
+<h2 id="gzip">gzip<a href="#gzip" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ファイル圧縮 (sample.txt が sample.txt.gz になる)</span>
+gzip sample.txt
+
+<span class="c1"># ディレクトリに含まれるファイルを圧縮 </span>
+<span class="c1"># ./midir/ 配下のファイルが全て .gz となる</span>
+gzip -r ./mydir
+
+<span class="c1"># ファイル展開</span>
+gunzip sample.txt.gz
+
+<span class="c1"># ディレクトリに含まれるファイルを展開</span>
+<span class="c1"># ./midir/ 配下の .gz ファイルが全て展開される</span>
+gunzip -r ./mydir
+
+<span class="c1"># gzip 圧縮されたファイルを展開せずに見る</span>
+gzcat sample.txt.gz <span class="c1"># Linux では gzcat ではなく zcat を使う</span>
+zless sample.txt.gz
+zmore sample.txt.gz
+</code></pre></div><p>GNU Gzip<br>
+<a href="https://www.gnu.org/software/gzip/manual/gzip.html">https://www.gnu.org/software/gzip/manual/gzip.html</a></p>
+<p>gzip<br>
+<a href="https://www.freebsd.org/cgi/man.cgi?query=gzip&amp;sektion=&amp;n=1">https://www.freebsd.org/cgi/man.cgi?query=gzip&amp;sektion=&amp;n=1</a></p>
+<p>gzcat(1)<br>
+<a href="https://www.freebsd.org/cgi/man.cgi?query=gzcat&amp;sektion=1&amp;n=1">https://www.freebsd.org/cgi/man.cgi?query=gzcat&amp;sektion=1&amp;n=1</a></p>
+<h2 id="bzip2">bzip2<a href="#bzip2" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ファイル圧縮 (sample.txt が sample.txt.bz2 になる)</span>
+bzip2 sample.txt
+
+<span class="c1"># ディレクトリに含まれるファイルを圧縮 </span>
+<span class="c1"># -r オプションが無いので find コマンド等と組み合わせる必要がある</span>
+find ./mydir -type f -exec bzip2 <span class="o">{}</span> +
+
+<span class="c1"># ファイル展開</span>
+bunzip2 sample.txt.bz2
+
+<span class="c1"># ディレクトリに含まれるファイルを展開</span>
+<span class="c1"># -r オプションが無いので find コマンド等と組み合わせる必要がある</span>
+find ./mydir -type f -exec bunzip2 <span class="o">{}</span> +
+
+<span class="c1"># bzip2 圧縮されたファイルを展開せずに見る</span>
+bzcat sample.txt.bz2
+</code></pre></div><p>bzip2(1): block-sorting file compressor - Linux man page<br>
+<a href="https://linux.die.net/man/1/bzip2">https://linux.die.net/man/1/bzip2</a></p>
+<p>bzip2(1)<br>
+<a href="https://www.freebsd.org/cgi/man.cgi?query=bzip2&amp;sektion=1">https://www.freebsd.org/cgi/man.cgi?query=bzip2&amp;sektion=1</a></p>
+<h2 id="xz">xz<a href="#xz" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 圧縮</span>
+xz sample.txt
+
+<span class="c1"># 圧縮されたデータを展開せずに確認</span>
+xzcat sample.txt.xz
+
+<span class="c1"># 展開</span>
+unxz sample.txt.xz
+</code></pre></div><p>xz(1): Compress/decompress .xz/.lzma files - Linux man page<br>
+<a href="https://linux.die.net/man/1/xz">https://linux.die.net/man/1/xz</a></p>
+<p>xz(1)<br>
+<a href="https://www.freebsd.org/cgi/man.cgi?xz(1)">https://www.freebsd.org/cgi/man.cgi?xz(1)</a></p>
+<h2 id="tar">tar<a href="#tar" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>tar.Z</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ディレクトリを指定して tar にしてから UNIX Compress</span>
+tar cZvf my.tar.Z /path/to/dir
+
+<span class="c1"># 展開</span>
+tar xvf my.tar.Z
+</code></pre></div><hr>
+<p>tar.gz</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ディレクトリを指定して tar にしてから gzip</span>
+tar czvf my.tar.gz /path/to/dir
+
+<span class="c1"># 展開</span>
+tar xvf my.tar.gz
+</code></pre></div><hr>
+<p>tar.bz2</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ディレクトリを指定して tar にしてから bzip2</span>
+tar jcvf my.tar.bz2 /path/to/dir
+
+<span class="c1"># 展開</span>
+tar xvf my.tar.bz2
+</code></pre></div><hr>
+<p>tar.xz</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ディレクトリ指定して tar にしてから xz</span>
+tar Jcvf my.tar.xz /path/to/dir
+
+<span class="c1"># 展開</span>
+tar xvf my.tar.xz
+</code></pre></div><p>tar(1) - Linux manual page<br>
+<a href="https://man7.org/linux/man-pages/man1/tar.1.html">https://man7.org/linux/man-pages/man1/tar.1.html</a></p>
+<p>tar(1)<br>
+<a href="https://www.freebsd.org/cgi/man.cgi?tar(1)">https://www.freebsd.org/cgi/man.cgi?tar(1)</a></p>
+<h2 id="ファイル形式あれこれ">ファイル形式あれこれ<a href="#ファイル形式あれこれ" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>zip
+<ul>
+<li><a href="https://support.pkware.com/home/pkzip/developer-tools/appnote">https://support.pkware.com/home/pkzip/developer-tools/appnote</a></li>
+<li><a href="https://www.iso.org/standard/60101.html">https://www.iso.org/standard/60101.html</a></li>
+<li>一般的。 Windows でも使われる</li>
+</ul>
+</li>
+<li>UNIX Compress
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Compress">https://en.wikipedia.org/wiki/Compress</a></li>
+<li>昔よく使われていたもの</li>
+</ul>
+</li>
+<li>gzip: GNU zip
+<ul>
+<li><a href="https://www.gzip.org/">https://www.gzip.org/</a></li>
+<li><a href="https://www.gnu.org/software/gzip/">https://www.gnu.org/software/gzip/</a></li>
+<li>現代の主流</li>
+</ul>
+</li>
+<li>bzip2
+<ul>
+<li><a href="https://www.sourceware.org/bzip2/">https://www.sourceware.org/bzip2/</a></li>
+<li>gzip よりも圧縮効率が高いと言われている。一方で圧縮や展開に必要となるリソースが大きめ、かつ時間がかかる</li>
+</ul>
+</li>
+<li>xz
+<ul>
+<li><a href="https://tukaani.org/xz/format.html">https://tukaani.org/xz/format.html</a></li>
+<li>bzip2 より更に圧縮効率が高いと言われているが、より CPU やメモリや時間を使用する</li>
+</ul>
+</li>
+<li>tar
+<ul>
+<li>tar 自体は圧縮ではなく tape archives, tarball 等と呼ばれるファイルアーカイブフォーマット</li>
+<li>複数のファイルに対して圧縮を行うよりも、複数のファイルを tar として1つのファイルにアーカイブして圧縮した方がシーケンシャルなデータになるので、一般的に圧縮効率が良い
+<ul>
+<li>.tar.Z: tar したあとに UNIX Compress したもの。 .taz とも表記される</li>
+<li>.tar.gz: tar したあとに gzip したもの。 .tgz とも表記される</li>
+<li>.tar.bz2: tar したあとに bzip2 したもの。</li>
+<li>.tar.xz: tar したあとに xz したもの。</li>
+</ul>
+</li>
+<li>ファイルが一部破損したら破損箇所以降のファイルを取り出すことができないというデメリットもある</li>
+</ul>
+</li>
+<li>圧縮効率が高いといっても、必ずしも他よりファイルサイズを小さくできる訳ではない
+<ul>
+<li>圧縮対象のファイル内容にも依存する。テキストファイルは得意だけど、動画ファイルは苦手とか。</li>
+<li>ちゃんと検討するならば具体的なサンプルファイルをいくつか用意して、それぞれの圧縮方式について検証した方が良い</li>
+</ul>
+</li>
+</ul>
+<h2 id="この記事を試した環境">この記事を試した環境<a href="#この記事を試した環境" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+</code></pre></div>
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://noid11.github.io/tags/zip">zip</a></span><span class="tag"><a href="https://noid11.github.io/tags/gzip">gzip</a></span><span class="tag"><a href="https://noid11.github.io/tags/bzip2">bzip2</a></span><span class="tag"><a href="https://noid11.github.io/tags/xz">xz</a></span><span class="tag"><a href="https://noid11.github.io/tags/tar">tar</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1103 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2021/02/08 23:56 &#43;0900</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/noid11/noid11.github.io/commit/f3082d2edd0ac969ae4c2c177855db2fbbce8d74" target="_blank" rel="noopener">f3082d2</a> @ 2021/02/09</p>
+			</footer>
+		</article>
+		<aside id="toc" class="show-toc">
+			<div class="toc-title">Table of Contents</div>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#zip">zip</a></li>
+    <li><a href="#unix-compress">UNIX Compress</a></li>
+    <li><a href="#gzip">gzip</a></li>
+    <li><a href="#bzip2">bzip2</a></li>
+    <li><a href="#xz">xz</a></li>
+    <li><a href="#tar">tar</a></li>
+    <li><a href="#ファイル形式あれこれ">ファイル形式あれこれ</a></li>
+    <li><a href="#この記事を試した環境">この記事を試した環境</a></li>
+  </ul>
+</nav>
+		</aside>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://noid11.github.io/posts/my-cloud9-tips/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>個人的な AWS Cloud9 の使い方 TIPS</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2021 <a href="https://noid11.github.io/"></a>&#183; noid11</p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://noid11.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://noid11.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

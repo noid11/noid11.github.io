@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gzip on noid11.github.io</title>
+    <link>https://noid11.github.io/tags/gzip/</link>
+    <description>Recent content in gzip on noid11.github.io</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>&amp;#169; noid11</copyright>
+    <lastBuildDate>Mon, 08 Feb 2021 23:56:05 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/gzip/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ファイルの圧縮や展開関連のコマンド</title>
+      <link>https://noid11.github.io/posts/file-compress-and-decompress-commands/</link>
+      <pubDate>Mon, 08 Feb 2021 23:56:05 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/file-compress-and-decompress-commands/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;オプションとか関連コマンドが多く、とても覚えきれないのでメモ&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

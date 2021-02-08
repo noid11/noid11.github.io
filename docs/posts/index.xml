@@ -6,8 +6,197 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Sun, 07 Feb 2021 19:37:56 +0900</lastBuildDate>
+		<lastBuildDate>Mon, 08 Feb 2021 23:56:05 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>ファイルの圧縮や展開関連のコマンド</title>
+			<link>https://noid11.github.io/posts/file-compress-and-decompress-commands/</link>
+			<pubDate>Mon, 08 Feb 2021 23:56:05 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/file-compress-and-decompress-commands/</guid>
+			<description>&lt;ul&gt;
+&lt;li&gt;オプションとか関連コマンドが多く、とても覚えきれないのでメモ&lt;/li&gt;
+&lt;/ul&gt;</description>
+			<content type="html"><![CDATA[<ul>
+<li>オプションとか関連コマンドが多く、とても覚えきれないのでメモ</li>
+</ul>
+<h2 id="zip">zip</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ファイル圧縮</span>
+zip myzip.zip sample.txt
+
+<span class="c1"># ディレクトリ圧縮</span>
+zip -r myzip.zip /path/to/dir
+
+<span class="c1"># 展開</span>
+unzip myzip.zip
+</code></pre></div><p>Manpage of ZIP<br>
+<a href="http://linux.math.tifr.res.in/manuals/man/zip.html">http://linux.math.tifr.res.in/manuals/man/zip.html</a></p>
+<p>zip(1)<br>
+<a href="https://www.freebsd.org/cgi/man.cgi?query=zip&amp;apropos=0&amp;sektion=1">https://www.freebsd.org/cgi/man.cgi?query=zip&amp;apropos=0&amp;sektion=1</a></p>
+<h2 id="unix-compress">UNIX Compress</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 圧縮</span>
+compress sample.txt
+
+<span class="c1"># 展開</span>
+uncompress sample.txt.Z
+</code></pre></div><p>compress(1p) - Linux manual page<br>
+<a href="https://man7.org/linux/man-pages/man1/compress.1p.html">https://man7.org/linux/man-pages/man1/compress.1p.html</a></p>
+<p>compress(1)<br>
+<a href="https://www.freebsd.org/cgi/man.cgi?query=compress&amp;sektion=1">https://www.freebsd.org/cgi/man.cgi?query=compress&amp;sektion=1</a></p>
+<h2 id="gzip">gzip</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ファイル圧縮 (sample.txt が sample.txt.gz になる)</span>
+gzip sample.txt
+
+<span class="c1"># ディレクトリに含まれるファイルを圧縮 </span>
+<span class="c1"># ./midir/ 配下のファイルが全て .gz となる</span>
+gzip -r ./mydir
+
+<span class="c1"># ファイル展開</span>
+gunzip sample.txt.gz
+
+<span class="c1"># ディレクトリに含まれるファイルを展開</span>
+<span class="c1"># ./midir/ 配下の .gz ファイルが全て展開される</span>
+gunzip -r ./mydir
+
+<span class="c1"># gzip 圧縮されたファイルを展開せずに見る</span>
+gzcat sample.txt.gz <span class="c1"># Linux では gzcat ではなく zcat を使う</span>
+zless sample.txt.gz
+zmore sample.txt.gz
+</code></pre></div><p>GNU Gzip<br>
+<a href="https://www.gnu.org/software/gzip/manual/gzip.html">https://www.gnu.org/software/gzip/manual/gzip.html</a></p>
+<p>gzip<br>
+<a href="https://www.freebsd.org/cgi/man.cgi?query=gzip&amp;sektion=&amp;n=1">https://www.freebsd.org/cgi/man.cgi?query=gzip&amp;sektion=&amp;n=1</a></p>
+<p>gzcat(1)<br>
+<a href="https://www.freebsd.org/cgi/man.cgi?query=gzcat&amp;sektion=1&amp;n=1">https://www.freebsd.org/cgi/man.cgi?query=gzcat&amp;sektion=1&amp;n=1</a></p>
+<h2 id="bzip2">bzip2</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ファイル圧縮 (sample.txt が sample.txt.bz2 になる)</span>
+bzip2 sample.txt
+
+<span class="c1"># ディレクトリに含まれるファイルを圧縮 </span>
+<span class="c1"># -r オプションが無いので find コマンド等と組み合わせる必要がある</span>
+find ./mydir -type f -exec bzip2 <span class="o">{}</span> +
+
+<span class="c1"># ファイル展開</span>
+bunzip2 sample.txt.bz2
+
+<span class="c1"># ディレクトリに含まれるファイルを展開</span>
+<span class="c1"># -r オプションが無いので find コマンド等と組み合わせる必要がある</span>
+find ./mydir -type f -exec bunzip2 <span class="o">{}</span> +
+
+<span class="c1"># bzip2 圧縮されたファイルを展開せずに見る</span>
+bzcat sample.txt.bz2
+</code></pre></div><p>bzip2(1): block-sorting file compressor - Linux man page<br>
+<a href="https://linux.die.net/man/1/bzip2">https://linux.die.net/man/1/bzip2</a></p>
+<p>bzip2(1)<br>
+<a href="https://www.freebsd.org/cgi/man.cgi?query=bzip2&amp;sektion=1">https://www.freebsd.org/cgi/man.cgi?query=bzip2&amp;sektion=1</a></p>
+<h2 id="xz">xz</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 圧縮</span>
+xz sample.txt
+
+<span class="c1"># 圧縮されたデータを展開せずに確認</span>
+xzcat sample.txt.xz
+
+<span class="c1"># 展開</span>
+unxz sample.txt.xz
+</code></pre></div><p>xz(1): Compress/decompress .xz/.lzma files - Linux man page<br>
+<a href="https://linux.die.net/man/1/xz">https://linux.die.net/man/1/xz</a></p>
+<p>xz(1)<br>
+<a href="https://www.freebsd.org/cgi/man.cgi?xz(1)">https://www.freebsd.org/cgi/man.cgi?xz(1)</a></p>
+<h2 id="tar">tar</h2>
+<p>tar.Z</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ディレクトリを指定して tar にしてから UNIX Compress</span>
+tar cZvf my.tar.Z /path/to/dir
+
+<span class="c1"># 展開</span>
+tar xvf my.tar.Z
+</code></pre></div><hr>
+<p>tar.gz</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ディレクトリを指定して tar にしてから gzip</span>
+tar czvf my.tar.gz /path/to/dir
+
+<span class="c1"># 展開</span>
+tar xvf my.tar.gz
+</code></pre></div><hr>
+<p>tar.bz2</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ディレクトリを指定して tar にしてから bzip2</span>
+tar jcvf my.tar.bz2 /path/to/dir
+
+<span class="c1"># 展開</span>
+tar xvf my.tar.bz2
+</code></pre></div><hr>
+<p>tar.xz</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ディレクトリ指定して tar にしてから xz</span>
+tar Jcvf my.tar.xz /path/to/dir
+
+<span class="c1"># 展開</span>
+tar xvf my.tar.xz
+</code></pre></div><p>tar(1) - Linux manual page<br>
+<a href="https://man7.org/linux/man-pages/man1/tar.1.html">https://man7.org/linux/man-pages/man1/tar.1.html</a></p>
+<p>tar(1)<br>
+<a href="https://www.freebsd.org/cgi/man.cgi?tar(1)">https://www.freebsd.org/cgi/man.cgi?tar(1)</a></p>
+<h2 id="ファイル形式あれこれ">ファイル形式あれこれ</h2>
+<ul>
+<li>zip
+<ul>
+<li><a href="https://support.pkware.com/home/pkzip/developer-tools/appnote">https://support.pkware.com/home/pkzip/developer-tools/appnote</a></li>
+<li><a href="https://www.iso.org/standard/60101.html">https://www.iso.org/standard/60101.html</a></li>
+<li>一般的。 Windows でも使われる</li>
+</ul>
+</li>
+<li>UNIX Compress
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Compress">https://en.wikipedia.org/wiki/Compress</a></li>
+<li>昔よく使われていたもの</li>
+</ul>
+</li>
+<li>gzip: GNU zip
+<ul>
+<li><a href="https://www.gzip.org/">https://www.gzip.org/</a></li>
+<li><a href="https://www.gnu.org/software/gzip/">https://www.gnu.org/software/gzip/</a></li>
+<li>現代の主流</li>
+</ul>
+</li>
+<li>bzip2
+<ul>
+<li><a href="https://www.sourceware.org/bzip2/">https://www.sourceware.org/bzip2/</a></li>
+<li>gzip よりも圧縮効率が高いと言われている。一方で圧縮や展開に必要となるリソースが大きめ、かつ時間がかかる</li>
+</ul>
+</li>
+<li>xz
+<ul>
+<li><a href="https://tukaani.org/xz/format.html">https://tukaani.org/xz/format.html</a></li>
+<li>bzip2 より更に圧縮効率が高いと言われているが、より CPU やメモリや時間を使用する</li>
+</ul>
+</li>
+<li>tar
+<ul>
+<li>tar 自体は圧縮ではなく tape archives, tarball 等と呼ばれるファイルアーカイブフォーマット</li>
+<li>複数のファイルに対して圧縮を行うよりも、複数のファイルを tar として1つのファイルにアーカイブして圧縮した方がシーケンシャルなデータになるので、一般的に圧縮効率が良い
+<ul>
+<li>.tar.Z: tar したあとに UNIX Compress したもの。 .taz とも表記される</li>
+<li>.tar.gz: tar したあとに gzip したもの。 .tgz とも表記される</li>
+<li>.tar.bz2: tar したあとに bzip2 したもの。</li>
+<li>.tar.xz: tar したあとに xz したもの。</li>
+</ul>
+</li>
+<li>ファイルが一部破損したら破損箇所以降のファイルを取り出すことができないというデメリットもある</li>
+</ul>
+</li>
+<li>圧縮効率が高いといっても、必ずしも他よりファイルサイズを小さくできる訳ではない
+<ul>
+<li>圧縮対象のファイル内容にも依存する。テキストファイルは得意だけど、動画ファイルは苦手とか。</li>
+<li>ちゃんと検討するならば具体的なサンプルファイルをいくつか用意して、それぞれの圧縮方式について検証した方が良い</li>
+</ul>
+</li>
+</ul>
+<h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H114
+</code></pre></div>]]></content>
+		</item>
 		
 		<item>
 			<title>個人的な AWS Cloud9 の使い方 TIPS</title>
