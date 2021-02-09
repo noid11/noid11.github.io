@@ -1,12 +1,14 @@
 ---
-title: "個人的 vscode TIPS"
+title: "個人的な vscode の使い方 TIPS"
 date: 2021-02-09T14:35:24+09:00
 draft: true
-toc: false
+toc: true
 images:
 tags: 
   - Visual Studio Code
 ---
+
+<!--more-->
 
 ## document
 
@@ -26,8 +28,8 @@ Linux
 https://code.visualstudio.com/shortcuts/keyboard-shortcuts-linux.pdf
 
 
-## `command + shift + P`: コマンドパレット
+## shortcuts
 
-## `command + P`: ファイル名で検索
-
-## `command + shift + F`: ファイルの中身で検索
+- `command + shift + P`: コマンドパレット
+- `command + P`: ファイル名で検索
+- `command + shift + F`: ファイルの中身で検索
