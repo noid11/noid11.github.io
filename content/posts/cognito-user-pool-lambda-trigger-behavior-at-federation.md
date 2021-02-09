@@ -1,7 +1,7 @@
 ---
 title: "Cognito User Pool における Lambda Trigger は Federation 時にどう動くのか"
 date: 2021-02-09T14:36:09+09:00
-draft: true
+draft: false
 toc: true
 images:
 tags: 

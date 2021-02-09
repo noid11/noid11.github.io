@@ -6,8 +6,159 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Tue, 09 Feb 2021 05:54:16 +0900</lastBuildDate>
+		<lastBuildDate>Tue, 09 Feb 2021 14:36:09 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Cognito User Pool における Lambda Trigger は Federation 時にどう動くのか</title>
+			<link>https://noid11.github.io/posts/cognito-user-pool-lambda-trigger-behavior-at-federation/</link>
+			<pubDate>Tue, 09 Feb 2021 14:36:09 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/cognito-user-pool-lambda-trigger-behavior-at-federation/</guid>
+			<description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-identity-federation.html&#34;&gt;Cognito User Pool では Google, Facebook といった外部 IdP を使用したフェデレーションが可能&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;このフェデレーションを行った際に、どう &lt;a href=&#34;https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html&#34;&gt;Lambda トリガー&lt;/a&gt;が起動するのか気になったので調べたメモ&lt;/li&gt;
+&lt;/ul&gt;</description>
+			<content type="html"><![CDATA[<ul>
+<li><a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-identity-federation.html">Cognito User Pool では Google, Facebook といった外部 IdP を使用したフェデレーションが可能</a></li>
+<li>このフェデレーションを行った際に、どう <a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html">Lambda トリガー</a>が起動するのか気になったので調べたメモ</li>
+</ul>
+<h2 id="どうやって調べたのか">どうやって調べたのか</h2>
+<ul>
+<li>各種 Lambda トリガーを User Pool に設定して、実際にフェデレーションしてみて Lambda 関数の起動状況を確認すれば OK</li>
+</ul>
+<h2 id="初回フェデレーション時のみ起動される-lambda-トリガー">初回フェデレーション時のみ起動される Lambda トリガー</h2>
+<h3 id="pre-sign-up-lambda-triggerhttpsdocsawsamazoncomcognitolatestdeveloperguideuser-pool-lambda-pre-sign-uphtml"><a href="https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-lambda-pre-sign-up.html">Pre Sign-up Lambda Trigger</a></h3>
+<p>Lambda 関数に連携される event 例</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;region&#34;</span><span class="p">:</span> <span class="s2">&#34;ap-northeast-1&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;userPoolId&#34;</span><span class="p">:</span> <span class="s2">&#34;ap-northeast-1_xxx&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;userName&#34;</span><span class="p">:</span> <span class="s2">&#34;IdP_userid&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;callerContext&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;awsSdkVersion&#34;</span><span class="p">:</span> <span class="s2">&#34;aws-sdk-unknown-unknown&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;clientId&#34;</span><span class="p">:</span> <span class="s2">&#34;xxx&#34;</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;triggerSource&#34;</span><span class="p">:</span> <span class="s2">&#34;PreSignUp_ExternalProvider&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;request&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;userAttributes&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;email_verified&#34;</span><span class="p">:</span> <span class="s2">&#34;false&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;cognito:email_alias&#34;</span><span class="p">:</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;cognito:phone_number_alias&#34;</span><span class="p">:</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;email&#34;</span><span class="p">:</span> <span class="s2">&#34;sample@example.com&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;validationData&#34;</span><span class="p">:</span> <span class="p">{}</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;response&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;autoConfirmUser&#34;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&#34;autoVerifyEmail&#34;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&#34;autoVerifyPhone&#34;</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="post-confirmation-lambda-triggerhttpsdocsawsamazoncomcognitolatestdeveloperguideuser-pool-lambda-post-confirmationhtml"><a href="https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-lambda-post-confirmation.html">Post Confirmation Lambda Trigger</a></h3>
+<p>Lambda 関数に連携される event 例</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;region&#34;</span><span class="p">:</span> <span class="s2">&#34;ap-northeast-1&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;userPoolId&#34;</span><span class="p">:</span> <span class="s2">&#34;ap-northeast-1_xxx&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;userName&#34;</span><span class="p">:</span> <span class="s2">&#34;IdP_userid&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;callerContext&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;awsSdkVersion&#34;</span><span class="p">:</span> <span class="s2">&#34;aws-sdk-unknown-unknown&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;clientId&#34;</span><span class="p">:</span> <span class="s2">&#34;xxx&#34;</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;triggerSource&#34;</span><span class="p">:</span> <span class="s2">&#34;PostConfirmation_ConfirmSignUp&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;request&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;userAttributes&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;sub&#34;</span><span class="p">:</span> <span class="s2">&#34;3c6fcb0d-b156-4d9b-8dd3-77a8fd9a8954&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;identities&#34;</span><span class="p">:</span> <span class="s2">&#34;[{\&#34;userId\&#34;:\&#34;userid\&#34;,\&#34;providerName\&#34;:\&#34;IdP\&#34;,\&#34;providerType\&#34;:\&#34;XXX\&#34;,\&#34;issuer\&#34;:null,\&#34;primary\&#34;:true,\&#34;dateCreated\&#34;:1611313260723}]&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;cognito:user_status&#34;</span><span class="p">:</span> <span class="s2">&#34;EXTERNAL_PROVIDER&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;email_verified&#34;</span><span class="p">:</span> <span class="s2">&#34;false&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;email&#34;</span><span class="p">:</span> <span class="s2">&#34;sample@example.com&#34;</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;response&#34;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="初回以降のフェデレーション時のみ起動される-lambda-トリガー">初回以降のフェデレーション時のみ起動される Lambda トリガー</h2>
+<h3 id="pre-authentication-lambda-triggerhttpsdocsawsamazoncomcognitolatestdeveloperguideuser-pool-lambda-pre-authenticationhtml"><a href="https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-lambda-pre-authentication.html">Pre Authentication Lambda Trigger</a></h3>
+<p>Lambda 関数に連携される event 例</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;region&#34;</span><span class="p">:</span> <span class="s2">&#34;ap-northeast-1&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;userPoolId&#34;</span><span class="p">:</span> <span class="s2">&#34;ap-northeast-1_xxx&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;userName&#34;</span><span class="p">:</span> <span class="s2">&#34;IdP_userid&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;callerContext&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;awsSdkVersion&#34;</span><span class="p">:</span> <span class="s2">&#34;aws-sdk-unknown-unknown&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;clientId&#34;</span><span class="p">:</span> <span class="s2">&#34;xxx&#34;</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;triggerSource&#34;</span><span class="p">:</span> <span class="s2">&#34;PreAuthentication_Authentication&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;request&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;userAttributes&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;sub&#34;</span><span class="p">:</span> <span class="s2">&#34;3c6fcb0d-b156-4d9b-8dd3-77a8fd9a8954&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;email_verified&#34;</span><span class="p">:</span> <span class="s2">&#34;false&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;cognito:user_status&#34;</span><span class="p">:</span> <span class="s2">&#34;EXTERNAL_PROVIDER&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;identities&#34;</span><span class="p">:</span> <span class="s2">&#34;[{\&#34;userId\&#34;:\&#34;userid\&#34;,\&#34;providerName\&#34;:\&#34;IdP\&#34;,\&#34;providerType\&#34;:\&#34;XXX\&#34;,\&#34;issuer\&#34;:null,\&#34;primary\&#34;:true,\&#34;dateCreated\&#34;:1611313260723}]&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;email&#34;</span><span class="p">:</span> <span class="s2">&#34;sample@example.com&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;validationData&#34;</span><span class="p">:</span> <span class="p">{}</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;response&#34;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="post-authentication-lambda-triggerhttpsdocsawsamazoncomcognitolatestdeveloperguideuser-pool-lambda-post-authenticationhtml"><a href="https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-lambda-post-authentication.html">Post Authentication Lambda Trigger</a></h3>
+<p>Lambda 関数に連携される event 例</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;region&#34;</span><span class="p">:</span> <span class="s2">&#34;ap-northeast-1&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;userPoolId&#34;</span><span class="p">:</span> <span class="s2">&#34;ap-northeast-1_xxx&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;userName&#34;</span><span class="p">:</span> <span class="s2">&#34;IdP_userid&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;callerContext&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;awsSdkVersion&#34;</span><span class="p">:</span> <span class="s2">&#34;aws-sdk-unknown-unknown&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;clientId&#34;</span><span class="p">:</span> <span class="s2">&#34;xxx&#34;</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;triggerSource&#34;</span><span class="p">:</span> <span class="s2">&#34;PostAuthentication_Authentication&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;request&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;userAttributes&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;sub&#34;</span><span class="p">:</span> <span class="s2">&#34;3c6fcb0d-b156-4d9b-8dd3-77a8fd9a8954&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;identities&#34;</span><span class="p">:</span> <span class="s2">&#34;[{\&#34;userId\&#34;:\&#34;userid\&#34;,\&#34;providerName\&#34;:\&#34;IdP\&#34;,\&#34;providerType\&#34;:\&#34;XXX\&#34;,\&#34;issuer\&#34;:null,\&#34;primary\&#34;:true,\&#34;dateCreated\&#34;:1611313260723}]&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;cognito:user_status&#34;</span><span class="p">:</span> <span class="s2">&#34;EXTERNAL_PROVIDER&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;email_verified&#34;</span><span class="p">:</span> <span class="s2">&#34;false&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;email&#34;</span><span class="p">:</span> <span class="s2">&#34;sample@example.com&#34;</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;newDeviceUsed&#34;</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;response&#34;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="note">NOTE</h2>
+<ul>
+<li>なぜ初回と初回以降で起動する Lambda トリガーが異なるのか？
+<ul>
+<li>Cognito User Pool でフェデレーションすると、フェデレーションしたユーザー情報が User Pool に作成される
+<ul>
+<li>初回のフェデレーション時のみ、このユーザー作成が行われるため、呼び出される Lambda トリガーが異なるのだと思われる
+<ul>
+<li>Pre Sign-up と Post Confirmation が暗黙的に呼び出される</li>
+</ul>
+</li>
+<li>初回以降は既にユーザー情報が作成済みであり、 Cognito User Pool としてはユーザー作成ではなく認証が行われるものとして扱われているのだと思われる
+<ul>
+<li>Pre Authentication, Post Authentication が呼び出される</li>
+</ul>
+</li>
+<li>ちなみにユーザーが作成されてから意図的に該当ユーザーを削除し、再度フェデレーションするとユーザーは再作成される
+<ul>
+<li>つまりフェデレーション時のユーザー作成は PUT 的な処理なのだと思われる</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>何に使えるのか？
+<ul>
+<li>例えばフェデレーションする際でも許可したユーザーのみ利用を許可したい場合、 Pre Sign-up Lambda Trigger でメールアドレス等のユーザー情報をチェックして、所定のユーザー以外がフェデレーションしてきたらブロックする・・・みたいな構成ができそう</li>
+</ul>
+</li>
+</ul>]]></content>
+		</item>
 		
 		<item>
 			<title>AWS アカウントのセットアップ TIPS</title>

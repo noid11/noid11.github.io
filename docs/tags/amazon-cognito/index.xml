@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Amazon Cognito on noid11.github.io</title>
+    <link>https://noid11.github.io/tags/amazon-cognito/</link>
+    <description>Recent content in Amazon Cognito on noid11.github.io</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>&amp;#169; noid11</copyright>
+    <lastBuildDate>Tue, 09 Feb 2021 14:36:09 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/amazon-cognito/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cognito User Pool における Lambda Trigger は Federation 時にどう動くのか</title>
+      <link>https://noid11.github.io/posts/cognito-user-pool-lambda-trigger-behavior-at-federation/</link>
+      <pubDate>Tue, 09 Feb 2021 14:36:09 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/cognito-user-pool-lambda-trigger-behavior-at-federation/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-identity-federation.html&#34;&gt;Cognito User Pool では Google, Facebook といった外部 IdP を使用したフェデレーションが可能&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;このフェデレーションを行った際に、どう &lt;a href=&#34;https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html&#34;&gt;Lambda トリガー&lt;/a&gt;が起動するのか気になったので調べたメモ&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

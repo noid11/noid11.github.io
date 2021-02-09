@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Tue, 09 Feb 2021 05:54:16 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 09 Feb 2021 14:36:09 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cognito User Pool における Lambda Trigger は Federation 時にどう動くのか</title>
+      <link>https://noid11.github.io/posts/cognito-user-pool-lambda-trigger-behavior-at-federation/</link>
+      <pubDate>Tue, 09 Feb 2021 14:36:09 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/cognito-user-pool-lambda-trigger-behavior-at-federation/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-identity-federation.html&#34;&gt;Cognito User Pool では Google, Facebook といった外部 IdP を使用したフェデレーションが可能&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;このフェデレーションを行った際に、どう &lt;a href=&#34;https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html&#34;&gt;Lambda トリガー&lt;/a&gt;が起動するのか気になったので調べたメモ&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
     <item>
       <title>AWS アカウントのセットアップ TIPS</title>
       <link>https://noid11.github.io/posts/my-aws-account-setup-tips/</link>
@@ -161,43 +173,6 @@ HOGE
 &lt;p&gt;全リージョンに対して &lt;code&gt;ec2 describe-instances&lt;/code&gt; を実行する例&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;aws ec2 describe-regions &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; jq --raw-output &lt;span class=&#34;s2&#34;&gt;&amp;#34;.Regions[].RegionName&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; xargs -n &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; -I&lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt; -P &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt; aws --region &lt;span class=&#34;o&#34;&gt;{}&lt;/span&gt; ec2 describe-instances
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>Apache Bench ノート</title>
-      <link>https://noid11.github.io/posts/apache-bench-note/</link>
-      <pubDate>Mon, 25 Jan 2021 01:01:38 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/apache-bench-note/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;ab&lt;/code&gt;: Apache Bench について調べたノート&lt;/li&gt;
-&lt;li&gt;基本形
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;ab -c 10 -n 10 http://example.com/&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;オプション
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-A&lt;/code&gt;: Basic 認証での user/password 指定&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-c&lt;/code&gt;: concurrency. 並行実行するコネクション数&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-C&lt;/code&gt;: Cookie 指定&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-H&lt;/code&gt;: 任意の HTTP リクエストヘッダー指定&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-k&lt;/code&gt;: HTTP KeepAlive を有効化&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-m&lt;/code&gt;: HTTP Method を指定&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-n&lt;/code&gt;: 生成する HTTP リクエスト数&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-p&lt;/code&gt;: POST file&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-s&lt;/code&gt;: タイムアウト設定。デフォルト 30 秒&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-t&lt;/code&gt;: ベンチマークのタイムリミット。デフォルトでは無制限&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-T&lt;/code&gt;: POST, PUT メソッドを使用する場合の Content-Type ヘッダー値。デフォルトでは text/plain だが application/x-www-form-urlencoded 等を指定できる&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;実行結果
-&lt;ul&gt;
-&lt;li&gt;1秒 あたりに行ったリクエスト数が知りたい: &lt;code&gt;Requests per second&lt;/code&gt; を確認&lt;/li&gt;
-&lt;li&gt;失敗したリクエストを知りたい: &lt;code&gt;Non-2xx responses&lt;/code&gt; を確認&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</description>
     </item>
     
   </channel>
