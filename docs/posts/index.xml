@@ -161,6 +161,31 @@
 		</item>
 		
 		<item>
+			<title>個人的な vscode の使い方 TIPS</title>
+			<link>https://noid11.github.io/posts/my-vscode-tips/</link>
+			<pubDate>Tue, 09 Feb 2021 14:35:24 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/my-vscode-tips/</guid>
+			<description></description>
+			<content type="html"><![CDATA[<h2 id="document">document</h2>
+<p>Documentation for Visual Studio Code<br>
+<a href="https://code.visualstudio.com/docs">https://code.visualstudio.com/docs</a></p>
+<h2 id="cheatsheet">cheatsheet</h2>
+<p>Windows<br>
+<a href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf">https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf</a></p>
+<p>macOS<br>
+<a href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf">https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf</a></p>
+<p>Linux<br>
+<a href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-linux.pdf">https://code.visualstudio.com/shortcuts/keyboard-shortcuts-linux.pdf</a></p>
+<h2 id="shortcuts">shortcuts</h2>
+<ul>
+<li><code>command + shift + P</code>: コマンドパレット</li>
+<li><code>command + P</code>: ファイル名で検索</li>
+<li><code>command + shift + F</code>: ファイルの中身で検索</li>
+</ul>]]></content>
+		</item>
+		
+		<item>
 			<title>AWS アカウントのセットアップ TIPS</title>
 			<link>https://noid11.github.io/posts/my-aws-account-setup-tips/</link>
 			<pubDate>Tue, 09 Feb 2021 05:54:16 +0900</pubDate>
