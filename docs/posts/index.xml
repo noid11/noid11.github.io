@@ -6,8 +6,122 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Tue, 09 Feb 2021 14:36:09 +0900</lastBuildDate>
+		<lastBuildDate>Thu, 11 Feb 2021 17:05:07 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Mac に Ansible をインストールして EC2 に ping するまで</title>
+			<link>https://noid11.github.io/posts/how-to-ping-ec2-from-mac-using-ansible/</link>
+			<pubDate>Thu, 11 Feb 2021 17:05:07 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/how-to-ping-ec2-from-mac-using-ansible/</guid>
+			<description></description>
+			<content type="html"><![CDATA[<h2 id="mac-に-ansible-をインストール">Mac に Ansible をインストール</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">brew install ansible
+</code></pre></div><p>ansible — Homebrew Formulae<br>
+<a href="https://formulae.brew.sh/formula/ansible">https://formulae.brew.sh/formula/ansible</a></p>
+<h2 id="ec2-linux-環境を構築">EC2 Linux 環境を構築</h2>
+<ul>
+<li>EC2 で Linux 環境構築する手順は省略</li>
+<li>EC2 インスタンスに ssh 接続できるようにしておく</li>
+</ul>
+<h2 id="etcansiblehosts-に-ec2-インスタンスを登録">/etc/ansible/hosts に EC2 インスタンスを登録</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% cat /etc/ansible/hosts 
+ec2-xxx-xxx-xxx-xxx.ap-northeast-1.compute.amazonaws.com
+</code></pre></div><hr>
+<p><code>/etc/ansible/hosts</code> って何？</p>
+<ul>
+<li>Ansible では、インベントリと呼ばれる単位で、複数のホストに対して操作を行う
+<ul>
+<li>インベントリを定義したらパターンを使用して Ansible を実行したいホストやグループを指定する</li>
+<li>このインベントリのデフォルトの場所が <code>/etc/ansible/hosts</code> となる。</li>
+</ul>
+</li>
+<li>コマンドラインで <code>-i</code> or <code>--inventory</code> or <code>--inventory-file</code> オプションを使用して、任意のインベントリファイルを指定することも可能</li>
+</ul>
+<p>How to build your inventory — Ansible Documentation<br>
+<a href="https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html">https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html</a></p>
+<h2 id="ping">ping</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% ansible --user ec2-user all --module-name ping
+<span class="o">[</span>WARNING<span class="o">]</span>: Platform linux on host ec2-xxx-xxx-xxx-xxx.ap-northeast-1.compute.amazonaws.com is using the discovered Python interpreter at /usr/bin/python, but future
+installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible/2.10/reference_appendices/interpreter_discovery.html
+<span class="k">for</span> more information.
+ec2-xxx-xxx-xxx-xxx.ap-northeast-1.compute.amazonaws.com <span class="p">|</span> <span class="nv">SUCCESS</span> <span class="o">=</span>&gt; <span class="o">{</span>
+    <span class="s2">&#34;ansible_facts&#34;</span>: <span class="o">{</span>
+        <span class="s2">&#34;discovered_interpreter_python&#34;</span>: <span class="s2">&#34;/usr/bin/python&#34;</span>
+    <span class="o">}</span>,
+    <span class="s2">&#34;changed&#34;</span>: false,
+    <span class="s2">&#34;ping&#34;</span>: <span class="s2">&#34;pong&#34;</span>
+<span class="o">}</span>
+</code></pre></div><hr>
+<p>この ping って何？</p>
+<ul>
+<li>Ansible の ping モジュール
+<ul>
+<li>リモートノードに ssh による通信が可能か、リモートノードで Python が動かくか確認するもの</li>
+<li>ICMP での ping ではない</li>
+</ul>
+</li>
+</ul>
+<p>ansible.builtin.ping – Try to connect to host, verify a usable python and return pong on success — Ansible Documentation<br>
+<a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/ping_module.html#ansible-collections-ansible-builtin-ping-module">https://docs.ansible.com/ansible/latest/collections/ansible/builtin/ping_module.html#ansible-collections-ansible-builtin-ping-module</a></p>
+<p>Ansible.Builtin — Ansible Documentation<br>
+<a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/">https://docs.ansible.com/ansible/latest/collections/ansible/builtin/</a></p>
+<hr>
+<p>この警告は何なのか</p>
+<ul>
+<li>POSIX 環境で実行されるほとんどの Ansible モジュールは、ターゲットホスト上で Python インタプリタを必要としまする</li>
+<li>特に設定しない限り Ansible は、 Python モジュールがそのホストで初めて実行されたときに、各ターゲットホスト上で適切な Python インタプリタを検出しようとする
+<ul>
+<li>この動作を Interpreter Discovery という</li>
+<li>Interpreter Discovery を防ぐには2つの方法がある
+<ol>
+<li>個々のホストやグループに対して ansible_python_interpreter インベントリ変数を設定する</li>
+<li>グローバルに ansible.cfg の [defaults] セクションで interpreter_python キーを使用する</li>
+</ol>
+</li>
+<li>グローバルに設定してしまったほうが楽なので、今回は 2. の方法で対処する</li>
+</ul>
+</li>
+</ul>
+<p>[小ネタ] Pythonのバージョンを指定してAnsible実行時に表示される警告を消す | DevelopersIO<br>
+<a href="https://dev.classmethod.jp/articles/ansible-interpreter-warning/">https://dev.classmethod.jp/articles/ansible-interpreter-warning/</a></p>
+<p>Interpreter Discovery — Ansible Documentation<br>
+<a href="https://docs.ansible.com/ansible/2.9/reference_appendices/interpreter_discovery.html">https://docs.ansible.com/ansible/2.9/reference_appendices/interpreter_discovery.html</a></p>
+<h2 id="警告を消すために-ansiblecfg-を作成">警告を消すために ~/.ansible.cfg を作成</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% cat ~/.ansible.cfg
+<span class="o">[</span>defaults<span class="o">]</span>
+<span class="nv">interpreter_python</span><span class="o">=</span>/usr/bin/python
+</code></pre></div><hr>
+<p><code>~/.ansible.cfg</code> って何？</p>
+<ul>
+<li>Ansible の設定ファイル</li>
+</ul>
+<p>Controlling how Ansible behaves: precedence rules — Ansible Documentation<br>
+<a href="https://docs.ansible.com/ansible/latest/reference_appendices/general_precedence.html">https://docs.ansible.com/ansible/latest/reference_appendices/general_precedence.html</a></p>
+<h2 id="再度-ping">再度 ping</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% ansible --user ec2-user all --module-name ping
+ec2-xxx-xxx-xxx-xxx.ap-northeast-1.compute.amazonaws.com <span class="p">|</span> <span class="nv">SUCCESS</span> <span class="o">=</span>&gt; <span class="o">{</span>
+    <span class="s2">&#34;changed&#34;</span>: false,
+    <span class="s2">&#34;ping&#34;</span>: <span class="s2">&#34;pong&#34;</span>
+<span class="o">}</span>
+</code></pre></div><ul>
+<li>警告が消えたのでヨシ！</li>
+</ul>
+<h2 id="この記事を試した環境">この記事を試した環境</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H512
+% ansible --version
+ansible 2.10.5
+  config <span class="nv">file</span> <span class="o">=</span> /Users/myname/.ansible.cfg
+  configured module search <span class="nv">path</span> <span class="o">=</span> <span class="o">[</span><span class="s1">&#39;/Users/myname/.ansible/plugins/modules&#39;</span>, <span class="s1">&#39;/usr/share/ansible/plugins/modules&#39;</span><span class="o">]</span>
+  ansible python module <span class="nv">location</span> <span class="o">=</span> /usr/local/Cellar/ansible/2.10.6/libexec/lib/python3.9/site-packages/ansible
+  executable <span class="nv">location</span> <span class="o">=</span> /usr/local/bin/ansible
+  python <span class="nv">version</span> <span class="o">=</span> 3.9.1 <span class="o">(</span>default, Feb  <span class="m">3</span> 2021, 07:04:15<span class="o">)</span> <span class="o">[</span>Clang 12.0.0 <span class="o">(</span>clang-1200.0.32.29<span class="o">)]</span>
+</code></pre></div>]]></content>
+		</item>
 		
 		<item>
 			<title>Cognito User Pool における Lambda Trigger は Federation 時にどう動くのか</title>

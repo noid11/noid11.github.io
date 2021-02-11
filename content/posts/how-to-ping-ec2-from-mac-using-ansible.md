@@ -1,7 +1,7 @@
 ---
 title: "Mac に Ansible をインストールして EC2 に ping するまで"
 date: 2021-02-11T17:05:07+09:00
-draft: true
+draft: false
 toc: true
 images:
 tags: 

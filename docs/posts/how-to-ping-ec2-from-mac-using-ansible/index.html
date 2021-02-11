@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="Mac に Ansible をインストールして EC2 に ping するまで">
+<meta itemprop="description" content="">
+<meta itemprop="datePublished" content="2021-02-11T17:05:07+09:00" />
+<meta itemprop="dateModified" content="2021-02-11T18:25:31+09:00" />
+<meta itemprop="wordCount" content="793">
+
+
+
+<meta itemprop="keywords" content="Mac,Ansible," />
+<meta property="og:title" content="Mac に Ansible をインストールして EC2 に ping するまで" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noid11.github.io/posts/how-to-ping-ec2-from-mac-using-ansible/" />
+<meta property="article:published_time" content="2021-02-11T17:05:07+09:00" />
+<meta property="article:modified_time" content="2021-02-11T18:25:31+09:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Mac に Ansible をインストールして EC2 に ping するまで"/>
+<meta name="twitter:description" content=""/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Mac に Ansible をインストールして EC2 に ping するまで</title>
+	<link rel="stylesheet" href="https://noid11.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://noid11.github.io/">noid11.github.io</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://noid11.github.io/posts/">Posts</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="toc-btn" class="hdr-btn desktop-only-ib" title="Table of Contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="https://twitter.com/_noid11" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://github.com/noid11" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://noid11.github.io/posts/">Posts</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>2021/02/11</span></div>
+				<h1>Mac に Ansible をインストールして EC2 に ping するまで</h1>
+			</header>
+			<div class="content">
+				<h2 id="mac-に-ansible-をインストール">Mac に Ansible をインストール<a href="#mac-に-ansible-をインストール" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">brew install ansible
+</code></pre></div><p>ansible — Homebrew Formulae<br>
+<a href="https://formulae.brew.sh/formula/ansible">https://formulae.brew.sh/formula/ansible</a></p>
+<h2 id="ec2-linux-環境を構築">EC2 Linux 環境を構築<a href="#ec2-linux-環境を構築" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>EC2 で Linux 環境構築する手順は省略</li>
+<li>EC2 インスタンスに ssh 接続できるようにしておく</li>
+</ul>
+<h2 id="etcansiblehosts-に-ec2-インスタンスを登録">/etc/ansible/hosts に EC2 インスタンスを登録<a href="#etcansiblehosts-に-ec2-インスタンスを登録" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% cat /etc/ansible/hosts 
+ec2-xxx-xxx-xxx-xxx.ap-northeast-1.compute.amazonaws.com
+</code></pre></div><hr>
+<p><code>/etc/ansible/hosts</code> って何？</p>
+<ul>
+<li>Ansible では、インベントリと呼ばれる単位で、複数のホストに対して操作を行う
+<ul>
+<li>インベントリを定義したらパターンを使用して Ansible を実行したいホストやグループを指定する</li>
+<li>このインベントリのデフォルトの場所が <code>/etc/ansible/hosts</code> となる。</li>
+</ul>
+</li>
+<li>コマンドラインで <code>-i</code> or <code>--inventory</code> or <code>--inventory-file</code> オプションを使用して、任意のインベントリファイルを指定することも可能</li>
+</ul>
+<p>How to build your inventory — Ansible Documentation<br>
+<a href="https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html">https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html</a></p>
+<h2 id="ping">ping<a href="#ping" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% ansible --user ec2-user all --module-name ping
+<span class="o">[</span>WARNING<span class="o">]</span>: Platform linux on host ec2-xxx-xxx-xxx-xxx.ap-northeast-1.compute.amazonaws.com is using the discovered Python interpreter at /usr/bin/python, but future
+installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible/2.10/reference_appendices/interpreter_discovery.html
+<span class="k">for</span> more information.
+ec2-xxx-xxx-xxx-xxx.ap-northeast-1.compute.amazonaws.com <span class="p">|</span> <span class="nv">SUCCESS</span> <span class="o">=</span>&gt; <span class="o">{</span>
+    <span class="s2">&#34;ansible_facts&#34;</span>: <span class="o">{</span>
+        <span class="s2">&#34;discovered_interpreter_python&#34;</span>: <span class="s2">&#34;/usr/bin/python&#34;</span>
+    <span class="o">}</span>,
+    <span class="s2">&#34;changed&#34;</span>: false,
+    <span class="s2">&#34;ping&#34;</span>: <span class="s2">&#34;pong&#34;</span>
+<span class="o">}</span>
+</code></pre></div><hr>
+<p>この ping って何？</p>
+<ul>
+<li>Ansible の ping モジュール
+<ul>
+<li>リモートノードに ssh による通信が可能か、リモートノードで Python が動かくか確認するもの</li>
+<li>ICMP での ping ではない</li>
+</ul>
+</li>
+</ul>
+<p>ansible.builtin.ping – Try to connect to host, verify a usable python and return pong on success — Ansible Documentation<br>
+<a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/ping_module.html#ansible-collections-ansible-builtin-ping-module">https://docs.ansible.com/ansible/latest/collections/ansible/builtin/ping_module.html#ansible-collections-ansible-builtin-ping-module</a></p>
+<p>Ansible.Builtin — Ansible Documentation<br>
+<a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/">https://docs.ansible.com/ansible/latest/collections/ansible/builtin/</a></p>
+<hr>
+<p>この警告は何なのか</p>
+<ul>
+<li>POSIX 環境で実行されるほとんどの Ansible モジュールは、ターゲットホスト上で Python インタプリタを必要としまする</li>
+<li>特に設定しない限り Ansible は、 Python モジュールがそのホストで初めて実行されたときに、各ターゲットホスト上で適切な Python インタプリタを検出しようとする
+<ul>
+<li>この動作を Interpreter Discovery という</li>
+<li>Interpreter Discovery を防ぐには2つの方法がある
+<ol>
+<li>個々のホストやグループに対して ansible_python_interpreter インベントリ変数を設定する</li>
+<li>グローバルに ansible.cfg の [defaults] セクションで interpreter_python キーを使用する</li>
+</ol>
+</li>
+<li>グローバルに設定してしまったほうが楽なので、今回は 2. の方法で対処する</li>
+</ul>
+</li>
+</ul>
+<p>[小ネタ] Pythonのバージョンを指定してAnsible実行時に表示される警告を消す | DevelopersIO<br>
+<a href="https://dev.classmethod.jp/articles/ansible-interpreter-warning/">https://dev.classmethod.jp/articles/ansible-interpreter-warning/</a></p>
+<p>Interpreter Discovery — Ansible Documentation<br>
+<a href="https://docs.ansible.com/ansible/2.9/reference_appendices/interpreter_discovery.html">https://docs.ansible.com/ansible/2.9/reference_appendices/interpreter_discovery.html</a></p>
+<h2 id="警告を消すために-ansiblecfg-を作成">警告を消すために ~/.ansible.cfg を作成<a href="#警告を消すために-ansiblecfg-を作成" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% cat ~/.ansible.cfg
+<span class="o">[</span>defaults<span class="o">]</span>
+<span class="nv">interpreter_python</span><span class="o">=</span>/usr/bin/python
+</code></pre></div><hr>
+<p><code>~/.ansible.cfg</code> って何？</p>
+<ul>
+<li>Ansible の設定ファイル</li>
+</ul>
+<p>Controlling how Ansible behaves: precedence rules — Ansible Documentation<br>
+<a href="https://docs.ansible.com/ansible/latest/reference_appendices/general_precedence.html">https://docs.ansible.com/ansible/latest/reference_appendices/general_precedence.html</a></p>
+<h2 id="再度-ping">再度 ping<a href="#再度-ping" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% ansible --user ec2-user all --module-name ping
+ec2-xxx-xxx-xxx-xxx.ap-northeast-1.compute.amazonaws.com <span class="p">|</span> <span class="nv">SUCCESS</span> <span class="o">=</span>&gt; <span class="o">{</span>
+    <span class="s2">&#34;changed&#34;</span>: false,
+    <span class="s2">&#34;ping&#34;</span>: <span class="s2">&#34;pong&#34;</span>
+<span class="o">}</span>
+</code></pre></div><ul>
+<li>警告が消えたのでヨシ！</li>
+</ul>
+<h2 id="この記事を試した環境">この記事を試した環境<a href="#この記事を試した環境" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H512
+% ansible --version
+ansible 2.10.5
+  config <span class="nv">file</span> <span class="o">=</span> /Users/myname/.ansible.cfg
+  configured module search <span class="nv">path</span> <span class="o">=</span> <span class="o">[</span><span class="s1">&#39;/Users/myname/.ansible/plugins/modules&#39;</span>, <span class="s1">&#39;/usr/share/ansible/plugins/modules&#39;</span><span class="o">]</span>
+  ansible python module <span class="nv">location</span> <span class="o">=</span> /usr/local/Cellar/ansible/2.10.6/libexec/lib/python3.9/site-packages/ansible
+  executable <span class="nv">location</span> <span class="o">=</span> /usr/local/bin/ansible
+  python <span class="nv">version</span> <span class="o">=</span> 3.9.1 <span class="o">(</span>default, Feb  <span class="m">3</span> 2021, 07:04:15<span class="o">)</span> <span class="o">[</span>Clang 12.0.0 <span class="o">(</span>clang-1200.0.32.29<span class="o">)]</span>
+</code></pre></div>
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://noid11.github.io/tags/mac">Mac</a></span><span class="tag"><a href="https://noid11.github.io/tags/ansible">Ansible</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>793 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2021/02/11 17:05 &#43;0900</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/noid11/noid11.github.io/commit/7d27dc4e0d432033e33d2b9aea62390636cdeb64" target="_blank" rel="noopener">7d27dc4</a> @ 2021/02/11</p>
+			</footer>
+		</article>
+		<aside id="toc" class="show-toc">
+			<div class="toc-title">Table of Contents</div>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#mac-に-ansible-をインストール">Mac に Ansible をインストール</a></li>
+    <li><a href="#ec2-linux-環境を構築">EC2 Linux 環境を構築</a></li>
+    <li><a href="#etcansiblehosts-に-ec2-インスタンスを登録">/etc/ansible/hosts に EC2 インスタンスを登録</a></li>
+    <li><a href="#ping">ping</a></li>
+    <li><a href="#警告を消すために-ansiblecfg-を作成">警告を消すために ~/.ansible.cfg を作成</a></li>
+    <li><a href="#再度-ping">再度 ping</a></li>
+    <li><a href="#この記事を試した環境">この記事を試した環境</a></li>
+  </ul>
+</nav>
+		</aside>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://noid11.github.io/posts/cognito-user-pool-lambda-trigger-behavior-at-federation/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Cognito User Pool における Lambda Trigger は Federation 時にどう動くのか</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2021 <a href="https://noid11.github.io/"></a>&#183; noid11</p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://noid11.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://noid11.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>
