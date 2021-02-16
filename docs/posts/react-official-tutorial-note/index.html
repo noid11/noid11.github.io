@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="React 公式チュートリアルやったノート">
+<meta itemprop="description" content="三目並べゲームを作成する React 公式のチュートリアルを進めたメモ">
+<meta itemprop="datePublished" content="2021-02-14T19:10:27+09:00" />
+<meta itemprop="dateModified" content="2021-02-17T08:33:35+09:00" />
+<meta itemprop="wordCount" content="11259">
+
+
+
+<meta itemprop="keywords" content="React,JavaScript," />
+<meta property="og:title" content="React 公式チュートリアルやったノート" />
+<meta property="og:description" content="三目並べゲームを作成する React 公式のチュートリアルを進めたメモ" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://noid11.github.io/posts/react-official-tutorial-note/" />
+<meta property="article:published_time" content="2021-02-14T19:10:27+09:00" />
+<meta property="article:modified_time" content="2021-02-17T08:33:35+09:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="React 公式チュートリアルやったノート"/>
+<meta name="twitter:description" content="三目並べゲームを作成する React 公式のチュートリアルを進めたメモ"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>React 公式チュートリアルやったノート</title>
+	<link rel="stylesheet" href="https://noid11.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://noid11.github.io/">noid11.github.io</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://noid11.github.io/posts/">Posts</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="toc-btn" class="hdr-btn desktop-only-ib" title="Table of Contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="https://twitter.com/_noid11" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://github.com/noid11" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://noid11.github.io/posts/">Posts</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>2021/02/14</span></div>
+				<h1>React 公式チュートリアルやったノート</h1>
+			</header>
+			<div class="content">
+				<p>三目並べゲームを作成する <a href="https://ja.reactjs.org/tutorial/tutorial.html">React 公式のチュートリアル</a>を進めたメモ</p>
+<h2 id="振り返りノート">振り返りノート<a href="#振り返りノート" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li><a href="https://create-react-app.dev/">create-react-app</a> で React を使ったアプリケーションの土台が作れる
+<ul>
+<li><a href="https://create-react-app.dev/docs/adding-typescript/">TypeScript</a> も使用可能</li>
+</ul>
+</li>
+<li>React では UI を <a href="https://ja.reactjs.org/docs/react-component.html">React.Component</a> サブクラスというコンポーネントとして扱う
+<ul>
+<li><a href="https://ja.reactjs.org/docs/react-component.html#props">props (properties)</a>
+<ul>
+<li>React コンポーネントにデータを連携するもの</li>
+<li>React では親コンポーネントから子コンポーネントに props を渡すことでアプリ内での情報をやりとりする</li>
+<li>JavaScript のクラスでは、サブクラスのコンストラクタを定義する際には常に <a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/super"><code>super()</code></a> を呼ぶ必要がある
+<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Classes/constructor"><code>constructor</code></a> を持つ React コンポーネントでは、全てのコンストラクタを <code>super(props)</code> の呼び出しから始める</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="https://ja.reactjs.org/docs/react-component.html#render">render</a>
+<ul>
+<li>React コンポーネントが描画するもの</li>
+<li>JSX と呼ばれるシンタックスシュガーで記述可能
+<ul>
+<li><a href="https://ja.reactjs.org/docs/react-api.html#createelement">React.createElement</a> を使った定義を HTML ライクに書けるというもの</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="https://ja.reactjs.org/docs/react-component.html#state">state</a>
+<ul>
+<li>React コンポーネントに持たせる状態を扱うもの
+<ul>
+<li>その React コンポーネント内でプライベートなデータとして扱う</li>
+</ul>
+</li>
+<li>state は対象 React コンポーネントのコンストラクタ以外では直接変更せず <a href="https://ja.reactjs.org/docs/react-component.html#setstate"><code>setState()</code></a> メソッドによって変更を行う</li>
+<li>state の更新は非同期に行われる場合がある
+<ul>
+<li><code>this.props</code>, <code>this.state</code> は非同期に更新されるため、これらの値に依存するような実装はしない</li>
+<li>オブジェクトではなく関数を受け取る <code>setState()</code> を使うと、良い
+<ul>
+<li>第1引数: 設定する state</li>
+<li>第2引数: 更新が適用される時点での props</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>state の更新はマージされる
+<ul>
+<li>state に複数の値を使用している場合、複数の値を独立して更新することができる
+<ul>
+<li>ので state で取り扱う値を変更する場合、全ての値を変更せず、変更したい値だけを変更すれば良い</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>state のリフトアップ
+<ul>
+<li>state の管理を親 React コンポーネントに変更すること</li>
+<li>複数の子要素からデータを集めたい、または 2つ の子コンポーネントに互いにやりとりさせたい場合、代わりに親コンポーネント内で共有の state を宣言する必要がある
+<ul>
+<li>親コンポーネントは props を使うことで、子に情報を返すことができる</li>
+<li>これによって子コンポーネントが兄弟同士や親との間で、常に同期されるようになる</li>
+</ul>
+</li>
+<li>state を親コンポーネントにリフトアップすることは React コンポーネントのリファクタリングでよくあること</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="https://ja.reactjs.org/docs/components-and-props.html#function-and-class-components">関数コンポーネント</a>
+<ul>
+<li><code>render</code> メソッドだけを有して、自分の state を持たないコンポーネントを、よりシンプルに書くための方法</li>
+<li><code>React.Component</code> を継承するクラスを定義する代わりに props を入力として受け取り、表示すべき内容を返す関数を定義する</li>
+<li>関数コンポーネントはクラスよりも書くのが楽</li>
+<li><code>function Welcome(props) { return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;; }</code></li>
+</ul>
+</li>
+<li><a href="https://ja.reactjs.org/docs/lists-and-keys.html#keys">key</a>
+<ul>
+<li>React によって予約されているプロパティ</li>
+<li>リストアイテムをレンダリングする際に、各アイテムを識別するために指定する ID のようなもの
+<ul>
+<li><code>&lt;li key={user.id}&gt;{user.name}: {user.taskCount} tasks left&lt;/li&gt;</code></li>
+</ul>
+</li>
+<li>動的なリストを構築する場合には、正しい key を割り当てることが強く推奨されている
+<ul>
+<li>key はグローバルに一意である必要は無い</li>
+<li>コンポーネントと、その兄弟の間で一意であれば十分</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>React Developer Tools
+<ul>
+<li>React 開発者向けのツールが <a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en">Chrome</a> と <a href="https://addons.mozilla.org/en-US/firefox/addon/react-devtools/">Firefox</a> 向けに公開されている</li>
+<li>React を使った開発をする際にはインストールしておこう</li>
+</ul>
+</li>
+<li>immutability の重要性
+<ul>
+<li>直接データを mutate する
+<ul>
+<li>配列データを直接変更したり</li>
+</ul>
+</li>
+<li>imutability を保つ
+<ul>
+<li>配列データを直接変更するのではなく、配列データのコピーを作って操作したり
+<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/slice">slice</a>, <a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/concat">concat</a>, <a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/map">map</a> とか、新しい配列を返すような関数を使う</li>
+</ul>
+</li>
+<li>メリット
+<ol>
+<li>複雑な機能が簡単に実装できる</li>
+<li>変更があったことを検出できる</li>
+</ol>
+<ul>
+<li>immutable object を比較すれば良い</li>
+</ul>
+<ol>
+<li>React の再レンダータイミングの決定</li>
+</ol>
+<ul>
+<li><a href="https://ja.reactjs.org/docs/react-api.html#reactpurecomponent">pure component</a> を構築しやすくなる</li>
+<li>イミュータブルなデータは変更があったかどうか簡単に分かるため、コンポーネントをいつ再レンダーすべきなのか決定しやすくなる</li>
+<li><a href="https://ja.reactjs.org/docs/optimizing-performance.html#examples">shouldComponentUpdate() および pure component をどのように作成するのかについて</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ローカル環境で開発する準備">ローカル環境で開発する準備<a href="#ローカル環境で開発する準備" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<h3 id="create-react-app">create-react-app<a href="#create-react-app" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">npx create-react-app react-tutorial
+</code></pre></div><ul>
+<li><a href="https://create-react-app.dev">create-react-app</a>: React 使ったモダンなアプリケーション開発環境をセットアップしてくれるツール
+<ul>
+<li><a href="https://create-react-app.dev/docs/folder-structure">ディレクトリ構成</a></li>
+<li><a href="https://create-react-app.dev/docs/adding-typescript">TypeScript を使いたい場合</a>:
+<ul>
+<li><code>npx create-react-app my-app --template typescript</code></li>
+<li><code>npm install --save typescript @types/node @types/react @types/react-dom @types/jest</code></li>
+<li><a href="https://react-typescript-cheatsheet.netlify.app/">React TypeScript Cheatsheets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="src-ディレクトリの中身を削除">src ディレクトリの中身を削除<a href="#src-ディレクトリの中身を削除" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nb">cd</span> react-tutorial/src
+rm -f *
+<span class="nb">cd</span> ../
+</code></pre></div><h3 id="基本となるファイルを作成">基本となるファイルを作成<a href="#基本となるファイルを作成" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">touch index.css
+touch index.js
+</code></pre></div><p>index.css</p>
+<div class="highlight"><pre class="chroma"><code class="language-css" data-lang="css"><span class="nt">body</span> <span class="p">{</span>
+    <span class="k">font</span><span class="p">:</span> <span class="mi">14</span><span class="kt">px</span> <span class="s2">&#34;Century Gothic&#34;</span><span class="p">,</span> <span class="n">Futura</span><span class="p">,</span> <span class="kc">sans-serif</span><span class="p">;</span>
+    <span class="k">margin</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">ol</span><span class="o">,</span> <span class="nt">ul</span> <span class="p">{</span>
+    <span class="k">padding-left</span><span class="p">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">board-row</span><span class="p">:</span><span class="nd">after</span> <span class="p">{</span>
+    <span class="k">clear</span><span class="p">:</span> <span class="kc">both</span><span class="p">;</span>
+    <span class="k">content</span><span class="p">:</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+    <span class="k">display</span><span class="p">:</span> <span class="kc">table</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">status</span> <span class="p">{</span>
+    <span class="k">margin-bottom</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">square</span> <span class="p">{</span>
+    <span class="k">background</span><span class="p">:</span> <span class="mh">#fff</span><span class="p">;</span>
+    <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="mh">#999</span><span class="p">;</span>
+    <span class="k">float</span><span class="p">:</span> <span class="kc">left</span><span class="p">;</span>
+    <span class="k">font-size</span><span class="p">:</span> <span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">font-weight</span><span class="p">:</span> <span class="kc">bold</span><span class="p">;</span>
+    <span class="k">line-height</span><span class="p">:</span> <span class="mi">34</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span> <span class="mi">34</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">margin-right</span><span class="p">:</span> <span class="mi">-1</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">margin-top</span><span class="p">:</span> <span class="mi">-1</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+    <span class="k">width</span><span class="p">:</span> <span class="mi">34</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">square</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+    <span class="k">outline</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">kbd-navigation</span> <span class="p">.</span><span class="nc">square</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+    <span class="k">background</span><span class="p">:</span> <span class="mh">#ddd</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">game</span> <span class="p">{</span>
+    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+    <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">row</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">game-info</span> <span class="p">{</span>
+    <span class="k">margin-left</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><p>index.js</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">ReactDOM</span> <span class="nx">from</span> <span class="s1">&#39;react-dom&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="s1">&#39;./index.css&#39;</span><span class="p">;</span>
+
+<span class="kr">class</span> <span class="nx">Square</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;square&#34;</span><span class="o">&gt;</span>
+        <span class="p">{</span><span class="cm">/* TODO */</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="err">/button&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">class</span> <span class="nx">Board</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">renderSquare</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">Square</span> <span class="o">/&gt;</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">status</span> <span class="o">=</span> <span class="s1">&#39;Next player: X&#39;</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;status&#34;</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">status</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;board-row&#34;</span><span class="o">&gt;</span>
+          <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">0</span><span class="p">)}</span>
+          <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">1</span><span class="p">)}</span>
+          <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">2</span><span class="p">)}</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;board-row&#34;</span><span class="o">&gt;</span>
+          <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">3</span><span class="p">)}</span>
+          <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">4</span><span class="p">)}</span>
+          <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">5</span><span class="p">)}</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;board-row&#34;</span><span class="o">&gt;</span>
+          <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">6</span><span class="p">)}</span>
+          <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">7</span><span class="p">)}</span>
+          <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">8</span><span class="p">)}</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">class</span> <span class="nx">Game</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;game&#34;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;game-board&#34;</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">Board</span> <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;game-info&#34;</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="p">{</span><span class="cm">/* status */</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+          <span class="o">&lt;</span><span class="nx">ol</span><span class="o">&gt;</span><span class="p">{</span><span class="cm">/* TODO */</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/ol&gt;</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// ========================================
+</span><span class="c1"></span>
+<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">Game</span> <span class="o">/&gt;</span><span class="p">,</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div><h3 id="動作確認">動作確認<a href="#動作確認" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">npm start
+</code></pre></div><h2 id="react-とは">React とは？<a href="#react-とは" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>React はユーザインターフェイスを構築するための、宣言型で効率的で柔軟な JavaScript ライブラリ</li>
+<li>複雑な UI を、「コンポーネント」と呼ばれる小さく独立した部品から組み立てることができる</li>
+<li>まずは React.Component サブクラスというコンポーネントをみていく</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">ShoppingList</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;shopping-list&#34;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Shopping</span> <span class="nx">List</span> <span class="k">for</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+        <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="nx">Instagram</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="nx">WhatsApp</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+          <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="nx">Oculus</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+        <span class="o">&lt;</span><span class="err">/ul&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><ul>
+<li>コンポーネントは、 React に何を描画するのか伝えるもの
+<ul>
+<li>データが変更されると React はコンポーネントを効率よく更新して再度レンダリングを行う</li>
+</ul>
+</li>
+<li><code>ShoppingList</code> は React コンポーネントクラスまたは React コンポーネント型
+<ul>
+<li>コンポーネントは props (properties の略) を呼ばれるパラメーターを受け取り、 <code>render</code> メソッドを通して、表示するビューの階層構造を返す</li>
+</ul>
+</li>
+<li><code>render</code> メソッドが返すのは画面上に表示するものの説明書き
+<ul>
+<li>React は説明書きを受け取って画面に描画する
+<ul>
+<li>具体的には、 <code>render</code> は、描画すべきものの軽量な記述形式である React 要素というものを返す</li>
+<li>たいていの React 開発者は、これらの構造を簡単に記述できる <a href="https://ja.reactjs.org/docs/jsx-in-depth.html">JSX</a> と呼ばれる構文を使用する
+<ul>
+<li><code>&lt;div /&gt;</code> という構文は、ビルド時に <code>React.createElement('div')</code> に変換される</li>
+<li><a href="https://ja.reactjs.org/docs/react-api.html#createelement">https://ja.reactjs.org/docs/react-api.html#createelement</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>上記の例は以下のコードと同等</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="k">return</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">className</span><span class="o">:</span> <span class="s1">&#39;shopping-list&#39;</span><span class="p">},</span>
+  <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;h1&#39;</span><span class="p">,</span> <span class="cm">/* ... h1 children ... */</span><span class="p">),</span>
+  <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;ul&#39;</span><span class="p">,</span> <span class="cm">/* ... ul children ... */</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div><ul>
+<li>JSX では JavaScript のすべての能力を使うことができる
+<ul>
+<li>どのような JavaScript の式も JSX 内で中括弧に囲んで記入することができる</li>
+<li>各 React 要素は、変数に格納したりプログラム内で受け渡ししたりできる JavaScript のオブジェクト</li>
+</ul>
+</li>
+<li>上記の ShoppingList コンポーネントは <code>&lt;div /&gt;</code> や <code>&lt;li /&gt;</code> といった組み込みの DOM コンポーネントのみをレンダーしているが、自分で書いたカスタム React コンポーネントを組み合わせることも可能
+<ul>
+<li>例えば <code>&lt;ShoppingList /&gt;</code> と書いてショッピングリスト全体を指し示すことができる</li>
+<li>それぞれの React のコンポーネントはカプセル化されており、独立して動作する</li>
+<li>これにより単純なコンポーネントから複雑な UI を作成することができる</li>
+</ul>
+</li>
+</ul>
+<h2 id="スターターコードの中身を確認">スターターコードの中身を確認<a href="#スターターコードの中身を確認" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li><code>src/index.js</code> には 3つ の React コンポーネントがある
+<ol>
+<li>Square: 正方形のマス <code>&lt;button&gt;</code></li>
+<li>Borad: 盤面 (3x3 の Square)</li>
+<li>Game: Board とゲーム情報</li>
+</ol>
+</li>
+</ul>
+<h2 id="データを-props-経由で渡す">データを Props 経由で渡す<a href="#データを-props-経由で渡す" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>Board の <code>renderSquare</code> メソッド内で、 props として value という名前の値を Square に渡すようにコードを変更</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Boards</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">renderSquare</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">Square</span> <span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="nx">i</span><span class="p">}</span><span class="o">&gt;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><ul>
+<li>Square の <code>render</code> メソッドで、渡された値を表示するように、<code>{/* TODO */}</code> を <code>{this.props.value}</code> に書き換える</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Square</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;square&#34;</span><span class="o">&gt;</span>
+        <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">value</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="err">/button&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><ul>
+<li>これで親である Board コンポーネントから、子である Square コンポーネントに「props を渡す」ことができた</li>
+<li>React では、親から子へと props を渡すことで、アプリ内を情報が流れていく</li>
+</ul>
+<p><a href="https://codepen.io/gaearon/pen/aWWQOG?editors=0010">この時点でのコード</a></p>
+<h2 id="インタラクティブなコンポーネントを作る">インタラクティブなコンポーネントを作る<a href="#インタラクティブなコンポーネントを作る" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>Square コンポーネントがクリックされたら X と表示するように実装する
+<ul>
+<li>アロー関数を使う場合 onClick プロパティに渡しているのは関数であることに注意
+<ul>
+<li>React はクリックされるまでこの関数を実行しない</li>
+</ul>
+</li>
+<li><code>onClick={alert('click')}</code> のように書いてしまうとコンポーネントをレンダリングしなおす度に関数が呼ばれてしまう</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Square</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;square&#34;</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">)</span> <span class="p">}}</span><span class="o">&gt;</span>
+      <span class="c">&lt;!--</span> <span class="nx">アロー関数を使う場合</span><span class="o">:</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="p">=&gt;</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">)}</span> <span class="o">--&gt;</span>
+
+        <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">value</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="err">/button&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><ul>
+<li>これで Square をクリックした際にアラートが表示されるはず</li>
+<li>コンポーネントに状態を持たせたい場合、 state を使う
+<ul>
+<li>クリックされたら X にする・・・というのが今回持たせたい状態</li>
+<li><a href="https://ja.reactjs.org/docs/state-and-lifecycle.html">https://ja.reactjs.org/docs/state-and-lifecycle.html</a>
+<ol>
+<li>state はコンストラクタ以外では直接変更せず <code>setState</code> を使う</li>
+</ol>
+<ul>
+<li><a href="https://ja.reactjs.org/docs/react-component.html#setstate">https://ja.reactjs.org/docs/react-component.html#setstate</a></li>
+</ul>
+<ol start="2">
+<li>state の更新は非同期に行われる可能性がある</li>
+</ol>
+<ul>
+<li>React はパフォーマンスのために複数の <code>setState</code> 呼び出しを一度の更新にまとめて処理する場合がある</li>
+<li><code>this.props</code> と <code>this.state</code> は非同期に更新されるため state を求める際にはこれらの値に依存するべきではない
+<ul>
+<li>オブジェクトではなく関数を受け取る <code>setState</code> を使うと、 state を最初の引数として受け取り、更新が適用される時点での props を第2引数として受け取る</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>state の更新はマージされる</li>
+</ol>
+<ul>
+<li><code>setState</code> を呼び出した場合 React は与えられたオブジェクトを現在の state にマージする</li>
+<li>state に複数の値を使用している場合、複数の値を独立して更新することができる</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>React コンポーネントはコンストラクタで <code>this.state</code> を設定することで、状態を持つことができるようになる
+<ul>
+<li><code>this.state</code> は、それが定義されているコンポーネント内でプライベートと見なすべきもの</li>
+<li>現在の Square の状態を <code>this.state</code> に保存して、マス目がクリックされた時にそれを変更するようにする</li>
+</ul>
+</li>
+<li>JavaScript のクラスでは、サブクラスのコンストラクタを定義する際には常に <code>super</code> を呼ぶ必要がある
+<ul>
+<li><code>constructor</code> を持つ React コンポーネントでは、全てのコンストラクタを <code>super(props)</code> の呼び出しから始めるべき</li>
+</ul>
+</li>
+</ul>
+<p>クラスにコンストラクタを追加して state を初期化</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Square</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">value</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span><span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;square&#34;</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="p">=&gt;</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">)}</span><span class="o">&gt;</span>
+        <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">value</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="err">/button&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>クリックされたら state が変わるようにする</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Square</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">value</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">render</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">button</span>
+        <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;square&#34;</span>
+        <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span><span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;X&#39;</span><span class="p">})}</span>
+      <span class="o">&gt;</span>
+        <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">value</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="err">/button&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><ul>
+<li>Square の <code>render</code> メソッド内に書かれた <code>onClick</code> ハンドラ内で <code>this.setState</code> を呼び出すことで、 React に <code>&lt;button&gt;</code> がクリックされたら常に再レンダーするように伝えることができる</li>
+<li>データ更新のあと、この Square の <code>this.state.value</code> は <code>X</code> になるので、盤面に X と表示される</li>
+<li><code>setState</code> をコンポーネント内で呼び出すと React は内部の子コンポーネントも自動的に更新する</li>
+</ul>
+<p><a href="https://codepen.io/gaearon/pen/VbbVLg?editors=0010">この時点でのコード</a></p>
+<h2 id="react-developer-tools">React Developer Tools<a href="#react-developer-tools" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>React 開発者向けのツールが <a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en">Chrome</a> と <a href="https://addons.mozilla.org/en-US/firefox/addon/react-devtools/">Firefox</a> 向けに公開されている</li>
+<li>ブラウザの開発者向けツールを拡張するもので、 React コンポーネントのツリーを確認することができる</li>
+</ul>
+<h2 id="ゲームを完成させる">ゲームを完成させる<a href="#ゲームを完成させる" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>ここまでの作業で三目並べゲームの基本的な部品が揃った</li>
+<li>完全なゲームにするためのタスクは以下
+<ul>
+<li>盤面に X と O を交互に置けるようにする</li>
+<li>どちらのプレイヤーが勝利したのか判定できるようにする</li>
+</ul>
+</li>
+</ul>
+<h3 id="state-のリフトアップ">State のリフトアップ<a href="#state-のリフトアップ" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li>現時点では、それぞれの Square コンポーネントがゲームの状態を保持している
+<ul>
+<li>どちらのプレイヤーが勝利したのか判定するために 9個 のマス目の値を 1箇所 で管理するようにする
+<ul>
+<li>Board が各 Square に、現時点の state がどうなっているのか問い合わせればよいだけ？
+<ul>
+<li>可能ではあるが、コードが難解になり、メンテしづらくなるので非推奨</li>
+</ul>
+</li>
+<li>ゲームの状態を各 Square の代わりに、親となる Board コンポーネントで管理するのがベストな解決策
+<ul>
+<li>Board コンポーネントは、それぞれの Square に props を渡すことで、何を表示すべきかを伝えられる
+<ul>
+<li>Square に番号を常時させた時と同じ</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>複数の子要素からデータを集めたい、または 2つ の子コンポーネントに互いにやりとりさせたい場合、代わりに親コンポーネント内で共有の state を宣言する必要がある
+<ul>
+<li>親コンポーネントは props を使うことで、子に情報を返すことができる</li>
+<li>これによって子コンポーネントが兄弟同士や親との間で、常に同期されるようになる</li>
+</ul>
+</li>
+<li>state を親コンポーネントにリフトアップすることは React コンポーネントのリファクタリングでよくあること</li>
+</ul>
+<p>Board にコンストラクタを追加し、初期 state として 9個 のマス目に対応する 9個 の null 値をセットする</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Board</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">squares</span><span class="o">:</span> <span class="nb">Array</span><span class="p">(</span><span class="mi">9</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="kc">null</span><span class="p">),</span>
+        <span class="p">};</span>
+    <span class="p">}</span>
+
+    <span class="nx">renderSquare</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">Square</span> <span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="nx">i</span><span class="p">}</span> <span class="o">/&gt;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">...</span>
+</code></pre></div><ul>
+<li><code>renderSquare</code> が <code>i</code> を使ってマス目を表示していたが、 X マークを表示するようにしたので、 Board から渡されている <code>value</code> プロパティの値は、現状無視されている</li>
+<li>props を渡すメカニズムを使う
+<ul>
+<li>Board を書き換えて、それぞれの個別の Square に現在の値 (X, O, null) を伝えるようにする</li>
+<li><code>squares</code> 配列は Board コンストラクタで定義しているので Board の <code>renderSquare</code> が値を読み込むように書き換える</li>
+<li><code>fill</code> メソッド
+<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/fill">https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/fill</a></li>
+<li>配列に対して値を設定するメソッド</li>
+<li><code>Array(9).fill(null)</code> は 9つの要素 を持つ配列を作成して、それぞれに null を設定するという意味</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://codepen.io/gaearon/pen/gWWQPY?editors=0010">この時点でのコード</a></p>
+<ul>
+<li>マス目がクリックされたときの挙動を変更する
+<ul>
+<li>現状、どのマス目に何が入っているのかを管理しているのは Board</li>
+<li>Square が Board の state を更新できるようにする必要がある</li>
+<li>state は、それを定義しているコンポーネント内でプライベートなものなので、 Square から Board の state を直接書き換えることはできない</li>
+<li>Board から Square に関数を渡すことにして、マス目がクリックされた時に Square にその関数を呼んでもらうようにする</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js">    <span class="nx">renderSquare</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="o">&lt;</span><span class="nx">Square</span> 
+                <span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">squares</span><span class="p">[</span><span class="nx">i</span><span class="p">]}</span>
+                <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleClick</span><span class="p">(</span><span class="nx">i</span><span class="p">)}</span>
+            <span class="o">/&gt;</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+</code></pre></div><ul>
+<li>現状 Board から Square には props として 2つ の値を渡している
+<ol>
+<li>value</li>
+<li>onClick</li>
+</ol>
+<ul>
+<li>マス目がクリックされた時に Square が呼び出すためのもの</li>
+<li>以下のような実装をしていく
+<ul>
+<li>Square の <code>render</code> メソッド内の <code>this.state.value</code> を <code>this.props.value</code> に書き換える</li>
+<li>Square の <code>render</code> メソッド内の <code>this.setState()</code> を <code>this.props.onClick()</code> に書き換える</li>
+<li>Square は、ゲームの状態を管理しないので <code>constuctor</code> を削除</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Square</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="o">&lt;</span><span class="nx">button</span> 
+                <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;square&#34;</span> 
+                <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">onClick</span><span class="p">()}</span>
+            <span class="o">&gt;</span>
+                <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">value</span><span class="p">}</span>
+            <span class="o">&lt;</span><span class="err">/button&gt;</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><ul>
+<li>Square がクリックされると Board から渡された <code>onClick</code> 関数がコールされる</li>
+<li>流れのおさらい
+<ol>
+<li>組み込みの DOM コンポーネントである <code>&lt;button&gt;</code> に <code>onClick</code> プロパティが設定されているため、 React がクリックに対するイベントリスナーを設定</li>
+</ol>
+<ul>
+<li>DOM 要素である <code>&lt;button&gt;</code> は組み込みコンポーネントなので <code>onClick</code> 属性は React にとって特別な意味を持っている</li>
+<li>Square のようなカスタムコンポーネントでは、名前の付け方は開発者が自由に決めれる</li>
+<li>Square の <code>onClick</code> プロパティや Board の <code>handleClick</code> メソッドについては別名を付けたとしても同じように動作する</li>
+<li>React の慣習
+<ul>
+<li>イベントを表す props には <code>on[Event]</code> という名前</li>
+<li>イベントを処理するメソッドには <code>handle[Event]</code> という名前</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>ボタンがクリックされると React は Square の <code>render()</code> メソッド内に定義されている <code>onClick</code> イベントハンドラをコール</li>
+<li>このイベントハンドラが <code>this.props.onClick()</code> をコール</li>
+</ol>
+<ul>
+<li>Square の <code>onClick</code> プロパティは Board から渡されているもの</li>
+</ul>
+<ol start="4">
+<li>Board は Square に <code>onClick={() =&gt; this.handleClick(i)}</code> を渡していたので Square はクリックされた時に <code>this.handleClick(i)</code> を呼び出す</li>
+<li>まだ <code>handleClick()</code> を定義していないので、コードがクラッシュする</li>
+</ol>
+<ul>
+<li>Square をクリックすると &ldquo;this.handleClick is not a function&rdquo; といったエラー画面が表示されるハズ</li>
+</ul>
+</li>
+</ul>
+<p><code>handleClick</code> を Board クラスに実装する</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Board</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">squares</span><span class="o">:</span> <span class="nb">Array</span><span class="p">(</span><span class="mi">9</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="kc">null</span><span class="p">),</span>
+        <span class="p">};</span>
+    <span class="p">}</span>
+
+    <span class="nx">handleClick</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">squares</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">squares</span><span class="p">.</span><span class="nx">slice</span><span class="p">();</span>
+        <span class="nx">squares</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;X&#39;</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span> <span class="nx">squares</span><span class="o">:</span> <span class="nx">squares</span> <span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="nx">renderSquare</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="o">&lt;</span><span class="nx">Square</span> 
+                <span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">squares</span><span class="p">[</span><span class="nx">i</span><span class="p">]}</span>
+                <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleClick</span><span class="p">(</span><span class="nx">i</span><span class="p">)}</span>
+            <span class="o">/&gt;</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">...</span>
+</code></pre></div><p><a href="https://codepen.io/gaearon/pen/ybbQJX?editors=0010">この時点でのコード</a></p>
+<ul>
+<li>再びマス目をクリックすることで値が書き込めるようになった
+<ul>
+<li>状態は個々の Square コンポーネントではなく Board コンポーネント内に保存されている</li>
+<li>Board の state が変更になると、個々の Square コンポーネントも自動的に再レンダーされる</li>
+<li>全てのマス目の状態を Board コンポーネント内で保持するようにしたことで、この後で勝利者を判定する処理をシンプルに実装できる</li>
+</ul>
+</li>
+<li>Square コンポーネントは自分で state を管理しないので Board コンポーネントから値を受け取って、クリックされた時にはクリックされた事を Board コンポーネントに伝えるだけの存在になった
+<ul>
+<li>React 用語で表現すると Square コンポーネントは 制御されたコンポーネント (controlled component) になった</li>
+</ul>
+</li>
+<li><code>handleClick</code> 内では <code>squares</code> を直接変更する代わりに <code>slice()</code> を呼び出して配列のコピーを作成している
+<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/slice">https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/slice</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="イミュータビリティは何故重要">イミュータビリティは何故重要？<a href="#イミュータビリティは何故重要" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li><code>slice()</code> メソッドで <code>squares</code> 配列のコピーを作成し、それを変更する実装とした
+<ul>
+<li>immutability と重要性について解説</li>
+</ul>
+</li>
+<li>一般的に、変化するデータに対しては 2種類 のアプローチがある
+<ol>
+<li>データの値を直接操作する mutate</li>
+<li>望む変更を加えた新しいデータのコピーで古いデータを置き換える</li>
+</ol>
+</li>
+<li>最終的な結果は同じだが、直接データの mutate をしないことで、以下のメリットが有る
+<ul>
+<li>複雑な機能が簡単に実装できる
+<ul>
+<li>ヒストリを保って再利用するとか</li>
+</ul>
+</li>
+<li>変更の検出
+<ul>
+<li>参照しているイミュータブルオブジェクトが前と別のものであれば変更があったと判定できる</li>
+</ul>
+</li>
+<li>React の再レンダータイミングの決定
+<ul>
+<li>React で pure component を構築しやすくなる</li>
+<li>イミュータブルなデータは変更があったかどうか簡単に分かるため、コンポーネントをいつ再レンダーすべきなのか決定しやすくなる</li>
+<li><a href="https://ja.reactjs.org/docs/optimizing-performance.html#examples">shouldComponentUpdate() および pure component をどのように作成するのかについて</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="関数コンポーネント">関数コンポーネント<a href="#関数コンポーネント" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li>Square を関数コンポーネントに書き換える</li>
+<li>関数コンポーネント
+<ul>
+<li><code>render</code> メソッドだけを有して自分の state を持たないコンポーネントを、よりシンプルに書くための方法</li>
+<li><code>React.Component</code> を継承するクラスを定義する代わりに <code>props</code> を入力として受け取り、表示すべき内容を返す関数を定義する</li>
+</ul>
+</li>
+<li>関数コンポーネントはクラスよりも書くのが楽
+<ul>
+<li>多くのコンポーネントは関数コンポーネントで書くことができる</li>
+</ul>
+</li>
+<li><code>onClick={() =&gt; this.props.onClick()}</code> をより短い <code>onClick={props.onClick}</code> に書き換える</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">Square</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;square&#34;</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">onClick</span><span class="p">}</span><span class="o">&gt;</span>
+            <span class="p">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">value</span><span class="p">}</span>
+        <span class="o">&lt;</span><span class="err">/button&gt;</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><p><a href="https://codepen.io/gaearon/pen/QvvJOv?editors=0010">この時点でのコード</a></p>
+<h3 id="手番の処理">手番の処理<a href="#手番の処理" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li>クリックでの書き換えを交互に X と O で切り替えるよう実装していく</li>
+<li>デフォルトで先手を X にする
+<ul>
+<li>Board のコンストラクタで state の初期値を変えれば OK</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Board</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">squares</span><span class="o">:</span> <span class="nb">Array</span><span class="p">(</span><span class="mi">9</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="kc">null</span><span class="p">),</span>
+            <span class="nx">xIsNext</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="p">};</span>
+    <span class="p">}</span>
+<span class="p">...</span>
+</code></pre></div><ul>
+<li>プレイヤーが着手する度に、どちらのプレイヤーの手番なのか決める <code>xIsNext</code> が反転され、ゲームの状態が保存されるようにする</li>
+<li>Board の <code>handleClick</code> 関数を書き換えて <code>xIsNext</code> の値を反転させるようにする</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js">    <span class="nx">handleClick</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">squares</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">squares</span><span class="p">.</span><span class="nx">slice</span><span class="p">();</span>
+        <span class="nx">squares</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">xIsNext</span> <span class="o">?</span> <span class="s1">&#39;X&#39;</span> <span class="o">:</span> <span class="s1">&#39;O&#39;</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+            <span class="nx">squares</span><span class="o">:</span> <span class="nx">squares</span><span class="p">,</span>
+            <span class="nx">xIsNext</span><span class="o">:</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">xIsNext</span><span class="p">,</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+</code></pre></div><ul>
+<li>この変更により X と O が交互に着手できるようになる</li>
+<li>Board の <code>render</code> 内にある status も変更して、どちらのプレイヤーの手番なのか表示するように修正する</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js">    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">status</span> <span class="o">=</span> <span class="s1">&#39;Next player: &#39;</span> <span class="o">+</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">xIsNext</span> <span class="o">?</span> <span class="s1">&#39;X&#39;</span> <span class="o">:</span> <span class="s1">&#39;O&#39;</span><span class="p">);</span>
+<span class="p">...</span>
+</code></pre></div><p><a href="https://codepen.io/gaearon/pen/KmmrBy?editors=0010">この時点でのコード</a></p>
+<h3 id="ゲーム勝者の判定">ゲーム勝者の判定<a href="#ゲーム勝者の判定" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li>ゲームが決着して次の手番がなくなった時に、それを表示する</li>
+<li>ヘルパー関数を追加</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">calculateWinner</span><span class="p">(</span><span class="nx">squares</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">lines</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+    <span class="p">];</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">lines</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="p">[</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">]</span> <span class="o">=</span> <span class="nx">lines</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">squares</span><span class="p">[</span><span class="nx">a</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">squares</span><span class="p">[</span><span class="nx">a</span><span class="p">]</span> <span class="o">===</span> <span class="nx">squares</span><span class="p">[</span><span class="nx">b</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">squares</span><span class="p">[</span><span class="nx">a</span><span class="p">]</span> <span class="o">===</span> <span class="nx">squares</span><span class="p">[</span><span class="nx">c</span><span class="p">])</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">squares</span><span class="p">[</span><span class="nx">a</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><ul>
+<li><code>calculateWinner</code> は 9つ の square 配列が与えられると、勝者を判断し X or O or null を返す</li>
+<li>Board の <code>render</code> 関数内で <code>calculateWinner(squares)</code> を呼び出して、どのプレイヤーが勝利したか判定する
+<ul>
+<li>決着が着いた場合は <code>Winner: X</code> or <code>Winner: O</code> のようなテキストを表示する</li>
+<li>Borad の <code>render</code> 関数の <code>status</code> 宣言を書き換える</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js">    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">winner</span> <span class="o">=</span> <span class="nx">calculateWinner</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">squares</span><span class="p">);</span>
+        <span class="kd">let</span> <span class="nx">status</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">winner</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">status</span> <span class="o">=</span> <span class="s1">&#39;Winner: &#39;</span> <span class="o">+</span> <span class="nx">winner</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">status</span> <span class="o">=</span> <span class="s1">&#39;Next player: &#39;</span> <span class="o">+</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">xIsNext</span> <span class="o">?</span> <span class="s1">&#39;X&#39;</span> <span class="o">:</span> <span class="s1">&#39;O&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+<span class="p">...</span>
+</code></pre></div><ul>
+<li>Board の <code>handleClick</code> を書き換えて、ゲームの決着が既についている場合や、クリックされたマス目が既に埋まっている場合には早期に return するようにする</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js">    <span class="nx">handleClick</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">squares</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">squares</span><span class="p">.</span><span class="nx">slice</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">calculateWinner</span><span class="p">(</span><span class="nx">squares</span><span class="p">)</span> <span class="o">||</span> <span class="nx">squares</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nx">squares</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">xIsNext</span> <span class="o">?</span> <span class="s1">&#39;X&#39;</span> <span class="o">:</span> <span class="s1">&#39;O&#39;</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+            <span class="nx">squares</span><span class="o">:</span> <span class="nx">squares</span><span class="p">,</span>
+            <span class="nx">xIsNext</span><span class="o">:</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">xIsNext</span><span class="p">,</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+</code></pre></div><p><a href="https://codepen.io/gaearon/pen/LyyXgK?editors=0010">この時点でのコード</a></p>
+<h2 id="タイムトラベル機能の追加">タイムトラベル機能の追加<a href="#タイムトラベル機能の追加" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>以前の着手まで時間を巻き戻すことができるようにする</li>
+</ul>
+<h3 id="着手履歴の保存">着手履歴の保存<a href="#着手履歴の保存" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li><code>squares</code> 配列をミューテートしていたら、タイムトラベルの実装は困難</li>
+<li>しかし、着手がある度に <code>squares</code> のコピーを作り、この配列をイミュータブルなものとして扱う実装をしてきた
+<ul>
+<li><code>squares</code> の過去バージョンを全て保存しておいて、過去の手番を遡ることができるようになる</li>
+</ul>
+</li>
+<li>過去の <code>squares</code> 配列を <code>history</code> という名前で別配列に保存する
+<ul>
+<li>この <code>history</code> 配列は初手から最後までの盤面の全ての状態を表現</li>
+<li>以下のような構造</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">history</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1">// Before first move
+</span><span class="c1"></span>    <span class="p">{</span>
+        <span class="nx">squares</span><span class="o">:</span> <span class="p">[</span>
+            <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="c1">// After first move
+</span><span class="c1"></span>    <span class="p">{</span>
+        <span class="nx">squares</span><span class="o">:</span> <span class="p">[</span>
+            <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="kc">null</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="c1">// After second move
+</span><span class="c1"></span>    <span class="p">{</span>
+        <span class="nx">squares</span><span class="o">:</span> <span class="p">[</span>
+            <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="kc">null</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="c1">// ...
+</span><span class="c1"></span><span class="p">]</span>
+</code></pre></div><ul>
+<li>この <code>history</code> の状態は、どのコンポーネントが保持するべきか？</li>
+</ul>
+<h3 id="state-のリフトアップ再び">State のリフトアップ、再び<a href="#state-のリフトアップ再び" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li>トップレベルの Game コンポーネント内で、過去の着手履歴を表示する
+<ul>
+<li>そのため Game コンポーネントが <code>history</code> にアクセスできる必要があるので <code>history</code> という state は Game コンポーネントに置く</li>
+</ul>
+</li>
+<li><code>history</code> state を Game コンポーネント内に置くことで <code>squares</code> の state を、子である Board コンポーネントから取り除くことができる
+<ul>
+<li>Square コンポーネントにあった state をリフトアップして Board コンポーネントに移動した時と同様に、今度は Board にある state を Game コンポーネントにリフトアップする</li>
+<li>これにより Game コンポーネントは Board のデータを完全に制御することになり <code>history</code> 内の過去の手番データを Board にレンダーさせることができるようになる</li>
+</ul>
+</li>
+<li>Game コンポーネントの初期 state をコンストラクタ内でセットする</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Game</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">history</span><span class="o">:</span> <span class="p">[{</span>
+                <span class="nx">squares</span><span class="o">:</span> <span class="nb">Array</span><span class="p">(</span><span class="mi">9</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="kc">null</span><span class="p">),</span>
+            <span class="p">}],</span>
+            <span class="nx">xIsNext</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="p">};</span>
+    <span class="p">}</span>
+<span class="p">...</span>
+</code></pre></div><ul>
+<li>次に Board コンポーネントが <code>squares</code> と <code>onClick</code> プロパティを Game コンポーネントから受け取るようにする
+<ul>
+<li>Board 内には多数のマス目に対応するクリックハンドラが 1つ だけあるので Square の位置を <code>onClick</code> ハンドラに渡して、どのマス目がクリックされたのかを伝えるようにする</li>
+<li>以下の手順で Board コンポーネントを書き換える
+<ol>
+<li>Board の <code>constructor</code> を削除</li>
+<li>Board の <code>renderSquare</code> にある <code>this.state.squares[i]</code> を <code>this.props.squares[i]</code> に置き換える</li>
+<li>Board の <code>renderSquare</code> にある <code>this.handleClick(i)</code> を <code>this.props.onClick(i)</code> に置き換える</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>Board コンポーネントは以下のようになる</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Board</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+    <span class="nx">handleClick</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">squares</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">squares</span><span class="p">.</span><span class="nx">slice</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">calculateWinner</span><span class="p">(</span><span class="nx">squares</span><span class="p">)</span> <span class="o">||</span> <span class="nx">squares</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nx">squares</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">xIsNext</span> <span class="o">?</span> <span class="s1">&#39;X&#39;</span> <span class="o">:</span> <span class="s1">&#39;O&#39;</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+            <span class="nx">squares</span><span class="o">:</span> <span class="nx">squares</span><span class="p">,</span>
+            <span class="nx">xIsNext</span><span class="o">:</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">xIsNext</span><span class="p">,</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="nx">renderSquare</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="o">&lt;</span><span class="nx">Square</span> 
+                <span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">squares</span><span class="p">[</span><span class="nx">i</span><span class="p">]}</span>
+                <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">onClick</span><span class="p">(</span><span class="nx">i</span><span class="p">)}</span>
+            <span class="o">/&gt;</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">...</span>
+</code></pre></div><ul>
+<li>Game コンポーネントの render 関数を更新して、ゲームのステータステキストの決定や、表示の際に最新の履歴が使われるようにする</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Game</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">history</span><span class="o">:</span> <span class="p">[{</span>
+                <span class="nx">squares</span><span class="o">:</span> <span class="nb">Array</span><span class="p">(</span><span class="mi">9</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="kc">null</span><span class="p">),</span>
+            <span class="p">}],</span>
+            <span class="nx">xIsNext</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="p">};</span>
+    <span class="p">}</span>
+
+    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">history</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">history</span><span class="p">;</span>
+        <span class="kr">const</span> <span class="nx">current</span> <span class="o">=</span> <span class="nx">history</span><span class="p">[</span><span class="nx">history</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+        <span class="kr">const</span> <span class="nx">winner</span> <span class="o">=</span> <span class="nx">calculateWinner</span><span class="p">(</span><span class="nx">current</span><span class="p">.</span><span class="nx">squares</span><span class="p">);</span>
+        <span class="kd">let</span> <span class="nx">status</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">winner</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">status</span> <span class="o">=</span> <span class="s1">&#39;Winner: &#39;</span> <span class="o">+</span> <span class="nx">winner</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">status</span> <span class="o">=</span> <span class="s1">&#39;Next player: &#39;</span> <span class="o">+</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">xIsNext</span> <span class="o">?</span> <span class="s1">&#39;X&#39;</span> <span class="o">:</span> <span class="s1">&#39;O&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;game&#34;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;game-board&#34;</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="nx">Board</span>
+                        <span class="nx">squares</span><span class="o">=</span><span class="p">{</span><span class="nx">current</span><span class="p">.</span><span class="nx">squares</span><span class="p">}</span>
+                        <span class="nx">onClick</span><span class="o">=</span><span class="p">{(</span><span class="nx">i</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleClick</span><span class="p">(</span><span class="nx">i</span><span class="p">)}</span>
+                    <span class="o">/&gt;</span>
+                <span class="o">&lt;</span><span class="err">/div&gt;</span>
+            <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;game-info&#34;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">status</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+                <span class="o">&lt;</span><span class="nx">ol</span><span class="o">&gt;</span><span class="p">{</span><span class="cm">/* TODO */</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/ol&gt;</span>
+            <span class="o">&lt;</span><span class="err">/div&gt;</span>
+            <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><ul>
+<li>Game コンポーネントがゲームのステータステキストを表示するようになったので、対応するコードは Board 内 <code>render</code> メソッドから削除できる</li>
+<li>このリファクタリングの後で、 Board の <code>render</code> メソッドは以下のようになる</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js">    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;board-row&#34;</span><span class="o">&gt;</span>
+                    <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">0</span><span class="p">)}</span>
+                    <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">1</span><span class="p">)}</span>
+                    <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">2</span><span class="p">)}</span>
+                <span class="o">&lt;</span><span class="err">/div&gt;</span>
+                <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;board-row&#34;</span><span class="o">&gt;</span>
+                    <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">3</span><span class="p">)}</span>
+                    <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">4</span><span class="p">)}</span>
+                    <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">5</span><span class="p">)}</span>
+                <span class="o">&lt;</span><span class="err">/div&gt;</span>
+                <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;board-row&#34;</span><span class="o">&gt;</span>
+                    <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">6</span><span class="p">)}</span>
+                    <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">7</span><span class="p">)}</span>
+                    <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">renderSquare</span><span class="p">(</span><span class="mi">8</span><span class="p">)}</span>
+                <span class="o">&lt;</span><span class="err">/div&gt;</span>
+            <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+</code></pre></div><ul>
+<li>最後に <code>handleClick</code> メソッドを Board コンポーネントから Game コンポーネントに移動する
+<ul>
+<li>Game コンポーネントの state は異なる形で構成されているので、 <code>handleClick</code> の中身も修正する</li>
+<li>Game 内の <code>handleClick</code> メソッドで新しい履歴エントリを <code>history</code> に追加する</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js">    <span class="nx">handleClick</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">history</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">history</span><span class="p">;</span>
+        <span class="kr">const</span> <span class="nx">current</span> <span class="o">=</span> <span class="nx">history</span><span class="p">[</span><span class="nx">history</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+        <span class="kr">const</span> <span class="nx">squares</span> <span class="o">=</span> <span class="nx">current</span><span class="p">.</span><span class="nx">squares</span><span class="p">.</span><span class="nx">slice</span><span class="p">();</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">calculateWinner</span><span class="p">(</span><span class="nx">squares</span><span class="p">)</span> <span class="o">||</span> <span class="nx">squares</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="nx">squares</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">xIsNext</span> <span class="o">?</span> <span class="s1">&#39;X&#39;</span> <span class="o">:</span> <span class="s1">&#39;O&#39;</span><span class="p">;</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+            <span class="nx">history</span><span class="o">:</span> <span class="nx">history</span><span class="p">.</span><span class="nx">concat</span><span class="p">([{</span>
+                <span class="nx">squares</span><span class="o">:</span> <span class="nx">squares</span><span class="p">,</span>
+            <span class="p">}]),</span>
+            <span class="nx">xIsNext</span><span class="o">:</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">xIsNext</span><span class="p">,</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+</code></pre></div><ul>
+<li><code>push()</code> とは異なり <code>concat()</code> は元の配列をミューテートしないため、こちらを利用する
+<ul>
+<li><code>Array.prototype.concat()</code>
+<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/concat">https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/concat</a></li>
+<li>2つ 以上の配列を結合して、新しい配列を返すメソッド</li>
+</ul>
+</li>
+<li><code>Array.prototype.push()</code>
+<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/push">https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/push</a></li>
+<li>配列の末尾に 1つ 以上の要素を追加し、新しい配列の要素数を返すメソッド</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Board コンポーネントに必要なのは <code>renderSquare</code> と <code>render</code> メソッドだけ
+<ul>
+<li>ゲームの状態と <code>handleClick</code> は Game コンポーネントで管理</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://codepen.io/gaearon/pen/EmmOqJ?editors=0010">この時点でのコード</a></p>
+<h3 id="過去の着手を表示">過去の着手を表示<a href="#過去の着手を表示" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li>三目並べの履歴を記録しているので、これを過去の着手リストとしてプレイヤーに表示することが可能</li>
+<li>React 要素は第一級 JavaScript オブジェクトであり、それらをアプリケーション内で受け渡しできる
+<ul>
+<li>React で複数の要素を描画するには React 要素の配列を使うことができる</li>
+</ul>
+</li>
+<li>JavaScript では配列に <code>map()</code> メソッドが存在しており、これはデータを別のデータにマップするのによく使われる
+<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/map">https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/map</a></li>
+<li>与えられた関数を配列の全要素に対して呼び出して、その結果となる新しい配列を生成する</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+<span class="kr">const</span> <span class="nx">doubled</span> <span class="o">=</span> <span class="nx">numbers</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">x</span> <span class="p">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// [2, 4, 6]
+</span></code></pre></div><ul>
+<li><code>map()</code> を使うことで、着手履歴の配列をマップして画面上のボタンを表現する React 要素を作り出し、過去の手番にジャンプするためのボタンの一覧を表示できる</li>
+<li>Game の <code>render</code> メソッド内で <code>history</code> に <code>map()</code> を使う</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js">    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">history</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">history</span><span class="p">;</span>
+        <span class="kr">const</span> <span class="nx">current</span> <span class="o">=</span> <span class="nx">history</span><span class="p">[</span><span class="nx">history</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+        <span class="kr">const</span> <span class="nx">winner</span> <span class="o">=</span> <span class="nx">calculateWinner</span><span class="p">(</span><span class="nx">current</span><span class="p">.</span><span class="nx">squares</span><span class="p">);</span>
+
+        <span class="kr">const</span> <span class="nx">moves</span> <span class="o">=</span> <span class="nx">history</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">step</span><span class="p">,</span> <span class="nx">move</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="kr">const</span> <span class="nx">desc</span> <span class="o">=</span> <span class="nx">move</span> <span class="o">?</span>
+                <span class="s1">&#39;Go to move #&#39;</span> <span class="o">+</span> <span class="nx">move</span> <span class="o">:</span>
+                <span class="s1">&#39;Go to game start&#39;</span><span class="p">;</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">jumpTo</span><span class="p">(</span><span class="nx">move</span><span class="p">)}</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">desc</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
+                <span class="o">&lt;</span><span class="err">/li&gt;</span>
+            <span class="p">);</span>
+        <span class="p">});</span>
+
+        <span class="kd">let</span> <span class="nx">status</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">winner</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">status</span> <span class="o">=</span> <span class="s1">&#39;Winner: &#39;</span> <span class="o">+</span> <span class="nx">winner</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">status</span> <span class="o">=</span> <span class="s1">&#39;Next player: &#39;</span> <span class="o">+</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">xIsNext</span> <span class="o">?</span> <span class="s1">&#39;X&#39;</span> <span class="o">:</span> <span class="s1">&#39;O&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;game&#34;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;game-board&#34;</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="nx">Board</span>
+                        <span class="nx">squares</span><span class="o">=</span><span class="p">{</span><span class="nx">current</span><span class="p">.</span><span class="nx">squares</span><span class="p">}</span>
+                        <span class="nx">onClick</span><span class="o">=</span><span class="p">{(</span><span class="nx">i</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleClick</span><span class="p">(</span><span class="nx">i</span><span class="p">)}</span>
+                    <span class="o">/&gt;</span>
+                <span class="o">&lt;</span><span class="err">/div&gt;</span>
+            <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&#34;game-info&#34;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">status</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+                <span class="o">&lt;</span><span class="nx">ol</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">moves</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/ol&gt;</span>
+            <span class="o">&lt;</span><span class="err">/div&gt;</span>
+            <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+</code></pre></div><p><a href="https://codepen.io/gaearon/pen/EmmGEa?editors=0010">この時点でのコード</a></p>
+<ul>
+<li>ゲーム履歴内にある三目並べの、それぞれの着手に対応して、ボタンを有するリストアイテムを作成
+<ul>
+<li>ボタンには <code>onClick</code> ハンドラがあり、それは <code>this.jumpTo()</code> メソッドを呼び出す</li>
+<li><code>jumpTo()</code> は未だ実装していない</li>
+</ul>
+</li>
+<li>ひとまず、このコードにより、ゲーム内で行われた着手のリストが表示されるようになったが、コンソールに以下の警告が表示されるようになった</li>
+</ul>
+<pre><code>Warning: Each child in an array or iterator should have a unique “key” prop. Check the render method of “Game”.
+</code></pre><ul>
+<li>この警告について対策していく</li>
+</ul>
+<h3 id="key-を選ぶ">key を選ぶ<a href="#key-を選ぶ" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li>リストをレンダーする際、リストの項目それぞれについて、 React はとある情報を保持する
+<ul>
+<li>リストが変更になった場合 React は、どのアイテムが変更になったのかを知る必要がある</li>
+<li>リストのアイテムは追加された可能性も、削除された可能性も、並び替えられた可能性も、中身自体が変更になった可能性もある</li>
+</ul>
+</li>
+</ul>
+<p>以下のリストが</p>
+<div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Alexa: 7 tasks left<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Ben: 5 tasks left<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</code></pre></div><p>以下のリストに遷移する場合を考える</p>
+<div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Ben: 9 tasks left<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Claudia: 8 tasks left<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Alexa: 5 tasks left<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</code></pre></div><ul>
+<li>タスクの数も変化しているが、人間が見た場合 Alexa と Ben の順番が変わって、その間に Claudia が追加されていると考える</li>
+<li>React はリストの項目それぞれに対して key プロパティを与えることで、兄弟要素の中で、そのアイテムが区別できるようにする必要がある</li>
+<li>このケースでは <code>alexa</code>, <code>ben</code>, <code>claudia</code> の文字列を使う方法がある
+<ul>
+<li>データベースからのデータを表示している場合は、データベースで使用しているそれぞれの項目の ID を Key として使うこともできる</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="o">&lt;</span><span class="nx">li</span> <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="o">:</span> <span class="p">{</span><span class="nx">user</span><span class="p">.</span><span class="nx">taskCount</span><span class="p">}</span> <span class="nx">tasks</span> <span class="nx">left</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+</code></pre></div><ul>
+<li>リストが再レンダーされる際 React はそれぞれのリスト項目の key について、前回のリスト項目内に同じ key を持つものがないか探す
+<ul>
+<li>もし、以前になかった key がリストに含まれていれば React はコンポーネントを作成する</li>
+<li>もし、以前のリストにあった key が新しいリストに含まれていなければ React はコンポーネントを破棄する</li>
+<li>もし、 2つ の key がマッチした場合、対応するコンポーネントは移動される</li>
+</ul>
+</li>
+<li>key はそれぞれのコンポーネントの同一性に関する情報を React に与え、それにより React は再レンダー間で state を保持できるようになる
+<ul>
+<li>もしコンポーネントの key が変化していれば、コンポーネントは破棄されて新しい state で再作成される</li>
+</ul>
+</li>
+<li><code>key</code> は特別なプロパティであり React によって予約されている
+<ul>
+<li>より応用的な機能である <code>ref</code> も同様</li>
+<li>要素が作成される際 React は <code>key</code> プロパティを引き抜いて、返される要素に直接その <code>key</code> を格納する</li>
+<li><code>key</code> は <code>props</code> の一部のようにも思えるが <code>this.props.key</code> で参照できない</li>
+<li>React は、どの子要素を更新すべきかを決定する際に <code>key</code> を自動的に使用する</li>
+<li>コンポーネントが自身の <code>key</code> について確認する方法はない</li>
+</ul>
+</li>
+<li>動的なリストを構築する場合は、正しい key を割り当てることが強く推奨される
+<ul>
+<li>適切な key が無い場合、データ構造を再構成して、そのような key が存在するようにするべきかも</li>
+</ul>
+</li>
+<li>key が指定されなかった場合 React は警告を表示し、デフォルトで key として配列のインデックスを使用する
+<ul>
+<li>配列のインデックスを key として使うことは、項目を並べ替えたり挿入・削除する際に問題の原因となる</li>
+<li>明示的に <code>key={i}</code> と渡すことで警告を消すことはできるが、配列のインデックスを使う場合と同様な問題が生じるため、殆どの場合は非推奨</li>
+</ul>
+</li>
+<li>key はグローバルに一意である必要は無い
+<ul>
+<li>コンポーネントと、その兄弟の間で一意であれば十分</li>
+</ul>
+</li>
+</ul>
+<h3 id="タイムトラベルの実装">タイムトラベルの実装<a href="#タイムトラベルの実装" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li>三目並べゲームの履歴内においては、全ての着手には、それに関連付けられた一意な ID が存在する
+<ul>
+<li>着手順の連番数字</li>
+</ul>
+</li>
+<li>着手はゲームの最中に並びがかわったり、削除されたり、挿入されたりすることは無いので、着手のインデックスを key として使うのは安全</li>
+<li>Game コンポーネントの <code>render</code> メソッド内で key は <code>&lt;li key={move}&gt;</code> のようにして加えることができ、これで React の key に関する警告は表示されなくなる</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js">        <span class="kr">const</span> <span class="nx">moves</span> <span class="o">=</span> <span class="nx">history</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">step</span><span class="p">,</span> <span class="nx">move</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="kr">const</span> <span class="nx">desc</span> <span class="o">=</span> <span class="nx">move</span> <span class="o">?</span>
+                <span class="s1">&#39;Go to move #&#39;</span> <span class="o">+</span> <span class="nx">move</span> <span class="o">:</span>
+                <span class="s1">&#39;Go to game start&#39;</span><span class="p">;</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="o">&lt;</span><span class="nx">li</span> <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">move</span><span class="p">}</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">jumpTo</span><span class="p">(</span><span class="nx">move</span><span class="p">)}</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">desc</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
+                <span class="o">&lt;</span><span class="err">/li&gt;</span>
+            <span class="p">);</span>
+        <span class="p">});</span>
+</code></pre></div><p><a href="https://codepen.io/gaearon/pen/PmmXRE?editors=0010">この時点でのコード</a></p>
+<ul>
+<li>まだ <code>jumpTo</code> メソッドが未定義なので、このリスト項目内のボタンをクリックするとエラーが発生する
+<ul>
+<li><code>jumpTo</code> を実装する前に Game コンポーネントの state に stepNumber という値を加える</li>
+<li>これは、いま何手目の状態を見ているのかを表すのに使う</li>
+</ul>
+</li>
+<li>Game の <code>constructor</code> 内で state の初期値として <code>stepNumber: 0</code> を加える</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Game</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">history</span><span class="o">:</span> <span class="p">[{</span>
+                <span class="nx">squares</span><span class="o">:</span> <span class="nb">Array</span><span class="p">(</span><span class="mi">9</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="kc">null</span><span class="p">),</span>
+            <span class="p">}],</span>
+            <span class="nx">stepNumber</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="nx">xIsNext</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="p">};</span>
+    <span class="p">}</span>
+<span class="p">...</span>
+</code></pre></div><ul>
+<li>次に Game 内に <code>jumpTo</code> メソッドを定義してその <code>stepNumber</code> が更新されるようにする</li>
+<li>また、更新しようとしている <code>stepNumber</code> の値が偶数だった場合は <code>xIsNext</code> を true に設定する</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js">    <span class="nx">jumpTo</span><span class="p">(</span><span class="nx">step</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+            <span class="nx">stepNumber</span><span class="o">:</span> <span class="nx">step</span><span class="p">,</span>
+            <span class="nx">xIsNext</span><span class="o">:</span> <span class="p">(</span><span class="nx">step</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+</code></pre></div><ul>
+<li>マス目をクリックしたときに実行される Game の <code>handleClick</code> メソッドに、いくつか変更を加える</li>
+<li>今加えた state である <code>stepNumber</code> は、現在ユーザーに見せている着手を反映している
+<ul>
+<li>新しい着手が発生した場合は <code>this.setState</code> の引数の一部として <code>stepNumber: history.length</code> を加えることで <code>stepNumber</code> を更新する必要がある</li>
+</ul>
+</li>
+<li><code>this.state.history</code> から読み取っているところを <code>this.state.history.slice(0, this.state.stepNumber + 1)</code> に書き換える
+<ul>
+<li>これにより、時間の巻き戻しをしてから、その時点で新しい着手を起こした場合に、そこから見て将来にある履歴を確実に捨て去ることができる</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js">    <span class="nx">handleClick</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">history</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">stepNumber</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="kr">const</span> <span class="nx">current</span> <span class="o">=</span> <span class="nx">history</span><span class="p">[</span><span class="nx">history</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+        <span class="kr">const</span> <span class="nx">squares</span> <span class="o">=</span> <span class="nx">current</span><span class="p">.</span><span class="nx">squares</span><span class="p">.</span><span class="nx">slice</span><span class="p">();</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">calculateWinner</span><span class="p">(</span><span class="nx">squares</span><span class="p">)</span> <span class="o">||</span> <span class="nx">squares</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="nx">squares</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">xIsNext</span> <span class="o">?</span> <span class="s1">&#39;X&#39;</span> <span class="o">:</span> <span class="s1">&#39;O&#39;</span><span class="p">;</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+            <span class="nx">history</span><span class="o">:</span> <span class="nx">history</span><span class="p">.</span><span class="nx">concat</span><span class="p">([{</span>
+                <span class="nx">squares</span><span class="o">:</span> <span class="nx">squares</span><span class="p">,</span>
+            <span class="p">}]),</span>
+            <span class="nx">stepNumber</span><span class="o">:</span> <span class="nx">history</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+            <span class="nx">xIsNext</span><span class="o">:</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">xIsNext</span><span class="p">,</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+</code></pre></div><ul>
+<li>Game コンポーネントの <code>render</code> を書き換えて、常に最後の着手後の状態をレンダーするのではなく、 <code>stepNumber</code> によって現在選択されている着手をレンダーするようにする</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js">    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">history</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">history</span><span class="p">;</span>
+        <span class="kr">const</span> <span class="nx">current</span> <span class="o">=</span> <span class="nx">history</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">stepNumber</span><span class="p">];</span>
+        <span class="kr">const</span> <span class="nx">winner</span> <span class="o">=</span> <span class="nx">calculateWinner</span><span class="p">(</span><span class="nx">current</span><span class="p">.</span><span class="nx">squares</span><span class="p">);</span>
+
+        <span class="kr">const</span> <span class="nx">moves</span> <span class="o">=</span> <span class="nx">history</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">step</span><span class="p">,</span> <span class="nx">move</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="kr">const</span> <span class="nx">desc</span> <span class="o">=</span> <span class="nx">move</span> <span class="o">?</span>
+                <span class="s1">&#39;Go to move #&#39;</span> <span class="o">+</span> <span class="nx">move</span> <span class="o">:</span>
+                <span class="s1">&#39;Go to game start&#39;</span><span class="p">;</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="o">&lt;</span><span class="nx">li</span> <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">move</span><span class="p">}</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">jumpTo</span><span class="p">(</span><span class="nx">move</span><span class="p">)}</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">desc</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
+                <span class="o">&lt;</span><span class="err">/li&gt;</span>
+            <span class="p">);</span>
+        <span class="p">});</span>
+</code></pre></div><ul>
+<li>ゲーム内履歴の、どの手番をクリックした場合でも、三目並べの盤面は、該当着手が発生した直後の状態を表示するよう更新される</li>
+</ul>
+<p><a href="https://codepen.io/gaearon/pen/gWWZgR?editors=0010">この時点でのコード</a></p>
+<h2 id="まとめ">まとめ<a href="#まとめ" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>以下のような機能を有する三目並べゲームが完成した
+<ol>
+<li>三目並べが遊べる</li>
+<li>決着が着いた時に表示ができる</li>
+<li>ゲーム進行に合わせて履歴が保存される</li>
+<li>着手の履歴の見直しや、顔面の以前の状態が参照できる</li>
+</ol>
+</li>
+</ul>
+<p><a href="https://codepen.io/gaearon/pen/gWWZgR?editors=0010">最終結果のコード</a></p>
+<ul>
+<li>改良アイディア
+<ol>
+<li>履歴内のそれぞれの着手位置を (col, row) というフォーマットで表示する</li>
+<li>着手履歴のリスト中で、現在選択されているアイテムをボールドにする</li>
+<li>Board でマス目を並べる部分を、ハードコーディングではなく 2つ のループを使用するように書き換える</li>
+<li>着手履歴リストを昇順・降順いずれでも並び替えられるよう、トグルボタンを追加する</li>
+<li>どちらかが勝利した際に、勝利に繋がった 3つ のマス目をハイライトする</li>
+<li>どちらも勝利しなかった場合、結果が引き分けになったというメッセージを表示する</li>
+</ol>
+</li>
+<li>このチュートリアルを通して 要素, コンポーネント, props, state といった React の概念に触れた
+<ul>
+<li>これらのトピックについて更に掘り下げた説明はドキュメントの続きを参照
+<ul>
+<li><a href="https://ja.reactjs.org/docs/hello-world.html">https://ja.reactjs.org/docs/hello-world.html</a></li>
+</ul>
+</li>
+<li>コンポーネントの作成方法について、より詳細に学ぶには React.Component API リファレンスを参照
+<ul>
+<li><a href="https://ja.reactjs.org/docs/react-component.html">https://ja.reactjs.org/docs/react-component.html</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="この記事を試した環境">この記事を試した環境<a href="#この記事を試した環境" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh">% sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.7
+BuildVersion:   19H512
+% node -v
+v12.16.1
+% npm -v
+6.14.11
+% npx -v
+6.14.11
+</code></pre></div><p>package.json</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;react-tutorial&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;0.1.0&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;private&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nt">&#34;dependencies&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;@testing-library/jest-dom&#34;</span><span class="p">:</span> <span class="s2">&#34;^5.11.9&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;@testing-library/react&#34;</span><span class="p">:</span> <span class="s2">&#34;^11.2.5&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;@testing-library/user-event&#34;</span><span class="p">:</span> <span class="s2">&#34;^12.7.0&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;react&#34;</span><span class="p">:</span> <span class="s2">&#34;^17.0.1&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;react-dom&#34;</span><span class="p">:</span> <span class="s2">&#34;^17.0.1&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;react-scripts&#34;</span><span class="p">:</span> <span class="s2">&#34;4.0.2&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;web-vitals&#34;</span><span class="p">:</span> <span class="s2">&#34;^1.1.0&#34;</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;scripts&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;start&#34;</span><span class="p">:</span> <span class="s2">&#34;react-scripts start&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;build&#34;</span><span class="p">:</span> <span class="s2">&#34;react-scripts build&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;test&#34;</span><span class="p">:</span> <span class="s2">&#34;react-scripts test&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;eject&#34;</span><span class="p">:</span> <span class="s2">&#34;react-scripts eject&#34;</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;eslintConfig&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;extends&#34;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&#34;react-app&#34;</span><span class="p">,</span>
+      <span class="s2">&#34;react-app/jest&#34;</span>
+    <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;browserslist&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;production&#34;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&#34;&gt;0.2%&#34;</span><span class="p">,</span>
+      <span class="s2">&#34;not dead&#34;</span><span class="p">,</span>
+      <span class="s2">&#34;not op_mini all&#34;</span>
+    <span class="p">],</span>
+    <span class="nt">&#34;development&#34;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&#34;last 1 chrome version&#34;</span><span class="p">,</span>
+      <span class="s2">&#34;last 1 firefox version&#34;</span><span class="p">,</span>
+      <span class="s2">&#34;last 1 safari version&#34;</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://noid11.github.io/tags/react">React</a></span><span class="tag"><a href="https://noid11.github.io/tags/javascript">JavaScript</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>11259 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2021/02/14 19:10 &#43;0900</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/noid11/noid11.github.io/commit/1857bfb1d34b60fc71d99426f14ab63da76407b2" target="_blank" rel="noopener">1857bfb</a> @ 2021/02/17</p>
+			</footer>
+		</article>
+		<aside id="toc" class="show-toc">
+			<div class="toc-title">Table of Contents</div>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#振り返りノート">振り返りノート</a></li>
+    <li><a href="#ローカル環境で開発する準備">ローカル環境で開発する準備</a>
+      <ul>
+        <li><a href="#create-react-app">create-react-app</a></li>
+        <li><a href="#src-ディレクトリの中身を削除">src ディレクトリの中身を削除</a></li>
+        <li><a href="#基本となるファイルを作成">基本となるファイルを作成</a></li>
+        <li><a href="#動作確認">動作確認</a></li>
+      </ul>
+    </li>
+    <li><a href="#react-とは">React とは？</a></li>
+    <li><a href="#スターターコードの中身を確認">スターターコードの中身を確認</a></li>
+    <li><a href="#データを-props-経由で渡す">データを Props 経由で渡す</a></li>
+    <li><a href="#インタラクティブなコンポーネントを作る">インタラクティブなコンポーネントを作る</a></li>
+    <li><a href="#react-developer-tools">React Developer Tools</a></li>
+    <li><a href="#ゲームを完成させる">ゲームを完成させる</a>
+      <ul>
+        <li><a href="#state-のリフトアップ">State のリフトアップ</a></li>
+        <li><a href="#イミュータビリティは何故重要">イミュータビリティは何故重要？</a></li>
+        <li><a href="#関数コンポーネント">関数コンポーネント</a></li>
+        <li><a href="#手番の処理">手番の処理</a></li>
+        <li><a href="#ゲーム勝者の判定">ゲーム勝者の判定</a></li>
+      </ul>
+    </li>
+    <li><a href="#タイムトラベル機能の追加">タイムトラベル機能の追加</a>
+      <ul>
+        <li><a href="#着手履歴の保存">着手履歴の保存</a></li>
+        <li><a href="#state-のリフトアップ再び">State のリフトアップ、再び</a></li>
+        <li><a href="#過去の着手を表示">過去の着手を表示</a></li>
+        <li><a href="#key-を選ぶ">key を選ぶ</a></li>
+        <li><a href="#タイムトラベルの実装">タイムトラベルの実装</a></li>
+      </ul>
+    </li>
+    <li><a href="#まとめ">まとめ</a></li>
+    <li><a href="#この記事を試した環境">この記事を試した環境</a></li>
+  </ul>
+</nav>
+		</aside>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://noid11.github.io/posts/how-to-ping-ec2-from-mac-using-ansible/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Mac に Ansible をインストールして EC2 に ping するまで</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2021 <a href="https://noid11.github.io/"></a>&#183; noid11</p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://noid11.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://noid11.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

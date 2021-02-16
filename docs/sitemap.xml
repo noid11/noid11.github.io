@@ -3,33 +3,48 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://noid11.github.io/tags/ansible/</loc>
-    <lastmod>2021-02-11T18:25:31+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://noid11.github.io/tags/mac/</loc>
-    <lastmod>2021-02-11T18:25:31+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://noid11.github.io/posts/how-to-ping-ec2-from-mac-using-ansible/</loc>
-    <lastmod>2021-02-11T18:25:31+09:00</lastmod>
+    <loc>https://noid11.github.io/tags/javascript/</loc>
+    <lastmod>2021-02-17T08:33:35+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://noid11.github.io/</loc>
-    <lastmod>2021-02-11T18:25:31+09:00</lastmod>
+    <lastmod>2021-02-17T08:33:35+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://noid11.github.io/posts/</loc>
-    <lastmod>2021-02-11T18:25:31+09:00</lastmod>
+    <lastmod>2021-02-17T08:33:35+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/react/</loc>
+    <lastmod>2021-02-17T08:33:35+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/posts/react-official-tutorial-note/</loc>
+    <lastmod>2021-02-17T08:33:35+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://noid11.github.io/tags/</loc>
-    <lastmod>2021-02-11T18:25:31+09:00</lastmod>
+    <lastmod>2021-02-17T08:33:35+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/ansible/</loc>
+    <lastmod>2021-02-11T18:38:33+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/tags/mac/</loc>
+    <lastmod>2021-02-11T18:38:33+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://noid11.github.io/posts/how-to-ping-ec2-from-mac-using-ansible/</loc>
+    <lastmod>2021-02-11T18:38:33+09:00</lastmod>
   </url>
   
   <url>

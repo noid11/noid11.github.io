@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Thu, 11 Feb 2021 17:05:07 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 14 Feb 2021 19:10:27 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>React 公式チュートリアルやったノート</title>
+      <link>https://noid11.github.io/posts/react-official-tutorial-note/</link>
+      <pubDate>Sun, 14 Feb 2021 19:10:27 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/react-official-tutorial-note/</guid>
+      <description>&lt;p&gt;三目並べゲームを作成する &lt;a href=&#34;https://ja.reactjs.org/tutorial/tutorial.html&#34;&gt;React 公式のチュートリアル&lt;/a&gt;を進めたメモ&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Mac に Ansible をインストールして EC2 に ping するまで</title>
       <link>https://noid11.github.io/posts/how-to-ping-ec2-from-mac-using-ansible/</link>
@@ -117,49 +126,6 @@ HOGE
 &lt;li&gt;AWS STS には GetCallerIdentity API という、使用しているクレデンシャルから AWS アカウントや IAM User, IAM Role 情報を取得する API がある&lt;/li&gt;
 &lt;li&gt;この API は自分が想定した IAM User, IAM Role のクレデンシャルを取得できているのか確認するのに便利だが、使用する IAM Policy に sts:GetCallerIdentity アクションを Allow しなくても使用することが可能&lt;/li&gt;
 &lt;li&gt;API Reference に書いてある&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Go で作成した Web アプリを EB CLI を使ってデプロイする方法</title>
-      <link>https://noid11.github.io/posts/how-to-deploy-goapp-by-eb-cli/</link>
-      <pubDate>Tue, 26 Jan 2021 02:40:20 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/how-to-deploy-goapp-by-eb-cli/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;ほぼほぼ&lt;a href=&#34;https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/go-tutorial.html&#34;&gt;公式のチュートリアル&lt;/a&gt;をなぞっただけ&lt;/li&gt;
-&lt;li&gt;良い点
-&lt;ul&gt;
-&lt;li&gt;とりあえず Go で Web アプリ作って動かしたいような場合に便利
-&lt;ul&gt;
-&lt;li&gt;ミドルウェアの事とか考えなくて良い&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;5分程度でインターネット経由でアクセス出来る環境にデプロイできる&lt;/li&gt;
-&lt;li&gt;大体の場合、&lt;a href=&#34;https://aws.amazon.com/jp/free/&#34;&gt;12ヶ月間無料枠&lt;/a&gt;で済む
-&lt;ul&gt;
-&lt;li&gt;新しく始めるプロジェクトの PoC やプロトタイプを動かすようなシナリオに相性が良い&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;やる気になれば&lt;a href=&#34;https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-logs.html&#34;&gt;ログを確認&lt;/a&gt;したり、&lt;a href=&#34;https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-ssh.html&#34;&gt;アプリケーションが動作する EC2 インスタンスに SSH 接続したり&lt;/a&gt;できる&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;注意点
-&lt;ul&gt;
-&lt;li&gt;HTTPS ではなく HTTP でのアクセスとなる&lt;/li&gt;
-&lt;li&gt;デフォルトでは EC2 インスタンスロールを設定しないので AWS SDK を使いたい場合には工夫が必要
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;eb create&lt;/code&gt; するときに &lt;code&gt;--instance_profile&lt;/code&gt; で指定しておくとか&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;簡易的な設定で動作するため、複雑な要件が必要なプロダクション環境には向かないかも
-&lt;ul&gt;
-&lt;li&gt;ちゃんと設定内容を精査して調整した方が良い&lt;/li&gt;
-&lt;li&gt;複雑な要件が必要なら EB CLI, EB ではない方法で管理した方が良いかもしれない&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     

@@ -7,7 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Thu, 11 Feb 2021 17:05:07 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 14 Feb 2021 19:10:27 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JavaScript</title>
+      <link>https://noid11.github.io/tags/javascript/</link>
+      <pubDate>Sun, 14 Feb 2021 19:10:27 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/javascript/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>React</title>
+      <link>https://noid11.github.io/tags/react/</link>
+      <pubDate>Sun, 14 Feb 2021 19:10:27 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/react/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Ansible</title>
       <link>https://noid11.github.io/tags/ansible/</link>
@@ -77,24 +95,6 @@
       <pubDate>Tue, 09 Feb 2021 05:54:16 +0900</pubDate>
       
       <guid>https://noid11.github.io/tags/aws-service-catalog/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>AWS Single Sign-On</title>
-      <link>https://noid11.github.io/tags/aws-single-sign-on/</link>
-      <pubDate>Tue, 09 Feb 2021 05:54:16 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/aws-single-sign-on/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>bzip2</title>
-      <link>https://noid11.github.io/tags/bzip2/</link>
-      <pubDate>Mon, 08 Feb 2021 23:56:05 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/bzip2/</guid>
       <description></description>
     </item>
     
