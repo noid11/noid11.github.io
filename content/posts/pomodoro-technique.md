@@ -1,7 +1,7 @@
 ---
 title: "Pomodoro Technique"
 date: 2021-02-17T09:45:30+09:00
-draft: true
+draft: false
 toc: true
 images:
 tags: 

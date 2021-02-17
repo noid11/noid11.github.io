@@ -6,8 +6,161 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Sun, 14 Feb 2021 19:10:27 +0900</lastBuildDate>
+		<lastBuildDate>Wed, 17 Feb 2021 09:45:30 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Pomodoro Technique</title>
+			<link>https://noid11.github.io/posts/pomodoro-technique/</link>
+			<pubDate>Wed, 17 Feb 2021 09:45:30 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/pomodoro-technique/</guid>
+			<description>生産性向上で有名なポモドーロテクニックについて調べたメモ 個人的 TIPS 集中力が出ない時こそ効果的に使える 昼間のリモートワークとか ステップ 取り組むタ</description>
+			<content type="html"><![CDATA[<p>生産性向上で有名なポモドーロテクニックについて調べたメモ</p>
+<!-- raw HTML omitted -->
+<h2 id="個人的-tips">個人的 TIPS</h2>
+<ul>
+<li>集中力が出ない時こそ効果的に使える
+<ul>
+<li>昼間のリモートワークとか</li>
+</ul>
+</li>
+</ul>
+<h2 id="ステップ">ステップ</h2>
+<h3 id="取り組むタスクを選択">取り組むタスクを選択</h3>
+<ul>
+<li>4つ 以上のポモドーロが必要な場合、より小さく実行可能なステップまでタスクを分割する</li>
+<li>小さなタスクは 1つ のポモドーロにマージする
+<ul>
+<li>たとえば「家賃の小切手を書く」、「病院の予約を設定する」、「ポモドーロのブログ記事を読む」を 1つ のポモドーロタスクにまとめる</li>
+</ul>
+</li>
+</ul>
+<h3 id="25分-のタイマーをセット">25分 のタイマーをセット</h3>
+<ul>
+<li>時間配分の例
+<ul>
+<li>5分: Initial Review</li>
+<li>9 x 9 = 18分: Keep Focused</li>
+<li>1分: Final Review</li>
+<li>1分: Tracking</li>
+</ul>
+</li>
+</ul>
+<h3 id="タイマーが鳴るまでタスクに取り組む">タイマーが鳴るまでタスクに取り組む</h3>
+<ul>
+<li>中断
+<ul>
+<li>割り込み等によって中断が発生した場合、取組中だったタスクをメモしておく</li>
+<li>5分 程度の小休憩をとり、ポモドーロをやり直す</li>
+<li>外的中断:
+<ul>
+<li>話しかけられる、緊急度の高い事態が発生する等</li>
+<li>割り込みの原因をメモしておくと、今後割り込みを減らすのに役立つ</li>
+</ul>
+</li>
+<li>内的中断:
+<ul>
+<li>メールや Twitter やチャットをチェックしてしまった等</li>
+<li>そもそも取り組んでいるタスクの優先度が低いのかもしれない。目標設定を見直そう</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>取組中に出てきたアイディアやタスクは後から振り替えれるようにメモしておく</li>
+<li>タイマーが鳴る前にタスクが終了した
+<ul>
+<li>完了したばかりの作業を確認して編集する</li>
+<li>学習の観点から、活動を確認する
+<ul>
+<li>学んだ事をメモしたりする</li>
+</ul>
+</li>
+<li>次にスケジュールするポモドーロタイムブロックのタスクリストを確認して、それらのタスクの反映や更新を行う</li>
+<li>残りの時間を過剰学習またはスキルや知識の範囲の改善に使用する
+<ul>
+<li>たとえば、専門誌を読んだり、ネットワーキングの機会を調査したりする</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="タイマーが鳴ったらチェックマークをつける">タイマーが鳴ったら、チェックマークをつける</h3>
+<ul>
+<li>このタスクには何ポモドーロ必要だった・・・みたいなのをメモしておく</li>
+</ul>
+<h3 id="小休憩をとる">小休憩をとる</h3>
+<ul>
+<li>5分 程度の時間が良い</li>
+<li>深呼吸をしたり、瞑想したり、コーヒーを飲んだり、散歩に出かけたり、タスクと関係ないリラックスできることをしたりする</li>
+</ul>
+<h3 id="4つ-タスクをこなしたら長い休憩をとる">4つ タスクをこなしたら、長い休憩をとる</h3>
+<ul>
+<li>15分 から 30分 程度の時間が良い</li>
+<li>時間を使って新しい情報を吸収し、次のポモドーロのラウンドの前に休息する</li>
+</ul>
+<h2 id="なぜポモドーロテクニックが効果的なのか">なぜポモドーロ・テクニックが効果的なのか？</h2>
+<ul>
+<li>人はタスクを先延ばしにする
+<ul>
+<li>先延ばしは怠惰や自制心の欠如にはほとんど関係が無い</li>
+<li>人は物事を先延ばしにして否定的な感情を避ける
+<ul>
+<li>大きなタスクやプロジェクトを見つめるのは不快</li>
+<li>どうすればよいのか分からない場合や、多くの不確実性が伴う場合がある</li>
+</ul>
+</li>
+<li>一時的であっても気分を高めるため代わりに Twitter や Netflix を利用する</li>
+</ul>
+</li>
+<li>先延ばしの回避
+<ul>
+<li>先延ばしにしているものは何でも小さいステップに分割できる
+<ul>
+<li>たとえば、座って小説を書く代わりに、座って 5分間 書く、座って段落を編集する・・・</li>
+</ul>
+</li>
+<li>小さいことを短期間で行うことは、大きなプロジェクトに一度に取り組むよりも遥かに簡単</li>
+</ul>
+</li>
+<li>ポモドーロテクニック
+<ul>
+<li>大きなタスク、プロジェクト、目標を 25分間 だけ実行する単位に分解する</li>
+<li>巨大なものに圧倒されるのではなく、次に実行する小さなタスクの 1つ に集中し続ける</li>
+<li>productivity のゲーミフィケーション
+<ul>
+<li>集中力と意識がスピードにつながる、一度に 1つ のポモドーロ</li>
+<li>ポモドーロテクニックは、完璧よりも一貫性を重視しているため、親しみやすい
+<ul>
+<li>各セッションは、目標を再評価し、集中するように挑戦し、気を散らすものを制限するための新たなスタート</li>
+</ul>
+</li>
+<li>毎日ポモドーロを追加するという目標を設定して、成功を積み上げるように動機付ける
+<ul>
+<li>設定された数のポモドーロで大きなタスクを完了するように挑戦してみる</li>
+<li>チェーンを壊さずに、毎日のポモドーロの目標数を設定してみる</li>
+<li>時間ではなくトマトで考えるのはもっと楽しい</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ツール">ツール</h2>
+<ul>
+<li><a href="https://pomodoro.francescocirillo.com/">https://pomodoro.francescocirillo.com/</a></li>
+<li><a href="https://pomofocus.io/">https://pomofocus.io/</a></li>
+</ul>
+<h2 id="参考">参考</h2>
+<p>The Pomodoro Technique® - proudly developed by Francesco Cirillo | Cirillo Consulting GmbH<br>
+<a href="https://francescocirillo.com/pages/pomodoro-technique">https://francescocirillo.com/pages/pomodoro-technique</a></p>
+<p>The Pomodoro Technique – Why It Works &amp; How To Do It<br>
+<a href="https://todoist.com/ja/productivity-methods/pomodoro-technique">https://todoist.com/ja/productivity-methods/pomodoro-technique</a></p>
+<p>Pomodoro Technique - Wikipedia<br>
+<a href="https://en.wikipedia.org/wiki/Pomodoro_Technique">https://en.wikipedia.org/wiki/Pomodoro_Technique</a></p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>React 公式チュートリアルやったノート</title>

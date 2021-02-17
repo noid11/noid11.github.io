@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>productivity on noid11.github.io</title>
+    <link>https://noid11.github.io/tags/productivity/</link>
+    <description>Recent content in productivity on noid11.github.io</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>&amp;#169; noid11</copyright>
+    <lastBuildDate>Wed, 17 Feb 2021 09:45:30 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/productivity/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pomodoro Technique</title>
+      <link>https://noid11.github.io/posts/pomodoro-technique/</link>
+      <pubDate>Wed, 17 Feb 2021 09:45:30 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/pomodoro-technique/</guid>
+      <description>生産性向上で有名なポモドーロテクニックについて調べたメモ 個人的 TIPS 集中力が出ない時こそ効果的に使える 昼間のリモートワークとか ステップ 取り組むタ</description>
+    </item>
+    
+  </channel>
+</rss>

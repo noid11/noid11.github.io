@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Sun, 14 Feb 2021 19:10:27 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 17 Feb 2021 09:45:30 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>productivity</title>
+      <link>https://noid11.github.io/tags/productivity/</link>
+      <pubDate>Wed, 17 Feb 2021 09:45:30 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/productivity/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>JavaScript</title>
       <link>https://noid11.github.io/tags/javascript/</link>
@@ -86,15 +95,6 @@
       <pubDate>Tue, 09 Feb 2021 05:54:16 +0900</pubDate>
       
       <guid>https://noid11.github.io/tags/aws-organizations/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>AWS Service Catalog</title>
-      <link>https://noid11.github.io/tags/aws-service-catalog/</link>
-      <pubDate>Tue, 09 Feb 2021 05:54:16 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/aws-service-catalog/</guid>
       <description></description>
     </item>
     
