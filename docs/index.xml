@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Wed, 17 Feb 2021 09:45:30 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 03 Mar 2021 08:49:51 +0900</lastBuildDate><atom:link href="https://noid11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My English Tips 2021</title>
+      <link>https://noid11.github.io/posts/my-english-tips-2021/</link>
+      <pubDate>Wed, 03 Mar 2021 08:49:51 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/posts/my-english-tips-2021/</guid>
+      <description>&lt;p&gt;英語扱う時に便利だな〜と思ったツールや学習方法をまとめておく&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Pomodoro Technique</title>
       <link>https://noid11.github.io/posts/pomodoro-technique/</link>
@@ -114,15 +123,6 @@ HOGE
 % &lt;span class=&#34;nb&#34;&gt;unset&lt;/span&gt; MYVALUE
 % printenv MYVALUE
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>AWS 上に Proxy 環境を構築するメモ</title>
-      <link>https://noid11.github.io/posts/how-to-build-proxy-env-on-aws/</link>
-      <pubDate>Tue, 02 Feb 2021 22:07:44 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/posts/how-to-build-proxy-env-on-aws/</guid>
-      <description>これは何？ AWS 上に HTTP Proxy を構築して検証する機会があったので、構築手順をメモしておく 大まかな流れ [事前準備] VPC と public subnet, private subnet を用意しておく public subnet は Internet Gateway を</description>
     </item>
     
   </channel>

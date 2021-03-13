@@ -6,8 +6,59 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>ja-jp</language>
 		<copyright>&amp;#169; noid11</copyright>
-		<lastBuildDate>Wed, 17 Feb 2021 09:45:30 +0900</lastBuildDate>
+		<lastBuildDate>Wed, 03 Mar 2021 08:49:51 +0900</lastBuildDate>
 		<atom:link href="https://noid11.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>My English Tips 2021</title>
+			<link>https://noid11.github.io/posts/my-english-tips-2021/</link>
+			<pubDate>Wed, 03 Mar 2021 08:49:51 +0900</pubDate>
+			
+			<guid>https://noid11.github.io/posts/my-english-tips-2021/</guid>
+			<description>&lt;p&gt;英語扱う時に便利だな〜と思ったツールや学習方法をまとめておく&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p>英語扱う時に便利だな〜と思ったツールや学習方法をまとめておく</p>
+<ul>
+<li>google translate, deepl translate, amazon translate
+<ul>
+<li>雑に翻訳したい時に使う</li>
+</ul>
+</li>
+<li>AnkiWeb
+<ul>
+<li><a href="https://ankiweb.net/about">https://ankiweb.net/about</a></li>
+<li>英単語学習に使う</li>
+<li><a href="https://ejje.weblio.jp/">Weblio</a> で調べて AnkiWeb に登録して復習することが多い</li>
+</ul>
+</li>
+<li>Mouse Dictionary
+<ul>
+<li><a href="https://mouse-dictionary.netlify.app/ja/">https://mouse-dictionary.netlify.app/ja/</a></li>
+<li>Web ブラウザーで英語の情報見る時に使う</li>
+<li>爆速でよい</li>
+</ul>
+</li>
+<li>google ngram viewer
+<ul>
+<li><a href="https://books.google.com/ngrams">https://books.google.com/ngrams</a></li>
+<li>英作文時に使う</li>
+<li>英語で文章書く時に、こんな使い方していいんだっけ・・・？となった時に自信をつける</li>
+</ul>
+</li>
+<li>Grammarly
+<ul>
+<li><a href="https://www.grammarly.com">https://www.grammarly.com</a></li>
+<li>英作文時に使う</li>
+<li>英語で文章書く時に文法をチェックしてくれる</li>
+</ul>
+</li>
+<li>duolingo
+<ul>
+<li><a href="https://ja.duolingo.com/">https://ja.duolingo.com/</a></li>
+<li>普段から英語に触れておくことが大事な気がしているので、毎日の英語学習に使っている</li>
+</ul>
+</li>
+</ul>]]></content>
+		</item>
 		
 		<item>
 			<title>Pomodoro Technique</title>

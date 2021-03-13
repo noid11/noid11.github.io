@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>&amp;#169; noid11</copyright>
-    <lastBuildDate>Wed, 17 Feb 2021 09:45:30 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 03 Mar 2021 08:49:51 +0900</lastBuildDate><atom:link href="https://noid11.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>English</title>
+      <link>https://noid11.github.io/tags/english/</link>
+      <pubDate>Wed, 03 Mar 2021 08:49:51 +0900</pubDate>
+      
+      <guid>https://noid11.github.io/tags/english/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>productivity</title>
       <link>https://noid11.github.io/tags/productivity/</link>
@@ -86,15 +95,6 @@
       <pubDate>Tue, 09 Feb 2021 05:54:16 +0900</pubDate>
       
       <guid>https://noid11.github.io/tags/aws-control-tower/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>AWS Organizations</title>
-      <link>https://noid11.github.io/tags/aws-organizations/</link>
-      <pubDate>Tue, 09 Feb 2021 05:54:16 +0900</pubDate>
-      
-      <guid>https://noid11.github.io/tags/aws-organizations/</guid>
       <description></description>
     </item>
     
