@@ -1,6 +1,6 @@
 baseURL = "https://noid11.github.io/"
 languageCode = "ja-jp"
-title = "noid11.github.io"
+title = "dumped logs"
 publishDir = "docs"
 theme = "hermit"
 
