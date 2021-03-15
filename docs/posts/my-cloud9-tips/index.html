@@ -10,8 +10,8 @@
 <meta itemprop="name" content="個人的な AWS Cloud9 の使い方 TIPS">
 <meta itemprop="description" content="AWS Cloud9 を稀に使うのでセットアップ方法メモ セットアップ SSH key 作成 ssh-keygen -t rsa -b 4096 -C &#34;Cloud9 環境の ARN&#34; あとは GitHub に登録したり https://github.com/settings/keys ssh-keygen manual -t: アルゴリズム -b: bit 数 -C: コメント ユニ">
 <meta itemprop="datePublished" content="2021-02-07T19:37:56+09:00" />
-<meta itemprop="dateModified" content="2021-02-08T03:44:24+09:00" />
-<meta itemprop="wordCount" content="2855">
+<meta itemprop="dateModified" content="2021-03-15T19:57:55+09:00" />
+<meta itemprop="wordCount" content="2942">
 
 
 
@@ -21,7 +21,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://noid11.github.io/posts/my-cloud9-tips/" />
 <meta property="article:published_time" content="2021-02-07T19:37:56+09:00" />
-<meta property="article:modified_time" content="2021-02-08T03:44:24+09:00" />
+<meta property="article:modified_time" content="2021-03-15T19:57:55+09:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="個人的な AWS Cloud9 の使い方 TIPS"/>
 <meta name="twitter:description" content="AWS Cloud9 を稀に使うのでセットアップ方法メモ セットアップ SSH key 作成 ssh-keygen -t rsa -b 4096 -C &#34;Cloud9 環境の ARN&#34; あとは GitHub に登録したり https://github.com/settings/keys ssh-keygen manual -t: アルゴリズム -b: bit 数 -C: コメント ユニ"/>
@@ -105,6 +105,13 @@
 </li>
 <li><code>~/.ssh/authorized_keys</code> には既に Cloud9 環境が使う SSH Key が登録されているっぽいので、ファイルの上書きではなく <code>&gt;&gt;</code> で追記する</li>
 </ul>
+<h3 id="ebs-volume-のサイズ拡張">EBS Volume のサイズ拡張<a href="#ebs-volume-のサイズ拡張" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li>公式ドキュメントに EBS Volume のサイズ変更用シェルスクリプトが記載されているので、それを使うと良い</li>
+<li>とりえあずで 30 GB くらいには拡張してしまう</li>
+</ul>
+<p>Moving an environment and resizing or encrypting Amazon EBS volumes - AWS Cloud9<br>
+<a href="https://docs.aws.amazon.com/cloud9/latest/user-guide/move-environment.html#move-environment-resize">https://docs.aws.amazon.com/cloud9/latest/user-guide/move-environment.html#move-environment-resize</a></p>
 <h2 id="使い方">使い方<a href="#使い方" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <h3 id="しばらく使わないと思ったら環境を削除">しばらく使わないと思ったら環境を削除<a href="#しばらく使わないと思ったら環境を削除" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <ul>
@@ -774,9 +781,9 @@ zlib-devel.x86_64                            1.2.7-18.amzn2                     
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://noid11.github.io/tags/cloud9">Cloud9</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>2855 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>2942 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2021/02/07 19:37 &#43;0900</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/noid11/noid11.github.io/commit/3817c099f5ba09a93c7934974038e9f446e142a6" target="_blank" rel="noopener">3817c09</a> @ 2021/02/08</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/noid11/noid11.github.io/commit/42452c778d4670e25ebf758f33137f86f2317ae4" target="_blank" rel="noopener">42452c7</a> @ 2021/03/15</p>
 			</footer>
 		</article>
 		<aside id="toc" class="show-toc">
@@ -787,6 +794,7 @@ zlib-devel.x86_64                            1.2.7-18.amzn2                     
       <ul>
         <li><a href="#ssh-key-作成">SSH key 作成</a></li>
         <li><a href="#authorized-keys-登録">Authorized keys 登録</a></li>
+        <li><a href="#ebs-volume-のサイズ拡張">EBS Volume のサイズ拡張</a></li>
       </ul>
     </li>
     <li><a href="#使い方">使い方</a>
