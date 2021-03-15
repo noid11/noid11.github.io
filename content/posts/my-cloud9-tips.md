@@ -39,6 +39,15 @@ curl -s https://github.com/noid11.keys >> ~/.ssh/authorized_keys
 - `~/.ssh/authorized_keys` には既に Cloud9 環境が使う SSH Key が登録されているっぽいので、ファイルの上書きではなく `>>` で追記する
 
 
+### EBS Volume のサイズ拡張
+
+- 公式ドキュメントに EBS Volume のサイズ変更用シェルスクリプトが記載されているので、それを使うと良い
+- とりえあずで 30 GB くらいには拡張してしまう
+
+Moving an environment and resizing or encrypting Amazon EBS volumes - AWS Cloud9  
+https://docs.aws.amazon.com/cloud9/latest/user-guide/move-environment.html#move-environment-resize
+
+
 ## 使い方
 
 ### しばらく使わないと思ったら環境を削除
